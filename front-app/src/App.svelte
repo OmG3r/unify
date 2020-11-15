@@ -7,9 +7,10 @@
     import ProfilePage from './routes/ProfilePage.svelte'
     import MerchPage from './routes/MerchPage.svelte'
     import SingleProductPage from './routes/SingleProductPage.svelte'
+    import Navbar from "./components/navbar.svelte";
     export let url = "";
 </script>
-
+<Navbar/>
 <Router url="{url}">
     <Route path="/">
         
