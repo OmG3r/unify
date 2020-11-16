@@ -86,12 +86,14 @@
     })
 
     const handleTypeChange = (event) => {
-        let value = event.target.value
+        let value = [event.target.value]
+        if (value[0] == "none") {
+            value = []
+        }
         $filters = {
             ...$filters,
-            type: [value]
+            type: value
         }
-        console.log("done")
     }
 </script>
 
@@ -208,9 +210,18 @@
         margin: 4px 0;
     }
 
-    .type-select {
+    .type_filter {
         width: 94%;
-        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .type-select {
+        background: #312f30;
+        color: white;
+        padding: 6px;
+        width: 100%;
         border-radius: 3px;
     }
 
