@@ -1,7 +1,8 @@
 <script>
     import { writable } from 'svelte/store';
     import {lang} from '../../store.js'
-    import {onMount} from 'svelte'
+    import {onMount} from 'svelte';
+     import Single from '../SingleProductPage/singleProduct.svelte'
 
     
 
@@ -95,6 +96,22 @@
             type: value
         }
     }
+    let show = false;
+    const openModal = ()=>{
+        let modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        show=true;
+    }
+    const closeModel = ()=>{
+        let modal = document.getElementById("myModal");
+        show=false;
+        modal.style.display = "none";
+        
+        
+    }
+
+ 
+    
 </script>
 
 <style>
@@ -133,6 +150,7 @@
         flex-direction: column;
         align-items: center;
         min-height: 300px;
+        cursor: pointer;
     }
     .single_product img {
         width: 65%;
@@ -274,6 +292,54 @@
     :global(.noUi-connect) {
         background-color: #0e80f6 !important;
     }
+
+    .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: fit-content; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #1e1e20;
+  margin: 8% auto; /* 15% from the top and centered */
+  border-radius:30px;
+  padding: 20px;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ .show{
+animation: FadeIn 0.3s ease-out;
+  }
+  @keyframes FadeIn {
+    0%{
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
 </style>
 
 <div class="container">
@@ -387,7 +453,7 @@
 
     <div class="u_products">
         {#each displayProducts as product}
-            <div class="single_product">
+            <div class="single_product" on:click={openModal}>
                 <img src={product.img} alt="product" />
                 <div class="likebtn"><i class="far fa-heart" /></div>
                 <div class="productInfo">
@@ -422,5 +488,15 @@
             </div>
         {/each}
     </div>
+
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content" class:show>
+    <span class="close" on:click={closeModel}>&times;</span>
+    <Single/>
+  </div>
+
+</div>
 
 </div>
