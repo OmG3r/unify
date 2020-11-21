@@ -4,40 +4,48 @@
     import {onMount} from 'svelte';
      import Single from '../SingleProductPage/singleProduct.svelte'
 
-    
-
-    let products = [
-        {
+     let hashedproducts = {
+        "FM8748": {
+            name: "Ahmed Shirt",
+            img: "/img/tshirt.png",
+            price: 90,
+            type: "T-shirt"
+        },
+        "MMX8E7": {
+            name: "Ahmed Shirt",
+            img: "/img/tshirt.png",
+            price: 90,
+            type: "T-shirt"
+        },
+        "MX9E7C": {
             name: "Product XYZ",
             img: "/img/tshirt.png",
             price: 50,
             type: "T-shirt"
         },
-        {
-            name: "Ahmed Shirt",
+        "MOE7CZ": {
+            name: "Product XYZ",
             img: "/img/tshirt.png",
-            price: 90,
-            type: "T-shirt"
-        },
-        {
-            name: "Ahmed Shirt",
-            img: "/img/tshirt.png",
-            price: 90,
-            type: "T-shirt"
-        },
-        {
-            name: "Ahmed Shirt",
-            img: "/img/tshirt.png",
-            price: 90,
-            type: "T-shirt"
-        },
-        {
-            name: "Ahmed Shirt",
-            img: "/img/tshirt.png",
-            price: 90,
-            type: "T-shirt"
+            price: 50,
+            type: "T-shirt"  
         }
-    ];
+    }
+
+    let products = Object.entries(hashedproducts).map(([key, value]) => {
+        value.id = key
+        return value
+    })
+
+    let activeModalProduct = writable(undefined);
+    let unsubscribeActiveModal = activeModalProduct.subscribe((v) => {
+        if (v == undefined) {
+            document.body.style.overflow = "auto"
+            
+        } else {
+
+            document.body.style.overflow = "hidden"
+        }
+    })
     let budgetMin = 0;
     let budgetMax = 300;
 
@@ -293,15 +301,14 @@
         background-color: #0e80f6 !important;
     }
 
-    .modal {
-  display: none; /* Hidden by default */
+    .modal { /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
+        max-height: 100vh;
   width: 100%; /* Full width */
   height: fit-content; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  overflow-y: scroll; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
@@ -453,7 +460,7 @@ animation: FadeIn 0.3s ease-out;
 
     <div class="u_products">
         {#each displayProducts as product}
-            <div class="single_product" on:click={openModal}>
+            <div class="single_product" on:click={() => {$activeModalProduct = product}}>
                 <img src={product.img} alt="product" />
                 <div class="likebtn"><i class="far fa-heart" /></div>
                 <div class="productInfo">
@@ -488,15 +495,16 @@ animation: FadeIn 0.3s ease-out;
             </div>
         {/each}
     </div>
+{#if $activeModalProduct}
+    <div id="myModal" class="modal">
 
-<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" class:show>
+        <span class="close" on:click={() => {$activeModalProduct = undefined}}>&times;</span>
+        <Single/>
+    </div>
 
-  <!-- Modal content -->
-  <div class="modal-content" class:show>
-    <span class="close" on:click={closeModel}>&times;</span>
-    <Single/>
-  </div>
-
-</div>
+    </div>
+{/if}
 
 </div>
