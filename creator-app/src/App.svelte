@@ -1,44 +1,72 @@
+<style>
+    .app-container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+
+</style>
+
 <script>
-    import { Router, Link, Route } from "svelte-routing";
+    import { Router, Link, Route, link } from "svelte-routing";
+    import {onMount} from 'svelte'
 
     import NotFound from './routes/NotFound.svelte'
+    import Overview from './routes/Overview.svelte'
+    import Login from './routes/Login.svelte'
+    import Merch from './routes/Merch.svelte'
+    import Profile from './routes/Profile.svelte'
 
-    import LandingPage from './routes/LandingPage.svelte'
-    import ProfilePage from './routes/ProfilePage.svelte'
-    import MerchPage from './routes/MerchPage.svelte'
-    import SingleProductPage from './routes/SingleProductPage.svelte'
+    import VerifyLogin from './comps/VerifyLogin.svelte'
+    import SideNav from './comps/SideNav.svelte'
+
     export let url = "";
+    
+    let activeRoute
+
+    onMount(() => {
+        activeRoute.subscribe((v) => {
+            console.log(v)
+        })
+    })
 </script>
 
-<Router url="{url}">
-    <Route path="/">
-        
-        <LandingPage />
+<div class="app-container">
+    <SideNav />
+    <Router bind:activeRoute  url="{url}">
+        <Route path="/">
+            <VerifyLogin >
+                <Overview />
+            </VerifyLogin>
+        </Route>
     
-    </Route>
-
-    <Route let:params path="/:userid">
-        
-        <ProfilePage {params} />
+        <Route path="/profile">
+            <VerifyLogin >
+                <Profile />
+            </VerifyLogin>
+        </Route>
     
-    </Route>
-
-    <Route let:params path="/:userid/merch">
-        
-        <MerchPage {params} />
+        <Route path="/merch/*">
+            <VerifyLogin >
+               <Merch />
+            </VerifyLogin>
+        </Route>
     
-    </Route>
-
-    <Route let:params path="/:userid/merch/:itemid">
+        <Route path="/login">
+            
+            <Login />
         
-        <SingleProductPage {params} />
-    
-    </Route>
-
-
-    <Route path="*">
+        </Route>
         
-        <NotFound />
     
-    </Route>
-</Router>
+    
+    
+        <Route path="*">
+            
+            <NotFound />
+        
+        </Route>
+    </Router>
+
+</div>
+

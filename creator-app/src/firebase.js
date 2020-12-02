@@ -1,3 +1,5 @@
+import {writable} from 'svelte/store'
+
 const firebaseConfig = {
     apiKey: "AIzaSyDucnhtBFM0HOg8dxk3lUIRcV8pHmifzXc",
     authDomain: "unify-tn.firebaseapp.com",
@@ -11,3 +13,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore()
+export const auth = firebase.auth()
+export const user = writable("init")
+
+auth.onAuthStateChanged(function(kuser) {
+    if (kuser) {
+        user.set(kuser)
+    } else {
+        user.set(0)
+    }
+});
