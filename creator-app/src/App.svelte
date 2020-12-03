@@ -23,16 +23,16 @@
     export let url = "";
     
     let activeRoute
-
+    let activeURI;
     onMount(() => {
         activeRoute.subscribe((v) => {
-            console.log(v)
+            activeURI = v.uri
         })
     })
 </script>
 
 <div class="app-container">
-    <SideNav />
+    <SideNav {activeURI} />
     <Router bind:activeRoute  url="{url}">
         <Route path="/">
             <VerifyLogin >

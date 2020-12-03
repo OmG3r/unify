@@ -17,7 +17,6 @@
     let verified = false;
 
     const unsubscribe = user.subscribe((v) => {
-        console.log(v)
         if (v === "init" ) {
             return
         }
