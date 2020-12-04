@@ -1,3 +1,18 @@
 import {writable} from 'svelte/store'
 
-export let navCollapse = writable(false)
+
+
+function createSideNavStore() {
+    let saved = Boolean(localStorage.getItem('sideNav')) || false
+	const { subscribe, set, update } = writable(saved);
+
+	return {
+		subscribe,
+		set: (newV) => {
+            localStorage.setItem('sideNav', newV)
+            set(newV)
+        },
+		
+	};
+}
+export let navCollapse = createSideNavStore()

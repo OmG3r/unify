@@ -27,6 +27,7 @@
         align-items: center;
 
         cursor: pointer;
+        z-index: 10;
     }
 
     .reverse.resize-button {
@@ -192,12 +193,15 @@
         {name: "Profile", path: "/profile", img: '/imgs/misc/nav/profile.png'},
         {name: "Merch", path: "/merch", img: '/imgs/misc/nav/merch.png'}
     ]
-
+    const switchSideNav = () => {
+        console.log($navCollapse)
+        $navCollapse = !$navCollapse
+        }
 </script>
 
 {#if !["/login", "/register"].includes(activeURI)}
     <nav class:collapse={$navCollapse}>
-        <div on:click={() => {$navCollapse = !$navCollapse}} class="resize-button" class:reverse={$navCollapse}>
+        <div on:click={switchSideNav} class="resize-button" class:reverse={$navCollapse}>
 
             <img class:reverse={$navCollapse} src="/imgs/misc/nav/caret.png" alt="caret">
         </div>

@@ -2,6 +2,8 @@
     .app-container {
         display: flex;
         min-height: 100vh;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 
 
