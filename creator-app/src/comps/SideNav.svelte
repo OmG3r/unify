@@ -189,9 +189,9 @@
     import {link} from 'svelte-routing'
     export let activeURI
     const navItems = [
-        {name: "Overview", path: "/", img: '/imgs/misc/nav/dashboard.png'},
-        {name: "Profile", path: "/profile", img: '/imgs/misc/nav/profile.png'},
-        {name: "Merch", path: "/merch", img: '/imgs/misc/nav/merch.png'}
+        {name: "Overview", routerLink: '/', path: "/", img: '/imgs/misc/nav/dashboard.png'},
+        {name: "Profile", routerLink: "/profile", path: "/profile", img: '/imgs/misc/nav/profile.png'},
+        {name: "Merch", routerLink: "/merch", path: "/merch/all", img: '/imgs/misc/nav/merch.png'}
     ]
     const switchSideNav = () => {
         console.log($navCollapse)
@@ -226,7 +226,7 @@
         </div>
         <div class="navs">
             {#each navItems as item}
-                <a class:active={activeURI == item.path} use:link href={item.path} class="u-nav-item">
+                <a class:active={activeURI == item.routerLink} use:link href={item.path} class="u-nav-item">
                     <img class="nav-item-img" src={item.img} alt="item img">
                     <div class="nav-item-name" class:hidden={$navCollapse}>{item.name}</div>
 

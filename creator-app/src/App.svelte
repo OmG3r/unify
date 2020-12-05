@@ -29,6 +29,7 @@
     onMount(() => {
         activeRoute.subscribe((v) => {
             activeURI = v.uri
+            console.log(activeURI)
         })
     })
 </script>

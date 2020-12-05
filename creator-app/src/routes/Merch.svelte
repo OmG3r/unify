@@ -9,20 +9,19 @@
     import VerifyLogin from '../comps/VerifyLogin.svelte'
     import All from './Merch/All.svelte'
     import Create from './Merch/Create.svelte'
+    import Designer from './Merch/Designer.svelte'
 </script>
 
-merch
 
 <Router>
 
     <Route path="/all">
-        <VerifyLogin >
             <All />
-        </VerifyLogin>
     </Route>
     <Route path="/create">
-        <VerifyLogin >
             <Create />
-        </VerifyLogin>
+    </Route>
+    <Route let:params path="/create/:itemid">
+        <Designer {params} />
     </Route>
 </Router>
