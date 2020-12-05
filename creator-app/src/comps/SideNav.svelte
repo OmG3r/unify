@@ -185,7 +185,7 @@
 </style>
 
 <script>
-    import {navCollapse} from '../store.js'
+    import {navCollapse, navCollapsable} from '../store.js'
     import {link} from 'svelte-routing'
     export let activeURI
     const navItems = [
@@ -201,10 +201,12 @@
 
 {#if !["/login", "/register"].includes(activeURI)}
     <nav class:collapse={$navCollapse}>
-        <div on:click={switchSideNav} class="resize-button" class:reverse={$navCollapse}>
+        {#if $navCollapsable}
+            <div on:click={switchSideNav} class="resize-button" class:reverse={$navCollapse}>
 
-            <img class:reverse={$navCollapse} src="/imgs/misc/nav/caret.png" alt="caret">
-        </div>
+                <img class:reverse={$navCollapse} src="/imgs/misc/nav/caret.png" alt="caret">
+            </div>
+        {/if}
         <div class:no-padding={$navCollapse} class="user-card">
             <div class:justify-center={$navCollapse} class="u-info">
                 <div class:no-margin={$navCollapse} class="u-profile-pic">

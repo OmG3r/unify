@@ -15,5 +15,5 @@ function createSideNavStore() {
 		
 	};
 }
-export let navCollapse = createSideNavStore()
-
+export const navCollapse = createSideNavStore()
+export const navCollapsable = writable(true)
