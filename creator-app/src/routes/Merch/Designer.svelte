@@ -95,7 +95,7 @@
         
     }
     .control-container {
-        padding: 30px 20px;
+        padding: 20px 20px;
         border-bottom: 1px solid hsla(0,0%,100%,.05);
     }
 
@@ -155,6 +155,34 @@
     .u-canva-container.active {
         display: block;
     }
+
+    .show-faces {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    .one-face {
+        width: 48%;
+        padding: 6px 8px;
+        text-align: center;
+        color: #5ec8d5;
+        border: 2px solid #5ec8d5;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .one-face.active {
+        color: #212032;
+        background-color: #5ec8d5;
+    }
+    .merch-name {
+        border: 2px solid #5ec8d5;;
+        width: 100%;
+        padding: 6px 8px;
+        background-color: #2e2d3e;
+        border-radius: 4px;
+        outline: none;
+        color: white;
+    }
 </style>
 
 <script>
@@ -164,6 +192,7 @@
     import {colors, formatCssStyle} from '../../utils.js'
     import {creations} from '../../mockupdata.js'
     import FabricCanva from './_FabricCanva.svelte'
+    import PriceCalculator from './_PriceCalculator.svelte'
     import {navigate} from 'svelte-routing'
     export let params
     console.log(params)
@@ -172,7 +201,14 @@
         imgs: {
             front: '',
             back: ''
-        }
+        },
+        profit: 1,
+        cost: 10
+    }
+
+    const merchData = {
+        name: '',
+        featuredFace: 'front'
     }
     
     const action = writable('Design')
@@ -215,51 +251,6 @@
         mockup = creations[params.itemid]
         $navCollapsable = false
         $navCollapse = true
-        /*
-        canvas.front.canva = new fabric.Canvas('front');
-        canvas.front.canva.setDimensions({width:600, height:600});
-        canvas.front.background = new fabric.Rect({
-            fill: $selectedColor,
-            width:600,
-            height: 600,
-            selectable: false
-        });
-
-        
-        canvas.front.background.center()
-        canvas.front.canva.add(canvas.front.background);
-        await fabric.Image.fromURL('/imgs/clothes/hoodies/normal-front.png', function(oImg) {
-            canvas.front.mockup = oImg
-            oImg.scaleToWidth(600, false)
-            oImg.set('selectable', false);
-            canvas.front.canva.add(oImg)
-        });
-        
-
-        canvas.back.canva = new fabric.Canvas('back');
-        await fabric.Image.fromURL('/imgs/clothes/hoodies/normal-back.png', function(oImg) {
-            canvas.back.mockup = oImg
-            oImg.scaleToWidth(600, false)
-            oImg.set('selectable', false);
-            canvas.back.canva.add(oImg)
-        });
-        canvas.back.canva.setDimensions({width:600, height:600});
-        canvas.back.background = new fabric.Rect({
-            fill: $selectedColor,
-            width:600,
-            height: 600,
-            selectable: false
-        });
-        canvas.back.background.center()
-        canvas.back.canva.add(canvas.back.background);
-        selectedColor.subscribe((v) => {
-            canvas.front.background.set('fill', v)
-            canvas.front.canva.renderAll();
-
-            canvas.back.background.set('fill', v)
-            canvas.back.canva.renderAll();
-        })
-        */
         document.addEventListener('keyup', handleKeypress)
         
     })
@@ -279,7 +270,7 @@
         let activeCanva = canvas[$facade.toLocaleLowerCase()]
         await fabric.Image.fromURL(url, function(oImg) {
             activeCanva.items.push(oImg)
-            oImg.scaleToWidth(300, false)
+            oImg.scaleToWidth(200, false)
             oImg.center()
             activeCanva.canva.add(oImg)
             
@@ -310,6 +301,11 @@ class="u-view">
         <div class="u-title">
             Create Your Merch
         </div>
+        <div class="control-container">
+            <div class="control-title">Merch Name</div>
+            <input placeholder="Merch Name" type="text" class="merch-name">
+        </div>
+
         <div class="control-container">
             <div class="control-title">Design your product</div>
             <div class="options">
@@ -346,6 +342,31 @@ class="u-view">
             </div>
         </div>
 
+        <div class="control-container">
+            <div class="control-title">Which face customers see first</div>
+            <div class="show-faces">
+                <div
+                on:click={() => {merchData.featuredFace = 'front'}}
+                class:active={merchData.featuredFace == 'front'} class="one-face">
+                    Front
+                </div>
+                <div 
+                on:click={() => {merchData.featuredFace = 'back'}}
+                class:active={merchData.featuredFace == 'back'}
+                class="one-face">
+                    Back
+                </div>
+
+            </div>
+        </div>
+        <div class="control-container">
+            <div class="control-title">Set Your Price</div>
+            <PriceCalculator
+            unifyProfit={mockup.profit}
+            cost={mockup.cost}
+            />
+        </div>
+
     </div>
     <div on:keyup={handleKeypress} class="design-container">
         <div class="facades">
@@ -359,7 +380,6 @@ class="u-view">
         <div class="u-box">
             <div class="design-area">
                 <div class="u-canva-container" class:active={$facade == "Front"}>
-                    <!--<canvas class="c-canva"  id="front"></canvas>-->
                     {#if mockup.imgs.front}
                         <FabricCanva
                         bind:hash={canvas.front}
@@ -370,7 +390,6 @@ class="u-view">
                     {/if}
                 </div>
                 <div  class:active={$facade == "Back"} class="u-canva-container">
-                    <!--<canvas class="c-canva" id="back"></canvas>-->
                     {#if mockup.imgs.back}
                         <FabricCanva
                         bind:hash={canvas.back}
@@ -393,38 +412,6 @@ class="u-view">
                
             </div>
         </div>
-        <!--
-        <div class="u-row">
-            <div class="facades">
-                {#each ["Front", "Back"] as laction}
-                    <div 
-                    on:click={() => {$facade == laction ? "" : $facade = laction}}
-                    class:active={$facade == laction}
-                    class="facade">{laction}</div>
-                {/each}
-            </div>
-            <div class="desgin-area">
-                <div class="u-canva-container" class:active={$facade == "Front"}>
-                    <canvas class="c-canva"  id="front"></canvas>
-
-                </div>
-                <div  class:active={$facade == "Back"} class="u-canva-container">
-                    <canvas class="c-canva" id="back"></canvas>
-                </div>
-                
-            </div>
-            
-        </div>
-        <div class="actions">
-            {#each ["Design", "Preview"] as laction}
-                <div 
-                on:click={() => {$action == laction ? "" : $action = laction}}
-                class:active={$action == laction}
-                class="action">{laction}</div>
-
-            {/each}
-           
-        </div>-->
     </div>
     
 </div>

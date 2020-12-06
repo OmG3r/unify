@@ -1,9 +1,12 @@
 import {nanoid} from './utils'
+export const taxRate = 0.19
+
 export const creations = {
     [nanoid()]: {
         type: "hoodie",
         name: 'Eco Unisex Hoodie',
         cost: 32,
+        profit: 6,
         material: '80% Certified Organic Cotton, 20% Recycled Polyester',
         sizes: 'S - 4XLT',
         imgs: {
@@ -16,6 +19,7 @@ export const creations = {
         type: "hoodie",
         name: 'Premium Pullover Hoodie',
         cost: 29,
+        profit: 8,
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
         sizes: 'S - 2XL',
         imgs: {
@@ -28,6 +32,7 @@ export const creations = {
         type: "long-tee",
         name: 'Classic Long Sleeve Tee',
         cost: 14,
+        profit: 5,
         material: 'Regular fit, 100% cotton, unisex',
         sizes: 'S - 2XL',
         imgs: {
@@ -40,6 +45,7 @@ export const creations = {
         type: "long-tee",
         name: 'Premium Long Sleeve Tee',
         cost: 17,
+        profit: 6,
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: 'S - XL',
         imgs: {
@@ -52,6 +58,7 @@ export const creations = {
         type: "sweatshirt",
         name: 'Premium Long Sleeve Tee',
         cost: 17,
+        profit: 7,
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: 'S - XL',
         imgs: {

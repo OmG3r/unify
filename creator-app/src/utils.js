@@ -23,5 +23,5 @@ export const formatCssStyle = (data) =>  {
     }, "")
 }
 
-export const taxRate = 0.19
+
 export const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
