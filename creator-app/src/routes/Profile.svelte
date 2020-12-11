@@ -1,4 +1,20 @@
 <style>
+
+header {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        border-bottom: 1px solid #D8DAE0;
+        padding: 8px 12px;
+        height: 54px;
+    }
+    .u-button {
+        padding: 6px 12px;
+        background-color: #4a5aed;
+        color: white;
+        font-weight: bold;
+        border-radius: 3px;
+    }
     .u-view {
         width: 100%;
         min-height: 100vh;
@@ -114,6 +130,7 @@
 
 
 <script>
+    import {link} from 'svelte-routing'
     import Input from '../comps/InputField.svelte'
     import InputColor from '../comps/InputColor.svelte'
     let profile = {
@@ -141,7 +158,11 @@
 </script>
 
 <div class="u-view">
-
+ <header>
+        <a use:link href="/merch/create" class="u-button">
+            Create Merch
+        </a>
+    </header>
 
 
     <section class="banner-logo-area">
