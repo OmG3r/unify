@@ -50,11 +50,17 @@
 </style>
 
 <script>
+import { onMount } from 'svelte';
+
     import {taxRate} from '../../mockupdata.js'
     export let cost
     export let unifyProfit;
-    $: price = Math.floor((cost + unifyProfit) * (1 + taxRate));
+    export let price;
+    $: {
+        price = Math.floor((cost + unifyProfit) * (1 + taxRate)) + 5;
+    }
     $: profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+    
 </script>
 
 

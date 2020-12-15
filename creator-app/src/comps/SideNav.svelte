@@ -80,6 +80,9 @@
         border-radius: 50%;
         margin-right: 12px;
     }
+    .u-profile-pic img {
+        max-width: 100%;
+    }
     .u-profile-button {
         padding: 8px 12px;
         border: 1px solid #4A5AED;
@@ -136,10 +139,13 @@
         background-color: #E6E8F7;
         color: #3748CC;
     }
+    .nav-item-name {
+        margin-left: 12px;   
+    }
     .nav-item-img {
         display: block;
         max-height: 32px;
-        margin-right: 12px;
+        
     }
 
     .signout {
@@ -228,7 +234,7 @@
         </div>
         <div class="navs">
             {#each navItems as item}
-                <a class:active={activeURI == item.routerLink} use:link href={item.path} class="u-nav-item">
+                <a class:justify-center={$navCollapse} class:active={activeURI == item.routerLink} use:link href={item.path} class="u-nav-item">
                     <img class="nav-item-img" src={item.img} alt="item img">
                     <div class="nav-item-name" class:hidden={$navCollapse}>{item.name}</div>
 

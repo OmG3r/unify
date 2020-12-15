@@ -1,4 +1,5 @@
 import { customAlphabet } from 'nanoid'
+import { writable } from 'svelte/store'
 
 
 export const colors = {
@@ -25,3 +26,6 @@ export const formatCssStyle = (data) =>  {
 
 
 export const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
+
+export const notification = writable(0)
+export const popup = writable({})

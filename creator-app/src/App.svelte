@@ -21,7 +21,8 @@
 
     import VerifyLogin from './comps/VerifyLogin.svelte'
     import SideNav from './comps/SideNav.svelte'
-
+    import Notifications from './comps/Notifications.svelte'
+    import PopUpOverlay from './comps/PopupOverlay.svelte'
     export let url = "";
     
     let activeRoute
@@ -33,7 +34,8 @@
         })
     })
 </script>
-
+<Notifications />
+<PopUpOverlay />
 <div class="app-container">
     <SideNav {activeURI} />
     <Router bind:activeRoute  url="{url}">

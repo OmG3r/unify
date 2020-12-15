@@ -13,6 +13,7 @@
         border-bottom: 1px solid #D8DAE0;
         padding: 8px 12px;
         height: 54px;
+        align-items: center;
     }
     .u-button {
         padding: 6px 12px;

@@ -183,13 +183,24 @@
         outline: none;
         color: white;
     }
+    .flexed {
+        display: flex;
+    }
+    .u-finalize {
+        padding: 8px 16px;
+        background-color: #ee2761;
+        color: #212032;
+        margin-left: auto;
+        border-radius: 3px;
+        cursor: pointer;
+    }
 </style>
 
 <script>
     import {onDestroy, onMount} from 'svelte'
     import {writable} from 'svelte/store'
     import {navCollapsable, navCollapse} from '../../store.js'
-    import {colors, formatCssStyle} from '../../utils.js'
+    import {colors, formatCssStyle, notification} from '../../utils.js'
     import {creations} from '../../mockupdata.js'
     import FabricCanva from './_FabricCanva.svelte'
     import PriceCalculator from './_PriceCalculator.svelte'
@@ -208,7 +219,13 @@
 
     const merchData = {
         name: '',
-        featuredFace: 'front'
+        featuredFace: 'front',
+        mockup: params.itemid,
+        imgs: {
+            front: '',
+            back: ''
+        },
+        price: 0
     }
     
     const action = writable('Design')
@@ -291,6 +308,14 @@
         let img = event.dataTransfer.files[0]
         addImage(URL.createObjectURL(img))
     }
+
+    const finalizeCreation = () => {
+        notification.set({
+            accentColor: "alert",
+            title: "Delete",
+            content: "an error happend",
+        })
+    }
 </script>
 
 <div 
@@ -365,6 +390,12 @@ class="u-view">
             unifyProfit={mockup.profit}
             cost={mockup.cost}
             />
+        </div>
+
+        <div class="control-container flexed">
+            <div on:click={finalizeCreation} class="u-finalize">
+                CREATE
+            </div>
         </div>
 
     </div>
