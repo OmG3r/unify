@@ -96,8 +96,8 @@
     }
     .u-profile-button {
         padding: 8px 12px;
-        border: 1px solid #4A5AED;
-        background-color: #7682ec;
+        border: 1px solid #46b978;
+        background-color: #46b978;
         color: white;
         border-radius: 3px;
     }
@@ -160,7 +160,7 @@
   }
   .u-profile-button {
     padding: 8px 12px;
-    background-color: #0e80f6;
+    background-color: #46b978;
     color: white;
     border-radius: 40%;
   }
@@ -188,8 +188,8 @@
         font-weight: bold;
     }
     .u-nav-item.active {
-        background-color: #E6E8F7;
-        color: #3748CC;
+        background-color: #deeae3;
+        color: #46b978;
     }
     .nav-item-name {
         margin-left: 12px;   
@@ -218,8 +218,8 @@
     font-weight: bold;
   }
   .u-nav-item.active {
-    background-color: #e6e8f7;
-    color: #0e80f6;
+    background-color: #deeae3;
+    color: #46b978;
   }
   .nav-item-img {
     display: block;
@@ -232,7 +232,7 @@
     padding: 8px;
     border-radius: 3px;
     text-align: center;
-    background-color: #0e80f6;
+    background-color: #46b978;
     margin-top: auto;
     color: white;
     position: relative;

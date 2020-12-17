@@ -25,6 +25,9 @@
   };
 </script>
 <style>
+.u-view{
+  width:100%;
+}
     header {
         width: 100%;
         display: flex;
@@ -54,17 +57,17 @@
   }
   .u-button {
     padding: 6px 12px;
-    background-color: #0E80F6;
-    border-color: #0E80F6;
+    background-color: #46b978;
+    border-color: #46b978;
     color: white;
     cursor: pointer;
-    box-shadow: 0 0px 10px rgb(14 127 245 / 34%), 0 0px 10px rgb(14 127 245 / 32%);
+    box-shadow: 0 0px 10px rgb(70 185 120 / 0.34), 0 0px 10px rgb(70 185 120 / 0.32);
     font-weight: bold;
     border-radius: 3px;
     height: 40px;
   }
   .u-button:hover{
-      box-shadow: 0 0px 10px rgb(14 127 245 / 50%), 0 0px 10px rgb(14 127 245 / 50%);
+      box-shadow: 0 0px 10px rgb(70 185 120 / 0.5), 0 0px 10px rgb(70 185 120 / 0.5);
   }
 
   .kpi-section {
@@ -87,19 +90,19 @@
     width: max-content;
     padding: 6px 10px;
     border-radius: 12px;
-    background-color: #0E80F6;
-    border-color: #0E80F6;
+    background-color: #46b978;
+    border-color: #46b978;
     color: white;
     cursor: pointer;
-    box-shadow: 0 0px 10px rgb(14 127 245 / 34%), 0 0px 10px rgb(14 127 245 / 32%);
+    box-shadow: 0 0px 10px rgb(70 185 120 / 0.34), 0 0px 10px rgb(70 185 120 / 0.32)
 }
 .analytics-filter:hover{
-     box-shadow: 0 0px 10px rgb(14 127 245 / 50%), 0 0px 10px rgb(14 127 245 / 50%);
+     box-shadow: 0 0px 10px rgb(70 185 120 / 0.5), 0 0px 10px rgb(70 185 120 / 0.5)
 }
 
 
   .analytics-filter select {
-    background-color: #0E80F6;
+    background-color: #46b978;
     border: none;
     color: white;
     font-weight: 600;
