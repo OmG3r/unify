@@ -3,6 +3,7 @@
  
   let isScroll = false;
   let oldscroll = 0;
+  let headerheight = 70;
   window.onscroll = () => {
     let currentScroll = window.scrollY;
     if (Math.abs(currentScroll) > 165) {
@@ -17,6 +18,8 @@
           isScroll = false;
         }
         oldscroll = currentScroll;
+      }else if (Math.abs(currentScroll) <=320){
+        headerheight = 70 + (currentScroll-320)
       }
   };
 </script>
@@ -30,7 +33,6 @@
   }
 nav {
     display: grid;
-    grid-template-columns: [col1] 1fr [col2] 1fr [col3] 1fr;
     color: white;
     padding: 8px 24px;
     width: 100%;
@@ -43,25 +45,34 @@ nav {
   nav a {
     margin: 0 8px;
   }
+  nav .menuBtn{
+    justify-self: end;
+    align-items: center;
+    width: 30px;
+    height: 100%;
+    fill:white;
+    cursor: pointer;
+    display: none;
+  }
   .unify-logo {
     max-width: 42px;
-    grid-column-start: col2;
-    justify-self: center;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .unify-logo img {
     max-width: 100%;
   }
   .unify-plus{
-       font-size: 25px;
- 
+    font-size: 25px;
     position: absolute;
     left: 50%;
     top: 94.35%;
     transform: translate(-50%,-50%);
   }
   .menu-items {
-    grid-column-start: col3;
-    justify-self: center;
+    justify-self: end;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -84,11 +95,7 @@ nav {
 
 
 
-.u-banner{
-    position: relative;
-    height: var(--headerHeight);
-    
-}
+
 .u-logo{
     position: absolute;
     display: flex;
@@ -248,9 +255,18 @@ opacity: 1;
         from{height:70px}
         to {height:var(--headerHeight);}
     }
-    @keyframes scrollAnimReverse {
+  @keyframes scrollAnimReverse {
         from{height:0px;opacity: 0}
         to {height:var(--headerHeight);opacity: 1}
+    }
+
+  @media only screen and (max-width: 1180px) {
+      .menu-items{
+        display:none;
+      }
+      nav .menuBtn{
+        display:block;
+      }
     }
 </style>
 
@@ -305,7 +321,8 @@ opacity: 1;
 
       </a>
     </div>
-
+    <svg class="menuBtn" height="384pt" viewBox="0 -53 384 384" width="384pt" xmlns="http://www.w3.org/2000/svg"><path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/></svg>
+    
   </nav>
 <div  class="header {isScroll ? 'isScroll' : 'isScrollReverse'}">
 <!--u-layer contains content creator BG + BG choosen color (0.9 opacity)-->
