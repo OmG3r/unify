@@ -48,36 +48,7 @@
     height: 100%;
   }
 
-  .u_info {
-    display: flex;
-    flex-direction: row;
-  }
-  .u_info img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-  }
-
-  .userName {
-    margin-top: 12px;
-  }
-  .userName .Name {
-    font-size: 25px;
-    font-weight: 500;
-    color: white;
-  }
-  .userName i {
-    font-size: 20px;
-    color: #0e80f6;
-  }
-  .userSocial {
-    margin-top: 20px;
-  }
-  .userSocial i {
-    font-size: 22px;
-    color: white;
-    margin: 0 3px;
-  }
+  
 
   .p_container {
     display: grid;
@@ -158,7 +129,7 @@
     font-weight: 700;
   }
   .p_price span {
-    color: #0e80f6;
+    color: rgb(var(--AccentColor));
   }
   .p_subTitle {
     color: #505c61;
@@ -166,7 +137,7 @@
     font-weight: 700;
   }
   .p_subTitle span {
-    color: #0e80f6;
+    color: rgb(var(--AccentColor));
     margin-left: 8px;
   }
   .p_info hr {
@@ -221,7 +192,7 @@
     font-weight: 700;
   }
   .size:hover {
-    background-color: #0e80f6;
+    background-color: rgb(var(--AccentColor));
   }
   .p_colors {
     display: flex;
@@ -280,12 +251,12 @@
   }
   .input_number .arrow_left:active {
     border-radius: 0 14px 14px 0;
-    background-color: #0e80f6;
+    background-color: rgb(var(--AccentColor));
     fill: white;
   }
   .input_number .arrow_right:active {
     border-radius: 0 14px 14px 0;
-    background-color: #0e80f6;
+    background-color: rgb(var(--AccentColor));
     fill: white;
   }
   .input_number .arrow_left {
@@ -313,7 +284,7 @@
     visibility: hidden;
     width: 160px;
     height: 35px;
-    background-color: #0e80f6;
+    background-color: rgb(var(--AccentColor));
     color: #fff;
     font-weight: 500;
     font-size: 15px;
@@ -334,7 +305,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #0e80f6 transparent transparent transparent;
+    border-color: rgb(var(--AccentColor)) transparent transparent transparent;
   }
 
   .show {
@@ -370,7 +341,7 @@
     outline: none;
   }
   .add_cart_btn {
-    background-color: #0e80f6;
+    background-color: rgb(var(--AccentColor));
     color: white;
     border-radius: 15px;
     width: 150px;
@@ -438,21 +409,7 @@
 </style>
 
 <div class="container">
-  <div class="u_info">
-    <img src="../../img/ti3leh.jpg" alt="userLogo" />
-
-    <div class="userName">
-      <span class="Name">Ti 3leh</span>
-      <i class="fas fa-check-circle" />
-    </div>
-
-    <div class="userSocial">
-      <i class="fab fa-youtube" />
-      <i class="fab fa-facebook" />
-      <i class="fab fa-instagram" />
-      <i class="fab fa-twitch" />
-    </div>
-  </div>
+  
 
   <!--P -> Product -->
   <div class="p_container">

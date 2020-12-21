@@ -309,8 +309,8 @@ const filters = writable({
       flex-direction:row;
       justify-content: center;
   }
-  .social_icons img {
-    width: 30px;
+  .social_icons i {
+    font-size: 30px;
     margin-right:15px;
   }
   .u_info{
@@ -364,14 +364,10 @@ const filters = writable({
       <hr/>
       <!-- svelte-ignore a11y-no-onchange -->
       <div class="social_icons">
-        <!--Youtube-->
-        <img src="/img/socialMedia/yt.svg" alt="youtube">
-        <!--Instagram-->
-        <img src="/img/socialMedia/instagram.svg" alt="instagram">
-        <!--Facebook-->
-        <img src="/img/socialMedia/fb.svg" alt="facebook">
-        <!--Twitch-->
-        <img src="/img/socialMedia/twitch.svg" alt="twitch">
+        <i class="fab fa-youtube" />
+        <i class="fab fa-facebook" />
+        <i class="fab fa-instagram" />
+        <i class="fab fa-twitch" />
       </div>
     </div>
   </div>
