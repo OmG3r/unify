@@ -290,7 +290,7 @@
             oImg.scaleToWidth(200, false)
             oImg.center()
             activeCanva.canva.add(oImg)
-            
+            oImg.center()
         });
         setTimeout(() => {
             relayer()

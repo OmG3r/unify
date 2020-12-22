@@ -2,7 +2,7 @@ import {nanoid} from './utils'
 export const taxRate = 0.19
 
 export const creations = {
-    [nanoid()]: {
+    "EUJHU3": {
         type: "hoodie",
         name: 'Eco Unisex Hoodie',
         cost: 32,
@@ -15,7 +15,7 @@ export const creations = {
         },
         colors: ["Black", "Red", "Green", "White"]
     },
-    [nanoid()]: {
+    "X8E7FC": {
         type: "hoodie",
         name: 'Premium Pullover Hoodie',
         cost: 29,
@@ -28,7 +28,7 @@ export const creations = {
         },
         colors: [ "Red", "Green"]
     },
-    [nanoid()]: {
+    "NV7ECZ": {
         type: "long-tee",
         name: 'Classic Long Sleeve Tee',
         cost: 14,
@@ -41,7 +41,7 @@ export const creations = {
         },
         colors: ["Black", "White", "Green"]
     },
-    [nanoid()]: {
+    "REXE7C": {
         type: "long-tee",
         name: 'Premium Long Sleeve Tee',
         cost: 17,
@@ -54,7 +54,7 @@ export const creations = {
         },
         colors: ["Black", "Red", "Green", "White"]
     },
-    [nanoid()]: {
+    "25X8E7": {
         type: "sweatshirt",
         name: 'Premium Long Sleeve Tee',
         cost: 17,

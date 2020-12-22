@@ -283,7 +283,7 @@
           alt="caret" />
       </div>
     {/if}
-    <div class:no-padding={$navCollapse} class="user-card">
+    <div class:justify-center={$navCollapse} class:no-padding={$navCollapse} class="user-card">
       <a use:link href="/profile">
         <div class:justify-center={$navCollapse} class="u-info">
 
@@ -307,11 +307,12 @@
     <div class="navs">
       {#each navItems as item}
         <a
+          class:justify-center={$navCollapse}
           class:active={activeURI == item.routerLink}
           use:link
           href={item.path}
           class="u-nav-item">
-          <img class="nav-item-img" src={item.img} alt="item img" />
+          <img class:no-margin={$navCollapse} class="nav-item-img" src={item.img} alt="item img" />
           <div class="nav-item-name" class:hidden={$navCollapse}>
             {item.name}
           </div>

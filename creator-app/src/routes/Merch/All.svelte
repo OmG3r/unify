@@ -6,23 +6,6 @@
         overflow-y: auto;
     }
 
-    header {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        border-bottom: 1px solid #D8DAE0;
-        padding: 8px 12px;
-        height: 54px;
-        align-items: center;
-    }
-    .u-button {
-        padding: 6px 12px;
-        background-color: #4a5aed;
-        color: white;
-        font-weight: bold;
-        border-radius: 3px;
-    }
-
     .active-section {
         padding: 32px 80px;
     }
@@ -103,6 +86,7 @@
     import {link} from 'svelte-routing'
     import {textToHex} from '../../utils.js'
     import ImageBackground from '../../comps/ImageBackground.svelte'
+    import ViewNav from '../../comps/ViewNav.svelte'
     let format = "article-color-random5LettersCode"
     const products = {
         "H-B-5e8c7": {
@@ -128,11 +112,7 @@
 </script>
 
 <div class="u-view">
-    <header>
-        <a use:link href="/merch/create" class="u-button">
-            Create Merch
-        </a>
-    </header>
+    <ViewNav />
 
 
     <section class="active-section">
