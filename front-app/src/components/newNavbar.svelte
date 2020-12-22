@@ -206,7 +206,7 @@
   }
   .header.isScroll .userSocial{
     animation: scalein 0.3s ease-in-out forwards;
-    display: none;
+    display: none !important;
   }
 
   nav.isScroll {
@@ -468,7 +468,7 @@
   <!-- u-pattern contains "khtout" it is for all users-->
   <div class="u-pattern" />
 
-  <div class="u-logo">
+  <div  class="u-logo">
     <img src="/img/ti3leh.jpg" alt="u-logo" />
     <span>Ti 3leh</span>
      
