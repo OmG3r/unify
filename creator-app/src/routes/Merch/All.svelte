@@ -89,6 +89,8 @@
     import ImageBackground from '../../comps/ImageBackground.svelte'
     import ViewNav from '../../comps/ViewNav.svelte'
     let format = "article-color-random5LettersCode"
+    let products = []
+    /*
     let products = {
         "H-B-5e8c7": {
             name: "The showdown",
@@ -109,8 +111,14 @@
             }
         }
     }
+    */
     db.doc("/creators/" + $user.docData.username + "/merch/all").onSnapshot((doc) => {
         let data = doc.data()
+        console.log(data)
+        if ( data == undefined) {
+            products = []
+            return
+        }
         for (let [key, value] of Object.entries(data)) {
             for (let x of ['front','back']) {
                 let path = 'creators/' + $user.docData.username + "/merch/" + key + "/" + x
@@ -120,6 +128,8 @@
             } 
         }
         products = data
+        console.log(products)
+        console.log(products.length)
     })
 </script>
 
@@ -131,40 +141,46 @@
         <div class="u-section-title">
             Your current active merch
         </div>
-        <div class="active-products">
-            {#each Object.entries(products) as [key, product]}
-                <div class="prod-card">
-                    <div class="u-image-area">
-                        <ImageBackground
-                        img={product.imgs.front} 
-                        bgColor={textToHex(product.color)} />
+        {#if Object.keys(products).length > 0}
+            <div class="active-products">
+                {#each Object.entries(products) as [key, product]}
+                    <div class="prod-card">
+                        <div class="u-image-area">
+                            <ImageBackground
+                            img={product.imgs.front} 
+                            bgColor={textToHex(product.color)} />
 
-                    </div>
-                    <div class="u-informations">
-                        <div class="u-name">
-                            {product.name}
+                        </div>
+                        <div class="u-informations">
+                            <div class="u-name">
+                                {product.name}
+
+                            </div>
+
+                            <div class="actions">
+                                <div class="u-price">
+                                    {product.price} TND
+            
+                                </div>
+            
+                                <div class="u-modify">
+                                    Modify
+            
+                                </div>
+            
+                            </div>
 
                         </div>
 
-                        <div class="actions">
-                            <div class="u-price">
-                                {product.price} TND
-        
-                            </div>
-        
-                            <div class="u-modify">
-                                Modify
-        
-                            </div>
-        
-                        </div>
-
+                        
                     </div>
-
-                    
-                </div>
-            {/each}
-        </div>
+                {/each}
+            </div>
+        {:else}
+            <div class="u-empty">
+                No merch 
+            </div>
+        {/if}
         
     </section>
 
