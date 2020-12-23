@@ -326,6 +326,10 @@
     color: white;
     margin: 0 3px;
   }
+   .userSocial i:hover{
+    color:rgb(var(--AccentColor));
+    cursor: pointer
+  }
 
 
   @media only screen and (max-width: 1180px) {

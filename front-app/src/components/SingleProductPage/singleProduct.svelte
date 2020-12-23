@@ -40,8 +40,8 @@
 
 <style>
   .container {
-    background-color: #1e1e20;
-    color: white;
+    background-color: white;
+    color: #181d22;
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -52,7 +52,9 @@
 
   .p_container {
     display: grid;
-    grid-template-columns: 0.5fr[col] 1fr[col] 1fr [col]1fr [col] 0.5fr[col];
+    grid-template-columns: 0.2fr 1fr  1fr  1fr  0.2fr;
+    grid-template-rows: 1fr 1fr;
+  
     padding: 0 30px 0 30px;
   }
 
@@ -60,13 +62,20 @@
     display: flex;
     flex-direction: column;
     margin: 150px 0 0 0;
-    grid-column-start: col 1;
+    grid-column-start: 2;
+    grid-column-end:3;
+    grid-row-start: 1;
+    grid-row-end:2;
+
   }
 
   .p_imgs {
     display: flex;
     flex-direction: column;
-    grid-column-start: col 2;
+    grid-column-start: 3;
+    grid-column-end:4;
+    grid-row-start: 1;
+    grid-row-end:3;
   }
 
   .p_imgs .p_main_img {
@@ -97,7 +106,10 @@
     display: flex;
     flex-direction: column;
     margin: 150px 0 0 0;
-    grid-column-start: col 3;
+    grid-column-start: 4;
+    grid-column-end:5;
+    grid-row-start: 1;
+    grid-row-end:3;
   }
   .circle_border {
     position: absolute;
@@ -106,9 +118,17 @@
     left: 0;
     bottom: 0;
     right: 0;
+    width:500px;
+    height:500px;
   }
+    .circle_border .inside_color{
+      fill:transparent !important;
+    }
+    .circle_border defs linearGradient stop{
+      stop-color: rgb(var(--AccentColor));
+    }
   .p_back_circle {
-    background-color: #2c353a;
+    background-color: #cbcbcb;
     width: 430px;
     height: 430px;
     border-radius: 50%;
@@ -119,12 +139,13 @@
   }
 
   .p_title {
-    color: white;
+    color: #181d22;
     font-size: 35px;
     font-weight: 700;
+    width: max-content;
   }
   .p_price {
-    color: white;
+    color: #181d22;
     font-size: 35px;
     font-weight: 700;
   }
@@ -132,9 +153,10 @@
     color: rgb(var(--AccentColor));
   }
   .p_subTitle {
-    color: #505c61;
-    font-size: 35px;
+    color: #181d22;
+    font-size: 30px;
     font-weight: 700;
+    width: max-content;
   }
   .p_subTitle span {
     color: rgb(var(--AccentColor));
@@ -142,14 +164,19 @@
   }
   .p_info hr {
     width: 40%;
-    color: #505c61;
-    border: solid 1px #505c61;
+    color:#181d22;
+    border: solid 1px #181d22;
     margin: 5px 0 5px 0;
   }
   .p_desc {
     font-size: 20px;
     font-weight: 200;
-    color: white;
+    color: #181d22;
+    grid-column-start: 2;
+    grid-column-end:3;
+    grid-row-start: 2;
+    grid-row-end:3;
+    
   }
   .p_order_details .title {
     margin-right: 10px;
@@ -157,7 +184,7 @@
     font-weight: 600;
   }
   .starts i {
-    color: #4f595a;
+    color: #181d22;
   }
   .starts .active {
     color: #ffc107;
@@ -179,7 +206,7 @@
     column-gap: 5px;
   }
   .size {
-    background-color: #a4a6a9;
+    background-color: #181d22;
     width: 35px;
     height: 35px;
     border-radius: 10px;
@@ -237,7 +264,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 2px solid #a6a6a6;
+    border: 2px solid #181d22;
     border-radius: 15px;
     height: 40px;
     width: max-content;
@@ -245,7 +272,7 @@
   .input_number .arrow_left,
   .input_number .arrow_right {
     width: 25px;
-    fill: #a6a6a6;
+    fill: #181d22;
     cursor: pointer;
     height: 100%;
   }
@@ -269,7 +296,7 @@
     height: 100%;
     border: none;
     text-align: center;
-    color: #a6a6a6;
+    color: #181d22;
     font-size: 20px;
     font-weight: 700;
   }
@@ -325,8 +352,8 @@
   }
 
   .wishlist_btn {
-    background-color: white;
-    color: black;
+    background-color: #181d22;
+    color: white;
     border-radius: 50%;
     border: none;
     height: 40px;
@@ -402,7 +429,7 @@
   }
   .p_slider .arrow_left,
   .p_slider .arrow_right {
-    fill: #a6a6a6;
+    fill: #181d22;
     width: 25px;
     cursor: pointer;
   }
@@ -425,22 +452,49 @@
         <span>TND</span>
       </span>
 
-      <div class="p_desc">
+    </div>
+    <div class="p_desc">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae
         maxime provident rerum dolorum, quia accusantium cupiditate natus
         doloribus similique ullam voluptates omnis voluptatibus libero nulla
         totam recusandae corrupti laudantium exercitationem!
       </div>
-    </div>
-
     <div class="p_imgs">
       <div class="p_main_img">
-        <img
-          src="/img/circle_border.png"
-          alt="circle_border"
-          class="circle_border"
+      <!--start-->
+      <svg class="circle_border"
           class:rotateLeft
-          class:rotateRight />
+          class:rotateRight xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="734" height="734" viewBox="0 0 734 734">
+<defs>
+    <style>
+      .cls-1 {
+        fill: #bcbcbc;
+        stroke-linejoin: round;
+        stroke-width: 4px;
+        stroke: url(#linear-gradient);
+        filter: url(#filter);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="367" y1="728" x2="367" y2="6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0e80f6"/>
+      <stop offset="0.093" stop-color="#0e80f6" stop-opacity="0"/>
+      <stop offset="0.729" stop-color="#0e80f6" stop-opacity="0"/>
+      <stop offset="0.918" stop-color="#0e80f6"/>
+      <stop offset="1" stop-color="#0e80f6"/>
+    </linearGradient>
+    <filter id="filter" x="0" y="0" width="734" height="734" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#f7f7f7"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="inside_color" style="fill: #bcbcbc; filter: url(#filter)">
+    <circle id="Ellipse_1_copie" data-name="Ellipse 1 copie" class="cls-1" cx="367" cy="367" r="361" style="stroke: inherit; filter: none; fill: inherit"/>
+  </g>
+  <use xlink:href="#Ellipse_1_copie" style="stroke: url(#linear-gradient); filter: none; fill: none"/>
+</svg>
+      <!--end-->
+        
         <div class="p_back_circle" />
         <img
           src="/img/tshirt.png"
