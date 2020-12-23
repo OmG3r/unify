@@ -18,6 +18,8 @@
     import Login from './routes/Login.svelte'
     import Merch from './routes/Merch.svelte'
     import Profile from './routes/Profile.svelte'
+    import Test from './routes/Test.svelte'
+    import Register from './routes/Register.svelte'
 
     import VerifyLogin from './comps/VerifyLogin.svelte'
     import SideNav from './comps/SideNav.svelte'
@@ -56,7 +58,17 @@
                <Merch />
             </VerifyLogin>
         </Route>
+        <Route path="/test">
+            
+            <Test />
+        
+        </Route>
     
+        <Route path="/register">
+            
+            <Register />
+        
+        </Route>
         <Route path="/login">
             
             <Login />

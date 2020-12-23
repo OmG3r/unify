@@ -50,24 +50,39 @@
 </style>
 
 <script>
-import { onMount } from 'svelte';
 
+    import { createEventDispatcher } from 'svelte';
+    import {onMount} from 'svelte'
+    const dispatch = createEventDispatcher();
     import {taxRate} from '../../mockupdata.js'
     export let cost
     export let unifyProfit;
-    export let price;
-    $: {
-        price = Math.floor((cost + unifyProfit) * (1 + taxRate)) + 5;
-    }
-    $: profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+    export let priceCalculatorData;
     
+    let price = Math.floor((cost + unifyProfit) * (1 + taxRate)) + 5
+    let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+    let profitable = !(profit < 2)
+    $priceCalculatorData = {profit, price, profitable}
+    
+    
+        //
+        //
+   
+    const handlePriceChange = (e) => {
+        let price = e.target.value
+        profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+        profitable = !(profit < 2)
+
+        $priceCalculatorData = {profit, price, profitable}
+    
+    }
 </script>
 
 
 <div class="u-price-calculator">
-    <div class:red={profit < 2} class="u-price-wrapper">
-        <div class:red={profit < 2} class="u-currency">TND</div>
-        <input class:red={profit < 2}  bind:value={price}  class="price-input" type="number">
+    <div class:red={!profitable} class="u-price-wrapper">
+        <div class:red={!profitable} class="u-currency">TND</div>
+        <input  on:input={handlePriceChange} class:red={!profitable}  value={price}  class="price-input" type="number">
     </div>
     
     <div class:red={profit < 2} class="u-profit">

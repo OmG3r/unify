@@ -12,7 +12,7 @@ import { object_without_properties } from 'svelte/internal';
     export let facade;
     export let selectedColor
     export let mockupURL;
-
+    export let showBoundaries
     let canvaDiv;
 
     onMount(async () => {
@@ -42,6 +42,16 @@ import { object_without_properties } from 'svelte/internal';
         boundary.center()
         hash.canva.add(boundary);
         boundary.center()
+
+        showBoundaries.subscribe((v) => {
+            if (v == true) {
+                boundary.opacity = 1
+            } else {
+                boundary.opacity = 0
+            }
+            hash.canva.renderAll();
+            
+        })
         selectedColor.subscribe((v) => {
             hash.background.set('fill', v)
             hash.canva.renderAll();

@@ -81,7 +81,7 @@
 
 
 <script>
-    import {user} from '../firebase.js'
+    import {user, db} from '../firebase.js'
     import {onDestroy} from 'svelte'
     import { navigate, link } from "svelte-routing";
     import MaterialSpinner from '../comps/MaterialSpinner.svelte'
@@ -110,15 +110,17 @@
 
     let username = ""
     let password = ""
-
+    let email = ""
     let errorMessage = ""
     let doSubmit = async () => {
-        firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            errorMessage = error.message;
-            // ...
-        });
+
+        firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+            db.doc("/creators/" + username).set({
+                username,
+                email
+            })
+        })
+        
     }
 
 </script>
@@ -132,10 +134,10 @@
         </div>
         <div class="u-form-area">
             <form on:submit|preventDefault={doSubmit}>
-                <h3 class="u-section-title">Unify - Log in</h3>
+                <h3 class="u-section-title">Unify - Register</h3>
                 <p class="switch-login-register">
-                    <span>New User ?</span>
-                    <a use:link href="/register">Register here</a>
+                    <span>Existing User ?</span>
+                    <a use:link href="/register">Login here</a>
                 </p>
                 {#if errorMessage}
                     <div class="notification is-danger">
@@ -144,6 +146,13 @@
                 {/if}
                 <div class="input-container">
                     <h4 class="title is-6">Email</h4>
+                    <input bind:value={email} class="input"  name="username" type="text">
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="input-container">
+                    <h4 class="title is-6">Username</h4>
                     <input bind:value={username} class="input"  name="username" type="text">
                 </div>
 
@@ -156,7 +165,7 @@
                 
                 
                 <div class="separator"></div>
-                <button type="submit" class="u-button">Login</button>
+                <button type="submit" class="u-button">Register</button>
             </form>
 
         </div>

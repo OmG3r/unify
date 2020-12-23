@@ -1,6 +1,6 @@
 import { customAlphabet } from 'nanoid'
 import { writable } from 'svelte/store'
-
+export const itemBaseStorageLink = "https://firebasestorage.googleapis.com/v0/b/unify-tn.appspot.com/o/"
 
 export const colors = {
 	"black": "#000000",
@@ -22,6 +22,10 @@ export const formatCssStyle = (data) =>  {
     return Object.entries(data).reduce((acc, [key, value]) => {
         return acc + key + ": " + value + ";"
     }, "")
+}
+
+export const uuidToImageLink = (uuid, path) => {
+	return itemBaseStorageLink + encodeURIComponent(path) + "?alt=media&token=" + uuid
 }
 
 

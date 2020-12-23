@@ -322,7 +322,7 @@
 
     </div>
 
-    <div class:justify-center={$navCollapse} class="signout">
+    <div on:click={() => {firebase.auth().signOut()}} class:justify-center={$navCollapse} class="signout">
       <img class="logout-icon" src="/imgs/misc/nav/logout.png" alt="logout" />
       <div class:hidden={$navCollapse} class="logout-text">Logout</div>
     </div>

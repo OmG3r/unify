@@ -83,12 +83,13 @@
 
 
 <script>
+    import {db, user} from '../../firebase.js'
     import {link} from 'svelte-routing'
-    import {textToHex} from '../../utils.js'
+    import {textToHex, uuidToImageLink} from '../../utils.js'
     import ImageBackground from '../../comps/ImageBackground.svelte'
     import ViewNav from '../../comps/ViewNav.svelte'
     let format = "article-color-random5LettersCode"
-    const products = {
+    let products = {
         "H-B-5e8c7": {
             name: "The showdown",
             color: "Black",
@@ -108,7 +109,18 @@
             }
         }
     }
-
+    db.doc("/creators/" + $user.docData.username + "/merch/all").onSnapshot((doc) => {
+        let data = doc.data()
+        for (let [key, value] of Object.entries(data)) {
+            for (let x of ['front','back']) {
+                let path = 'creators/' + $user.docData.username + "/merch/" + key + "/" + x
+                console.log(path)
+                value.imgs[x] = uuidToImageLink(value.imgs[x], path)
+                console.log(value.imgs[x])
+            } 
+        }
+        products = data
+    })
 </script>
 
 <div class="u-view">
