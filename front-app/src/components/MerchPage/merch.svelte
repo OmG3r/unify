@@ -8,7 +8,7 @@
     FM8748: {
       name: "Ahmed Shirt",
       img: "/img/tshirt.png",
-      price: 90,
+      price: 50,
       type: "T-shirt"
     },
     MMX8E7: {
@@ -312,6 +312,10 @@ const filters = writable({
   .social_icons i {
     font-size: 30px;
     margin-right:15px;
+  }
+  .social_icons i:hover{
+    color:rgb(var(--AccentColor));
+    cursor: pointer
   }
   .u_info{
       padding:30px;
