@@ -36,7 +36,7 @@
     --navBarHeight: 70px;
     --headerHeight: 400px;
     --userColor: 24, 29, 34; /*its an RGB code color*/
-    --AccentColor: 70, 185, 120;
+    --AccentColor:  70, 185, 120;
   }
   nav {
     display: grid;
