@@ -29,5 +29,5 @@
 
 <div style={formatCssStyle({height: height, width: width})} class="image-wrapper">
     <div style={formatCssStyle({'background-color': bgColor})} class="background"></div>
-    <img src={img} alt="imag">
+    <img crossorigin="anonymous" src={img} alt="imag">
 </div>

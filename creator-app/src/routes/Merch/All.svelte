@@ -138,10 +138,11 @@
 
 
     <section class="active-section">
-        <div class="u-section-title">
-            Your current active merch
-        </div>
         {#if Object.keys(products).length > 0}
+            <div class="u-section-title">
+                Your current active merch
+            </div>
+        
             <div class="active-products">
                 {#each Object.entries(products) as [key, product]}
                     <div class="prod-card">
