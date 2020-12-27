@@ -59,9 +59,11 @@
     export let unifyProfit;
     export let priceCalculatorData;
     
-    let price = Math.floor((cost + unifyProfit) * (1 + taxRate)) + 5
+    
+    export let price = Math.floor((cost + unifyProfit ) * (1 + taxRate)) + 2
     let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
-    let profitable = !(profit < 2)
+    let profitable = !(profit < 1)
+    console.log(profit)
     $priceCalculatorData = {profit, price, profitable}
     
     
@@ -70,8 +72,12 @@
    
     const handlePriceChange = (e) => {
         let price = e.target.value
+        console.log(price)
+        console.log(cost)
+        console.log(unifyProfit)
         profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
-        profitable = !(profit < 2)
+        console.log(profit)
+        profitable = !(profit < 1)
 
         $priceCalculatorData = {profit, price, profitable}
     
@@ -85,8 +91,8 @@
         <input  on:input={handlePriceChange} class:red={!profitable}  value={price}  class="price-input" type="number">
     </div>
     
-    <div class:red={profit < 2} class="u-profit">
-        {#if profit >= 2}
+    <div class:red={!profitable} class="u-profit">
+        {#if profitable}
             TND {profit} profit/sale
         {:else}
             no profit

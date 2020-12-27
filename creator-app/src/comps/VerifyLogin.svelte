@@ -25,7 +25,7 @@
             setTimeout(() => {
                 navigate("/login")
             }, 100)
-            
+        
         } else {
             verified = true
         }

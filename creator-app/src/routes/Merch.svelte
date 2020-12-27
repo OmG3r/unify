@@ -10,6 +10,7 @@
     import All from './Merch/All.svelte'
     import Create from './Merch/Create.svelte'
     import Designer from './Merch/Designer.svelte'
+    import Modify from './Merch/Modify.svelte'
 </script>
 
 
@@ -24,4 +25,9 @@
     <Route let:params path="/create/:itemid">
         <Designer {params} />
     </Route>
+    <Route let:params path="/modify/:itemid">
+        <Modify {params} />
+    </Route>
+
+
 </Router>

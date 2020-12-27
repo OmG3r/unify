@@ -88,8 +88,11 @@
     import {textToHex, uuidToImageLink} from '../../utils.js'
     import ImageBackground from '../../comps/ImageBackground.svelte'
     import ViewNav from '../../comps/ViewNav.svelte'
+    import {onDestroy} from 'svelte'
+
     let format = "article-color-random5LettersCode"
     let products = []
+    let loaded = false
     /*
     let products = {
         "H-B-5e8c7": {
@@ -112,7 +115,9 @@
         }
     }
     */
-    db.doc("/creators/" + $user.docData.username + "/merch/all").onSnapshot((doc) => {
+    let listener = () => {}
+    listener = db.doc("/creators/" + $user.docData.username + "/merch/all").onSnapshot((doc) => {
+        loaded = true
         let data = doc.data()
         console.log(data)
         if ( data == undefined) {
@@ -120,9 +125,9 @@
             return
         }
         for (let [key, value] of Object.entries(data)) {
+            console.log(value)
             for (let x of ['front','back']) {
                 let path = 'creators/' + $user.docData.username + "/merch/" + key + "/" + x
-                console.log(path)
                 value.imgs[x] = uuidToImageLink(value.imgs[x], path)
                 console.log(value.imgs[x])
             } 
@@ -131,6 +136,9 @@
         console.log(products)
         console.log(products.length)
     })
+    onDestroy(() => {
+        listener()
+    })
 </script>
 
 <div class="u-view">
@@ -138,51 +146,52 @@
 
 
     <section class="active-section">
-        {#if Object.keys(products).length > 0}
-            <div class="u-section-title">
-                Your current active merch
-            </div>
-        
-            <div class="active-products">
-                {#each Object.entries(products) as [key, product]}
-                    <div class="prod-card">
-                        <div class="u-image-area">
-                            <ImageBackground
-                            img={product.imgs.front} 
-                            bgColor={textToHex(product.color)} />
+        {#if loaded}
+            {#if Object.keys(products).length > 0}
+                <div class="u-section-title">
+                    Your current active merch
+                </div>
+            
+                <div class="active-products">
+                    {#each Object.entries(products) as [key, product]}
+                        <div class="prod-card">
+                            <div class="u-image-area">
+                                <ImageBackground
+                                img={product.imgs.front} 
+                                bgColor={textToHex(product.color)} />
 
-                        </div>
-                        <div class="u-informations">
-                            <div class="u-name">
-                                {product.name}
+                            </div>
+                            <div class="u-informations">
+                                <div class="u-name">
+                                    {product.name}
+
+                                </div>
+
+                                <div class="actions">
+                                    <div class="u-price">
+                                        {product.price} TND
+                
+                                    </div>
+                
+                                    <a use:link href={"/merch/modify/" + key} class="u-modify">
+                                        Modify
+                
+                                    </a>
+                
+                                </div>
 
                             </div>
 
-                            <div class="actions">
-                                <div class="u-price">
-                                    {product.price} TND
-            
-                                </div>
-            
-                                <div class="u-modify">
-                                    Modify
-            
-                                </div>
-            
-                            </div>
-
+                            
                         </div>
-
-                        
-                    </div>
-                {/each}
-            </div>
-        {:else}
-            <div class="u-empty">
-                No merch 
-            </div>
+                    {/each}
+                </div>
+            {:else}
+                <div class="u-empty">
+                    No merch 
+                </div>
+            {/if}
         {/if}
-        
     </section>
 
 </div>

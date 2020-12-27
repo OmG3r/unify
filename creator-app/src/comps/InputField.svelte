@@ -46,6 +46,7 @@
     export let title = ""
     export let id;
     export let text = ""
+    export let placeholder = ""
 </script>
 
 <div class="input-wrapper">
@@ -60,6 +61,7 @@
             type="text"
             required="required"
             tabindex="1"
+            placeholder={placeholder}
             class="input-text" />
     </div>
 </div>

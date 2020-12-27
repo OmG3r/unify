@@ -111,7 +111,9 @@
     .save-btn:hover {
         background-color: rgb(87,210,141);
     }
-
+    .banner-image {
+        max-width: 100%;
+    }
 </style>
 
 
@@ -120,28 +122,154 @@
     import Input from '../comps/InputField.svelte'
     import InputColor from '../comps/InputColor.svelte'
     import ViewNav from '../comps/ViewNav.svelte'
+    import {db, user, storage} from '../firebase.js'
+    import {notification, uuidToImageLink} from '../utils.js'
+    import MaterialSpinner from '../comps/MaterialSpinner.svelte'
+
+
     let profile = {
+        
         banner: "",
-        logo: ""
+        logo: "",
+        ...$user.docData,
     }
+
+    const MAX_BANNER_SIZE = 1
+    const MAX_PROFIL_PIC_SIZE = 0.5
 
     const handleDropBanner = (event) => {
         console.log("got banner")
-        profile.banner = event.dataTransfer.files[0]
+        let f = event.dataTransfer.files[0]
+        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content: "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
+            })
+            return
+        }
+        profile.banner = f
     }
 
     const handleDropLogo = (event) => {
-        profile.logo = event.dataTransfer.files[0]
+        let f = event.dataTransfer.files[0]
+        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content: "Profile picture size should not exceed " + MAX_PROFIL_PIC_SIZE + " MB",
+            })
+            return
+        }
+
+        profile.logo = f
     }
 
     const handleExplorerBanner = (event) => {
-        profile.banner = event.target.files[0]
+        let f = event.target.files[0]
+        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content: "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
+            })
+            return
+        }
+        profile.banner = f
+
+
     }
 
     const handleExplorerLogo = (event) => {
-        profile.logo = event.target.files[0]
+        let f = event.target.files[0]
+
+        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content: "Profile picture size should not exceed " + MAX_PROFIL_PIC_SIZE + " MB",
+            })
+            return
+        }
+        profile.logo = f
     }
 
+    const uploadImage = (f, npath) => {
+            return new Promise(async (resolve, reject) => {
+                let path = 'creators/' + npath
+                let create = storage.ref().child(path);
+                let upping = undefined
+                if (typeof f == "string") {
+                    upping = create.putString(f, "data_url")
+                } else {
+                    upping = create.put(f)
+                }
+                
+                let listen = (snapshot) => {
+                    let uploadPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                }
+                let errfunc = (er) => {
+                    console.log(er)
+                    reject(er)
+                }
+                let successfunc = async () => {
+                    resolve(await upping.snapshot.ref.getDownloadURL())
+                }
+                upping.on('state_changed', listen, errfunc, successfunc)
+            })
+        }
+
+    let updating = false
+    const doUpdate = async () => {
+        if (updating == true) {
+            return
+        }
+        updating = true
+        if (typeof profile.logo != "string") {
+            profile.logo = (await uploadImage(profile.logo, $user.docData.username + "/logo" )).split('token=', 2)[1]
+        }
+
+        if (typeof profile.banner != "string") {
+            profile.banner = (await uploadImage(profile.banner, $user.docData.username + "/banner" )).split('token=', 2)[1]
+        }
+        let modification = false
+        for (let key of Object.keys($user.docData)) {
+            if ($user.docData[key] != profile[key]) {
+                modification = true
+            }
+        }
+        let docKeys = Object.keys($user.docData)
+        let profileKeys = Object.keys(profile)
+
+        if (!(docKeys.every((item) => profileKeys.includes(item)) && docKeys.length == profileKeys.length)) {
+            modification = true
+        }
+
+        for (let media of ['facebook', 'twitch', 'youtube', 'instagram']) {
+            if (profile[media].includes('/')) {
+                let sp = profile[media].split("/")
+                profile[media] = sp[sp.length - 1]
+            }
+        }
+        if (modification == true) {
+            await db.doc('/creators/' + $user.docData.username).update(profile)
+            notification.set(
+            {
+                accentColor: "success",
+                title: "Success",
+                content: "Profile updated",
+            })
+        }
+        
+        $user = {
+            ...$user,
+            docData: {
+                ...$user.docData,
+                ...profile
+            }
+        }
+        updating = false
+    }
 </script>
 
 <div class="u-view">
@@ -155,7 +283,9 @@
         on:dragover|preventDefault|stopPropagation class="banner">
             <input on:change={handleExplorerBanner} type="file" id="banner-upload">
             
-            {#if profile.banner}
+            {#if typeof profile.banner == "string" && profile.banner.length > 0}
+                <img crossorigin="anonymous" class="banner-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.docData.username + "/banner")} alt="baaner">
+            {:else if typeof profile.banner != "string"}
                 <img class="banner-image" src={URL.createObjectURL(profile.banner)} alt="logo">
             {:else}
                 <p class="banner-text">Drop banner here</p>
@@ -167,7 +297,9 @@
         on:drop|preventDefault={handleDropLogo}
         on:dragover|preventDefault|stopPropagation class="logo">
             <input on:change={handleExplorerLogo} type="file"  id="logo-upload">
-            {#if profile.logo}
+            {#if typeof profile.logo == "string" && profile.logo.length > 0}
+                <img crossorigin="anonymous" class="logo-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.docData.username + "/logo")} alt="logo">
+            {:else if typeof profile.logo != "string" }
                 <img class="logo-image" src={URL.createObjectURL(profile.logo)} alt="logo">
             {:else}
                 <p>Drop logo here</p>
@@ -180,19 +312,23 @@
         <div class="u-section-title">General Informations</div>
         <div class="u-information-box">
             <Input title="Profile Name" bind:text={profile.name} />
-            <InputColor title="Accent Color"/>
+            <InputColor title="Accent Color" bind:text={profile.accentColor} />
         </div>
 
         <div class="u-section-title">Social Media</div>
         <div class="u-information-box">
-            <Input title="Youtube" bind:text={profile.youtube} />
-            <Input title="Facebook" bind:text={profile.facebook} />
-            <Input title="Instagram" bind:text={profile.instagram} />
-            <Input title="Twitch" bind:text={profile.twitch} />
+            <Input placeholder={"Username"} title="Youtube" bind:text={profile.youtube} />
+            <Input placeholder={"Username"} title="Facebook" bind:text={profile.facebook} />
+            <Input placeholder={"Username"} title="Instagram" bind:text={profile.instagram} />
+            <Input placeholder={"Username"} title="Twitch" bind:text={profile.twitch} />
         </div>
         
-        <button class="save-btn">
-            Save
+        <button on:click={doUpdate} class="save-btn">
+            {#if updating}
+                <MaterialSpinner />
+            {:else}
+                Save
+            {/if}
         </button>
     </section>
 </div>

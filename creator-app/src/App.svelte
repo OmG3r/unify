@@ -20,6 +20,8 @@
     import Profile from './routes/Profile.svelte'
     import Test from './routes/Test.svelte'
     import Register from './routes/Register.svelte'
+    
+
 
     import VerifyLogin from './comps/VerifyLogin.svelte'
     import SideNav from './comps/SideNav.svelte'

@@ -75,6 +75,11 @@
     }
     let popData = undefined
     let promises = []
+    let colorsConver = {
+        'ok': '#46b978',
+        'danger': '#d23149',
+    }
+
     popup.set(async (data) => {
         /* we got a new sub*/
         /* start the promise for the future click */
@@ -82,6 +87,13 @@
             /* make sure all promises before this one are done */
             await Promise.all(promises)
             /* when they are done start the overlay for this sub */
+
+            /* convert text to appropriate hex */
+            for (let btn of data.buttons) {
+                if (colorsConver[btn.color]) {
+                    btn.color = colorsConver[btn.color]
+                }
+            }
             popData = data
             setTimeout(() => {
                 overlay.addEventListener('click', (event) => {

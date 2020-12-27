@@ -1,6 +1,7 @@
 <style>
     .spinner {
       animation: rotator 1.4s linear infinite;
+      max-height: 100%;
     }
     @keyframes rotator {
       0% {

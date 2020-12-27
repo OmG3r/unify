@@ -1,7 +1,10 @@
 <script>
   import { navCollapse, navCollapsable } from "../store.js";
+  import {user} from '../firebase.js'
   import { link } from "svelte-routing";
+  import {uuidToImageLink} from '../utils.js'
   export let activeURI;
+  console.log($user)
   const navItems = [
     {
       name: "Overview",
@@ -26,6 +29,15 @@
     console.log($navCollapse);
     $navCollapse = !$navCollapse;
   };
+  const ascertainImage = () => {
+    if ($user.docData && $user.docData.logo && $user.docData.logo.length > 0) {
+      return uuidToImageLink($user.docData.logo, 'creators/' + $user.docData.username +"/logo" )
+    } else {
+      return '/imgs/misc/nav/user.png'
+    }
+  }
+
+  
 </script>
 
 <style>
@@ -288,10 +300,16 @@
         <div class:justify-center={$navCollapse} class="u-info">
 
           <div class:no-margin={$navCollapse} class="u-profile-pic">
-            <img src="/imgs/misc/ti3leh.jpg" alt="user" />
+            <img src={ascertainImage($user)} alt="user" />
 
           </div>
-          <div class="u-name" class:hidden={$navCollapse}>Ti 3leh</div>
+          <div class="u-name" class:hidden={$navCollapse}>
+            {#if $user.docData && $user.docData.name}
+              {$user.docData.name}
+            {:else}
+              Update Name
+            {/if}
+          </div>
 
         </div>
       </a>
