@@ -12,22 +12,22 @@
     import Checkout from "./routes/CheckoutPage.svelte";
     export let url = "";
 </script>
-<Navbar/>
+
 <Router url="{url}">
     <Route path="/">
         
         <LandingPage />
     
     </Route>
-    <Route let:params path="/checkout">  
+    <Route path="/checkout">  
         <Checkout/>
     </Route>
-    <Route let:params path="/cart">  
+    <Route path="/cart">  
         <Cart/>
     </Route>
 
     <Route let:params path="/:userid">
-        
+        <Navbar/>
         <ProfilePage {params} />
     
     </Route>
@@ -39,15 +39,11 @@
     </Route>
 
     <Route let:params path="/:userid/merch/:itemid">
-        
+        <Navbar/>
         <SingleProductPage {params} />
     
     </Route>
-    <Route let:params path="/:userid/cart/">
-        
-        <SingleProductPage {params} />
-    
-    </Route>
+
 
 
     <Route path="*">

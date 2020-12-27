@@ -83,6 +83,9 @@
    .method_desc,.method_fees{
        margin-left:35px
    }
+   .method_desc  {
+       margin-bottom: 6px;
+   }
    .coupon_desc{
     margin-top: 50px;
     margin-bottom: 25px;
