@@ -8,6 +8,8 @@
     import MerchPage from './routes/MerchPage.svelte'
     import SingleProductPage from './routes/SingleProductPage.svelte'
     import Navbar from "./components/newNavbar.svelte";
+    import Cart from "./routes/CartPage.svelte";
+    import Checkout from "./routes/CheckoutPage.svelte";
     export let url = "";
 </script>
 <Navbar/>
@@ -16,6 +18,12 @@
         
         <LandingPage />
     
+    </Route>
+    <Route let:params path="/checkout">  
+        <Checkout/>
+    </Route>
+    <Route let:params path="/cart">  
+        <Cart/>
     </Route>
 
     <Route let:params path="/:userid">
@@ -31,6 +39,11 @@
     </Route>
 
     <Route let:params path="/:userid/merch/:itemid">
+        
+        <SingleProductPage {params} />
+    
+    </Route>
+    <Route let:params path="/:userid/cart/">
         
         <SingleProductPage {params} />
     

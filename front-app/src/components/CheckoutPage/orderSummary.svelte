@@ -1,0 +1,224 @@
+
+
+<script>
+let orders = [
+    {
+        "img":"/img/tshirt.png",
+        "title":"T-Shirt",
+        "sub_title":"best t-shirt quality",
+        "color" : "E23131",
+        "size" :"S",
+        "price" : "45",
+        "qty" : "2"
+    },
+     {
+         "img":"/img/hoodie.png",
+        "title":"T-Shirt",
+        "sub_title":"best t-shirt quality",
+        "color" : "E23131",
+        "size": "XL",
+        "price" : "70",
+        "qty" : "1"
+    }
+    ]
+</script>
+
+<style>
+.title{
+    font-size: 25px;
+    font-weight: 700;
+    color: rgb(var(--userColor));
+}
+
+.p_img {
+    background-color: white;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 18px rgba(var(--userColor), 0.15);
+    border-radius: 15px;
+    margin-right: 15px;
+}
+.p_img img{
+    width: 60px;
+}
+.info{
+    font-size: 12px;
+    color:rgb(var(--userColor));
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+}
+.info .p_title, .info .p_sub_title{
+    font-size: 13px;
+}
+.single_product{
+    margin:5px 0 5px 0;
+}
+.orders{
+    overflow-y: scroll;
+    height: 170px;
+    scrollbar-color:  #181D22 #8B8E90;
+}
+.orders::-webkit-scrollbar {
+    width: 11px;
+}
+.orders::-webkit-scrollbar-track {
+    background-color: #8B8E90;
+}
+.orders::-webkit-scrollbar-thumb {
+    background-color: #181D22;
+}
+.unit_price,.quantity,.color_size,.single_product{
+    display :flex;
+    flex-direction: row;
+    margin: 2px 0 2px 0;
+}
+.color_size .color,.color_size .size{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.color_size .size{
+    margin-left: 10px;
+}
+.color_size .color .shape{
+    margin-left: 15px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+}
+.color_size .size .shape{
+    margin-left: 15px;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(var(--userColor));
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.unit_price .price{
+    margin-left: 15px;
+    color: rgb(var(--AccentColor));
+}
+.quantity .qty{
+    margin-left: 15px;
+}
+hr{
+    border-top: 1px solid rgba(var(--userColor),0.3);
+}
+
+ .final_total {
+    margin: 20px 0 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .final_total .titles,
+  .final_total .prices {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .final_total .prices {
+    align-items: flex-end;
+  }
+  .final_total .titles {
+    align-items: flex-start;
+  }
+  .final_total .prices span,
+  .final_total .titles span {
+    margin: 5px 0 5px 0;
+  }
+  .promotional_code .code {
+    color: rgba(var(--userColor), 0.5);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .final_total .prices .shipping {
+    color: rgb(var(--AccentColor));
+  }
+  .total {
+    display: flex;
+    justify-content: flex-end;
+    color: rgb(var(--userColor));
+    font-size: 15px;
+    font-weight: 700;
+    margin: 15px 0 15px 0;
+  }
+  .back_to_cart{
+      color: rgb(var(--AccentColor));
+      font-size: 16px;
+      font-weight: 700;
+      display:flex;
+      justify-content: center;
+      cursor: pointer;
+  }
+   .back_to_cart:active{
+       color: rgba(var(--AccentColor),0.8);
+        user-select: none;
+   }
+ 
+</style>
+<div class="container">
+<span class="title">Order Summary</span>
+<hr>
+<div class="orders">
+{#each orders as order}
+    <div class="single_product">
+
+        <div class="p_img">
+        <img src=".{order.img}" alt="tshirt">
+        </div>
+        <div class="info">
+            <span class="p_title">{order.title}</span>
+            <span class="p_sub_title">{order.sub_title}</span>
+            <div class="color_size">
+                <div class="color">Color:
+                    <div class="shape" style="background-color=#{order.color}"></div>
+                </div>
+                <div class="size">Size:
+                    <div class="shape">{order.size}</div>
+                </div>
+            </div>
+            <div class="unit_price">Unit Price:
+                <div class="price">{order.price} TND</div>
+            </div>
+            <div class="quantity">
+            Qty: <div class="qty">{order.qty}</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {/each}
+    </div>
+      <div class="final_total">
+    <div class="titles">
+      <span class="subtotal">Subtotal</span>
+      <span class="shipping">Shipping</span>
+      <span class="promotional_code">
+        Promotional Code
+        <span class="code">ti3leh10</span>
+      </span>
+    </div>
+    <div class="prices">
+      <span class="subtotal">157 DT</span>
+      <span class="shipping">Free</span>
+      <span class="promotional_code">- 15.7 DT</span>
+    </div>
+  </div>
+  <hr />
+  <span class="total">Total: 141.3 DT</span>
+  <hr />
+    <div class="back_to_cart">Back To Cart</div>
+
+</div>

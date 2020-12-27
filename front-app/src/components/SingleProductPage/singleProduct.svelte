@@ -1,6 +1,6 @@
 <script>
   export let activeItem;
-
+   import { lang } from "../../store.js";
   if (activeItem == undefined) {
     activeItem = {
       name: "Ahmed Shirt",
@@ -48,44 +48,39 @@
     height: 100%;
   }
 
-  
+  .all_info{
+    position: relative;
+    grid-column-start: 3;
+    grid-column-end:4;
+  }
 
   .p_container {
     display: grid;
-    grid-template-columns: 0.2fr 1fr  1fr  1fr  0.2fr;
-    grid-template-rows: 1fr 1fr;
-  
-    padding: 0 30px 0 30px;
+    grid-template-columns: 5% 50% 40% 5%;
   }
 
   .p_info {
     display: flex;
     flex-direction: column;
-    margin: 150px 0 0 0;
-    grid-column-start: 2;
-    grid-column-end:3;
-    grid-row-start: 1;
-    grid-row-end:2;
 
   }
 
   .p_imgs {
     display: flex;
     flex-direction: column;
-    grid-column-start: 3;
-    grid-column-end:4;
-    grid-row-start: 1;
-    grid-row-end:3;
+    grid-column-start: 2;
+    grid-column-end:3;
+    align-items: center
   }
 
   .p_imgs .p_main_img {
-    width: 500px;
+    width: 550px;
     position: relative;
-    height: 500px;
+    height: 550px;
   }
 
   .p_main_img .product_img {
-    width: 255px;
+    width: 300px;
     margin: auto;
     top: 0;
     right: 0;
@@ -99,17 +94,12 @@
     justify-content: center;
   }
   .p_imgs .p_slider img {
-    width: 15%;
+    width: 10%;
   }
 
   .p_order_details {
     display: flex;
     flex-direction: column;
-    margin: 150px 0 0 0;
-    grid-column-start: 4;
-    grid-column-end:5;
-    grid-row-start: 1;
-    grid-row-end:3;
   }
   .circle_border {
     position: absolute;
@@ -118,8 +108,8 @@
     left: 0;
     bottom: 0;
     right: 0;
-    width:500px;
-    height:500px;
+    width:550px;
+    height:550px;
   }
     .circle_border .inside_color{
       fill:transparent !important;
@@ -129,8 +119,8 @@
     }
   .p_back_circle {
     background-color: #cbcbcb;
-    width: 430px;
-    height: 430px;
+    width: 480px;
+    height: 480px;
     border-radius: 50%;
     position: absolute;
     margin-left: 50%;
@@ -162,21 +152,16 @@
     color: rgb(var(--AccentColor));
     margin-left: 8px;
   }
-  .p_info hr {
-    width: 40%;
-    color:#181d22;
-    border: solid 1px #181d22;
-    margin: 5px 0 5px 0;
+  hr {
+    width: 100%;
+    color:E5E5E5;
+    border: solid 1px #E5E5E5;
+    margin: 10px 0 10px 0;
   }
   .p_desc {
     font-size: 20px;
     font-weight: 200;
     color: #181d22;
-    grid-column-start: 2;
-    grid-column-end:3;
-    grid-row-start: 2;
-    grid-row-end:3;
-    
   }
   .p_order_details .title {
     margin-right: 10px;
@@ -201,7 +186,7 @@
   }
   .sizes {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     row-gap: 15px;
     column-gap: 5px;
   }
@@ -217,6 +202,7 @@
     align-items: center;
     cursor: pointer;
     font-weight: 700;
+   
   }
   .size:hover {
     background-color: rgb(var(--AccentColor));
@@ -248,7 +234,7 @@
     border-width: 2px !important;
   }
   .p_order_details > div {
-    margin: 15px 0 15px 35px;
+    margin: 15px 0 15px 0px;
   }
   .p_quantity input[type="number"]::-webkit-outer-spin-button,
   .p_quantity input[type="number"]::-webkit-inner-spin-button {
@@ -303,10 +289,7 @@
   .input_number input[type="number"]:focus {
     outline: none;
   }
-  .wishlist_btn {
-    position: relative;
-    cursor: pointer;
-  }
+  
   .popuptext {
     visibility: hidden;
     width: 160px;
@@ -320,7 +303,7 @@
     padding: 8px 0;
     position: absolute;
     bottom: 50%;
-    z-index: 1;
+    z-index: 5006;
     left: 50%;
     margin-left: -80px;
   }
@@ -363,28 +346,39 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 15px;
   }
   .wishlist_btn:focus {
     outline: none;
   }
+
   .add_cart_btn {
     background-color: rgb(var(--AccentColor));
     color: white;
-    border-radius: 15px;
-    width: 150px;
+    border-radius: 10px;
+    width: 100%;
     height: 40px;
     border: none;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
     cursor: pointer;
+    position: relative;
   }
   .add_cart_btn:focus {
     outline: none;
   }
   .add_cart_btn svg {
     fill: white;
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 0;
+    margin: auto;
+    bottom: 0;
+    left: 20px;
   }
 
   .btns {
@@ -433,6 +427,55 @@
     width: 25px;
     cursor: pointer;
   }
+
+  .policies{
+    display : flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-weight: 700;
+    color:#181d22;
+    justify-content: space-between;
+  }
+  .policies .socialShare{
+    width:45%;
+    display:flex;
+    flex-direction: column;
+  }
+  .policies .socialShare .socialmedia i{
+    font-size: 35px;
+    cursor: pointer;
+    margin:6px;
+  }
+  .policies .delivery{
+    display:flex;
+    flex-direction: column;
+    width: 45%;
+  }
+  .policies .delivery .desc{
+    font-size: 15px;
+    font-weight: 400;
+    margin:6px 6px 6px 0;
+  }
+
+  @media only screen and (max-width: 1180px) {
+    .p_imgs{
+    grid-column-start: 1;
+    grid-column-end:2;
+    grid-row-start: 1;
+    }
+    .all_info{
+    grid-column-start: 1;
+    grid-column-end:1;
+    grid-row-start: 2;
+    }
+    .p_container {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-rows: 1fr 1fr;
+    padding:0 60px 0 60px;
+
+  }
+  }
 </style>
 
 <div class="container">
@@ -440,25 +483,7 @@
 
   <!--P -> Product -->
   <div class="p_container">
-    <div class="p_info">
-      <span class="p_title">T-Shirt</span>
-      <span class="p_subTitle">
-        Best T-shirts
-        <span>quality</span>
-      </span>
-      <hr />
-      <span class="p_price">
-        50
-        <span>TND</span>
-      </span>
-
-    </div>
-    <div class="p_desc">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-        maxime provident rerum dolorum, quia accusantium cupiditate natus
-        doloribus similique ullam voluptates omnis voluptatibus libero nulla
-        totam recusandae corrupti laudantium exercitationem!
-      </div>
+    
     <div class="p_imgs">
       <div class="p_main_img">
       <!--start-->
@@ -553,22 +578,27 @@
         </svg>
       </div>
     </div>
+<div class="all_info">
 
-    <div class="p_order_details">
-      <div class="p_review">
-        <span class="title">Review:</span>
-        <span class="starts">
-          <i class="fas fa-star active" />
-          <i class="fas fa-star active" />
-          <i class="fas fa-star active" />
-          <i class="fas fa-star active" />
-          <i class="fas fa-star" />
-        </span>
-        <span class="rate">4 (75)</span>
+
+   <div class="p_info">
+      
+      <span class="p_title">T-Shirt</span>
+      <span class="p_subTitle">
+        Best T-shirts
+        <span>quality</span>
+      </span>
+      <hr />
+      <span class="p_price">
+        50
+        <span>TND</span>
+      </span>
       </div>
+    
+    <div class="p_order_details">
 
       <div class="p_colors">
-        <span class="title">Colors:</span>
+        <span class="title">{{ en: 'Colors', fr: 'couleurs' }[$lang]}:</span>
         <span class="colors">
           {#each colors as color}
             <div class="color_border" style="border:0px solid #{color};">
@@ -579,7 +609,7 @@
       </div>
 
       <div class="p_size">
-        <span class="title">Size:</span>
+        <span class="title">{{ en: 'Size', fr: 'Taille' }[$lang]}:</span>
         <span class="sizes">
           <div class="size">XS</div>
           <div class="size">S</div>
@@ -591,7 +621,7 @@
       </div>
 
       <div class="p_quantity">
-        <span class="title">Quantity:</span>
+        <span class="title">{{ en: 'Quantity', fr: 'Quantité' }[$lang]}:</span>
         <div class="input_number">
           <!--Arrow left-->
           <svg
@@ -641,7 +671,7 @@
 
       <div class="btns">
         <button type="button" class="add_cart_btn">
-          Add to cart
+          {{ en: "Add to cart", fr: "J'achète" }[$lang]}
           <svg
             id="Capa_1"
             enable-background="new 0 0 512 512"
@@ -678,7 +708,31 @@
               15s15-6.716 15-15v-110c-.001-8.284-6.716-15-15-15z" />
           </svg>
         </button>
-        <button
+        
+      </div>
+    </div>
+    <div class="p_desc">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae
+        maxime provident rerum dolorum, quia accusantium cupiditate natus
+        doloribus similique ullam voluptates omnis voluptatibus libero nulla
+        totam recusandae corrupti laudantium exercitationem!
+    </div>
+    <hr />
+    <div class="policies">
+      <div class="socialShare">
+       <span>{{ en: "SHARE THIS PRODUCT", fr: "PARTAGEZ CE PRODUIT" }[$lang]}</span>
+       <div class="socialmedia">
+        <i class="fab fa-facebook" />
+        <i class="fab fa-instagram" /> 
+       </div>
+        
+      </div>
+      <div class="delivery">
+      <span>{{ en: "DELIVERY & RETURNS", fr: "LIVRAISON & RETOURS" }[$lang]}</span>
+      <span class="desc">Delivered between Wednesday 30 Dec and Sunday 3 Jan. Please check exact dates in the checkout page.</span>
+      </div>
+    </div>
+    <button
           type="button"
           class="wishlist_btn"
           on:mouseenter={() => {
@@ -690,7 +744,9 @@
           <i class="far fa-heart" />
           <span class="popuptext" class:show id="myPopup">Add to wishlist</span>
         </button>
-      </div>
-    </div>
+
+        
+
+</div>
   </div>
 </div>

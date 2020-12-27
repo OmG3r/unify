@@ -36,7 +36,7 @@
     --navBarHeight: 70px;
     --headerHeight: 400px;
     --userColor: 24, 29, 34; /*its an RGB code color*/
-    --AccentColor: 70, 185, 120;
+    --AccentColor:  70, 185, 120;
   }
   nav {
     display: grid;
@@ -192,20 +192,20 @@
     position: fixed;
   }
   .header.isScroll .u-logo {
-    animation: scrollAnim2 0.5s ease;
+    animation: scrollAnim2 0.6s ease;
     height: 70px;
     position: fixed;
   }
   
   .header.isScroll .u-logo img {
-    animation: scalein 0.3s ease-in-out forwards;
+    animation: scalein 0.5s ease-in-out forwards;
   }
   .header.isScroll .u-logo span {
-    animation: scalein 0.3s ease-in-out forwards;
+    animation: scalein 0.5s ease-in-out forwards;
     display: none;
   }
   .header.isScroll .userSocial{
-    animation: scalein 0.3s ease-in-out forwards;
+    animation: scalein 0.5s ease-in-out forwards;
     display: none !important;
   }
 
@@ -216,7 +216,7 @@
     display: none;
   }
   nav.isScroll .unify-logo {
-    animation: fadeout 0.3s ease-out;
+    animation: fadeout 0.5s ease-out;
     opacity: 0;
   }
 
@@ -254,7 +254,7 @@
   /*--isScroll Reverse animation*/
 
   .header.isScrollReverse .u-layer {
-    animation: scrollAnimReverse 0.5s ease;
+    animation: scrollAnimReverse 0.6s ease;
     height: var(--headerHeight);
     opacity: 1;
   }
@@ -267,7 +267,7 @@
     height: var(--headerHeight);
   }
   .header.isScrollReverse .u-logo img {
-    animation: scaleout 0.4s ease-in-out forwards;
+    animation: scaleout 0.5s ease-in-out forwards;
   }
   .header.isScrollReverse .u-logo span {
     display: block;
@@ -280,7 +280,7 @@
     display: block;
   }
   nav.isScrollReverse .unify-logo {
-    animation: fadein 0.3s ease-out;
+    animation: fadein 0.5s ease-out;
     opacity: 1;
   }
 
