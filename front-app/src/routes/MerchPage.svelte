@@ -19,22 +19,30 @@
     import {navigate} from 'svelte-routing'
     import Navbar from '../components/newNavbar.svelte'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
+    import {uuidToImageLink} from '../utils.js'
+    
 
     let validated = false;
+    let data = {}
     onMount(async () => {
-        let data = await dbWrapper.get('/creators/' + params.userid)
+        data = await dbWrapper.get('/creators/' + params.userid)
         if (Object.keys(data).length == 0) {
             navigate('/')
             return
         }
+        for (let x of ['logo', 'banner']) {
+            data[x] = uuidToImageLink(data[x], 'creators/' + params.userid + '/' + x)
+        }
+        data = data
+        console.log(data)
         validated = true
     })
 
 </script>
 
 {#if validated}
-    <Navbar/>
-    <Merch/>
+    <Navbar creatorData={data}/>
+    <Merch creatorData={data} {params}/>
 
 {:else}
     <div class="u-view">
