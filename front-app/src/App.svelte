@@ -11,6 +11,8 @@
     import Cart from "./routes/CartPage.svelte";
     import Checkout from "./routes/CheckoutPage.svelte";
     import Signup from "./routes/Signup.svelte";
+    import Signin from "./routes/Signin.svelte";
+    import PhoneVerification from "./routes/PhoneVerification.svelte";
     export let url = "";
 </script>
 
@@ -28,6 +30,12 @@
     </Route>
     <Route  path="/signup">  
         <Signup/>
+    </Route>
+    <Route  path="/signin">  
+        <Signin/>
+    </Route>
+    <Route  path="/phoneverification">  
+        <PhoneVerification/>
     </Route>
 
     <Route let:params path="/:userid">

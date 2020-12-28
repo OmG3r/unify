@@ -63,7 +63,7 @@
         top: -150px;
         right: -150px;
         width: 400px;
-        height: 400px;
+    height: 400px;
     }
     .right_side{
         width: 60%;
@@ -189,7 +189,7 @@
             <div class="u_logo">
                 <img src="./img/logo.png" alt="logo" />Unify
             </div>
-            <div class="title">Welcom to Our Website</div>
+            <div class="title">Welcom Back To Our Website</div>
             <div class="desc">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Molestiae maxime provident rerum dolorum,
@@ -199,38 +199,32 @@
         </div>
 
         <div class="right_side" >
-            <div class="title">Sign up to Unify</div>
+            <div class="title">Sign in to Unify</div>
             <div class="signupAlternatives">
                 <div class="googleBtn"><i class="fab fa-google-plus-g"></i><div class="text">Google</div> </div>
                 <div class="fbBtn"><i class="fab fa-facebook-f"></i> <div class="text">Facebook</div> </div>
             </div>
-            <div class="orEmailText">Or sign up using your email</div>
+            <div class="orEmailText">Or use your email account</div>
             <div class="inputContainer">
-                <div class="input">
-                    <i class="fas fa-user"></i>
-                <input type="text" class="name" placeholder="Name">
-                </div>
-                <div class="input">
-                    <i class="fas fa-phone"></i>
-                <input type="phone" class="phone" placeholder="Phone Number">
-                </div>
+               
                 <div class="input">
                     <i class="fas fa-envelope"></i>
                 <input type="email" class="email" placeholder="Email">
                 </div>
-                
+               
                 <div class="input">
                     <i class="fas fa-unlock-alt"></i>
                 <input type="password" class="password" placeholder="Password">
                 </div>
-                <div class="input">
-                    <i class="fas fa-unlock-alt"></i>
-                <input type="password" class="re_password" placeholder="Confirm password">
-                </div>
+                
+                
+                
+                
+                
                 
             </div>
-            <div class="forget"><a href="#">You already have an account?</a> </div>
-            <div class="signup"><button class="signup_btn">Sign up</button></div>
+            <div class="forget"><a href="#">Forget Your Password?</a> </div>
+            <div class="signup"><button class="signup_btn">Sign in</button></div>
         </div>
     </div>
 </div>
