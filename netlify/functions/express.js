@@ -10,7 +10,7 @@ function updateDatabase(data) {
 app.use(bodyParser);
 app.get('/one', (res, req) => {
   
-  req.json("yes");
+  req.end("yes");
 });
 
 module.exports.handler = serverless(app);
