@@ -1,6 +1,6 @@
 import {nanoid} from './utils'
 export const taxRate = 0.19
-
+export const clicPayRate = 0.025
 export const creations = {
     "EUJHU3": {
         type: "hoodie",

@@ -25,18 +25,18 @@
 
 
 <script>
-    import {crat} from '../../store.js'
+    import {cart} from '../../store.js'
     import {link} from 'svelte-routing'
 
 </script>
 
 
-<a class="basket-container" use:link href="/checkout">
+<a class="basket-container" use:link href="/cart">
     <img
         class="basket"
         src="/img/misc/shopping-basket.svg"
         alt="shopping basket" />
-    {#if $crat && Object.keys($crat).length > 0}
-        <div class="number">{Object.keys($crat).length}</div>
+    {#if $cart && Object.keys($cart).length > 0}
+        <div class="number">{Object.keys($cart).length}</div>
     {/if}
 </a>

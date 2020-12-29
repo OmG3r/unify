@@ -54,13 +54,18 @@
     import { createEventDispatcher } from 'svelte';
     import {onMount} from 'svelte'
     const dispatch = createEventDispatcher();
-    import {taxRate} from '../../mockupdata.js'
+    import {taxRate, clicPayRate} from '../../mockupdata.js'
     export let cost
     export let unifyProfit;
     export let priceCalculatorData;
     
     
     export let price = Math.floor((cost + unifyProfit ) * (1 + taxRate)) + 2
+
+
+    let adjustedTVA = clicPayRate - ((unifyProfit + cost) * clicPayRate ) / price
+
+
     let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
     let profitable = !(profit < 1)
     console.log(profit)

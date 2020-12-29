@@ -41,5 +41,5 @@ function createCartStore() {
 	};
 }
 
-export const crat = createCartStore()
+export const cart = createCartStore()
 

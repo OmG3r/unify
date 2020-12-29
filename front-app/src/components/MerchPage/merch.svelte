@@ -1,6 +1,6 @@
 <script>
     import { writable } from "svelte/store";
-    import { lang, crat } from "../../store.js";
+    import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
     import {dbWrapper} from '../../firebase.js'
@@ -320,7 +320,7 @@
                             <button type="button" class="buyNow">
                                 {{ en: 'Buy Now', fr: 'Acheter' }[$lang]}
                             </button>
-                            <button on:click={() => {crat.add({[params.userid + "/" + product.id]: product})}} type="button" class="addCart">
+                            <button on:click={() => {cart.add({[params.userid + "/" + product.id]: product})}} type="button" class="addCart">
                                 {{ en: 'Add to Cart', fr: 'Au Panier' }[$lang]}
                             </button>
                         </div>

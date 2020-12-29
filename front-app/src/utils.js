@@ -9,3 +9,19 @@ export const socialMedias = [
     {type: 'instagram', link: 'https://instagram.com'},
     {type: 'twitch', link: 'https://twitch.tv'}
 ]
+
+export const colors = {
+	"black": "#000000",
+	"grey": "#e5e5e5",
+	"red": "#941E1E",
+	"white": "#ffffff",
+	"green": "#3B922D"
+}
+export const textToHex = (text) => {
+	
+    
+	if (colors[text.toLowerCase()] != undefined) {
+		return colors[text.toLowerCase()]
+	}
+	return colors["black"]
+}
