@@ -359,6 +359,15 @@
 
         border-radius: 3px;
     }
+    .size_label{
+        width:50px;
+        height:50px;
+        margin:0 5px 0 5px;
+        background-color: blue;
+    }
+    .size_label:active{
+        background-color: red;
+    }
 </style>
 <script>
     import {cart} from '../../store.js'
@@ -439,6 +448,10 @@
                             </div>
                             <div class="size">
                                 Size:
+                                 {#each ['S', 'M', 'L', 'XL'] as size}
+                                 <input type="radio" id={size} name="size" >
+                            <label class="size_label"for="{size}">{size}</label>
+                                 {/each}
                                 <select on:change={(e) => {handleChangeSize(key, e)}} class="sizes">
                                     {#each ['S', 'M', 'L', 'XL'] as size}
                                         <option selected={value.size == size } >{size}</option>
@@ -454,10 +467,11 @@
                             <div
                                 class="minus"
                                 on:click={() => {
-                                    value.quantity <= 1 ? (value.quantity = 1) : (value.quantity -= 1);
+                                    value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
                                 }}>
                                 -
                             </div>
+                            
                             <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
                             <div
                                 class="plus"
