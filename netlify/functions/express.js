@@ -26,14 +26,14 @@ router.post('/', (req, res) => {
     res.json({ postBody: req.body })
 });
 
-app.post('/initializeClaims', async (req, res) => {
+router.post('/initializeClaims', async (req, res) => {
 
     let resp = await admin.auth().setCustomUserClaims(req.body.uid, req.body.claims)
     console.log(resp)
     res.end(JSON.stringify(resp))
 })
 
-app.post('/getClaims', async (req, res) => {
+router.post('/getClaims', async (req, res) => {
     let userRecord = await admin.auth().getUser(req.body.uid)
     console.log(userRecord)
     res.end(JSON.stringify(userRecord, null, 4))
