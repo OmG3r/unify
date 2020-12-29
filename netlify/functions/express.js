@@ -14,7 +14,7 @@ admin.initializeApp({
 });
 
 
-
+app.use(bodyParser.json());
 const router = express.Router();
 router.get('/', (req, res) => {
     res.end('hello')
@@ -39,7 +39,7 @@ router.post('/getClaims', async (req, res) => {
     res.end(JSON.stringify(userRecord, null, 4))
 })
 
-app.use(bodyParser.json());
+
 app.use('/.netlify/functions/express', router);  // path must route to lambda
 
 module.exports = app;
