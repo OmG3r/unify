@@ -8,9 +8,13 @@ function updateDatabase(data) {
 }
 
 app.use(bodyParser);
+app.get('/', (res, req) => {
+  
+    req.send("base");
+  });
 app.get('/one', (res, req) => {
   
-  req.end("yes");
+  req.send("yes");
 });
 
 module.exports.handler = serverless(app);
