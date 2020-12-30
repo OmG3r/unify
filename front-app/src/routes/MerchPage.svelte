@@ -17,7 +17,6 @@
     import {onMount} from 'svelte'
     import {dbWrapper} from '../firebase.js'
     import {navigate} from 'svelte-routing'
-    import Navbar from '../components/newNavbar.svelte'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import {uuidToImageLink} from '../utils.js'
     

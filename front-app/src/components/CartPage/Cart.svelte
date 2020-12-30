@@ -359,14 +359,33 @@
 
         border-radius: 3px;
     }
-    .size_label{
-        width:50px;
-        height:50px;
-        margin:0 5px 0 5px;
-        background-color: blue;
+    .radio_btns{
+        margin-left: 15px;
+        display: flex;
+        flex-direction: row;
     }
-    .size_label:active{
-        background-color: red;
+    .size_label div{
+        width:30px;
+        height:30px;
+        margin:0 5px 0 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(var(--userColor));
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    input[type="radio"]{
+        display: none;
+    }
+    input[type="radio"]:checked + div{
+        background-color: rgb(var(--AccentColor));
+    }
+    .container{
+        margin-top: 30px;
     }
 </style>
 <script>
@@ -382,13 +401,12 @@
         }
         loaded = true
     })
-
     const handleChangeSize = (key, e) => {
         $cart = {
             ...$cart,
             [key]: {
                 ...$cart[key],
-                size: e.target.value
+                size: e.currentTarget.value
             }
         }
         console.log($cart)
@@ -418,6 +436,7 @@
             return acc
         }, 0)
     })
+
 </script>
 {#if loaded}
     <div class="container">
@@ -448,16 +467,16 @@
                             </div>
                             <div class="size">
                                 Size:
-                                 {#each ['S', 'M', 'L', 'XL'] as size}
-                                 <input type="radio" id={size} name="size" >
-                            <label class="size_label"for="{size}">{size}</label>
+                                <div class="radio_btns">
+                                        {#each ['S', 'M', 'L', 'XL'] as size}
+                            <label class="size_label"for="{size}">
+                            <input type="radio" on:change={(e)=>{handleChangeSize(key,e)}}  value="{size}"  id={size} name="size" >
+                                <div>{size}</div>
+                            </label>
                                  {/each}
-                                <select on:change={(e) => {handleChangeSize(key, e)}} class="sizes">
-                                    {#each ['S', 'M', 'L', 'XL'] as size}
-                                        <option selected={value.size == size } >{size}</option>
-                                    {/each}
-                                    
-                                </select>
+                                </div>
+                                 
+                                
                             </div>
                         </div>
                     </div>
@@ -503,33 +522,34 @@
             {/each}
             <hr />
         </div>
-        
+        {#if false}
         <div class="discount_container">
             <span class="title">Promo code:</span>
             <input type="text" class="promo_code" placeholder="Enter promo code" />
             <button type="button" class="apply_btn">Apply</button>
         </div>
+        {/if}
 
         <div class="final_total">
             <div class="titles">
                 <span class="subtotal">Subtotal</span>
                 <span class="shipping">Shipping</span>
-                <span class="promotional_code">
+               {#if false} <span class="promotional_code">
                     Promotional Code
                     <span class="code">ti3leh10</span>
-                </span>
+                </span>{/if}
             </div>
             <div class="prices">
                 <span class="subtotal">{normalTotal} DT</span>
                 <span class="shipping">Free</span>
-                <span class="promotional_code">- 15.7 DT</span>
+               {#if false} <span class="promotional_code">- 15.7 DT</span>{/if}
             </div>
         </div>
         <hr />
-        <span class="total">Total: 141.3 DT</span>
+        <span class="total">Total: {normalTotal} DT</span>
 
         <div class="continue_finilize">
-            <button class="continue">Continue Shopping</button>
+         {#if false}<button class="continue">Continue Shopping</button>{/if}
             <button class="finilize">Finilize Your Order</button>
         </div>
     </div>

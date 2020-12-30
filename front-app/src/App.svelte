@@ -7,25 +7,29 @@
     import ProfilePage from './routes/ProfilePage.svelte'
     import MerchPage from './routes/MerchPage.svelte'
     import SingleProductPage from './routes/SingleProductPage.svelte'
-    import Navbar from "./components/newNavbar.svelte";
+    import NavbarCC from "./components/NavbarCC.svelte";
+    import NavbarUnify from "./components/NavbarUnify.svelte";
     import Cart from "./routes/CartPage.svelte";
     import Checkout from "./routes/CheckoutPage.svelte";
     import Signup from "./routes/Signup.svelte";
     import Signin from "./routes/Signin.svelte";
     import PhoneVerification from "./routes/PhoneVerification.svelte";
+    import UserProfile from "./routes/UserProfile.svelte";
     export let url = "";
 </script>
 
 <Router url="{url}">
     <Route path="/">
-        
+        <NavbarUnify/> 
         <LandingPage />
     
     </Route>
-    <Route  path="/checkout">  
+    <Route  path="/checkout">
+        <NavbarUnify/>   
         <Checkout/>
     </Route>
-    <Route  path="/cart">  
+    <Route  path="/cart">
+        <NavbarUnify/> 
         <Cart/>
     </Route>
     <Route  path="/signup">  
@@ -34,12 +38,15 @@
     <Route  path="/signin">  
         <Signin/>
     </Route>
+    <Route  path="/myaccount">  
+        <UserProfile/>
+    </Route>
     <Route  path="/phoneverification">  
         <PhoneVerification/>
     </Route>
 
     <Route let:params path="/:userid">
-        <Navbar/>
+        <NavbarCC/>
         <ProfilePage {params} />
     
     </Route>
@@ -51,7 +58,7 @@
     </Route>
 
     <Route let:params path="/:userid/merch/:itemid">
-        <Navbar/>
+        <NavbarCC/>
         <SingleProductPage {params} />
     
     </Route>

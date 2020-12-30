@@ -232,7 +232,7 @@
 </style>
 
 <div class="container">
-    <span class="title">Order Summary</span>
+    <span class="title">Order Completion</span>
 
     <hr />
     <div class="address">
@@ -273,8 +273,11 @@
                 </div>
             </div>
         </div>
+        {#if false}
         <div class="coupon_desc">You can use the coupon in the next step</div>
+        {/if}
         <button class="continue_btn">Continue</button>
+        
     </div>
     <hr />
 
@@ -296,6 +299,7 @@
             </div>
         </div>
         <div class="coupon">
+            {#if false}
             <div class="coupon_title">Do You have a coupon ?</div>
             <div class="input">
                 <input
@@ -304,21 +308,24 @@
                 placeholder="Enter your coupon code" />
                 <button class="Apply_btn">Apply</button>
             </div>
+            {/if}
             
         </div>
         <div class="final_total">
             <div class="titles">
                 <span class="subtotal">Subtotal</span>
                 <span class="shipping">Shipping</span>
+                {#if false}
                 <span class="promotional_code">
                     Promotional Code
                     <span class="code">ti3leh10</span>
                 </span>
+                {/if}
             </div>
             <div class="prices">
                 <span class="subtotal">157 DT</span>
                 <span class="shipping">Free</span>
-                <span class="promotional_code">- 15.7 DT</span>
+                {#if false}<span class="promotional_code">- 15.7 DT</span>{/if}
             </div>
         </div>
         <hr />
