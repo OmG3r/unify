@@ -344,6 +344,7 @@
             padding-top: 50px;
             font-size: 20px !important;
             z-index: 5001;
+            width: 0px;
         }
 
         .menu-items.isActive {
@@ -356,6 +357,7 @@
         .menu-items.isActiveReverse {
             animation: mobileMenuReverse 0.3s ease-out;
             opacity: 0;
+            width: 0px;
         }
 
         @keyframes mobileMenu {

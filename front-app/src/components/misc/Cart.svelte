@@ -34,7 +34,7 @@
 <a class="basket-container" use:link href="/cart">
     <img
         class="basket"
-        src="/img/misc/shopping-basket.svg"
+        src="/img/misc/shopping-basket.png"
         alt="shopping basket" />
     {#if $cart && Object.keys($cart).length > 0}
         <div class="number">{Object.keys($cart).length}</div>

@@ -4,12 +4,13 @@
     let headerVisible = false;
     let oldscroll = 0;
     /* When the user scrolls down, navbar -> background white */
-    let isScroll = false;
+   /* let isScroll = false;
     window.onscroll = () => {
         let currentScrollPos = window.pageYOffset;
         currentScrollPos < 150 ? (isScroll = false) : (isScroll = true);
     };
     let isActive = false;
+    */
 </script>
 
 <style>
@@ -31,6 +32,8 @@
         font-size: 18px;
         font-weight: 600;
         width: 100%;
+        position:fixed;
+        top: 0;
     }
     .u_logo {
         display: flex;
@@ -81,7 +84,7 @@
     .join_btn:active {
         background-color: rgba(var(--AccentColor), 0.8);
     }
-    .isScroll {
+   /* .isScroll {
         animation: scrollAnim 0.3s ease-out;
         height: 70px;
         position: fixed;
@@ -96,10 +99,13 @@
             position: fixed;
             height: 70px;
         }
-    }
+    }*/
+    @media only screen and (max-width: 1180px) {
+        .menuItems{display: none;}
+      }
 </style>
 
-<nav class:isScroll>
+<nav >
     <div class="u_logo">
         <img src="./img/logo_transaprent.png" alt="logo" />
         Unify

@@ -5,6 +5,7 @@
         display: flex;
         flex-direction: column;
         padding: 0 50px 0 50px;
+        margin-top: 100px;
     }
     .container .title {
         font-size: 30px;
@@ -30,36 +31,35 @@
     hr {
         grid-column-start: 1;
         grid-column-end: 5;
-        color: rgba(var(--userColor), 0.5);
+        border: 0;
+        border-top: 1px solid #8b8e9059;
+        width: 100%;   
     }
     .article_title {
         grid-column-start: 1;
         grid-column-end: 2;
-        color: rgba(var(--userColor), 0.5);
+        color: #8b8e90;
         justify-self: center;
     }
     .quantity_title {
         grid-column-start: 2;
         grid-column-end: 3;
-        color: rgba(var(--userColor), 0.5);
+        color: #8b8e90;
         justify-self: center;
     }
     .unit_price_title {
         grid-column-start: 3;
         grid-column-end: 4;
-        color: rgba(var(--userColor), 0.5);
+        color: #8b8e90;
         justify-self: center;
     }
     .total_price_title {
         grid-column-start: 4;
         grid-column-end: 5;
-        color: rgba(var(--userColor), 0.5);
+        color: #8b8e90;
         justify-self: center;
     }
-    hr {
-        width: 100%;
-        color: rgb(var(--userColor));
-    }
+
     .article {
         grid-column-start: 1;
         grid-column-end: 2;
@@ -83,7 +83,7 @@
         height: 40px;
         width: max-content;
         width: 150px;
-        background-color: rgb(var(--userColor));
+        background-color: #181d22;
         border: none;
     }
     .quantity .qty_btn div {
@@ -125,7 +125,7 @@
     }
     .qty {
         width: 33.33%;
-        background-color: rgba(var(--userColor), 1);
+        background-color: #181d22;
         border: none;
         color: white;
         text-align: center;
@@ -179,11 +179,11 @@
     }
     .article .info .p_title .title {
         font-size: 25px;
-        color: rgb(var(--userColor));
+        color: #181d22;
     }
     .article .info .p_title .sub_title {
         font-size: 15px;
-        color: rgb(var(--userColor));
+        color: #181d22;
         font-weight: 600;
     }
     .article .info .color {
@@ -212,7 +212,7 @@
         margin-left: 15px;
         width: 30px;
         height: 30px;
-        background-color: rgb(var(--userColor));
+        background-color: #181d22;
         border-radius: 10px;
         color: white;
         display: flex;
@@ -379,14 +379,91 @@
         cursor: pointer;
     }
     input[type="radio"]{
-        display: none;
+        display: block;
     }
     input[type="radio"]:checked + div{
         background-color: rgb(var(--AccentColor));
     }
-    .container{
-        margin-top: 30px;
+   
+    .quantity_mobile {
+        width: 100%;
+        display: flex;
+        margin-top: 15px;
+        font-weight: 600;
+        align-items: center;
     }
+    .quantity_mobile .qty_btn {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 2px solid #181d22;
+        border-radius: 25px;
+        height: 30px;
+        width: max-content;
+        width: 100px;
+        background-color: rgb(var(--userColor));
+        border: none;
+        margin-left: 15px;
+        font-size: 20px;
+    }
+    .quantity_mobile .qty_btn div {
+        width: 33.33%;
+        display: flex;
+        justify-content: center;
+        color: white;
+        align-items: center;
+    }
+    .quantity_mobile .qty_btn .minus {
+        color: white;
+        border-radius: 25px 0 0 25px;
+        cursor: pointer;
+        height: 100%;
+        user-select: none;
+    }
+    .quantity_mobile .qty_btn .minus:active {
+        background-color: rgba(var(--AccentColor), 0.8);
+    }
+    .quantity_mobile .qty_btn .plus {
+        color: white;
+        height: 100%;
+        user-select: none;
+        border-radius: 0 25px 25px 0px;
+        cursor: pointer;
+    }
+    .quantity_mobile .qty_btn .plus:active {
+        background-color: rgba(var(--AccentColor), 0.8);
+    }
+    .unit_price_mobile,.total_price_mobile{
+        font-weight: 600;
+        margin-top: 15px;
+        display:flex;
+        flex-direction: row;
+    }
+    
+    .price_mobile{
+        font-size: 17px;
+        margin-left:15px;
+    }
+    .btns_mobile{
+        margin-top: 15px;
+    }
+    .btns_mobile img{
+        width: 25px;
+        height:25px;
+        cursor: pointer;
+        margin: 0 5px 0 5px;
+    }
+   .btns_mobile img:active{
+        filter: invert(62%) sepia(12%) saturate(1951%) hue-rotate(93deg) brightness(100%) contrast(83%);
+    }
+    .mobile_items{
+        display: none;
+    }
+    @media only screen and (max-width: 1180px) {
+        .desktop_items{display:none !important;}
+        .single_order,.orders_container,.mobile_items {display: block !important;}
+        .container{padding:0 10px 0 10px}
+      }
 </style>
 <script>
     import {cart} from '../../store.js'
@@ -406,7 +483,7 @@
             ...$cart,
             [key]: {
                 ...$cart[key],
-                size: e.currentTarget.value
+                size: e.target.value
             }
         }
         console.log($cart)
@@ -444,10 +521,12 @@
         <span class="sub_title">Free Delivery</span>
 
         <div class="orders_container">
-            <span class="article_title">Article</span>
-            <span class="quantity_title">Quantity</span>
-            <span class="unit_price_title">Unit Price</span>
-            <span class="total_price_title">Total price</span>
+           
+            <span class="article_title desktop_items">Article</span>
+            <span class="quantity_title desktop_items">Quantity</span>
+            <span class="unit_price_title desktop_items">Unit Price</span>
+            <span class="total_price_title desktop_items">Total price</span>
+            
             <hr />
             {#each Object.entries($cart) as [key, value]}
                 <div class="single_order">
@@ -469,58 +548,97 @@
                                 Size:
                                 <div class="radio_btns">
                                         {#each ['S', 'M', 'L', 'XL'] as size}
-                            <label class="size_label"for="{size}">
-                            <input type="radio" on:change={(e)=>{handleChangeSize(key,e)}}  value="{size}"  id={size} name="size" >
-                                <div>{size}</div>
-                            </label>
+                                <label class="size_label"for="{size}">
+                                    <input type="radio" on:change={(e)=>{handleChangeSize(key,e)}}  value="{size}"  id={size} name="size" >
+                                    <div>{size}</div>
+                                </label>
                                  {/each}
                                 </div>
-                                 
-                                
+                            </div>
+                            <div class="mobile_items">
+                                <div class="quantity_mobile">
+                                    Quantity:
+                                    <div class="qty_btn">
+                                        <div class="minus"
+                                        on:click={() => {
+                                            value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
+                                        }}>
+                                    -
+                                    </div>
+                                    <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
+                                    <div class="plus"
+                                        on:click={() => {
+                                            value.quantity += 1;
+                                        }}>
+                                        +
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="unit_price_mobile">
+                                    Unit Price:
+                                    <div class="price_mobile">{value.price}TND</div> 
+                                </div>
+
+                                <div class="total_price_mobile">
+                                    Total Price:
+                                    <div class="price_mobile">{value.price * (value.quantity ? value.quantity : 1)} TND</div>
+                                    
+                                </div>
+
+                                <div class="btns_mobile">
+                                <img src="img/misc/heart.png" alt="heart">
+                                <img src="img/misc/delete.png" alt="delete">
                             </div>
                         </div>
-                    </div>
-                    <!--********-->
-                    <div class="quantity">
-                        <div class="qty_btn">
-                            <div
-                                class="minus"
-                                on:click={() => {
-                                    value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
-                                }}>
-                                -
-                            </div>
                             
-                            <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
-                            <div
-                                class="plus"
-                                on:click={() => {
-                                    value.quantity += 1;
-                                }}>
-                                +
+                        </div>
+                    </div>
+                    <!--********-->
+                   
+                        <div class="quantity desktop_items">
+                            <div class="qty_btn">
+                                <div
+                                    class="minus"
+                                    on:click={() => {
+                                        value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
+                                    }}>
+                                    -
+                                </div>
+                                
+                                <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
+                                <div
+                                    class="plus"
+                                    on:click={() => {
+                                        value.quantity += 1;
+                                    }}>
+                                    +
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--********-->
-                    <div class="unit_price">
-                        <div class="price">{value.price} DT</div>
-                        {#if false}
-                            <div class="old_price">52 DT</div>
-                            <div class="economie">Economie: 7 DT</div>
-                        {/if}
-                    </div>
-                    <!--********-->
-                    <div class="total_price">
-                        <div class="price">{value.price * (value.quantity ? value.quantity : 1)}</div>
-                        <div class="btns">
-                            <i class="far fa-heart" />
-                            <i class="fas fa-minus" />
+                        <!--********-->
+                        <div class="unit_price desktop_items">
+                            <div class="price">{value.price} TND</div>
+                            {#if false}
+                                <div class="old_price">52 DT</div>
+                                <div class="economie">Economie: 7 DT</div>
+                            {/if}
                         </div>
-                    </div>
-                    <!--********-->
-                </div>
+                        <!--********-->
+                        <div class="total_price desktop_items">
+                            <div class="price">{value.price * (value.quantity ? value.quantity : 1)} TND</div>
+                            <div class="btns">
+                                <i class="far fa-heart" />
+                                <i class="fas fa-minus" />
+                            </div>
+                        </div>
+                        <!--********-->
+                        </div>
+          
+                <hr />
             {/each}
-            <hr />
+            
         </div>
         {#if false}
         <div class="discount_container">

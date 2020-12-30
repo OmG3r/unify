@@ -26,3 +26,10 @@ a:hover {
 a:visited {
 	color: inherit;
 }
+    input,
+textarea,
+button,
+select,
+a,div{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
