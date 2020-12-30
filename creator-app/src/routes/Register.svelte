@@ -113,13 +113,31 @@
     let email = ""
     let errorMessage = ""
     let doSubmit = async () => {
-
+        /*
         firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
             db.doc("/creators/" + username).set({
                 username,
                 email
             })
         })
+        */
+        const headers = {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",                                                                                                
+            "Access-Control-Origin": "*"
+        }
+        let resp = await fetch('https://api.unify.tn/.netlify/functions/express/createCreator',  {
+            method: "POST",
+            headers: headers,
+            body:  JSON.stringify({
+                email,
+                password,
+                username
+            })
+        })
+
+        let data = await resp.json()
+        console.log(data)
         
     }
 
