@@ -1,7 +1,10 @@
 <script>
 import Profile from "./Profile.svelte"
-
-
+import Wishlist from "./Wishlist.svelte"
+let currentPage="profile";
+let handlepage = (page) =>{
+    currentPage=page;
+}
 </script>
 <style>
      .layout{
@@ -32,11 +35,7 @@ import Profile from "./Profile.svelte"
         margin-left: 100px;
         width: 85%;
      }
-     .profile_nav .title{
-        font-size: 30px;
-        font-weight: 600;
-    
-     }
+   
      .nav{
         display: flex;
         flex-direction: column;
@@ -56,9 +55,7 @@ import Profile from "./Profile.svelte"
          padding: 0 5px 0 5px;
           height: 35px;;
      }
-     hr{
-         width: 100%;
-     }
+    
 </style>
 
 <div class="layout">
@@ -67,15 +64,17 @@ import Profile from "./Profile.svelte"
         <img src="./img/ti3leh.jpg" alt="profilepic">
         <div class="u_name">Ahmed Ben Mahmoud</div>
         <div class="nav">
-            <a href="#" class="active">Profile</a>
-            <a href="#">My Wishlist</a>
-            <a href="#">My Orders</a>
+        <a href="#" class="{currentPage=="profile" ? "active":""}" on:click="{()=>{handlepage("profile")}}">Profile</a>
+            <a href="#" class="{currentPage=="wishlist" ? "active":""}" on:click="{()=>{handlepage("wishlist")}}">My Wishlist</a>
+            <a href="#" class="{currentPage=="orders" ? "active":""}" on:click="{()=>{handlepage("orders")}}">My Orders</a>
         </div>
     </div>
     <div class="profile_nav">
-        <div class="title">My Account</div>
-        <hr>
+        {#if currentPage=="profile"}
         <Profile/>
+        {:else if currentPage=="wishlist"}
+        <Wishlist/>
+        {/if}
 
     </div>
     

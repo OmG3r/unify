@@ -19,7 +19,7 @@
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import {uuidToImageLink} from '../utils.js'
-    
+    import Navbar from "../components/NavbarCC.svelte";
 
     let validated = false;
     let data = {}
