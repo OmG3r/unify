@@ -3,11 +3,11 @@ import Layout from "../components/UserProfile/Layout.svelte"
 </script>
 
 <style>
-.profile_container{
+.User_profile{
     padding: 30px 50px 30px 50px;
 }
 </style>
-<div class="profile_container">
+<div class="User_profile">
     <Layout/>
 </div>
 
