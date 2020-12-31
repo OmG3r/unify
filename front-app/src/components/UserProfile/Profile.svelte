@@ -22,6 +22,7 @@
         display: flex;
         flex-direction: column;
         margin: 20px 20px 20px 20px;
+        align-items: center;
     }
     .account_data .title,
     .personal_data .title,
@@ -52,6 +53,7 @@
         color: #46c092;
         background-color: white;
         padding: 0 5px 0 5px;
+        height: 13px;
     }
     input:focus,
     button:focus {
@@ -133,6 +135,35 @@
     }
     hr {
         width: 100%;
+    }
+    @media only screen and (max-width: 1180px) {
+        .big_title {
+            margin-left: 25px;
+        }
+        hr {
+            display: none;
+        }
+        .user_data {
+            flex-direction: column;
+            width: 100%;
+        }
+        .input {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+        }
+        .input .title{left: 10%;}
+        input {
+            width: 90% !important;
+        }
+        .pwd_change {
+            width: 100%;
+        }
+         .fb,
+    .youtube,
+    .twitch{
+        width: 90%;
+    }
     }
 </style>
 

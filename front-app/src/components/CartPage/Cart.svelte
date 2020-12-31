@@ -379,7 +379,7 @@
         cursor: pointer;
     }
     input[type="radio"]{
-        display: block;
+        display: none;
     }
     input[type="radio"]:checked + div{
         background-color: rgb(var(--AccentColor));

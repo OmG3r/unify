@@ -38,7 +38,8 @@
     <Route  path="/signin">  
         <Signin/>
     </Route>
-    <Route  path="/myaccount">  
+    <Route  path="/myaccount">
+        <NavbarUnify/> 
         <UserProfile/>
     </Route>
     <Route  path="/phoneverification">  

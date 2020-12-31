@@ -34,6 +34,7 @@
         width: 100%;
         position:fixed;
         top: 0;
+        z-index: 500;
     }
     .u_logo {
         display: flex;
