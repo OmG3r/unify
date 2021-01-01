@@ -56,7 +56,7 @@ router.post('/createCreator', async (req, res) => {
         return
     }
 
-    let data = await admin.firestore().doc('/creators' + req.body.username).get()
+    let data = await admin.firestore().doc('/creators/' + req.body.username).get()
     console.log(data)
     if (data.exists) {
         res.end(JSON.stringify({success: false, msg: 'username already taken'}))
@@ -88,8 +88,6 @@ router.post('/createCreator', async (req, res) => {
 
 
 app.use('/.netlify/functions/express', router);  // path must route to lambda
-app.listen(8214, () => {
-    console.log("listen")
-})
+
 module.exports = app;
 module.exports.handler = serverless(app);
