@@ -73,21 +73,22 @@ router.post('/createCreator', async (req, res) => {
         let promises = []
         let pro = admin.auth().setCustomUserClaims(userRecord.uid, {username: req.body.username})
         promises.push(pro)
-        pro = admin.firestore().doc("/creators/" + username).set({
-            username,
-            email
+        pro = admin.firestore().doc("/creators/" + req.body.username).set({
+            username: req.body.username,
         })
         promises.push(pro)
         await Promise.all(promises)
         res.end(JSON.stringify({success: true, msg: 'account created'}))
     })
-    .catch((error) => {
-        res.end(JSON.stringify({success: false, msg: 'firebase creation error', error}))
+    .catch((xerror) => {
+        res.end(JSON.stringify({success: false, msg: 'firebase creation error', error: {xerror}}))
     })
 })
 
 
 app.use('/.netlify/functions/express', router);  // path must route to lambda
-
+/*app.listen(8222, () => {
+    console.log("listened")
+})*/
 module.exports = app;
 module.exports.handler = serverless(app);
