@@ -121,9 +121,7 @@
             })
         })
         */
-        const headers = {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",                                                                                                
+        const headers = {                                                                                             
             "Access-Control-Origin": "*"
         }
         let resp = await fetch('https://api.unify.tn/.netlify/functions/express/createCreator',  {

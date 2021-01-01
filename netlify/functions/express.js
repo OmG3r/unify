@@ -43,7 +43,7 @@ router.post('/getClaims', async (req, res) => {
 
 router.post('/createCreator', async (req, res) => {
     if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
-        res.end(JSON.stringify({success: false, error: 'invalid request data'}))
+        res.end(JSON.stringify({success: false, error: 'invalid request data', body: req.body}))
         return
     }
 
