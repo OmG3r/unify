@@ -15,8 +15,8 @@ admin.initializeApp({
 const db = admin.firestore()
 
 app.use(bodyParser.json());
-app.use(cors({origin: '*'}));
-app.options('*', cors({origin: '*'}))
+app.use(cors({origin: true, credentials: true}));
+app.options('*', cors({origin: true, credentials: true}))
 const router = express.Router();
 router.get('/', (req, res) => {
     res.end('hello')
