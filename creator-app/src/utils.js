@@ -33,3 +33,17 @@ export const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
 
 export const notification = writable(0)
 export const popup = writable({})
+
+export const urlPostReq = async (url, data) => {
+	const headers = {
+		'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
+		"Access-Control-Origin": "*"
+	}
+	let resp = await fetch(url,  {
+		method: "POST",
+		headers: headers,
+		mode: 'cors',
+		body: new URLSearchParams(data)
+	})
+	return resp
+}

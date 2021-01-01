@@ -33,6 +33,7 @@ router.get('/another', (req, res) => {
     res.json({ route: req.originalUrl })
 });
 router.post('/', (req, res) => {
+    console.log(req.body)
     res.json({ postBody: req.body })
 });
 
@@ -50,6 +51,10 @@ router.post('/getClaims', async (req, res) => {
 })
 
 router.post('/createCreator', async (req, res) => {
+    console.log(req)
+    console.log("rec")
+    res.end(JSON.stringify({success: false, error: 'invalid request data', body: req.body}))
+    return
     if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({success: false, error: 'invalid request data', body: req.body}))
         return
@@ -87,6 +92,8 @@ router.post('/createCreator', async (req, res) => {
 
 
 app.use('/.netlify/functions/express', router);  // path must route to lambda
-
+app.listen(8214, () => {
+    console.log("listen")
+})
 module.exports = app;
 module.exports.handler = serverless(app);

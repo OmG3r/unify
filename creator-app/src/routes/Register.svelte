@@ -84,6 +84,7 @@
     import {user, db} from '../firebase.js'
     import {onDestroy} from 'svelte'
     import { navigate, link } from "svelte-routing";
+    import {urlPostReq} from '../utils.js'
     import MaterialSpinner from '../comps/MaterialSpinner.svelte'
     let verified
 
@@ -122,19 +123,13 @@
         })
         */
         const headers = {
-            'Accept': 'text/plain',
-            "Content-Type": "text/plain",                                                                                                
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
-        let resp = await fetch('https://api.unify.tn/.netlify/functions/express/createCreator',  {
-            method: "POST",
-            headers: headers,
-            mode: 'cors',
-            body:  JSON.stringify({
-                email,
-                password,
-                username
-            })
+        let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
+            email,
+            password,
+            username
         })
 
         let data = await resp.json()
