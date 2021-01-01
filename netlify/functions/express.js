@@ -16,6 +16,10 @@ const db = admin.firestore()
 
 app.use(bodyParser.json());
 app.use(cors({origin: true, credentials: true}));
+app.use(function (req, res, next) {
+    res.contentType('application/json');
+    next();
+  });
 app.options('*', cors({origin: true, credentials: true}))
 const router = express.Router();
 router.get('/', (req, res) => {
