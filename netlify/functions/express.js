@@ -60,7 +60,7 @@ router.post('/createCreator', async (req, res) => {
         password: req.body.password,
         disabled: false,
     })
-    .then((userRecord) => {
+    .then(async (userRecord) => {
         let promises = []
         let pro = admin.auth().setCustomUserClaims(userRecord.uid, {username: req.body.username})
         promises.push(pro)
