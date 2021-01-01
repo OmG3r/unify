@@ -47,7 +47,7 @@ router.post('/createCreator', async (req, res) => {
         return
     }
 
-    let data = await db.doc('/creators' + req.body.username).get()
+    let data = await admin.firestore().doc('/creators' + req.body.username).get()
     console.log(data)
     if (data.exists) {
         res.end(JSON.stringify({success: false, error: 'username already taken'}))
@@ -64,7 +64,7 @@ router.post('/createCreator', async (req, res) => {
         let promises = []
         let pro = admin.auth().setCustomUserClaims(userRecord.uid, {username: req.body.username})
         promises.push(pro)
-        pro = db.doc("/creators/" + username).set({
+        pro = admin.firestore().doc("/creators/" + username).set({
             username,
             email
         })
