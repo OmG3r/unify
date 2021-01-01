@@ -16,6 +16,7 @@ admin.initializeApp({
 
 app.use(bodyParser.json());
 app.use(cors());
+app.options('*', cors())
 const router = express.Router();
 router.get('/', (req, res) => {
     res.end('hello')
