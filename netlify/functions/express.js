@@ -14,7 +14,11 @@ admin.initializeApp({
 });
 const db = admin.firestore()
 
-app.use(express.urlencoded({extended: true}));
+
+app.use(express.urlencoded());
+
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(function (req, res, next) {
     res.type('application/json');
