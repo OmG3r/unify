@@ -122,13 +122,14 @@
         })
         */
         const headers = {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",                                                                                                
+            'Accept': 'text/plain',
+            "Content-Type": "text/plain",                                                                                                
             "Access-Control-Origin": "*"
         }
         let resp = await fetch('https://api.unify.tn/.netlify/functions/express/createCreator',  {
             method: "POST",
             headers: headers,
+            mode: 'cors',
             body:  JSON.stringify({
                 email,
                 password,
