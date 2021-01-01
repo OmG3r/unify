@@ -209,6 +209,7 @@
         animation: mobileMenu 0.3s ease-out;
         width: 350px;
         opacity: 1;
+        justify-content: flex-end;
     }
 
     .menuItems.isActiveReverse {
@@ -304,11 +305,10 @@
     }
 
     @media only screen and (max-width: 1180px) {
-        .menuItems {
-            display: none;
-        }
+
 
         .menuItems {
+            display: none;
             opacity: 0;
             flex-direction: column !important;
             height: 100vh;
@@ -328,6 +328,7 @@
             animation: mobileMenu 0.3s ease-out;
             width: 350px;
             opacity: 1;
+            justify-content:flex-start;
         }
 
         .menuItems.isActiveReverse {
@@ -385,10 +386,11 @@
             width: 80%;
         }
         .first_part img {display: none;}
-    }
-    .second_part .help,.second_part .logout{
+        .second_part .help,.second_part .logout{
         display: none;
     }
+    }
+    
     .menu_item{
          width: 100%;
         display: flex;
