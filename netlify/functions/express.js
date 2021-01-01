@@ -5,14 +5,14 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require("firebase-admin");
-const db = admin.firestore()
+
 const serviceAccount = require("./unify-tn-firebase-adminsdk-6i0rp-5c5b822f0b.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://unify-tn.firebaseio.com"
 });
-
+const db = admin.firestore()
 
 app.use(bodyParser.json());
 app.use(cors({origin: '*'}));
