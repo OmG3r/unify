@@ -51,19 +51,15 @@ router.post('/getClaims', async (req, res) => {
 })
 
 router.post('/createCreator', async (req, res) => {
-    console.log(req)
-    console.log("rec")
-    res.end(JSON.stringify({success: false, error: 'invalid request data', body: req.body}))
-    return
     if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
-        res.end(JSON.stringify({success: false, error: 'invalid request data', body: req.body}))
+        res.end(JSON.stringify({success: false, msg: 'invalid request data', body: req.body}))
         return
     }
 
     let data = await admin.firestore().doc('/creators' + req.body.username).get()
     console.log(data)
     if (data.exists) {
-        res.end(JSON.stringify({success: false, error: 'username already taken'}))
+        res.end(JSON.stringify({success: false, msg: 'username already taken'}))
         return
     }
 
@@ -86,7 +82,7 @@ router.post('/createCreator', async (req, res) => {
         res.end(JSON.stringify({success: true, msg: 'account created'}))
     })
     .catch((error) => {
-        res.end(JSON.stringify({success: false, error}))
+        res.end(JSON.stringify({success: false, msg: 'firebase creation error', error}))
     })
 })
 
