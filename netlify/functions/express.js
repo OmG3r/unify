@@ -17,7 +17,7 @@ const db = admin.firestore()
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(function (req, res, next) {
-    res.contentType('application/json');
+    res.type('application/json');
     next();
   });
 app.options('*', cors({origin: true, credentials: true}))
