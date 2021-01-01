@@ -7,13 +7,14 @@ import Summary from './orderSummary.svelte';
 <style>
 .container{
     display: flex;
-    padding: 20px 80px 20px 80px;
+    padding: 100px 80px 20px 80px;
 }
 
 @media only screen and (max-width: 1000px) {
     .container {
         flex-direction: column-reverse;
         overflow: hidden;
+        padding: 100px 20px 20px 20px;
     }
 }
 </style>

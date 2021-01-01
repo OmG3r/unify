@@ -95,10 +95,11 @@
     }
     .closeMobileMenu {
         position: absolute;
-        top: 0;
-        right: 10px;
+        top: 15px;
+        right: 15px;
         font-size: 30px;
         display: none;
+        cursor: pointer;
     }
 
     .basket {
@@ -110,6 +111,7 @@
     .nav-lang {
         width: 26px;
         margin: 0 8px;
+        margin-bottom: 18px;
     }
 
     .nav-lang img {
@@ -434,8 +436,7 @@
                     alt="shopping basket" />
             </a>
             -->
-        <a
-            href="#"
+        <div
             class="closeMobileMenu"
             class:isActive
             on:click={() => {
@@ -443,7 +444,7 @@
                 isActiveReverse = true;
             }}>
             X
-        </a>
+        </div>
     </div>
     <svg
         class="menuBtn"

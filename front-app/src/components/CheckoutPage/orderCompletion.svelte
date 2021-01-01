@@ -15,6 +15,7 @@
     }
     .container{
         padding-right: 50px;
+        width: 79%;
     }
     .Accent_color{
         color:rgb(var(--AccentColor))
@@ -229,6 +230,13 @@
     font-weight: 700;
     border-radius: 12px;
   }
+   @media only screen and (max-width: 1000px) {
+
+        .container {
+            width: 100%;
+            padding-right: 0px;
+        }
+    }
 </style>
 
 <div class="container">

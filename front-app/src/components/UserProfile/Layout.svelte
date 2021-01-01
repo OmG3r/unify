@@ -1,7 +1,18 @@
 <script>
     import Profile from "./Profile.svelte";
     import Wishlist from "./Wishlist.svelte";
-    let currentPage = "profile";
+    import Orders from "./Orders.svelte";
+    import { onMount } from "svelte";
+    import { link } from "svelte-routing";
+
+
+    export let params = {};
+    let currentPage = "";
+    onMount(async () => {
+            currentPage =params.type;
+    });
+
+    
     let handlepage = (page) => {
         currentPage = page;
     };
@@ -57,7 +68,9 @@
         padding: 0 5px 0 5px;
         height: 35px;
     }
-    .mobilehr{display:none;}
+    .mobilehr {
+        display: none;
+    }
     @media only screen and (max-width: 1180px) {
         .layout {
             flex-direction: column;
@@ -68,8 +81,9 @@
             width: 100%;
             align-items: start;
         }
-        .profile_pic img,.u_name{
-            margin-left:50%;
+        .profile_pic img,
+        .u_name {
+            margin-left: 50%;
             transform: translateX(-50%);
         }
         .u_name {
@@ -94,23 +108,26 @@
 
 <div class="layout">
     <div class="profile_pic">
-        <img src="./img/ti3leh.jpg" alt="profilepic" />
+        <img src="../img/ti3leh.jpg" alt="profilepic" />
         <div class="u_name">Ahmed Ben Mahmoud</div>
         <div class="nav">
             <a
-                href="#"
+                use:link
+                href='/myaccount/profile'
                 class={currentPage == 'profile' ? 'active' : ''}
                 on:click={() => {
                     handlepage('profile');
                 }}>Profile</a>
             <a
-                href="#"
+                use:link
+                href='/myaccount/wishlist'
                 class={currentPage == 'wishlist' ? 'active' : ''}
                 on:click={() => {
                     handlepage('wishlist');
                 }}>My Wishlist</a>
             <a
-                href="#"
+                use:link
+                href='/myaccount/orders'
                 class={currentPage == 'orders' ? 'active' : ''}
                 on:click={() => {
                     handlepage('orders');
@@ -123,6 +140,8 @@
             <Profile />
         {:else if currentPage == 'wishlist'}
             <Wishlist />
+        {:else if currentPage == 'orders'}
+            <Orders />
         {/if}
     </div>
 </div>

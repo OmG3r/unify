@@ -39,8 +39,12 @@
         <Signin/>
     </Route>
     <Route  path="/myaccount">
+        <NavbarUnify /> 
+        <UserProfile />
+    </Route>
+    <Route  let:params path="/myaccount/:type/">
         <NavbarUnify/> 
-        <UserProfile/>
+        <UserProfile {params}/>
     </Route>
     <Route  path="/phoneverification">  
         <PhoneVerification/>

@@ -22,6 +22,9 @@
 </script>
 
 <style>
+     .container{
+        width: 20%;
+    }
     .title {
         font-size: 25px;
         font-weight: 700;
@@ -170,6 +173,7 @@
         color: rgba(var(--AccentColor), 0.8);
         user-select: none;
     }
+   
 
     @media only screen and (max-width: 1000px) {
         .orders {
@@ -179,6 +183,7 @@
 
         .container {
             margin-bottom: 8px;
+            width: 100%;
         }
     }
 </style>

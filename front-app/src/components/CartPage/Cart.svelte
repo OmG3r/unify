@@ -4,8 +4,7 @@
     .container {
         display: flex;
         flex-direction: column;
-        padding: 0 50px 0 50px;
-        margin-top: 100px;
+        padding: 100px 50px 0 50px;
     }
     .container .title {
         font-size: 30px;
@@ -462,7 +461,7 @@
     @media only screen and (max-width: 1180px) {
         .desktop_items{display:none !important;}
         .single_order,.orders_container,.mobile_items {display: block !important;}
-        .container{padding:0 10px 0 10px}
+        .container{padding:100px 10px 0 10px}
       }
 </style>
 <script>

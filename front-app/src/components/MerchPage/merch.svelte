@@ -313,7 +313,7 @@
                 <div class="single_product">
                     <a
                         use:link
-                        href={'/' + params.userid + '/merch/' + product.id}>
+                        href='/{params.userid}/merch/{product.id}'>
                         <img
                             class="product_img"
                             src={product.imgs[product.featuredFace]}

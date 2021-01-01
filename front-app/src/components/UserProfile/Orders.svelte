@@ -6,7 +6,24 @@
     export let params = {};
     let loaded = false;
     let displayProducts = [];
-    let colors = ["0e80f6", "d40019", "46B978", "737372"];
+    let colors = [
+        {
+            color:"0e80f6",
+            border:2
+        },
+         
+         {
+            color:"d40019",
+            border:0
+        }, 
+        {
+            color:"46B978",
+            border:0
+        }, 
+        {
+            color:"737372",
+            border:0
+        }];
 
     dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
         console.log(data);
@@ -177,9 +194,6 @@
         display: flex;
         cursor: pointer;
     }
-    .color_border:hover {
-        border-width: 2px !important;
-    }
     @media only screen and (max-width: 1180px) {
         .u_products {
             grid-template-columns: 1fr 1fr;
@@ -202,64 +216,43 @@
 </style>
 
 <div class="profile_container">
-    <div class="big_title">My Wishlist</div>
+    <div class="big_title">My Orders</div>
     <hr />
 
     <div class="product_container">
         <div class="u_products">
-            {#each displayProducts as product}
-            
+                 {#each displayProducts as product}
                 <div class="single_product">
-                    <a
-                        use:link
-                        href={'/' + params.userid + '/merch/' + product.id}>
-                        <img
-                            class="product_img"
-                            src={product.imgs[product.featuredFace]}
-                            alt="product" />
-                    </a>
-
-                    <div class="cartBtns">
-                        <div class="icon1">
-                            <img
-                                src="/img/misc/cart.png"
-                                alt="cart"
-                                on:click={() => {
-                                    cart.add({
-                                        [params.userid +
-                                        '/' +
-                                        product.id]: product,
-                                    });
-                                }} />
-                        </div>
-                        <div class="icon2">
-                            <img src="/img/misc/heart.png" alt="heart" />
-                        </div>
-                    </div>
-                    <div class="productInfo">
-                        <span class="product_title">{product.name}</span>
-                        <span class="product_creator">{product.creator}</span>
-                        <div class="product_price">
-                            <span class="current_price">{product.price}
-                                TND</span>
-                            <span class="old_price">
-                                <span class="price">50 TND</span>
-                                <span class="percentage_discount">-20%</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="colors">
-                        {#each colors as color}
+                <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                    <img class="product_img" src={product.imgs[product.featuredFace]} alt="product" />
+                </a>
+                <div class="info">
+                    <span class="p_title">{product.title}</span>
+                    <span class="p_sub_title">{product.sub_title}</span>
+                    <div class="color_size">
+                        <div class="color">
+                            Color:
                             <div
-                                class="color_border"
-                                style="border:0px solid #{color};">
-                                <div
-                                    class="color"
-                                    style="background-color:#{color}" />
-                            </div>
-                        {/each}
+                                class="shape"
+                                style="background-color=#{product.color}" />
+                        </div>
+                        <div class="size">
+                            Size:
+                            <div class="shape">{product.size}</div>
+                        </div>
                     </div>
+                    <div class="unit_price">
+                        Unit Price:
+                        <div class="price">{product.price} TND</div>
+                    </div>
+                    <div class="quantity">
+                        Qty:
+                        <div class="qty">{product.qty}</div>
+                    </div>
+                    
                 </div>
+            </div>
+            <hr />
             {/each}
         </div>
     </div>
