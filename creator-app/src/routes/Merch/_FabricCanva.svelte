@@ -1,37 +1,79 @@
 <style>
+    .img1{
+    mix-blend-mode: multiply;
+    z-index: 5;
+    pointer-events: none;
+}
 
-
+.img1,.bg,.img2{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+}
+.bg{
+filter: invert(46%) sepia(51%) saturate(4899%) hue-rotate(166deg) brightness(102%) contrast(101%);
+z-index: 1;
+}
+canvas{z-index: 4;}
+.container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width: 600px;
+    height: 600px;
+}
+.border.activeBorder{
+   width: 200px;
+    height: 300px;
+    z-index: 10;
+    border: 2px dashed blue;
+    position: absolute;
+    pointer-events: none; 
+}
 </style>
 
 
 <script>
     import {onMount} from 'svelte'
 import { object_without_properties } from 'svelte/internal';
-
+import html2canvas from 'html2canvas';
     export let hash = {}
     export let facade;
     export let selectedColor
     export let mockupURL;
     export let showBoundaries
     let canvaDiv;
-
+    let activeBorder=true;
+    let htmlToCanvas = ()=>{
+        activeBorder = false;
+        html2canvas(document.getElementById("container")).then(function(c) {
+    document.body.appendChild(c);
+});
+    }
     onMount(async () => {
-        hash.canva = new fabric.Canvas(canvaDiv, {width:600, height:600});
+        hash.canva = new fabric.Canvas(canvaDiv, {width:200, height:300});
         hash.canva.stateful = true;
         hash.background = new fabric.Rect({
-            fill: $selectedColor,
-            width:600,
-            height: 600,
+            //fill: $selectedColor,
+            fill:rgba(255,0,0,0),
+            width:200,
+            height: 300,
             selectable: false
         });
         hash.background.center()
         hash.canva.add(hash.background);
-        await fabric.Image.fromURL(mockupURL, function(oImg) {
+       /* await fabric.Image.fromURL(mockupURL, function(oImg) {
             hash.mockup = oImg
             oImg.scaleToWidth(600, false)
             oImg.set('selectable', false);
             hash.canva.add(oImg)
-        });
+        });*/
         var boundary = new fabric.Rect({
             width: 310, height: 310,
             selectable: false,
@@ -162,4 +204,15 @@ import { object_without_properties } from 'svelte/internal';
     })
 </script>
 
+<div class="container" id="container">
+<div class="border" class:activeBorder></div>
+<img class="img1" src="../../imgs/pavette.png" alt="background">
+
 <canvas bind:this={canvaDiv} class="c-canva"  id="front"></canvas>
+
+<img class="bg" id="bg" src="../../imgs/pavette_black.png" alt="background">
+
+</div>
+
+<button on:click="{()=>htmlToCanvas()}">html to png</button>
+
