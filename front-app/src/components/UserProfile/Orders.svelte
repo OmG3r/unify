@@ -5,7 +5,61 @@
 
     export let params = {};
     let loaded = false;
-    let displayProducts = [];
+    let displayProducts = 
+    [
+        {
+            "id":"RQGHN7",
+            "img":"../img/hoodie.png",
+            "creator":"ti3leh",
+            "name":"hoodie 7amra",
+            "color":"0e80f6",
+            "size":"S",
+            "qty":"1",
+            "price":"69.99",
+            "date":"27/01/2021",
+            "status":"in delivery",
+            "statusColor":"ffb100"
+        },
+        {
+            "id":"GJYS78",
+            "img":"../img/tshirt.png",
+            "creator":"beki",
+            "name":"tshirt unique feras",
+            "color":"d40019",
+            "size":"S",
+            "qty":"2",
+            "price":"98.50",
+            "date":"22/01/2021",
+            "status":"Delivered",
+            "statusColor":"34bf65"
+        },
+         {
+            "id":"GJYS78",
+            "img":"../img/tshirt.png",
+            "creator":"beki",
+            "name":"tshirt unique feras",
+            "color":"d40019",
+            "size":"S",
+            "qty":"2",
+            "price":"98.50",
+            "date":"22/01/2021",
+            "status":"Printing",
+            "statusColor":"2985d4"
+        },
+         {
+            "id":"GJYS78",
+            "img":"../img/tshirt.png",
+            "creator":"beki",
+            "name":"tshirt unique feras",
+            "color":"d40019",
+            "size":"S",
+            "qty":"2",
+            "price":"98.50",
+            "date":"22/01/2021",
+            "status":"Delivered",
+            "statusColor":"34bf65"
+        }
+    ];
     let colors = [
         {
             color:"0e80f6",
@@ -25,7 +79,7 @@
             border:0
         }];
 
-    dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
+   /* dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
         console.log(data);
         if (data == undefined) {
             displayProducts = [];
@@ -45,108 +99,51 @@
         });
         console.log(displayProducts);
         let loaded = true;
-    });
+    });*/
 </script>
 
 <style>
-      .container{
-        width: 20%;
-    }
-    .title {
-        font-size: 25px;
-        font-weight: 700;
-        color: rgb(var(--userColor));
+
+    .color,
+    .size {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 600;
+        margin-top: 2px;
     }
 
-    .p_img {
-        background-color: white;
-        width: 90px;
-        height: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 18px rgba(var(--userColor), 0.15);
-        border-radius: 15px;
-        margin-right: 15px;
-    }
-    .p_img img {
-        width: 60px;
-    }
-    .info {
-        font-size: 12px;
-        color: rgb(var(--userColor));
-        display: flex;
-        flex-direction: column;
-        font-weight: 700;
-    }
-    .info .p_title,
-    .info .p_sub_title {
-        font-size: 13px;
-    }
-    .single_product {
-        margin: 5px 0 5px 0;
-    }
-    .orders {
-        overflow-y: scroll;
-        height: 170px;
-        scrollbar-color: #181d22 #8b8e90;
-    }
-    .orders::-webkit-scrollbar {
-        width: 11px;
-    }
-    .orders::-webkit-scrollbar-track {
-        background-color: #8b8e90;
-    }
-    .orders::-webkit-scrollbar-thumb {
-        background-color: #181d22;
-    }
-    .unit_price,
-    .quantity,
-    .color_size,
-    .single_product {
-        display: flex;
-        flex-direction: row;
-        margin: 2px 0 2px 0;
-    }
-    .color_size .color,
-    .color_size .size {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .color_size .size {
-        margin-left: 10px;
-    }
-    .color_size .color .shape {
-        margin-left: 15px;
+    .color .shape {
+        margin-left: 5px;
         width: 15px;
         height: 15px;
         border-radius: 50%;
-        background-color: red;
     }
-    .color_size .size .shape {
-        margin-left: 15px;
-        width: 20px;
-        height: 20px;
-        background-color: rgb(var(--userColor));
+    .size{margin-left: 5px;}
+    .size .shape {
+        margin-left: 5px;
+        width: 15px;
+        height: 15px;
+        background-color: #181D22;
         border-radius: 5px;
         color: white;
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: 600;
+        font-size: 10px;
     }
 
-    .unit_price .price {
+    .total_price {
         margin-left: 15px;
-        color: rgb(var(--AccentColor));
+        color: #46B978;
     }
-    .quantity .qty {
+    .quantity {
         margin-left: 15px;
     }
     hr {
-        border-top: 1px solid rgba(var(--userColor), 0.3);
+        border-top: 1px solid rgba(21,29,34, 0.3);
     }
    
 
@@ -169,31 +166,104 @@
         width: 100%;
     }
     .u_products {
-        min-height: 100%;
-        padding: 20px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        justify-items: center;
-        row-gap: 50px;
-    }
-
-    .single_product {
-        background-color: #f6f6f8;
-        border-radius: 20px;
-        margin: 25px 15px 25px 15px;
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-height: 240px;
+        overflow-y: scroll;
+        scrollbar-color: #181d22 #8b8e90;
+        height: 300px;
+    }
+        
+    
+    .u_products::-webkit-scrollbar {
+        width: 11px;
+    }
+    .u_products::-webkit-scrollbar-track {
+        background-color: #8b8e90;
+    }
+    .u_products::-webkit-scrollbar-thumb {
+        background-color: #181d22;
+    }
+    .u_products hr{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .titles{
+        margin-top: 50px;
+        display: flex;
+        flex-direction: row;
+        flex-direction: row;
+        padding: 10px 10px 10px 20px;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0px 0px 15px #0000001c;
+        width: 98%;
+    }
+    .id_title,.id{width: 8%;}
+    .Product_title,.product{width: 24.5%;}
+    .Quantity_title,.quantity{width: 15%;}
+    .Price_title,.total_price{width: 17.5%;}
+    .Date_title,.date{width: 17.5%;}
+    .Status_title,.status{width: 17.5%;}
+    .id{
+        font-size: 12px;
+        font-weight: 700;
+    }
+    .product{
+        display: flex;
+        justify-content: center;
+        text-align: left;
+    }
+
+    .color_size{
+        display: flex;
+        flex-direction: row;
+        }
+    
+    .status{
+            color: white;
+            border-radius:15px;
+            padding: 8px;
+    }
+    .p_img {
+        background-color: white;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 18px rgba(21,29,34, 0.15);
+        border-radius: 15px;
+        margin-right: 15px;
+    }
+      .p_img img {
+        width: 60px;
+    }
+    .p_info .p_title {
+        font-size: 13px;
+        font-weight: 700;
+    }
+    .p_content_creator{
+        font-size: 12px;
+        font-weight: 700;
+        color: #33333378;
+    }
+    .single_product {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
         cursor: pointer;
         user-select: none;
+        padding: 10px 5px 10px 5px;
+        align-items: center;
+        box-shadow: 0px 0px 15px #0000001c;
+        text-align: center;
+            width: 98%;
     }
-    .single_product img {
-        max-width: 100%;
-    }
-    .single_product .product_img {
-        border-radius: 20px;
+    .single_product:hover{
+        box-shadow: 0px 0px 15px #000000b5;
+        color: white;
+        background-color: #181d22;
     }
 
   
@@ -207,14 +277,12 @@
    
 
     /******************end Budget slider******************/
-
+    .product_container{
+        width: 100%;
+    }
  
 
-    .color {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-    }
+  
 
     @media only screen and (max-width: 1180px) {
         .u_products {
@@ -242,37 +310,51 @@
     <hr />
 
     <div class="product_container">
+        <div class="titles">
+            <div class="id_title">ID</div>
+            <div class="Product_title">Product</div>
+            <div class="Quantity_title">Quantity</div>
+            <div class="Price_title">Price</div>
+            <div class="Date_title">Date</div>
+            <div class="Status_title">Status</div>
+        </div>
+        <hr />
         <div class="u_products">
                  {#each displayProducts as product}
+                 
                 <div class="single_product">
-                <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
-                    <img class="product_img" src={product.imgs[product.featuredFace]} alt="product" />
-                </a>
-                <div class="info">
-                    <span class="p_title">{product.title}</span>
-                    <span class="p_sub_title">{product.sub_title}</span>
-                    <div class="color_size">
-                        <div class="color">
-                            Color:
-                            <div
-                                class="shape"
-                                style="background-color=#{product.color}" />
+                <div class="id">#{product.id}</div>
+
+                <div class="product">
+                    <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                        <img class="product_img" src={product.img} alt="product" />
+                    </a>
+                    <div class="p_info">
+                        <div class="p_title">{product.name}</div>
+                        <div class="p_content_creator">{product.creator}</div>
+                        <div class="color_size">
+                            <div class="color">
+                                Color:
+                                <div class="shape" style="background-color:#{product.color}" />
+                            </div>
+                            <div class="size">
+                                Size:
+                                <div class="shape">{product.size}</div>
+                            </div>
                         </div>
-                        <div class="size">
-                            Size:
-                            <div class="shape">{product.size}</div>
-                        </div>
+                        
                     </div>
-                    <div class="unit_price">
-                        Unit Price:
-                        <div class="price">{product.price} TND</div>
-                    </div>
-                    <div class="quantity">
-                        Qty:
-                        <div class="qty">{product.qty}</div>
-                    </div>
-                    
                 </div>
+
+                <div class="quantity">{product.qty}</div>
+
+                <div class="total_price">{product.price} TND</div>
+
+                <div class="date">{product.date}</div><!--Order Date-->
+
+            <div class="status" style="background-color:#{product.statusColor}">{product.status}</div><!--Order Status-->
+                
+                    
             </div>
             <hr />
             {/each}
