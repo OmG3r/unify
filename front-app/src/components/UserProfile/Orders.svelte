@@ -78,7 +78,7 @@
             color:"737372",
             border:0
         }];
-
+        let name =""
    /* dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
         console.log(data);
         if (data == undefined) {
@@ -330,7 +330,7 @@
                         <img class="product_img" src={product.img} alt="product" />
                     </a>
                     <div class="p_info">
-                        <div class="p_title">{product.name}</div>
+                        <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}</div>
                         <div class="p_content_creator">{product.creator}</div>
                         <div class="color_size">
                             <div class="color">
