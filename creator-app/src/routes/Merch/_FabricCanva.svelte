@@ -42,8 +42,7 @@ canvas{z-index: 4;}
 <script>
     import {onMount} from 'svelte'
 import { object_without_properties } from 'svelte/internal';
-import html2canvas from 'html2canvas';
-    export let hash = {}
+import domtoimage from 'dom-to-image';    export let hash = {}
     export let facade;
     export let selectedColor
     export let mockupURL;
@@ -52,10 +51,18 @@ import html2canvas from 'html2canvas';
     let activeBorder=true;
     let htmlToCanvas = ()=>{
         activeBorder = false;
-        html2canvas(document.getElementById("container")).then(function(c) {
-    document.body.appendChild(c);
-});
+        hash.canva.discardActiveObject().renderAll();
+        domtoimage.toPng(document.getElementById("container")).then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.getElementById("hihi").append(img);
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    });
+
     }
+   
     onMount(async () => {
         hash.canva = new fabric.Canvas(canvaDiv, {width:200, height:300});
         hash.canva.stateful = true;
@@ -74,6 +81,9 @@ import html2canvas from 'html2canvas';
             oImg.set('selectable', false);
             hash.canva.add(oImg)
         });*/
+
+         
+
         var boundary = new fabric.Rect({
             width: 310, height: 310,
             selectable: false,
@@ -216,3 +226,4 @@ import html2canvas from 'html2canvas';
 
 <button on:click="{()=>htmlToCanvas()}">html to png</button>
 
+<div  id="hihi"/>
