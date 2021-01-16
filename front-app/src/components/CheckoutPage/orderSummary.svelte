@@ -1,4 +1,5 @@
 <script>
+    import {link} from 'svelte-routing'
     let orders = [
         {
             img: "/img/tshirt.png",
@@ -227,19 +228,21 @@
         <div class="titles">
             <span class="subtotal">Subtotal</span>
             <span class="shipping">Shipping</span>
+            {#if false}
             <span class="promotional_code">
                 Promotional Code
                 <span class="code">ti3leh10</span>
             </span>
+            {/if}
         </div>
         <div class="prices">
             <span class="subtotal">157 DT</span>
             <span class="shipping">Free</span>
-            <span class="promotional_code">- 15.7 DT</span>
+             {#if false}<span class="promotional_code">- 15.7 DT</span>{/if}
         </div>
     </div>
     <hr />
-    <span class="total">Total: 141.3 DT</span>
+    <span class="total">Total: 157 DT</span>
     <hr />
-    <div class="back_to_cart">Back To Cart</div>
+    <a use:link href="/cart" class="back_to_cart">Back To Cart</a>
 </div>

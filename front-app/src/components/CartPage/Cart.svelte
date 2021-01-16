@@ -325,6 +325,9 @@
         border: none;
         border-radius: 12px;
         margin: 0 10px 0 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .continue_finilize .continue {
         background-color: rgb(var(--userColor));
@@ -469,6 +472,7 @@
     import {navigate} from 'svelte-routing'
     import {onMount} from 'svelte'
     import {textToHex} from '../../utils.js'
+    import {link} from 'svelte-routing'
     let quantity = 1;
     let loaded = false
     onMount(() => {
@@ -667,7 +671,7 @@
 
         <div class="continue_finilize">
          {#if false}<button class="continue">Continue Shopping</button>{/if}
-            <button class="finilize">Finilize Your Order</button>
+            <a use:link href="/checkout" class="finilize">Finilize Your Order</a>
         </div>
     </div>
 {/if}

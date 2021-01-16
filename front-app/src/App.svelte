@@ -9,6 +9,7 @@
     import SingleProductPage from './routes/SingleProductPage.svelte'
     import NavbarCC from "./components/NavbarCC.svelte";
     import NavbarUnify from "./components/NavbarUnify.svelte";
+    import NavbarCheckout from "./components/NavbarCheckout.svelte";
     import Cart from "./routes/CartPage.svelte";
     import Checkout from "./routes/CheckoutPage.svelte";
     import Signup from "./routes/Signup.svelte";
@@ -25,7 +26,7 @@
     
     </Route>
     <Route  path="/checkout">
-        <NavbarUnify/>   
+        <NavbarCheckout/>   
         <Checkout/>
     </Route>
     <Route  path="/cart">
