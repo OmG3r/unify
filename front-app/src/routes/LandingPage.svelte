@@ -15,6 +15,7 @@ header{
     display: flex;
     flex-direction: column;
     width: 70%;
+    z-index: 6;
 }
 .left_part .title{
     max-width: 290px;
@@ -45,7 +46,7 @@ button:focus {outline:0;}
 .slider{
     position: absolute;
     bottom: -220px;
-    right: 300px;
+    right: 15%;
     z-index: 5;
     }
 .slider img{
@@ -74,32 +75,32 @@ button:focus {outline:0;}
 
 .shape1{
     background-color: white;
-    width: 800px;
-    height: 800px;
+    width: 50vw;
+    height: 50vw;
     border-radius: 50%;
     position:absolute;
-    top:-150px;
-    right: -200px;
+    top:-19%;
+    right: -12%;
     z-index: 4;
 }
 .shape2{
     background-color: #00CE7C;
-    width: 800px;
-    height: 800px;
+    width: 50vw;
+    height: 50vw;
     border-radius: 50%;
      position:absolute;
-    top:-300px;
-    right: 200px;
+    top:-38%;
+    right: 12%;
     z-index: 3;
 }
 .shape3{
     background-color: #273441;
-    width: 800px;
-    height: 800px;
+    width: 50vw;
+    height: 50vw;
     border-radius: 50%;
     position:absolute;
-    bottom: -200px;
-    right: -200px;
+    bottom: -23%;
+    right: -11%;
     z-index: 3;
 }
 .section1{
@@ -179,14 +180,50 @@ button:focus {outline:0;}
     width: 65%;
 }
 
+@media only screen and (max-width: 1180px) {
+    .slider{
+        right:0;
+    }
+    .slider img{
+        width: 50vw;
+        min-width: 500px;
+    }
+    .shape1{
+        top: -10%;
+    }
+    .shape2{
+        top: -20%;
+    }
+    .shape3{
+        bottom: -10%;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .slider{
+        display: none;
+    }
+    .shape1{
+        display: none;
+    }
+    .shape2{
+     display: none;
+    }
+    .shape3{
+        display: none;
+    }
+    .shape_bottom_left{
+        width: 400px;
+        height:400px;
+        top: -200px;
+        left: -200px;
+    }
+}
 
 </style>
 
 
 <script>
-    export let params = {}
-
-
+    export let params = {}  
 </script>
 <!--header-->
 <header>

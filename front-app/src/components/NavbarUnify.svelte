@@ -1,6 +1,7 @@
 <script>
     import { lang } from "../store.js";
     import Logo from "./misc/UnifyLogo.svelte";
+    import {upColor,downColor} from "../store.js";
     import { link, navigate } from "svelte-routing";
     import { onMount } from "svelte";
 
@@ -19,10 +20,10 @@
             isActiveReverse = false;
         }
     });
+    $upColor = "#45B877";
+    $downColor = "#181D22";
     let headerVisible = false;
     let oldscroll = 0;
-    let upColor = "#45B877";
-    let downColor = "#181D22";
     let mobileMenuColor = "#FFFFFF";
     /* When the user scrolls down, navbar -> background white */
     let isScroll = false;
@@ -32,13 +33,13 @@
         if (currentScrollPos <= 150) {
             isScroll = false;
             isScrollReverse = true;
-            downColor = "#181D22";
+            $downColor = "#181D22";
             mobileMenuColor = "#FFFFFF";
         }
         if (currentScrollPos > 100) {
             isScroll = true;
             isScrollReverse = false;
-            downColor = "#FFFFFF";
+            $downColor = "#FFFFFF";
             mobileMenuColor = "#181D22";
         }
     };
@@ -407,9 +408,9 @@
 <nav
     class:isScroll
     class="{isScroll ? 'isScroll' : ''} {isScrollReverse ? 'isScrollReverse' : ''}">
-    <div class="u_logo">
+<div class="u_logo" style="color:{$downColor}">
         <div class="logo_img">
-            <Logo {upColor} {downColor} />
+            <Logo />
         </div>
         Unify
     </div>
@@ -487,7 +488,7 @@
     <div
         class="closeMobileMenu"
         class:isActive
-        style="color:{downColor}"
+        style="color:{$downColor}"
         on:click={() => {
             isActive = false;
             isActiveReverse = true;
@@ -504,7 +505,7 @@
         on:click={() => {
             isActive = !isActive;
         }}
-        style="fill:{downColor}">
+        style="fill:{$downColor}">
         <path
             d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16
       16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />

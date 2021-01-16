@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
 
 export const lang = writable("fr")
-
+export let upColor = writable("#45B877");
+export let downColor = writable("#FFFFFF")
 
 
 function createCartStore() {

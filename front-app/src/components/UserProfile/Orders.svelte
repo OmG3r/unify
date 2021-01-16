@@ -103,7 +103,7 @@
 </script>
 
 <style>
-
+ 
     .color,
     .size {
         display: flex;
@@ -143,7 +143,7 @@
         margin-left: 15px;
     }
     hr {
-        border-top: 1px solid rgba(21,29,34, 0.3);
+        border-top: 1px solid rgba(21,29,34, 0.3) !important;
     }
    
 
@@ -249,21 +249,32 @@
         color: #33333378;
     }
     .single_product {
-        border-radius: 10px;
-        display: flex;
-        flex-direction: row;
+        border-radius: 10px; 
         cursor: pointer;
         user-select: none;
         padding: 10px 5px 10px 5px;
-        align-items: center;
         box-shadow: 0px 0px 15px #0000001c;
         text-align: center;
-            width: 98%;
+        width: 98%;
     }
     .single_product:hover{
         box-shadow: 0px 0px 15px #000000b5;
         color: white;
         background-color: #181d22;
+    }
+    .single_product:active{
+        box-shadow: 0px 0px 15px #000000b5;
+        color: white;
+        background-color: #181d22;
+    }
+    .left_part{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+    .right_part{
+        display: none;
     }
 
   
@@ -281,7 +292,9 @@
         width: 100%;
     }
  
-
+    .reference{
+        display: none;
+    }
   
 
     @media only screen and (max-width: 1180px) {
@@ -293,7 +306,7 @@
         .big_title {
             margin-left: 25px;
         }
-        hr {
+        .hr_to_remove {
             display: none;
         }
     }
@@ -302,12 +315,77 @@
             grid-template-columns: 1fr;
             flex: 0 0 100%;
         }
+        .single_product{
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .right_part{
+            display: flex;
+            align-items: center;
+            width: 40%;
+        }
+        .right_part a {
+            width: max-content;
+            height: max-content;
+        }
+        .right_part a img {
+            width: 100%;
+            max-width: 200px;
+        }
+        .left_part{
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 10%;
+        }
+        .left_part .product a{
+            display: none
+        }
+        .titles{
+            display:none;
+        }
+        .id,.product,.quantity,.total_price,.date,.status{
+            margin-left: 0px;
+            text-align: left;
+            width: max-content;
+            margin-bottom: 3px;
+            }
+        .quantity,.total_price,.date{
+            display: flex;
+            flex-direction: row;
+        }
+        .status{
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            
+        } 
+
+     
+        .single_product:hover{
+        box-shadow: none !important;
+         color: #333333;
+        background-color: transparent !important;
+        }
+        .single_product:active{
+        box-shadow: none !important;
+        color: #333333;
+        background-color: transparent !important;
+        }
+        .u_products {
+            overflow-y: hidden;
+            height: 100%;
+        }
+        .reference{
+            display: block;
+            margin-right: 10px;
+        }
     }
 </style>
 
 <div class="profile_container">
     <div class="big_title">My Orders</div>
-    <hr />
+    <hr class="hr_to_remove"/>
 
     <div class="product_container">
         <div class="titles">
@@ -318,41 +396,49 @@
             <div class="Date_title">Date</div>
             <div class="Status_title">Status</div>
         </div>
-        <hr />
+        <hr class="hr_to_remove" />
         <div class="u_products">
                  {#each displayProducts as product}
                  
                 <div class="single_product">
-                <div class="id">#{product.id}</div>
-
-                <div class="product">
-                    <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
-                        <img class="product_img" src={product.img} alt="product" />
-                    </a>
-                    <div class="p_info">
-                        <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}</div>
-                        <div class="p_content_creator">{product.creator}</div>
-                        <div class="color_size">
-                            <div class="color">
-                                Color:
-                                <div class="shape" style="background-color:#{product.color}" />
-                            </div>
-                            <div class="size">
-                                Size:
-                                <div class="shape">{product.size}</div>
-                            </div>
-                        </div>
-                        
+                    <div class="right_part">
+                        <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                            <img class="product_img" src={product.img} alt="product" />
+                        </a>
                     </div>
-                </div>
+                    <div class="left_part">
+                        <div class="id">#{product.id}</div>
 
-                <div class="quantity">{product.qty}</div>
+                    <div class="product">
+                        <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                            <img class="product_img" src={product.img} alt="product" />
+                        </a>
+                        <div class="p_info">
+                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}</div>
+                            <div class="p_content_creator">{product.creator}</div>
+                            <div class="color_size">
+                                <div class="color">
+                                    Color:
+                                    <div class="shape" style="background-color:#{product.color}" />
+                                </div>
+                                <div class="size">
+                                    Size:
+                                    <div class="shape">{product.size}</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
 
-                <div class="total_price">{product.price} TND</div>
+                    <div class="quantity"><div class="reference">Quantity: </div>{product.qty}</div>
 
-                <div class="date">{product.date}</div><!--Order Date-->
+                    <div class="total_price"><div class="reference">Price: </div>{product.price} TND</div>
 
-            <div class="status" style="background-color:#{product.statusColor}">{product.status}</div><!--Order Status-->
+                    <div class="date"><div class="reference">Date: </div>{product.date}</div><!--Order Date-->
+
+                <div class="status" style="background-color:#{product.statusColor}">{product.status}</div><!--Order Status-->
+                    </div>
+                    
                 
                     
             </div>

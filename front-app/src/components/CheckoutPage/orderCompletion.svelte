@@ -6,6 +6,10 @@
         "--userColor"
     );
     let popup=false;
+
+    let removeScroll = () =>{
+    popup ? document.body.style.overflow="hidden" : document.body.style.overflow="scroll";
+    }
 </script>
 
 <style>
@@ -19,7 +23,8 @@
         width: 79%;
     }
     .Accent_color{
-        color:rgb(var(--AccentColor))
+        color:rgb(var(--AccentColor));
+        font-weight: 600;
     }
     button{
         background-color:rgb(var(--AccentColor));
@@ -298,6 +303,9 @@ hr{
     border-radius: 5px;
     margin: 15px 20px 15px 20px;
 }
+.Save_btn button:active{
+    background-color: rgba(var(--AccentColor),.8);
+}
 .name_lastname{
     display: flex;
     flex-direction: row;
@@ -384,6 +392,7 @@ hr{
     right: 25px;
     cursor: pointer;
 }
+
    @media only screen and (max-width: 1000px) {
 
         .container {
@@ -415,6 +424,7 @@ hr{
 
             <div class="edit" on:click="{()=>{
                 popup=true;
+                removeScroll();
             }}"><i class="far fa-edit" />Edit</div>
 
             </div>
@@ -516,6 +526,7 @@ hr{
                 <div class="exit_button" 
         on:click="{()=>{
             popup=false;
+            removeScroll();
         }}">
         X
     </div>
