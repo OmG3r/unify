@@ -19,10 +19,16 @@
       img: "/imgs/misc/nav/profile.png"
     },
     {
-      name: "Merch",
+      name: "Store",
       routerLink: "/merch",
       path: "/merch/all",
-      img: "/imgs/misc/nav/merch.png"
+      img: "/imgs/misc/nav/store.png"
+    },
+    {
+      name: "Make a design",
+      routerLink: "/merch/design",
+      path: "/merch/design",
+      img: "/imgs/misc/nav/design.png"
     }
   ];
   const switchSideNav = () => {

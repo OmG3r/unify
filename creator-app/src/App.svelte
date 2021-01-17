@@ -20,6 +20,7 @@
     import Profile from './routes/Profile.svelte'
     import Test from './routes/Test.svelte'
     import Register from './routes/Register.svelte'
+    import PhoneVerification from './routes/PhoneVerification.svelte'
     
 
 
@@ -76,7 +77,9 @@
             <Login />
         
         </Route>
-        
+        <Route  path="/phoneverification">  
+            <PhoneVerification/>
+        </Route>
     
     
     

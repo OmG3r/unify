@@ -1,7 +1,8 @@
 <style>
     .input-wrapper {
         width: 100%;
-        margin-bottom: 1.5rem;
+        margin: 15px 0 15px 0;
+        position: relative;
     }
 
     .input-label {
@@ -17,6 +18,17 @@
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
         justify-content: space-between;
+        z-index: 1;
+        color: #46B978;
+        font-size: 18px;
+        font-weight: 600;
+        position: absolute;
+        top: -12px;
+        left: 30px;
+        color: #46c092;
+        background-color: #F1F4F6;
+        padding: 0 5px 0 5px;
+        height: 13px;
     }
 
     .input-wrapper-container {
@@ -33,11 +45,13 @@
         width: 100%;
         padding: 0 10px;
         line-height: 40px;
-        -webkit-box-shadow: 0 0 0 1px #ddd;
-        box-shadow: 0 0 0 1px #ddd;
-        border-radius: 4px;
-        border: 0;
         outline: none;
+        height: 45px;
+        border-radius: 8px;
+        border: 1px solid #b9bbbc;
+        padding-left: 15px;
+        font-size: 15px;
+        font-weight: 600;
     }
     
 </style>

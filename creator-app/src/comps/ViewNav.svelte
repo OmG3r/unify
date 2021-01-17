@@ -1,34 +1,37 @@
 <style>
     header {
-        width: 100%;
         display: flex;
         justify-content: flex-end;
-        border-bottom: 1px solid #D8DAE0;
         padding: 8px 12px;
         height: 54px;
         align-items: center;
-        background-color: white;
+        position:absolute;
+        right: 30px;
+        top: 20px;
+        z-index: 1;
     }
 
     .u-button {
         padding: 6px 12px;
         background-color: #46b978;
-        border-color: #46b978;
         color: white;
         cursor: pointer;
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.34),
-            0 0px 10px rgb(70 185 120 / 0.32);
         font-weight: bold;
         border-radius: 3px;
-        height: 40px;
-
+        height: 55px;
+        width: 185px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     .u-button:hover {
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.5),
-            0 0px 10px rgb(70 185 120 / 0.5);
+        background-color: #77ca9b;
+    }
+    .u-button img {
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
     }
 
 
@@ -42,5 +45,5 @@
 </script>
 
 <header>
-    <a use:link href="/merch/create" class="u-button">Create Merch</a>
+    <a use:link href="/merch/create" class="u-button"> <img src="/imgs/misc/merch.png" alt=""> Create a Merch</a>
 </header>

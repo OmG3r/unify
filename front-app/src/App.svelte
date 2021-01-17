@@ -16,9 +16,13 @@
     import Signin from "./routes/Signin.svelte";
     import PhoneVerification from "./routes/PhoneVerification.svelte";
     import UserProfile from "./routes/UserProfile.svelte";
+<<<<<<< HEAD
     import ForgotPassword from './routes/ForgotPassword.svelte'
     import EmailVerification from './routes/EmailVerification.svelte'
 
+=======
+    import Footer from "./components/Footer.svelte";
+>>>>>>> up
     export let url = "";
 </script>
 
@@ -26,15 +30,18 @@
     <Route path="/">
         <NavbarUnify/> 
         <LandingPage />
+        <Footer/>
     
     </Route>
     <Route  path="/checkout">
         <NavbarCheckout/>   
         <Checkout/>
+        <Footer/>
     </Route>
     <Route  path="/cart">
         <NavbarUnify/> 
         <Cart/>
+        <Footer/>
     </Route>
     <Route  path="/signup">  
         <Signup/>
@@ -45,10 +52,12 @@
     <Route  path="/myaccount">
         <NavbarUnify /> 
         <UserProfile />
+        <Footer/>
     </Route>
     <Route  let:params path="/myaccount/:type/">
         <NavbarUnify/> 
         <UserProfile {params}/>
+        <Footer/>
     </Route>
     <Route  path="/phoneverification">  
         <PhoneVerification/>

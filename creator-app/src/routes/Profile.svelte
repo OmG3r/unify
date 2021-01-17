@@ -6,6 +6,8 @@
         min-height: 100vh;
         max-height: 100vh;
         overflow-y: scroll;
+        position: relative;
+
     }
 
     .banner-logo-area {
@@ -15,35 +17,27 @@
     .banner {
         width: 100%;
         height: 300px;
-        border: 1px dashed black;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .banner.filled {
-        border: none;
-        height: auto;
-    }
-    .banner-text {
-        margin-top: 150px;
-        z-index: 1;
-    }
+    
+  
 
     .logo {
         position: absolute;
-        top: 0;
-        bottom: 0;
+        bottom: -40px;
         right: 0;
         left: 0;
         margin: auto;
-        border: 1px dashed black;
         width: 150px;
-        height: 50px;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: white;
+        border-radius: 50%;
+        
     }
 
     .logo.filled  {
@@ -97,7 +91,7 @@
         -ms-flex-align: center;
         align-items: center;
         cursor: pointer;
-        background-color: #2dc770;
+        background-color: #46B978;
 
         text-shadow: none;
         box-shadow: none;
@@ -113,6 +107,164 @@
     }
     .banner-image {
         max-width: 100%;
+    }
+    .logo-image{
+        border-radius: 50%;
+        border: 5px solid white;
+        width: 150px;
+        height: 150px;
+    }
+    .banner-image{
+        background-image:url("/imgs/defaultBanner.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    /*************/
+      .profile_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333333;
+        align-items: center;
+    }
+    .user_data {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        max-width: 600px;
+        width: 100%;
+    }
+    .account_data,
+    .personal_data,
+    .pwd_change {
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        align-items: center;
+    }
+    .account_data .title,
+    .personal_data .title,
+    .pwd_change .title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333333;
+    }
+    .input {
+        position: relative;
+        margin: 15px 0 15px 0;
+        width: 100%;
+    }
+    .input input {
+        width: 300px;
+        height: 45px;
+        border-radius: 8px;
+        border: 1px solid #b9bbbc;
+        padding-left: 15px;
+        font-size: 15px;
+        font-weight: 600;
+        width: 100%;
+    }
+    .input .title {
+        font-size: 18px;
+        font-weight: 600;
+        position: absolute;
+        top: -12px;
+        left: 30px;
+        color: #46c092;
+        background-color: #F1F4F6;
+        padding: 0 5px 0 5px;
+        height: 13px;
+    }
+    input:focus,
+    button:focus {
+        outline: none;
+    }
+    .save_btn {
+        width: 50%;
+        background-color: #46b978;
+        height: 50px;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+    }
+    .save_btn:active {
+        background-color: #46b978de;
+    }
+    .link_social_media {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .fb,
+    .youtube,
+    .twitch {
+        width: 60%;
+        height: 40px;
+        color: white;
+        background-color: #46b978;
+        text-align: center;
+        margin: 5px 0 5px 0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+    }
+    .fb {
+        background-color: #3b5998;
+    }
+    .youtube {
+        background-color: #d2504d;
+    }
+    .twitch {
+        background-color: #9146ff;
+    }
+    .fb:active {
+        background-color: #3b5998cf;
+    }
+    .youtube:active {
+        background-color: #d2504dde;
+    }
+    .twitch:active {
+        background-color: #9146ffe8;
+    }
+    .link_social_media div i {
+        position: absolute;
+        left: 15px;
+    }
+    .pwd_change {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .pwd_change .input input {
+        width: 500px;
+    }
+    .profile_container .big_title {
+        font-size: 30px;
+        font-weight: 600;
+        width: 100%;
+        text-align: left;
+    }
+    hr {
+        width: 100%;
+    }
+    @media only screen and (max-width: 1180px) {
+     
     }
 </style>
 
@@ -286,9 +438,9 @@
             {#if typeof profile.banner == "string" && profile.banner.length > 0}
                 <img crossorigin="anonymous" class="banner-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.docData.username + "/banner")} alt="baaner">
             {:else if typeof profile.banner != "string"}
-                <img class="banner-image" src={URL.createObjectURL(profile.banner)} alt="logo">
+                <div class="banner-image" style="background-image:url({URL.createObjectURL(profile.banner)})"/>
             {:else}
-                <p class="banner-text">Drop banner here</p>
+                <div class="banner-image"/>
             {/if}
         </label>
 
@@ -302,18 +454,51 @@
             {:else if typeof profile.logo != "string" }
                 <img class="logo-image" src={URL.createObjectURL(profile.logo)} alt="logo">
             {:else}
-                <p>Drop logo here</p>
+                <img class="logo-image" src="/imgs/defaultUser.png" alt="logo"/>
             {/if}
         </label>
 
     </section>
 
     <section class="u-info-area">
-        <div class="u-section-title">General Informations</div>
-        <div class="u-information-box">
-            <Input title="Profile Name" bind:text={profile.name} />
-            <InputColor title="Accent Color" bind:text={profile.accentColor} />
+        <div class="user_data">
+        <div class="account_data">
+            <div class="title">Account Data</div>
+            <div class="input">
+                <div class="title">Email</div>
+                <input
+                    type="email"
+                    class="email"
+                    
+                    value="contact.ahmedbm@gmail.com" />
+            </div>
+            <div class="input">
+                <div class="title">Phone Number</div>
+                <input
+                    type="phone"
+                    class="phone_num"
+                    
+                    value="26612708" />
+            </div>
         </div>
+        <div class="personal_data">
+            <div class="title">Personal Data</div>
+            <div class="input">
+                <div class="title">Name</div>
+                <input type="text" class="name" value="Ahmed Ben Mahmoud"/>
+            </div>
+            <div class="input">
+                <div class="title">Date of Birth</div>
+                <input type="date" class="birth_date" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="u-information-box">
+        <Input title="Profile Name" bind:text={profile.name} />
+        <InputColor title="Accent Color" bind:text={profile.accentColor} />
+    </div>
+  
 
         <div class="u-section-title">Social Media</div>
         <div class="u-information-box">

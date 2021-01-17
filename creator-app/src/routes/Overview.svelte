@@ -29,6 +29,7 @@
 <style>
     .u-view {
         width: 100%;
+        padding-top: 75px;
     }
     header {
         width: 100%;
