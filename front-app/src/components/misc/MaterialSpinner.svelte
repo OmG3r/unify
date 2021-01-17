@@ -50,8 +50,8 @@
   </style>
   
   <script>
-      export let height = "65px"
-      export let width = "65px"
+      export let height = "100%"
+      export let width = "100%"
   </script>
   
   <svg

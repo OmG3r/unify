@@ -5,6 +5,7 @@ html, body {
 }
 * {
 	box-sizing: border-box;	
+	outline: none;
 }
 body {
 	color: #333;

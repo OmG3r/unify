@@ -1,3 +1,5 @@
+import { writable } from "svelte/store";
+
 const firebaseConfig = {
     apiKey: "AIzaSyDucnhtBFM0HOg8dxk3lUIRcV8pHmifzXc",
     authDomain: "unify-tn.firebaseapp.com",
@@ -9,9 +11,24 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
+export const auth = firebase.auth()
 export const db = firebase.firestore()
-
+/* 0 => uninitialized 
+    undefined => there is no user logged in
+    else (object) => user logged in
+*/
+export const user = writable(0)
+auth.onAuthStateChanged(function(kuser) {
+    if (kuser) {
+        user.set(kuser)
+        console.log(kuser)
+      // User is signed in.
+    } else {
+      // No user is signed in.
+      console.log('no user')
+      user.set(undefined)
+    }
+  });
 
 let cacheHours = 300000
 class FirebaseDBWrapper {

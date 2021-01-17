@@ -4,8 +4,9 @@
     import {upColor,downColor} from "../store.js";
     import { link, navigate } from "svelte-routing";
     import { onMount } from "svelte";
+    import {user} from '../firebase.js'
 
-    let signedin = true;
+    let signedin = $user;
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
     let myAccount = false;
@@ -448,13 +449,13 @@
                     <hr />
                     <div class="second_part">
                         <div class="help" >Help & Sypport</div>
-                        <div class="logout" >Logout</div>
+                        <div on:click={() => {firebase.auth().signOut()}} class="logout" >xLogout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
                 <div class="help" >Help & Sypport</div>
-                <div class="logout" >Logout</div>
+                <div on:click={() => {firebase.auth().signOut()}} class="logout" >zLogout</div>
             </div>
         {/if}
         {#if !signedin}

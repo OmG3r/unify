@@ -1,7 +1,16 @@
 <script>
+    import {link} from 'svelte-routing'
 </script>
 
 <style>
+    .no-have-acc {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    .no-have-acc a {
+        text-decoration: underline;
+        color: #1aa3e9
+    }
     .signUp_container{
         display: flex;
         flex-direction: row;
@@ -186,9 +195,9 @@
 <div class="container">
     <div class="signUp_container">
         <div class="left_side">
-            <div class="u_logo">
+            <a use:link href="/" class="u_logo">
                 <img src="./img/logo.png" alt="logo" />Unify
-            </div>
+            </a>
             <div class="title">Welcom Back To Our Website</div>
             <div class="desc">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -205,6 +214,7 @@
                 <div class="fbBtn"><i class="fab fa-facebook-f"></i> <div class="text">Facebook</div> </div>
             </div>
             <div class="orEmailText">Or use your email account</div>
+            <div class="no-have-acc">Don't have an account ? <a use:link href="/signup">Sign up here</a></div>
             <div class="inputContainer">
                
                 <div class="input">
