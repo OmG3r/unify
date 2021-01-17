@@ -16,13 +16,9 @@
     import Signin from "./routes/Signin.svelte";
     import PhoneVerification from "./routes/PhoneVerification.svelte";
     import UserProfile from "./routes/UserProfile.svelte";
-<<<<<<< HEAD
     import ForgotPassword from './routes/ForgotPassword.svelte'
     import EmailVerification from './routes/EmailVerification.svelte'
-
-=======
-    import Footer from "./components/Footer.svelte";
->>>>>>> up
+    import Footer from "./components/Footer.svelte"
     export let url = "";
 </script>
 
