@@ -16,6 +16,9 @@
     import Signin from "./routes/Signin.svelte";
     import PhoneVerification from "./routes/PhoneVerification.svelte";
     import UserProfile from "./routes/UserProfile.svelte";
+    import ForgotPassword from './routes/ForgotPassword.svelte'
+    import EmailVerification from './routes/EmailVerification.svelte'
+
     export let url = "";
 </script>
 
@@ -49,6 +52,12 @@
     </Route>
     <Route  path="/phoneverification">  
         <PhoneVerification/>
+    </Route>
+    <Route  path="/emailverification">  
+        <EmailVerification/>
+    </Route>
+    <Route  path="/forgotpassword">  
+        <ForgotPassword/>
     </Route>
 
     <Route let:params path="/:userid">

@@ -2,16 +2,28 @@
     import Profile from "./Profile.svelte";
     import Wishlist from "./Wishlist.svelte";
     import Orders from "./Orders.svelte";
-    import { onMount } from "svelte";
-    import { link } from "svelte-routing";
+    import { link, navigate } from "svelte-routing";
+    import {user} from '../../firebase.js'
+    import {onMount, onDestroy} from 'svelte'
+    let unsubscribeUser = () => {}
+    
 
+    
 
     export let params = {};
     let currentPage = "";
     onMount(async () => {
             currentPage =params.type;
+            unsubscribeUser = user.subscribe((v) => {
+                if (v == undefined) {
+                    navigate("/")
+                }
+            })
     });
 
+    onDestroy(() => {
+        unsubscribeUser()
+    })
     
     let handlepage = (page) => {
         currentPage = page;

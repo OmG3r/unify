@@ -120,7 +120,7 @@
         </div>
     {/if}
     <div class="inputContainer">
-        <div class="input">
+        <form on:submit|preventDefault={SendCode} class="input">
             <i class="fas fa-phone" />
             <input
                 bind:this={phone}
@@ -129,9 +129,9 @@
                 placeholder="Phone Number"
                 value={$user && $user.phoneNumber ? $user.phoneNumber : ''}
             />
-        </div>
+        </form>
         {#if confResInitied}
-            <div class="input">
+            <form on:submit|preventDefault={verifyCode} class="input">
                 <i class="fas fa-key" />
                 <input
                 bind:this={code}
@@ -139,7 +139,7 @@
                     class="verification"
                     placeholder="Verification Code"
                 />
-            </div>
+            </form>
         {/if}
     </div>
     <div class="verification_btns">
@@ -286,6 +286,7 @@
     .resend_btn {
         background-color: white !important;
         color: rgb(var(--userColor)) !important;
+        padding: 4px 0;
     }
     .send_btn:active {
         background-color: rgba(var(--AccentColor), 0.8);

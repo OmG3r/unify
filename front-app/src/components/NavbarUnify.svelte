@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import {user} from '../firebase.js'
 
-    let signedin = $user;
+    $: signedin = $user;
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
     let myAccount = false;
@@ -418,7 +418,7 @@
 
     <div
         class="menuItems {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"
-        style="background-color:{mobileMenuColor}">
+        style="background-color:{true ? "" :mobileMenuColor}">
         <a use:link href="/">{{ en: 'Home', fr: 'Acceuil' }[$lang]}</a>
         <a use:link href="/merch">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a use:link href="/tips">{{ en: 'Donations', fr: 'don' }[$lang]}</a>
@@ -438,7 +438,7 @@
                     <div class="first_part">
                         <img src="../img/ti3leh.jpg" alt="avatar" />
                         <div class="user_info">
-                        <div class="u_name" >Ahmed Ben Mahmoud</div>
+                        <div class="u_name" >{$user && $user.displayName ? $user.displayName : "User"}</div>
                             <div class="edit_btn">
                             <button class="btn" on:click="{()=>{navigate("/myaccount")}}">
                                     {{ en: 'Edit Profile', fr: 'Modifier votre profil' }[$lang]}

@@ -1,8 +1,23 @@
 <script>
-    import {auth} from '../firebase.js'
+    import {auth, user} from '../firebase.js'
     import {navigate, link} from 'svelte-routing'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
-    
+    import SignInProviders from '../components/misc/SigninProviders.svelte'
+    import {onMount, onDestroy} from 'svelte'
+    let unsubscribeUser = () => {} ;
+    onMount(() => {
+        unsubscribeUser = user.subscribe((v) => {
+            if (v == 0) {
+                console.log("uninited")
+            } else if (v) {
+                navigate("/")
+            }
+        })
+    })
+
+    onDestroy(() => {
+        unsubscribeUser()
+    })
 
     let sub = false
     const doSubmit = async () => {
@@ -53,16 +68,7 @@
 
         <div class="right_side">
             <div class="title">Sign up to Unify</div>
-            <div class="signupAlternatives">
-                <div class="googleBtn">
-                    <i class="fab fa-google-plus-g" />
-                    <div class="text">Google</div>
-                </div>
-                <div class="fbBtn">
-                    <i class="fab fa-facebook-f" />
-                    <div class="text">Facebook</div>
-                </div>
-            </div>
+            <SignInProviders bind:errorMessage />
             <div class="orEmailText">Or sign up using your email</div>
             <div class="have-acc">Aready have an account ? <a use:link href="/signin">Sign in here</a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
@@ -221,38 +227,7 @@
         font-weight: 700;
         color: #273441;
     }
-    .signupAlternatives {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 25px 0 25px 0;
-    }
-    .signupAlternatives div {
-        width: 200px;
-        height: 35px;
-        color: white;
-        font-size: 15px;
-        font-weight: 700;
-        border-radius: 7px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 5px 0 5px 0;
-    }
-    .googleBtn {
-        background-color: #d2504d;
-        position: relative;
-    }
-    .fbBtn {
-        background-color: #3b5998;
-        position: relative;
-    }
-    .googleBtn i,
-    .fbBtn i {
-        position: absolute;
-        left: 15px;
-    }
+    
     .orEmailText,
     .forget {
         color: rgba(var(--userColor), 0.4);
@@ -298,6 +273,7 @@
         border: none;
         width: 200px;
         height: 40px;
+        padding: 4px 0;
         color: white;
         font-size: 18px;
         font-weight: 700;

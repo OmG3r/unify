@@ -1,8 +1,115 @@
 <script>
-    import {link} from 'svelte-routing'
+    import {link, navigate} from 'svelte-routing'
+    import {auth, user} from '../firebase.js'
+    import {onMount, onDestroy} from 'svelte'
+    import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
+    import SignInProviders from '../components/misc/SigninProviders.svelte'
+    let unsubscribeUser = () => {} ;
+    let sub = false
+    onMount(() => {
+        unsubscribeUser = user.subscribe((v) => {
+            if (v == 0) {
+                console.log("uninited")
+            } else if (v) {
+                navigate("/")
+            }
+        })
+    })
+
+    onDestroy(() => {
+        unsubscribeUser()
+    })
+
+    const doSubmit = async () => {
+        if (sub) {
+            return
+        }
+        sub = true
+        let lform = Object.fromEntries(Object.entries(form).map(([key, el]) => [key, el.value]))
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((user) => {
+            sub = false
+        })
+        .catch((error) => {
+
+            errorMessage = error.message;
+            sub = false
+        });
+        sub = false
+    }
+
+    const form = {}
+    let errorMessage = undefined
+
+    
+    
+
+    let subgoogle = false
+    const googleSignIn = async () => {
+        if (subgoogle) {
+            return
+        }
+
+        subgoogle = true
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        await auth
+        .signInWithPopup(googleProvider)
+        .then((result) => {
+            /** @type {firebase.auth.OAuthCredential} */
+            
+            // ...
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            var errorCode = error.code;
+            errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+
+            // ...
+        });
+        subgoogle = false
+    }
+    let subfb = false
+    const facebookSignIn = async () => {
+        if (subfb) {
+            return
+        }
+        subfb = true
+        const facebookProvider = new firebase.auth.FacebookAuthProvider();
+        await auth
+        .signInWithPopup(facebookProvider)
+        .then((result) => {
+            /** @type {firebase.auth.OAuthCredential} */
+            // ...
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            var errorCode = error.code;
+            errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+
+            // ...
+        });
+        subfb = false
+    }
 </script>
 
 <style>
+    .error-container {
+        padding: 16px;
+        border-radius: 4px;
+        background-color: #ee5353;
+        color: white;
+        margin: 12px 0;
+        width: 300px;
+        text-align: center;
+    }
     .no-have-acc {
         text-align: center;
         margin-bottom: 16px;
@@ -86,37 +193,6 @@
         font-size: 25px;
         font-weight: 700;
         color:#273441;
-    }
-    .signupAlternatives{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 25px 0 25px 0;
-    }
-    .signupAlternatives div{
-        width: 200px;
-        height: 35px;
-        color:white;
-        font-size: 15px;
-        font-weight: 700;
-        border-radius: 7px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 5px 0 5px 0;
-    }
-    .googleBtn{
-        background-color:#D2504D;
-        position: relative;
-    }
-    .fbBtn{
-        background-color: #3B5998;
-        position: relative;
-    }
-    .googleBtn i,.fbBtn i {
-       position: absolute;
-       left: 15px;
     }
     .orEmailText,.forget{
         color: rgba(var(--userColor),0.4);
@@ -209,32 +285,41 @@
 
         <div class="right_side" >
             <div class="title">Sign in to Unify</div>
-            <div class="signupAlternatives">
-                <div class="googleBtn"><i class="fab fa-google-plus-g"></i><div class="text">Google</div> </div>
-                <div class="fbBtn"><i class="fab fa-facebook-f"></i> <div class="text">Facebook</div> </div>
-            </div>
+            <SignInProviders bind:errorMessage />
             <div class="orEmailText">Or use your email account</div>
             <div class="no-have-acc">Don't have an account ? <a use:link href="/signup">Sign up here</a></div>
-            <div class="inputContainer">
-               
+            <form on:submit|preventDefault={doSubmit} class="inputContainer">
+               {#if errorMessage}
+                    <div class="error-container">
+                        {errorMessage}
+                    </div>
+                {/if}
                 <div class="input">
                     <i class="fas fa-envelope"></i>
-                <input type="email" class="email" placeholder="Email">
+                <input bind:this={form.email} type="email" class="email" placeholder="Email">
                 </div>
                
                 <div class="input">
                     <i class="fas fa-unlock-alt"></i>
-                <input type="password" class="password" placeholder="Password">
+                <input bind:this={form.password} type="password" class="password" placeholder="Password">
+                </div>
+                
+                <div class="forget"><a use:link href="/forgotpassword">Forget Your Password?</a> </div>
+                <div class="signup">
+                    <button type="submit" class="signup_btn">
+                        {#if sub}
+                            <MaterialSpinner />
+                        {:else}
+                            Sign in
+                        {/if}
+                    </button>
                 </div>
                 
                 
                 
                 
-                
-                
-            </div>
-            <div class="forget"><a href="#">Forget Your Password?</a> </div>
-            <div class="signup"><button class="signup_btn">Sign in</button></div>
+            </form>
+            
         </div>
     </div>
 </div>
