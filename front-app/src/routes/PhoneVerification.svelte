@@ -2,7 +2,7 @@
     import {onMount} from 'svelte'
     import {user, auth} from '../firebase.js'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
-    import {navigate} from 'svelte-routing'
+    import {navigate, link} from 'svelte-routing'
 
     user.subscribe((v) => {
         if (v == 0) {
@@ -72,7 +72,7 @@
         });
         sendingCode = false
     }
-
+    let succOperation = false
     const verifyCode = () => {
         console.log("first")
         var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value);
@@ -82,6 +82,7 @@
             console.log('4')
             $user.updatePhoneNumber(credential)
             console.log($user)
+            succOperation = true
         }
         return
         window.confirmationResult.confirm(code.value).then((result) => {
@@ -104,9 +105,10 @@
 </script>
 
 <div class="left_side">
-    <div class="u_logo">
+    <a use:link href="/" class="u_logo">
         <img src="./img/logo.png" alt="logo" />Unify
-    </div>
+    </a>
+    {#if succOperation == false}
     <div class="title">
         {#if $user && $user.phoneNumber}
             Update your phone number
@@ -156,6 +158,12 @@
             </button>
         </div>
     </div>
+    {:else}
+        <div class="title">
+            Success: Phone Updated.
+        </div>
+
+    {/if}
 
     <div class="circle_top" />
     <div class="circle_bottom" />

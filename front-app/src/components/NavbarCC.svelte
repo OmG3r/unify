@@ -1,7 +1,11 @@
 <script>
     import { lang } from "../store.js";
     import { socialMedias } from "../utils.js";
+    import {link} from 'svelte-routing'
     import Cart from './misc/Cart.svelte'
+    
+
+
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
     window.addEventListener("resize", () => {
@@ -111,7 +115,7 @@
     .nav-lang {
         width: 26px;
         margin: 0 8px;
-        margin-bottom: 18px;
+        
     }
 
     .nav-lang img {
@@ -399,7 +403,7 @@
 </style>
 
 <nav class={isScroll ? 'isScroll' : 'isScrollReverse'}>
-    <div class="unify-logo"><img src="/img/logo.png" alt="logo" /></div>
+    <a href="/" use:link class="unify-logo"><img src="/img/logo.png" alt="logo" /></a>
     <div class="unify-plus">+</div>
 
     <div
@@ -408,7 +412,7 @@
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="#">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a href="#">{{ en: 'donation', fr: 'don' }[$lang]}</a>
-        <a href="#">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
+        <a use:link href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
         <div class="nav-lang">
             {#if $lang == 'fr'}
                 <img
@@ -475,7 +479,7 @@
 
     <div class="u-logo">
         <img crossorigin="anonymous" src={creatorData.logo} alt="u-logo" />
-        <span>Ti 3leh</span>
+        <span>{creatorData.name}</span>
 
         <div class="userSocial">
             <!--

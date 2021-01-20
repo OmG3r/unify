@@ -9,17 +9,27 @@ function createCartStore() {
     let saved = localStorage.getItem('cart') || '{}'
     console.log(saved)
     saved = JSON.parse(saved)
-	const { subscribe, set, update } = writable(saved);
+    const { subscribe, set, update } = writable(saved);
 
-	return {
-		subscribe,
-		set: (newV) => {
+    return {
+        subscribe,
+        set: (newV) => {
             localStorage.setItem('cart', JSON.stringify(newV))
+            Object.entries(newV).forEach((item) => {
+                if (item.quantity == undefined) {
+                    item.quantity = 1
+                }
+            })
             set(newV)
         },
         add: (newV) => {
             update((oldV) => {
-                let resp = {...oldV, ...newV}
+                let resp = {...oldV, ...newV }
+                Object.entries(resp).forEach((item) => {
+                    if (item.quantity == undefined) {
+                        item.quantity = 1
+                    }
+                })
                 localStorage.setItem('cart', JSON.stringify(resp))
                 console.log(resp)
                 return resp
@@ -38,9 +48,8 @@ function createCartStore() {
             localStorage.setItem('cart', JSON.stringify({}))
             set({})
         }
-		
-	};
+
+    };
 }
 
 export const cart = createCartStore()
-

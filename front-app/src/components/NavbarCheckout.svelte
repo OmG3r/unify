@@ -1,6 +1,6 @@
 <script>
     import Logo from "./misc/UnifyLogo.svelte";
-
+    import {link} from 'svelte-routing'
     let upColor = "#45B877";
     let downColor = "#181D22";
 </script>
@@ -60,12 +60,12 @@ nav{
 
 <nav>
 
-     <div class="u_logo">
-        <div class="logo_img">
+     <a use:link href="/" class="u_logo">
+        <div  class="logo_img">
             <Logo {upColor} {downColor} />
         </div>
         Unify
-    </div>
+    </a>
 
     <div class="help">
         <img src="./img/misc/call.png" alt="call">

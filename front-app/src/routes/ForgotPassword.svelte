@@ -134,6 +134,7 @@
 
 <script>
     import {auth} from '../firebase.js'
+    import {link} from 'svelte-routing'
     let errorMessage;
     let email;
     let sent = false
@@ -152,9 +153,9 @@
     }
 </script>
 <div class="left_side">
-    <div class="u_logo">
+    <a href="/" use:link class="u_logo">
         <img src="./img/logo.png" alt="logo" />Unify
-    </div>
+    </a>
     <div class="title">
         Write your email
     </div>

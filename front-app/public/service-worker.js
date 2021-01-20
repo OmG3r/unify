@@ -8,7 +8,7 @@ workbox.precaching.precacheAndRoute([
     ...cachingSkeleton.map((item) => { return { url: item, revision: null } })
 ]);
 */
-
+workbox.setConfig({ debug: false })
 workbox.routing.registerRoute(
     /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
     new workbox.strategies.CacheFirst({
@@ -16,13 +16,13 @@ workbox.routing.registerRoute(
         plugins: [
             new workbox.expiration.ExpirationPlugin({
                 maxEntries: 100,
-                
+
                 maxAgeSeconds: 3 * 24 * 3600, // 30 Days
             }),
         ],
     })
 );
-const cacheLinks = ['https://firebasestorage.googleapis.com/v0/b/unify-tn.appspot.com/o/' , '/imgs/']
+const cacheLinks = ['https://firebasestorage.googleapis.com/v0/b/unify-tn.appspot.com/o/', '/imgs/']
 const matchCb = ({ url, event }) => {
     return cacheLinks.some((item) => url.href.includes(item));
 };
@@ -34,14 +34,14 @@ workbox.routing.registerRoute(
         plugins: [
             new workbox.expiration.ExpirationPlugin({
                 maxEntries: 100,
-                
+
                 maxAgeSeconds: 3 * 24 * 3600, // 30 Days
             }),
         ],
     })
 );
 const cachingLinks = ['https://cdnjs.cloudflare.com', 'https://unpkg.com']
-const matchFiles = ({url, event}) => {
+const matchFiles = ({ url, event }) => {
     return cachingLinks.some((item) => url.href.includes(item))
 }
 
@@ -57,7 +57,7 @@ workbox.routing.registerRoute(
     })
 );
 
-self.addEventListener('fetch', async (event) => {
+self.addEventListener('fetch', async(event) => {
     if (navigator.onLine === false) {
         if (event.request.destination == "document") {
             event.respondWith(caches.match('/index.html'))

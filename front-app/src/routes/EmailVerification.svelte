@@ -105,7 +105,7 @@
 <script>
     import {auth, user} from '../firebase.js'
     import {onMount, onDestroy} from 'svelte'
-    import {navigate} from 'svelte-routing'
+    import {navigate, link} from 'svelte-routing'
     let unsubscribeUser = () => {};
     onMount(() => {
         unsubscribeUser = user.subscribe((v) => {
@@ -139,9 +139,9 @@
 
 
 <div class="left_side">
-    <div class="u_logo">
+    <a href="/" use:link class="u_logo">
         <img src="./img/logo.png" alt="logo" />Unify
-    </div>
+    </a>
     <div class="title">
         Send Email verification link.
     </div>

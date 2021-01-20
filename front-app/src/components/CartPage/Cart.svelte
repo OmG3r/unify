@@ -1,6 +1,296 @@
+<script>
+    import { cart } from "../../store.js";
+    import { navigate } from "svelte-routing";
+    import { onMount, onDestroy } from "svelte";
+    import { textToHex } from "../../utils.js";
+    import { link } from "svelte-routing";
+    let quantity = 1;
+    let loaded = false;
+    let unsubscribeCart = () => {};
+    onMount(() => {
+        if (Object.keys($cart).length == 0) {
+            navigate("/");
+        }
+        loaded = true;
+    });
+    const handleChangeSize = (key, size) => {
+        $cart = {
+            ...$cart,
+            [key]: {
+                ...$cart[key],
+                size: size
+            },
+        };
+        console.log($cart);
+    };
 
+    const updateQuantity = (key, e) => {
+        $cart = {
+            ...$cart,
+            [key]: {
+                ...$cart[key],
+                quantity: e.target.value,
+            },
+        };
+    };
+    const isSelected = () => {
+        return;
+    };
+
+    const calculateTotal = () => {};
+    let normalTotal = 0;
+    unsubscribeCart = cart.subscribe((data) => {
+        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+            acc += value.price * (value.quantity ? value.quantity : 1);
+            return acc;
+        }, 0);
+    });
+
+    const removeItem = (key) => {
+        cart.remove(key)
+    }
+    let noSize = false
+    const verifyBeforeFinalize = () => {
+        noSize = false
+        Object.entries($cart).forEach(([key, item]) => {
+            console.log(item)
+            if (item.size == undefined) {
+                noSize = true
+            }
+        });
+
+        if (noSize == false) {
+            navigate("/checkout")
+        } else {
+
+        }
+    }
+    onDestroy(() => {
+        unsubscribeCart()
+    })
+</script>
+
+{#if loaded}
+    <div class="container">
+        <span class="title"
+            >Shopping cart ({Object.keys($cart).length} Articles )</span
+        >
+        <span class="sub_title">Free Delivery</span>
+        {#if noSize}
+            <div class="size-error">Please select size(s) for your article(s)</div>
+        {/if}
+        <div class="orders_container">
+            <span class="article_title desktop_items">Article</span>
+            <span class="quantity_title desktop_items">Quantity</span>
+            <span class="unit_price_title desktop_items">Unit Price</span>
+            <span class="total_price_title desktop_items">Total price</span>
+
+            <hr />
+            {#each Object.entries($cart) as [key, value]}
+                <div class="single_order">
+                    <!--********-->
+                    <div class="article">
+                        <div class="p_img">
+                            <img
+                                crossorigin="anonymous"
+                                src={value.imgs[value.featuredFace]}
+                                alt="order"
+                            />
+                        </div>
+                        <div class="info">
+                            <div class="p_title">
+                                <a href={"/" + value.creator + "/" + value.id} class="title">{value.name}</a>
+                                <span class="sub_title"
+                                    >from <a use:link href={"/" + value.creator}> {value.creator} </a></span
+                                >
+                            </div>
+                            <div class="color">
+                                Color:
+                                <div
+                                    style={"background-color:" +
+                                        textToHex(value.color) +
+                                        ";"}
+                                    class="shape"
+                                />
+                            </div>
+                            <div class="size">
+                                Size:
+                                <div class="radio_btns">
+                                    {#each ["S", "M", "L", "XL"] as size}
+                                        <label class="size_label" for={size}>
+                                            
+                                            <div
+                                                class:checked={value.size == size}
+                                                on:click={(e) => {
+                                                    handleChangeSize(key, size);
+                                                }}
+                                            >{size}</div>
+                                        </label>
+                                    {/each}
+                                </div>
+                            </div>
+                            <div class="mobile_items">
+                                <div class="quantity_mobile">
+                                    Quantity:
+                                    <div class="qty_btn">
+                                        <div
+                                            class="minus"
+                                            on:click={() => {
+                                                value.quantity <= 1 ||
+                                                value.quantity == undefined
+                                                    ? (value.quantity = 1)
+                                                    : (value.quantity -= 1);
+                                                console.log("clicked");
+                                            }}
+                                        >-</div>
+                                        <input
+                                            disabled
+                                            class="qty"
+                                            on:change={(e) => {
+                                                updateQuantity(key, e);
+                                            }}
+                                            value={value.quantity
+                                                ? value.quantity
+                                                : 1}
+                                        />
+                                        <div
+                                            class="plus"
+                                            on:click={() => {
+                                                value.quantity != undefined ? value.quantity += 1 : value.quantity = 2;
+                                            }}
+                                        >+</div>
+                                    </div>
+                                </div>
+
+                                <div class="unit_price_mobile">
+                                    Unit Price:
+                                    <div class="price_mobile">
+                                        {value.price}TND
+                                    </div>
+                                </div>
+
+                                <div class="total_price_mobile">
+                                    Total Price:
+                                    <div class="price_mobile">
+                                        {value.price *
+                                            (value.quantity
+                                                ? value.quantity
+                                                : 1)} TND
+                                    </div>
+                                </div>
+
+                                <div class="btns_mobile">
+                                    <img src="img/misc/heart.png" alt="heart" />
+                                    <img
+                                        on:click={() => {removeItem(key)}}
+                                        src="img/misc/delete.png"
+                                        alt="delete"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--********-->
+
+                    <div class="quantity desktop_items">
+                        <div class="qty_btn">
+                            <div
+                                class="minus"
+                                on:click={() => {
+                                    value.quantity <= 1 ||
+                                    value.quantity == undefined
+                                        ? (value.quantity = 1)
+                                        : (value.quantity -= 1);
+                                }}
+                            >-</div>
+
+                            <input
+                                disabled
+                                class="qty"
+                                on:change={(e) => {
+                                    updateQuantity(key, e);
+                                }}
+                                value={value.quantity ? value.quantity : 1}
+                            />
+                            <div
+                                class="plus"
+                                on:click={() => {
+                                    value.quantity != undefined ? value.quantity += 1 : value.quantity = 2;
+                                }}
+                            >+</div>
+                        </div>
+                    </div>
+                    <!--********-->
+                    <div class="unit_price desktop_items">
+                        <div class="price">{value.price} TND</div>
+                        {#if false}
+                            <div class="old_price">52 DT</div>
+                            <div class="economie">Economie: 7 DT</div>
+                        {/if}
+                    </div>
+                    <!--********-->
+                    <div class="total_price desktop_items">
+                        <div class="price">
+                            {value.price *
+                                (value.quantity ? value.quantity : 1)} TND
+                        </div>
+                        <div class="btns">
+                            <i class="far fa-heart" />
+                            <i on:click={() => {removeItem(key)}} class="fas fa-minus" />
+                        </div>
+                    </div>
+                    <!--********-->
+                </div>
+
+                <hr />
+            {/each}
+        </div>
+        {#if false}
+            <div class="discount_container">
+                <span class="title">Promo code:</span>
+                <input
+                    type="text"
+                    class="promo_code"
+                    placeholder="Enter promo code"
+                />
+                <button type="button" class="apply_btn">Apply</button>
+            </div>
+        {/if}
+
+        <div class="final_total">
+            <div class="titles">
+                <span class="subtotal">Subtotal</span>
+                <span class="shipping">Shipping</span>
+                {#if false}
+                    <span class="promotional_code">
+                        Promotional Code
+                        <span class="code">ti3leh10</span>
+                    </span>{/if}
+            </div>
+            <div class="prices">
+                <span class="subtotal">{normalTotal} DT</span>
+                <span class="shipping">Free</span>
+                {#if false} <span class="promotional_code">- 15.7 DT</span>{/if}
+            </div>
+        </div>
+        <hr />
+        <span class="total">Total: {normalTotal} DT</span>
+
+        <div class="continue_finilize">
+            {#if false}<button class="continue">Continue Shopping</button>{/if}
+            <a href="/checkout" on:click|preventDefault={verifyBeforeFinalize} class="finilize">Finalize Your Order</a>
+        </div>
+    </div>
+{/if}
 
 <style>
+    .size-error {
+        padding: 16px;
+        border-radius: 4px;
+        margin: 16px 0;
+        background-color: #e84e38;
+        color: #f7f7f7
+    }
     .container {
         display: flex;
         flex-direction: column;
@@ -32,7 +322,7 @@
         grid-column-end: 5;
         border: 0;
         border-top: 1px solid #8b8e9059;
-        width: 100%;   
+        width: 100%;
     }
     .article_title {
         grid-column-start: 1;
@@ -223,6 +513,7 @@
         max-width: 100%;
     }
     .article .p_img {
+        overflow: hidden;
         background-color: white;
         width: 120px;
         height: 120px;
@@ -351,25 +642,25 @@
         background-position: 25px center;
         background-repeat: no-repeat;
         outline: none;
-        border: 1px solid #DDD;
+        border: 1px solid #ddd;
         border-radius: 0;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
         padding: 4px 8px;
         width: 50px;
-        
+
         margin-left: 16px;
 
         border-radius: 3px;
     }
-    .radio_btns{
+    .radio_btns {
         margin-left: 15px;
         display: flex;
         flex-direction: row;
     }
-    .size_label div{
-        width:30px;
-        height:30px;
-        margin:0 5px 0 5px;
+    .size_label div {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px 0 5px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -380,13 +671,13 @@
         border-radius: 10px;
         cursor: pointer;
     }
-    input[type="radio"]{
+    input[type="radio"] {
         display: none;
     }
-    input[type="radio"]:checked + div{
+    .size_label div.checked {
         background-color: rgb(var(--AccentColor));
     }
-   
+
     .quantity_mobile {
         width: 100%;
         display: flex;
@@ -435,243 +726,45 @@
     .quantity_mobile .qty_btn .plus:active {
         background-color: rgba(var(--AccentColor), 0.8);
     }
-    .unit_price_mobile,.total_price_mobile{
+    .unit_price_mobile,
+    .total_price_mobile {
         font-weight: 600;
         margin-top: 15px;
-        display:flex;
+        display: flex;
         flex-direction: row;
     }
-    
-    .price_mobile{
+
+    .price_mobile {
         font-size: 17px;
-        margin-left:15px;
+        margin-left: 15px;
     }
-    .btns_mobile{
+    .btns_mobile {
         margin-top: 15px;
     }
-    .btns_mobile img{
+    .btns_mobile img {
         width: 25px;
-        height:25px;
+        height: 25px;
         cursor: pointer;
         margin: 0 5px 0 5px;
     }
-   .btns_mobile img:active{
-        filter: invert(62%) sepia(12%) saturate(1951%) hue-rotate(93deg) brightness(100%) contrast(83%);
+    .btns_mobile img:active {
+        filter: invert(62%) sepia(12%) saturate(1951%) hue-rotate(93deg)
+            brightness(100%) contrast(83%);
     }
-    .mobile_items{
+    .mobile_items {
         display: none;
     }
     @media only screen and (max-width: 1180px) {
-        .desktop_items{display:none !important;}
-        .single_order,.orders_container,.mobile_items {display: block !important;}
-        .container{padding:100px 10px 0 10px}
-      }
+        .desktop_items {
+            display: none !important;
+        }
+        .single_order,
+        .orders_container,
+        .mobile_items {
+            display: block !important;
+        }
+        .container {
+            padding: 100px 10px 0 10px;
+        }
+    }
 </style>
-<script>
-    import {cart} from '../../store.js'
-    import {navigate} from 'svelte-routing'
-    import {onMount} from 'svelte'
-    import {textToHex} from '../../utils.js'
-    import {link} from 'svelte-routing'
-    let quantity = 1;
-    let loaded = false
-    onMount(() => {
-        if (Object.keys($cart).length == 0) {
-            navigate('/')
-        }
-        loaded = true
-    })
-    const handleChangeSize = (key, e) => {
-        $cart = {
-            ...$cart,
-            [key]: {
-                ...$cart[key],
-                size: e.target.value
-            }
-        }
-        console.log($cart)
-
-    }
-
-    const updateQuantity = (key, e) => {
-        $cart = {
-            ...$cart,
-            [key]: {
-                ...$cart[key],
-                quantity: e.target.value
-            }
-        }
-    }
-    const isSelected = () =>  {
-        return 
-    }
-
-    const calculateTotal = () => {
-        
-    }
-    let normalTotal = 0
-    cart.subscribe((data) => {
-        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
-            acc += value.price * (value.quantity ? value.quantity : 1)
-            return acc
-        }, 0)
-    })
-
-</script>
-{#if loaded}
-    <div class="container">
-        <span class="title">Shopping cart ({Object.keys($cart).length} Articles )</span>
-        <span class="sub_title">Free Delivery</span>
-
-        <div class="orders_container">
-           
-            <span class="article_title desktop_items">Article</span>
-            <span class="quantity_title desktop_items">Quantity</span>
-            <span class="unit_price_title desktop_items">Unit Price</span>
-            <span class="total_price_title desktop_items">Total price</span>
-            
-            <hr />
-            {#each Object.entries($cart) as [key, value]}
-                <div class="single_order">
-                <!--********-->
-                    <div class="article">
-                        <div class="p_img">
-                            <img crossorigin="anonymous" src={value.imgs[value.featuredFace]} alt="order" />
-                        </div>
-                        <div class="info">
-                            <div class="p_title">
-                                <span class="title">{value.name}</span>
-                                <span class="sub_title">from {value.creator}</span>
-                            </div>
-                            <div class="color">
-                                Color:
-                                <div style={"background-color:" + textToHex(value.color) + ";"} class="shape" />
-                            </div>
-                            <div class="size">
-                                Size:
-                                <div class="radio_btns">
-                                        {#each ['S', 'M', 'L', 'XL'] as size}
-                                <label class="size_label"for="{size}">
-                                    <input type="radio" on:change={(e)=>{handleChangeSize(key,e)}}  value="{size}"  id={size} name="size" >
-                                    <div>{size}</div>
-                                </label>
-                                 {/each}
-                                </div>
-                            </div>
-                            <div class="mobile_items">
-                                <div class="quantity_mobile">
-                                    Quantity:
-                                    <div class="qty_btn">
-                                        <div class="minus"
-                                        on:click={() => {
-                                            value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
-                                        }}>
-                                    -
-                                    </div>
-                                    <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
-                                    <div class="plus"
-                                        on:click={() => {
-                                            value.quantity += 1;
-                                        }}>
-                                        +
-                                    </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="unit_price_mobile">
-                                    Unit Price:
-                                    <div class="price_mobile">{value.price}TND</div> 
-                                </div>
-
-                                <div class="total_price_mobile">
-                                    Total Price:
-                                    <div class="price_mobile">{value.price * (value.quantity ? value.quantity : 1)} TND</div>
-                                    
-                                </div>
-
-                                <div class="btns_mobile">
-                                <img src="img/misc/heart.png" alt="heart">
-                                <img src="img/misc/delete.png" alt="delete">
-                            </div>
-                        </div>
-                            
-                        </div>
-                    </div>
-                    <!--********-->
-                   
-                        <div class="quantity desktop_items">
-                            <div class="qty_btn">
-                                <div
-                                    class="minus"
-                                    on:click={() => {
-                                        value.quantity <= 1 || value.quantity == undefined ? (value.quantity = 1) : (value.quantity -= 1);
-                                    }}>
-                                    -
-                                </div>
-                                
-                                <input disabled class="qty" on:change={(e) => {updateQuantity(key, e)}} value={value.quantity ? value.quantity : 1} />
-                                <div
-                                    class="plus"
-                                    on:click={() => {
-                                        value.quantity += 1;
-                                    }}>
-                                    +
-                                </div>
-                            </div>
-                        </div>
-                        <!--********-->
-                        <div class="unit_price desktop_items">
-                            <div class="price">{value.price} TND</div>
-                            {#if false}
-                                <div class="old_price">52 DT</div>
-                                <div class="economie">Economie: 7 DT</div>
-                            {/if}
-                        </div>
-                        <!--********-->
-                        <div class="total_price desktop_items">
-                            <div class="price">{value.price * (value.quantity ? value.quantity : 1)} TND</div>
-                            <div class="btns">
-                                <i class="far fa-heart" />
-                                <i class="fas fa-minus" />
-                            </div>
-                        </div>
-                        <!--********-->
-                        </div>
-          
-                <hr />
-            {/each}
-            
-        </div>
-        {#if false}
-        <div class="discount_container">
-            <span class="title">Promo code:</span>
-            <input type="text" class="promo_code" placeholder="Enter promo code" />
-            <button type="button" class="apply_btn">Apply</button>
-        </div>
-        {/if}
-
-        <div class="final_total">
-            <div class="titles">
-                <span class="subtotal">Subtotal</span>
-                <span class="shipping">Shipping</span>
-               {#if false} <span class="promotional_code">
-                    Promotional Code
-                    <span class="code">ti3leh10</span>
-                </span>{/if}
-            </div>
-            <div class="prices">
-                <span class="subtotal">{normalTotal} DT</span>
-                <span class="shipping">Free</span>
-               {#if false} <span class="promotional_code">- 15.7 DT</span>{/if}
-            </div>
-        </div>
-        <hr />
-        <span class="total">Total: {normalTotal} DT</span>
-
-        <div class="continue_finilize">
-         {#if false}<button class="continue">Continue Shopping</button>{/if}
-            <a use:link href="/checkout" class="finilize">Finilize Your Order</a>
-        </div>
-    </div>
-{/if}

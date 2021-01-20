@@ -329,7 +329,7 @@
                                     cart.add({
                                         [params.userid +
                                         '/' +
-                                        product.id]: product,
+                                        product.id]: {...product, quantity: 1},
                                     });
                                 }} />
                         </div>
@@ -340,12 +340,17 @@
                     <div class="productInfo">
                         <span class="product_title">{product.name}</span>
                         <div class="product_price">
-                            <span class="current_price">{product.price}
+                            {#if product.discount}
+                            <span class="current_price">{product.price * (1 - product.discount)}
                                 TND</span>
                             <span class="old_price">
-                                <span class="price">50 TND</span>
-                                <span class="percentage_discount">-20%</span>
+                                <span class="price">{product.price}</span>
+                                <span class="percentage_discount">-{product.discount * 100}%</span>
                             </span>
+                            {:else}
+                            <span class="current_price">{product.price}
+                                TND</span>
+                            {/if}
                         </div>
                     </div>
                     <div class="colors">

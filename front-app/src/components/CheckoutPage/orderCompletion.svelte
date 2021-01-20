@@ -1,4 +1,6 @@
 <script>
+    import {cart} from '../../store.js'
+    import {onMount, onDestroy} from 'svelte'
     let AccentColor = getComputedStyle(document.body).getPropertyValue(
         "--AccentColor"
     );
@@ -10,6 +12,21 @@
     let removeScroll = () =>{
     popup ? document.body.style.overflow="hidden" : document.body.style.overflow="scroll";
     }
+
+   
+    
+    let normalTotal = 0;
+    let unsubscribeCart = () => {};
+    unsubscribeCart = cart.subscribe((data) => {
+        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+            acc += value.price * (value.quantity ? value.quantity : 1);
+            return acc;
+        }, 0);
+    });
+
+    onDestroy(() => {
+        unsubscribeCart()
+    })
 </script>
 
 <style>
@@ -504,13 +521,13 @@ hr{
                 {/if}
             </div>
             <div class="prices">
-                <span class="subtotal">157 DT</span>
+                <span class="subtotal">{normalTotal} DT</span>
                 <span class="shipping">Free</span>
                 {#if false}<span class="promotional_code">- 15.7 DT</span>{/if}
             </div>
         </div>
         <hr />
-        <span class="total">Total: 141.3 DT</span>
+        <span class="total">Total: {normalTotal} DT</span>
 
         <button class="finilize_btn">Finalize Your Order</button>
     </div>

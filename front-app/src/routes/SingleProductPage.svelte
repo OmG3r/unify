@@ -6,9 +6,37 @@
 
 <script>
     export let params = {}
+    import NavbarCC from "../components/NavbarCC.svelte";
     import Single from '../components/SingleProductPage/singleProduct.svelte'
-</script>
+    import {onMount} from 'svelte'
+    import {dbWrapper} from '../firebase.js'
+    import {navigate} from 'svelte-routing'
+    import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
+    let validated = false
+    onMount(async () => {
+        console.log("mounted")
+        let data = await dbWrapper.get('/creators/' + params.userid + "/merch/all")
+        if (data[params.itemid] == undefined) {
+            
+            navigate('/' + params.userid)
+        } else {
+            validated = true;
+        }
 
-<Single/>
+        
+
+        
+    })
+
+</script>
+{#if validated}
+    <NavbarCC />
+    <Single />
+{:else}
+    <div class="u-view">
+        <MaterialSpinner />
+
+    </div>
+{/if}
 
 

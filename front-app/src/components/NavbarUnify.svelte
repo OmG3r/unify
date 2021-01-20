@@ -5,7 +5,7 @@
     import { link, navigate } from "svelte-routing";
     import { onMount } from "svelte";
     import {user} from '../firebase.js'
-
+    import Cart from '../components/misc/Cart.svelte'
     $: signedin = $user;
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
@@ -457,6 +457,7 @@
                 <div class="help" >Help & Sypport</div>
                 <div on:click={() => {firebase.auth().signOut()}} class="logout" >zLogout</div>
             </div>
+            
         {/if}
         {#if !signedin}
             <a
@@ -480,6 +481,9 @@
                     alt="en" />
             {/if}
         </div>
+        {#if signedin}
+            <Cart color={isScroll ? "#ffffff" : "#181d22"} />
+        {/if}
         {#if !signedin}
             <div class="join_btn">
                 {{ en: 'Join Us', fr: 'Rejoignez-nous' }[$lang]}

@@ -7,7 +7,7 @@
     import ProfilePage from './routes/ProfilePage.svelte'
     import MerchPage from './routes/MerchPage.svelte'
     import SingleProductPage from './routes/SingleProductPage.svelte'
-    import NavbarCC from "./components/NavbarCC.svelte";
+    
     import NavbarUnify from "./components/NavbarUnify.svelte";
     import NavbarCheckout from "./components/NavbarCheckout.svelte";
     import Cart from "./routes/CartPage.svelte";
@@ -66,7 +66,7 @@
     </Route>
 
     <Route let:params path="/:userid">
-        <NavbarCC/>
+        
         <ProfilePage {params} />
     
     </Route>
@@ -78,7 +78,7 @@
     </Route>
 
     <Route let:params path="/:userid/merch/:itemid">
-        <NavbarCC/>
+        
         <SingleProductPage {params} />
     
     </Route>

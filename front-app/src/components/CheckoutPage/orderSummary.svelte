@@ -1,25 +1,20 @@
 <script>
     import {link} from 'svelte-routing'
-    let orders = [
-        {
-            img: "/img/tshirt.png",
-            title: "T-Shirt",
-            sub_title: "best t-shirt quality",
-            color: "E23131",
-            size: "S",
-            price: "45",
-            qty: "2",
-        },
-        {
-            img: "/img/hoodie.png",
-            title: "T-Shirt",
-            sub_title: "best t-shirt quality",
-            color: "E23131",
-            size: "XL",
-            price: "70",
-            qty: "1",
-        },
-    ];
+    import {cart} from '../../store.js'
+    import {onMount, onDestroy} from 'svelte'
+    console.log($cart)
+    let normalTotal = 0;
+    let unsubscribeCart = () => {};
+    unsubscribeCart = cart.subscribe((data) => {
+        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+            acc += value.price * (value.quantity ? value.quantity : 1);
+            return acc;
+        }, 0);
+    });
+
+    onDestroy(() => {
+        unsubscribeCart()
+    })
 </script>
 
 <style>
@@ -42,9 +37,10 @@
         box-shadow: 0px 0px 18px rgba(var(--userColor), 0.15);
         border-radius: 15px;
         margin-right: 15px;
+        overflow: hidden;
     }
     .p_img img {
-        width: 60px;
+        max-width: 100%;
     }
     .info {
         font-size: 12px;
@@ -193,18 +189,18 @@
     <span class="title">Order Summary</span>
     <hr />
     <div class="orders">
-        {#each orders as order}
+        {#each Object.entries($cart) as [key, order]}
             <div class="single_product">
-                <div class="p_img"><img src=".{order.img}" alt="tshirt" /></div>
+                <div class="p_img"><img src="{order.imgs[order.featuredFace]}" alt="tshirt" /></div>
                 <div class="info">
-                    <span class="p_title">{order.title}</span>
-                    <span class="p_sub_title">{order.sub_title}</span>
+                    <span class="p_title">{order.name}</span>
+                    <span class="p_sub_title">{order.creator}</span>
                     <div class="color_size">
                         <div class="color">
                             Color:
                             <div
                                 class="shape"
-                                style="background-color=#{order.color}" />
+                                style="background-color:{order.color}" />
                         </div>
                         <div class="size">
                             Size:
@@ -217,7 +213,7 @@
                     </div>
                     <div class="quantity">
                         Qty:
-                        <div class="qty">{order.qty}</div>
+                        <div class="qty">{order.quantity}</div>
                     </div>
                 </div>
             </div>
@@ -236,13 +232,13 @@
             {/if}
         </div>
         <div class="prices">
-            <span class="subtotal">157 DT</span>
+            <span class="subtotal">{normalTotal} DT</span>
             <span class="shipping">Free</span>
              {#if false}<span class="promotional_code">- 15.7 DT</span>{/if}
         </div>
     </div>
     <hr />
-    <span class="total">Total: 157 DT</span>
+    <span class="total">Total: {normalTotal} DT</span>
     <hr />
     <a use:link href="/cart" class="back_to_cart">Back To Cart</a>
 </div>
