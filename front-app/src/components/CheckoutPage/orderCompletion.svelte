@@ -1,6 +1,9 @@
 <script>
     import {cart} from '../../store.js'
     import {onMount, onDestroy} from 'svelte'
+    import {user} from '../../firebase.js'
+    import {link} from 'svelte-routing'
+
     let AccentColor = getComputedStyle(document.body).getPropertyValue(
         "--AccentColor"
     );
@@ -18,7 +21,7 @@
     let normalTotal = 0;
     let unsubscribeCart = () => {};
     unsubscribeCart = cart.subscribe((data) => {
-        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+        normalTotal = Object.entries(data.items).reduce((acc, [key, value]) => {
             acc += value.price * (value.quantity ? value.quantity : 1);
             return acc;
         }, 0);
@@ -27,6 +30,22 @@
     onDestroy(() => {
         unsubscribeCart()
     })
+
+    const form = {
+        cart: {
+            cartID: $cart.cartID,
+            items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, [values.id, values.creator, values.quantity, values.size]]))
+        },
+        uid: $user.uid,
+        info: {
+            name: $user.displayName,
+            address: '',
+            state: '',
+            city: ''
+        },
+        phoneNumber: $user.phoneNumber
+    }
+    console.log(form)
 </script>
 
 <style>
@@ -277,6 +296,12 @@
     scrollbar-color: black gray;
     height: 500px;
 }
+.edit_address_popup input, .edit_address_popup select {
+    padding: 0 16px;
+}
+.edit_address_popup textarea {
+    padding: 16px;
+}
 
 .edit_address_popup::-webkit-scrollbar {
     width: 11px;
@@ -326,7 +351,7 @@ hr{
 .name_lastname{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+   
     margin:20px;
 }
 .name_lastname .first_name,.name_lastname .last_name{
@@ -361,7 +386,12 @@ hr{
     border-radius: 8px;
     border: 1px solid #ababab;
     margin-top: 10px;
-    margin-right: 8px;
+    margin-left: 8px;
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+
 }
 .inputs .num{
     width: 100%;
@@ -409,6 +439,10 @@ hr{
     right: 25px;
     cursor: pointer;
 }
+.editphone {
+    display: flex;
+    flex-direction: row-reverse !important;
+}
 
    @media only screen and (max-width: 1000px) {
 
@@ -432,11 +466,15 @@ hr{
         <div class="section2">
 
             <div class="address_info">
-                <div class="name">Ahmed Ben Mahmoud</div>
+                <div class="name">{form.info.name}</div>
                 <div class="address_location">
-                    Residence sandra,El mourouj 6 Ben Arous
+                    {#if ['address', 'state', 'city'].some((item) => {return form.info[item].length == 0;})}
+                        Please press Edit and input your address
+                    {:else}
+                        {form.info.address}, {form.info.state != "Other" ? form.info.state: ""} , {form.info.city != "Other" ? form.info.city : ""}
+                    {/if}
                 </div>
-                <div class="phone_num">+216 26 612 708</div>
+                <div class="phone_num">{$user.phoneNumber}</div>
             </div>
 
             <div class="edit" on:click="{()=>{
@@ -553,45 +591,43 @@ hr{
     <div class="edit_address_popup">
         <div class="name_lastname">
             <div class="first_name">
-                First Name *:
-                <input type="text" value="Ahmed" class="first_name_input">
+                Name *:
+                <input type="text" bind:value={form.info.name} class="first_name_input">
             </div>
-            <div class="last_name">
-                Last Name *:
-                <input type="text" value="Ben Mahmoud" class="last_name_input">
-            </div>
+            
             
         </div>
 
         <div class="phone_num">
             <div class="phone_num_text">Phone Number *:</div>
-            <div class="inputs">
-                <input type="text" value="+216" class="country_num" disabled>
-                <input type="text" value="26612708" class="num" >  
+            <div class="inputs editphone">
+                <a href="/phoneverification" use:link class="country_num">Edit</a>
+                <input disabled type="text" value={$user.phoneNumber} class="num" >  
             </div>
             
         </div>
         <div class="address">
-            Adress *:
-            <textarea type="text"  class="address_input">Appartemant B01 Residence Sandra</textarea>
+            Address *:
+            <textarea bind:value={form.info.address} type="text"  class="address_input"></textarea>
         </div>
 
         <div class="region">
             Region *:
-            <select name="region" id="region_id">
-                <option value="Nabeul">Nabeul</option>
-                <option value="Nabeul">Ariana</option>
-                <option value="Nabeul">Kef</option>
-                <option value="Nabeul">Gabes</option>
+            <select bind:value={form.info.state} name="region" id="region_id">
+                <option >Nabeul</option>
+                <option >Ariana</option>
+                <option >Kef</option>
+                <option >Gabes</option>
+                <option> Other</option>
             </select>
         </div>
         <div class="city">
             City *:
-            <select name="city" id="city_id">
-                <option value="Nabeul">kelibia</option>
-                <option value="Nabeul">el mourouj</option>
-                <option value="Nabeul">rades</option>
-                <option value="Nabeul">test</option>
+            <select bind:value={form.info.city} name="city" id="city_id">
+                <option >kelibia</option>
+                <option >el mourouj</option>
+                <option >rades</option>
+                <option >Other</option>
             </select>
         </div>
         

@@ -8,7 +8,7 @@
     let loaded = false;
     let unsubscribeCart = () => {};
     onMount(() => {
-        if (Object.keys($cart).length == 0) {
+        if (Object.keys($cart.items).length == 0) {
             navigate("/");
         }
         loaded = true;
@@ -16,10 +16,13 @@
     const handleChangeSize = (key, size) => {
         $cart = {
             ...$cart,
-            [key]: {
-                ...$cart[key],
-                size: size
-            },
+            items: {
+                ...$cart.items,
+                [key]: {
+                    ...$cart[key],
+                    size: size
+                }
+            }
         };
         console.log($cart);
     };
@@ -27,10 +30,14 @@
     const updateQuantity = (key, e) => {
         $cart = {
             ...$cart,
-            [key]: {
-                ...$cart[key],
-                quantity: e.target.value,
-            },
+            items: {
+                ...$cart.item,
+                [key]: {
+                    ...$cart[key],
+                    quantity: e.target.value,
+                }
+            }
+            
         };
     };
     const isSelected = () => {
@@ -40,7 +47,7 @@
     const calculateTotal = () => {};
     let normalTotal = 0;
     unsubscribeCart = cart.subscribe((data) => {
-        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+        normalTotal = Object.entries(data.items).reduce((acc, [key, value]) => {
             acc += value.price * (value.quantity ? value.quantity : 1);
             return acc;
         }, 0);
@@ -52,7 +59,7 @@
     let noSize = false
     const verifyBeforeFinalize = () => {
         noSize = false
-        Object.entries($cart).forEach(([key, item]) => {
+        Object.entries($cart.items).forEach(([key, item]) => {
             console.log(item)
             if (item.size == undefined) {
                 noSize = true
@@ -73,7 +80,7 @@
 {#if loaded}
     <div class="container">
         <span class="title"
-            >Shopping cart ({Object.keys($cart).length} Articles )</span
+            >Shopping cart ({Object.keys($cart.items).length} Articles )</span
         >
         <span class="sub_title">Free Delivery</span>
         {#if noSize}
@@ -86,7 +93,7 @@
             <span class="total_price_title desktop_items">Total price</span>
 
             <hr />
-            {#each Object.entries($cart) as [key, value]}
+            {#each Object.entries($cart.items) as [key, value]}
                 <div class="single_order">
                     <!--********-->
                     <div class="article">

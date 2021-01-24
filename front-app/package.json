@@ -16,6 +16,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@rollup/plugin-replace": "^2.3.4",
+    "nanoid": "^3.1.20",
     "sirv-cli": "^1.0.0",
     "svelte-routing": "^1.4.2"
   }

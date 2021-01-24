@@ -5,6 +5,7 @@ import Summary from './orderSummary.svelte';
     import {user} from '../../firebase.js'
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../misc/MaterialSpinner.svelte'
+    import {cart} from '../../store.js'
     let validated = false;
     let unsubscribeUser = () => {};
     onMount(() => {
@@ -31,6 +32,10 @@ import Summary from './orderSummary.svelte';
             }
             validated = true
         })
+
+        if (Object.keys($cart.items.length == 0)) {
+            navigate("/")
+        }
     })
     onDestroy(() => {
         unsubscribeUser()

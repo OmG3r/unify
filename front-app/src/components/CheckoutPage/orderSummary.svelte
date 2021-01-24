@@ -6,7 +6,7 @@
     let normalTotal = 0;
     let unsubscribeCart = () => {};
     unsubscribeCart = cart.subscribe((data) => {
-        normalTotal = Object.entries(data).reduce((acc, [key, value]) => {
+        normalTotal = Object.entries(data.items).reduce((acc, [key, value]) => {
             acc += value.price * (value.quantity ? value.quantity : 1);
             return acc;
         }, 0);
@@ -189,7 +189,7 @@
     <span class="title">Order Summary</span>
     <hr />
     <div class="orders">
-        {#each Object.entries($cart) as [key, order]}
+        {#each Object.entries($cart.items) as [key, order]}
             <div class="single_product">
                 <div class="p_img"><img src="{order.imgs[order.featuredFace]}" alt="tshirt" /></div>
                 <div class="info">
