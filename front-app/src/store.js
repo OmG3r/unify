@@ -18,7 +18,7 @@ function createCartStore() {
         saved = JSON.parse(saved)
     } catch {
         saved = {
-            cartID = nanoid(),
+            cartID: nanoid(),
             items: {}
         }
     }
