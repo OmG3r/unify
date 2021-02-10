@@ -21,17 +21,13 @@
             navigate('/' + params.userid)
         } else {
             validated = true;
-        }
-
-        
-
-        
+        }  
     })
 
 </script>
 {#if validated}
     <NavbarCC />
-    <Single />
+    <Single {params} />
 {:else}
     <div class="u-view">
         <MaterialSpinner />

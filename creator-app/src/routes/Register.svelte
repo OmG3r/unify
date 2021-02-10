@@ -330,7 +330,7 @@
         unsubscribe()
     })
     
-
+    let submitting = false
     let username = ""
     let name=""
     let password = ""
@@ -338,6 +338,15 @@
     let email = ""
     let errorMessage = ""
     let doSubmit = async () => {
+        if (submitting) {
+            return
+        }
+        submitting = true
+        if (re_password.value != password.value) {
+            errorMessage = "Password and Re-Password are different"
+            submitting = false
+            return
+        }
         /*
         firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
             db.doc("/creators/" + username).set({
@@ -346,18 +355,24 @@
             })
         })
         */
+
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
         let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
-            email,
-            password,
-            username
+            email: email.value,
+            password: password.value,
+            username: username.value
         })
 
         let data = await resp.json()
         console.log(data)
+        if (data.success == false) {
+            errorMessage = data.xerror.message
+        }
+        submitting = false
+        return
         
     }
 
@@ -495,7 +510,13 @@
                     <a href="/signin">You already have an account?</a>
                 </div>
                 <div class="signup">
-                    <button type="submit" class="signup_btn">Register</button>
+                    <button type="submit" class="signup_btn">
+                        {#if submitting}
+                            <MaterialSpinner />
+                        {:else}
+                            Register
+                        {/if}
+                    </button>
                 </div>
             </form>
         </div>
