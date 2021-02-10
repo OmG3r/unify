@@ -58,7 +58,6 @@
     .u-image-area {
         width: 100%;
         max-height: 300px;
-        border-bottom: 1px solid #ddd;
     }
     .u-informations {
         width: 100%;
@@ -129,6 +128,7 @@
         {#each Object.entries(categories) as [key, cat]} 
             <section id={key} class="cat-section">
                 <div class="cat-title">{cat.title}</div>
+                <hr style='width: 100%;'>
                 <div class="u-items">
                     {#each Object.entries(cat.items) as [key, item]}
                     <a use:link href={"/merch/create/" + key} id={key} class="prod-card">

@@ -6,7 +6,7 @@
     .background {
         width: 100%;
         height: 100%;
-        border-radius: 30px;
+        
     }
 
     .image-wrapper img {
@@ -14,6 +14,10 @@
         max-height: 100%;
         position: absolute;
         top: 0;
+        border-radius: 20px 20px 0 0;
+    }
+    .image-wrapper .background{
+       border-radius: 25px 25px 0 0;
     }
 
 </style>

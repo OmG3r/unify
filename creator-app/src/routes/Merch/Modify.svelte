@@ -33,11 +33,8 @@
     .u-button, .u-update {
         padding: 6px 24px;
         background-color: #d23149;
-        border-color: #d23149;
         color: white;
         cursor: pointer;
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.34),
-            0 0px 10px rgb(70 185 120 / 0.32);
         font-weight: bold;
         border-radius: 3px;
         height: 40px;
@@ -53,9 +50,15 @@
         border-color: #46b978;
         margin: auto auto 0 auto
     }
+    .u-update:hover{
+        color: #46b978;
+        background-color:white;
+        border:1px solid #46b978;
+    }
     .u-button:hover {
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.5),
-            0 0px 10px rgb(70 185 120 / 0.5);
+        color: #d23149;
+        background-color:white;
+        border:1px solid #d23149;
     }
 
     .u-image-section {
@@ -94,6 +97,7 @@
         max-height: 100%;
         box-shadow: 0 0 0 1px #ddd; 
         display: block;
+        border-radius: 10px;
     }
 
     .input-container {
@@ -114,7 +118,26 @@
         box-shadow: 0 0 0 1px #ddd;
         border: none;
     }
-
+ @media only screen and (max-width: 1180px) {
+      .u-content{
+          flex-direction: column;
+          margin: 0 0 100px 0;
+      }
+      .u-image-section{
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        }
+        .image-container{
+            margin: 15px 5px 0 5px;
+        }
+        .u-info-section{
+            margin-top: 25px;
+            width: 100%;
+        }
+      
+  }
     
 </style>
 

@@ -369,7 +369,7 @@
         let data = await resp.json()
         console.log(data)
         if (data.success == false) {
-            errorMessage = data.xerror.message
+            errorMessage = data.error.message
         } else {
             auth.signInWithCustomToken(data.authToken)
         }

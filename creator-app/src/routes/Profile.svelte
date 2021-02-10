@@ -346,6 +346,10 @@
         ...$user.docData,
     }
 
+    
+    console.log(profile)
+    console.log($user.docData)
+
     const MAX_BANNER_SIZE = 1
     const MAX_PROFIL_PIC_SIZE = 0.5
 
@@ -362,7 +366,9 @@
         }
         profile.banner = f
     }
-
+    setInterval(() => {
+        console.log(profile)
+    },   1500)
     const handleDropLogo = (event) => {
         let f = event.dataTransfer.files[0]
         if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
@@ -375,8 +381,9 @@
         }
 
         profile.logo = f
+         
     }
-
+$: console.log(profile.logo);
     const handleExplorerBanner = (event) => {
         let f = event.target.files[0]
         if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
@@ -525,12 +532,13 @@
         on:drop|preventDefault={handleDropLogo}
         on:dragover|preventDefault|stopPropagation class="logo">
             <input on:change={handleExplorerLogo} type="file"  id="logo-upload">
+            
             {#if typeof profile.logo == "string" && profile.logo.length > 0}
                 <img crossorigin="anonymous" class="logo-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + "/logo")} alt="logo">
             {:else if typeof profile.logo != "string" }
                 <img class="logo-image" src={URL.createObjectURL(profile.logo)} alt="logo">
             {:else}
-                <img class="logo-image" src="/imgs/defaultUser.png" alt="logo"/>
+                <img class="logo-image" src="/imgs/defaultUser.png" alt={profile.logo}/>
             {/if}
             <div class="creator_name">{$user.claims.username}</div>
         </label>

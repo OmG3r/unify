@@ -14,11 +14,12 @@
     }
     .price-input {
         padding: 10px 8px 10px 40px;
-        background-color: #2e2d3e;
+        background-color: #181d22;
         color: white;
         width: 100px;
         border:none;
         outline: none;
+        border-radius: 8px;
     }
     .price-input.red {
         color: #ee2761;

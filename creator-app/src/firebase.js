@@ -23,8 +23,9 @@ auth.onAuthStateChanged(async function(kuser) {
         let tokenRes = await kuser.getIdTokenResult()
         kuser.claims = tokenRes.claims
         console.log(tokenRes)
-        kuser.docData = await db.collection("creators").doc(tokenRes.claims.username).get()
-        kuser.docData = resp
+        kuser.docData = (await db.collection("creators").doc(tokenRes.claims.username).get()).data()
+        
+        console.log("the kuser")
         console.log(kuser)
         user.set(kuser)
     } else {

@@ -143,7 +143,6 @@
         z-index: 500;
     }
     .u-logo img {
-        border-radius: 50%;
         position: absolute;
         left: 0;
         top: 0;
@@ -151,7 +150,7 @@
         right: 0;
         margin: auto;
         width: 120px;
-        height: 120px;
+    
     }
     .u-logo span {
         font-size: 30px;
