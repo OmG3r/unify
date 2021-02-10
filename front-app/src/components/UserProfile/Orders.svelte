@@ -139,7 +139,10 @@
                     let data = await dbWrapper.get(path)
                     console.log("d")
                     console.log(data)
-                    iteminfo.img = uuidToImageLink(data[iteminfo.id].imgs[data[iteminfo.id].featuredFace],"creators/" + iteminfo.creator + "/merch/" + iteminfo.id + "/" + data[iteminfo.id].featuredFace )
+                    console.log("iteminfo")
+                    console.log(iteminfo)
+                    console.log(data[iteminfo.id])
+                    iteminfo.img = uuidToImageLink(data[iteminfo.id].imgs[iteminfo.color][data[iteminfo.id].featuredFace],"creators/" + iteminfo.creator + "/merch/" + iteminfo.id + "/" + data[iteminfo.id].featuredFace + "-" + iteminfo.color)
                     iteminfo.price = data[iteminfo.id].price
                     iteminfo.name = data[iteminfo.id].name
                     iteminfo.cartID = key

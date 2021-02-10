@@ -169,6 +169,7 @@
     }
 
     .section2 .part_one button {
+        display: block;
         background-color: #00ce7c;
         color: white;
         border-radius: 20px;
@@ -177,9 +178,8 @@
         height: 75px;
         width: 380px;
         border: none;
-        margin-top: 25px;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        
+        margin: 25px auto 0 auto;
         cursor: pointer;
     }
     .section2 .part_one button:active {

@@ -38,7 +38,7 @@
     let form = {
         cart: {
             cartID: $cart.cartID,
-            items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, {id: values.id, creator: values.creator, quantity: values.quantity, size: values.size}]))
+            items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, {id: values.id, creator: values.creator, quantity: values.quantity, size: values.size, color: values.color}]))
         },
         info: {
             address: '',

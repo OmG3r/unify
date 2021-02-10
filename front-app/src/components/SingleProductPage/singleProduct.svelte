@@ -58,7 +58,7 @@
             return
         }  
         cart.add({
-            [params.userid + params.itemid]: {
+            [params.userid + "/" + params.itemid]: {
                 ...activeItem,
                 quantity: $activeQuantity,
                 color: $activeColor,
