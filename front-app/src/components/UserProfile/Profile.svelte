@@ -1,4 +1,5 @@
 <script>
+    import {user} from '../../firebase.js'
 </script>
 
 <style>
@@ -179,7 +180,7 @@
                     type="email"
                     class="email"
                     disabled
-                    value="contact.ahmedbm@gmail.com" />
+                    value={$user.email ? $user.email : ""} />
             </div>
             <div class="input">
                 <div class="title">Phone Number</div>
@@ -187,14 +188,14 @@
                     type="phone"
                     class="phone_num"
                     disabled
-                    value="+216 26 612 708" />
+                    value={$user.phoneNumber ? $user.phoneNumber : ""} />
             </div>
         </div>
         <div class="personal_data">
             <div class="title">Personal Data</div>
             <div class="input">
                 <div class="title">Name</div>
-                <input type="text" class="name" />
+                <input type="text" class="name" value={$user.displayName ? $user.displayName : ""} />
             </div>
             <div class="input">
                 <div class="title">Date of Birth</div>

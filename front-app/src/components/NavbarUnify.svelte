@@ -430,13 +430,13 @@
                 <div class="menu_item" class:myAccount>
                     {{ en: 'My Account', fr: 'Mon Compte' }[$lang]}
                     <div class="user_avatar">
-                        <img src="../img/ti3leh.jpg" alt="avatar" />
+                        <img src={isScroll ? "/img/misc/user-white.png" : "/img/misc/user.png"} alt="avatar" />
                     </div>
                 </div>
 
                 <div class="popup_myaccount" class:myAccount style="background-color:{mobileMenuColor}">
                     <div class="first_part">
-                        <img src="../img/ti3leh.jpg" alt="avatar" />
+                        <img src="/img/misc/user.png" alt="avatar" />
                         <div class="user_info">
                         <div class="u_name" >{$user && $user.displayName ? $user.displayName : "User"}</div>
                             <div class="edit_btn">

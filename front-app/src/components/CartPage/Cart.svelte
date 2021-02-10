@@ -13,14 +13,16 @@
         }
         loaded = true;
     });
-    const handleChangeSize = (key, size) => {
+    const handleChangeSize = (key, fsize) => {
+        console.log(key)
+        console.log(fsize)
         $cart = {
             ...$cart,
             items: {
                 ...$cart.items,
                 [key]: {
-                    ...$cart[key],
-                    size: size
+                    ...$cart.items[key],
+                    size: fsize
                 }
             }
         };
@@ -31,9 +33,9 @@
         $cart = {
             ...$cart,
             items: {
-                ...$cart.item,
+                ...$cart.items,
                 [key]: {
-                    ...$cart[key],
+                    ...$cart.items[key],
                     quantity: e.target.value,
                 }
             }

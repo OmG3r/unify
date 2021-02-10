@@ -11,7 +11,7 @@
     
 
     export let params = {};
-    let currentPage = "";
+    $: currentPage = params.type;
     onMount(async () => {
             currentPage =params.type;
             unsubscribeUser = user.subscribe((v) => {

@@ -1,8 +1,10 @@
 <script>
-    import { dbWrapper } from "../../firebase.js";
+    import { dbWrapper, user } from "../../firebase.js";
+
     import { uuidToImageLink, socialMedias } from "../../utils.js";
     import { link } from "svelte-routing";
-
+    import {onDestroy } from 'svelte'
+    import MaterialSpinner from '../misc/MaterialSpinner.svelte'
     export let params = {};
     let loaded = false;
     let displayProducts = 
@@ -60,6 +62,14 @@
             "statusColor":"34bf65"
         }
     ];
+    const statusColors = {
+        "Delivered": '34bf65',
+        "Printing": '2985d4',
+        'Delivering': 'ffb100',
+        'In Progress': '34bf65'
+
+    }
+    displayProducts = []
     let colors = [
         {
             color:"0e80f6",
@@ -100,6 +110,70 @@
         console.log(displayProducts);
         let loaded = true;
     });*/
+    let orders = {}
+    let initialized = false;
+    let unsubscribeUser = user.subscribe(async (v) => {
+        if (v == 0) {
+            return
+        }
+        if (v == undefined) {
+            
+        } else {
+            console.log(v.uid)
+            let path = "users/" + v.uid
+            console.log(path)
+            let data = await dbWrapper.get(path, true)
+            orders = data.orders
+            console.log("eorders")
+            console.log(data)
+            console.log("orders")
+            if (Object.keys(orders).length == 0) {
+                initialized  = true
+                return
+            }
+            displayProducts = []
+            await Object.entries(orders).forEach(async ([key, values]) => {
+                Object.entries(values.items).forEach(async ([lkey, iteminfo]) => {
+                    console.log(iteminfo.creator)
+                    let path = "creators/" + iteminfo.creator + "/merch/all"
+                    let data = await dbWrapper.get(path)
+                    console.log("d")
+                    console.log(data)
+                    iteminfo.img = uuidToImageLink(data[iteminfo.id].imgs[data[iteminfo.id].featuredFace],"creators/" + iteminfo.creator + "/merch/" + iteminfo.id + "/" + data[iteminfo.id].featuredFace )
+                    iteminfo.price = data[iteminfo.id].price
+                    iteminfo.name = data[iteminfo.id].name
+                    iteminfo.cartID = key
+                    console.log(values)
+                    iteminfo.timestamp = values.timestamp?.seconds || 1610233362
+                    if (iteminfo.status == undefined) {
+                        iteminfo.status = "In Progress"
+                    }
+                    displayProducts.push(iteminfo)
+                })
+                
+            })
+            
+            displayProducts.sort((a, b) => parseFloat(b.timestamp) - parseFloat(a.timestamp));
+            displayProducts = displayProducts
+            console.log("finished")
+            console.log(orders)
+            console.log(displayProducts)
+            initialized = true
+        }
+        
+       
+    })
+    const formatTimestampToDate = (t) => {
+        const a = new Date(t* 1000);
+        const year = a.getFullYear();
+        const month = a.getMonth();
+        const date = a.getDate();
+        return date + "/" + month + "/" + year
+    }
+    onDestroy(() => {
+        unsubscribeUser()
+    })
+
 </script>
 
 <style>
@@ -199,9 +273,9 @@
         box-shadow: 0px 0px 15px #0000001c;
         width: 98%;
     }
-    .id_title,.id{width: 8%;}
+    .id_title,.id{width: 15%;}
     .Product_title,.product{width: 24.5%;}
-    .Quantity_title,.quantity{width: 15%;}
+    .Quantity_title,.quantity{width: 8%;}
     .Price_title,.total_price{width: 17.5%;}
     .Date_title,.date{width: 17.5%;}
     .Status_title,.status{width: 17.5%;}
@@ -256,12 +330,12 @@
         box-shadow: 0px 0px 15px #0000001c;
         text-align: center;
         width: 98%;
-    }
+    }/*
     .single_product:hover{
         box-shadow: 0px 0px 15px #000000b5;
         color: white;
         background-color: #181d22;
-    }
+    }*/
     .single_product:active{
         box-shadow: 0px 0px 15px #000000b5;
         color: white;
@@ -294,6 +368,14 @@
  
     .reference{
         display: none;
+    }
+    .u-spin-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        
+        
     }
   
 
@@ -387,6 +469,25 @@
     <div class="big_title">My Orders</div>
     <hr class="hr_to_remove"/>
 
+    {#if initialized == false}
+    <div class="product_container">
+        <div class="titles">
+            <div class="id_title">ID</div>
+            <div class="Product_title">Product</div>
+            <div class="Quantity_title">Quantity</div>
+            <div class="Price_title">Price</div>
+            <div class="Date_title">Date</div>
+            <div class="Status_title">Status</div>
+        </div>
+        <hr class="hr_to_remove" />
+        <div class="u_products u-spin-area">
+
+            <MaterialSpinner height="75px" width="75px" />
+        </div>
+    </div>
+    {:else if initialized && displayProducts.length == 0}
+        <div>No Products</div>
+    {:else if initialized && displayProducts.length > 0}
     <div class="product_container">
         <div class="titles">
             <div class="id_title">ID</div>
@@ -407,14 +508,14 @@
                         </a>
                     </div>
                     <div class="left_part">
-                        <div class="id">#{product.id}</div>
+                        <div class="id">#{product.cartID}</div>
 
                     <div class="product">
                         <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
                             <img class="product_img" src={product.img} alt="product" />
                         </a>
                         <div class="p_info">
-                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}</div>
+                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,10)+"..." :product.name}{"#" + product.id}</div>
                             <div class="p_content_creator">{product.creator}</div>
                             <div class="color_size">
                                 <div class="color">
@@ -430,13 +531,13 @@
                         </div>
                     </div>
 
-                    <div class="quantity"><div class="reference">Quantity: </div>{product.qty}</div>
+                    <div class="quantity"><div class="reference">Quantity: </div>{product.quantity}</div>
 
                     <div class="total_price"><div class="reference">Price: </div>{product.price} TND</div>
 
-                    <div class="date"><div class="reference">Date: </div>{product.date}</div><!--Order Date-->
+                    <div class="date"><div class="reference">Date: </div>{formatTimestampToDate(product.timestamp)}</div><!--Order Date-->
 
-                <div class="status" style="background-color:#{product.statusColor}">{product.status}</div><!--Order Status-->
+                <div class="status" style="background-color:#{statusColors[product.status]}">{product.status}</div><!--Order Status-->
                     </div>
                     
                 
@@ -446,4 +547,5 @@
             {/each}
         </div>
     </div>
+    {/if}
 </div>

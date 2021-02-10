@@ -2,19 +2,21 @@
     import {cart} from '../../store.js'
     import {onMount, onDestroy} from 'svelte'
     import {user} from '../../firebase.js'
-    import {link} from 'svelte-routing'
-
+    import {link, navigate} from 'svelte-routing'
+    import Popup from './Popup.svelte'
+    import {writable} from 'svelte/store'
+    import {urlPostReq} from '../../utils.js'
     let AccentColor = getComputedStyle(document.body).getPropertyValue(
         "--AccentColor"
     );
     let userColor = getComputedStyle(document.body).getPropertyValue(
         "--userColor"
     );
-    let popup=false;
+    let popup= writable(false);
 
-    let removeScroll = () =>{
-    popup ? document.body.style.overflow="hidden" : document.body.style.overflow="scroll";
-    }
+    let unsubscribePopup = popup.subscribe((v) =>{
+        v ? document.body.style.overflowY="hidden" : document.body.style.overflowY="scroll";
+    })
 
    
     
@@ -28,27 +30,57 @@
     });
 
     onDestroy(() => {
+        document.body.style.overflowY ="scroll"
         unsubscribeCart()
+        unsubscribePopup()
     })
-
-    const form = {
+    console.log(Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, [values.id, values.creator, values.quantity, values.size]])))
+    let form = {
         cart: {
             cartID: $cart.cartID,
-            items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, [values.id, values.creator, values.quantity, values.size]]))
+            items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, {id: values.id, creator: values.creator, quantity: values.quantity, size: values.size}]))
         },
-        uid: $user.uid,
         info: {
-            name: $user.displayName,
-            address: '',
-            state: '',
-            city: ''
+            address: 'cc',
+            state: 'Tunis',
+            city: 'Tunis',
+            postal: '1000',
         },
-        phoneNumber: $user.phoneNumber
+        
     }
     console.log(form)
+    let submitting = false;
+    let addressError = false
+    const finalizeOrder = async () => {
+        console.log("finalizing")
+        if (submitting == true) {
+            return
+        }
+        console.log("after if")
+        submitting = true
+        if (['address', 'state', 'city', 'postal'].some((item) => {console.log(form.info[item]); return form.info[item].length == 0;})) {
+            addressError = true
+            document.querySelector('.address-notification').scrollIntoView({block: "center"});
+            submitting = false
+            return
+        }
+        console.log("doing new form")
+        form = {
+            ...form,
+            token: await $user.getIdToken(true)
+        }
+
+        let rep = await urlPostReq('http://localhost:3001/addOrder', form)
+        cart.reset()
+        navigate('/myaccount/orders')
+        submitting = false;
+    }
 </script>
 
 <style>
+    .address-error {
+        color: #ca4235
+    }
     .title {
         font-size: 25px;
         font-weight: 700;
@@ -268,181 +300,32 @@
     font-weight: 700;
     border-radius: 12px;
   }
-.bg_edit_address_popup{
-    display: block; /* Hidden by default */
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    overflow-y: hidden;
-    display: none;
-}
-.edit_address_popup{
-    background-color: #fefefe;
-    width: 60%; /* Could be more or less, depending on screen size */
-    padding: 0px 0 20px 0;
-    position: relative;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: black gray;
-    height: 500px;
-}
-.edit_address_popup input, .edit_address_popup select {
-    padding: 0 16px;
-}
-.edit_address_popup textarea {
-    padding: 16px;
-}
 
-.edit_address_popup::-webkit-scrollbar {
-    width: 11px;
-}
-.edit_address_popup::-webkit-scrollbar-track {
-    background-color: #8b8e90;
-}
-.edit_address_popup::-webkit-scrollbar-thumb {
-    background-color: #181d22;
-    border-radius: 10px;
-}
-.popup_title{
-    width: 60%;
-    background-color: white;
-    border-radius: 10px 10px 0 0;
-    background-color: #fefefe;
-}
-.popup_title .popup_title_text{
-    font-size: 20px;
-    font-weight: 600;
-    margin: 15px 0px 15px 20px;
-    position: relative;
-}
 hr{
     margin: 0px;
     width: 100%;
 }
-.Save_btn{
-    width: 60%;
-    background-color: white;
-    border-radius: 0px 0px 10px 10px;
-    background-color: #fefefe;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.Save_btn button{
-    width: 95%;
-    height: 50px;
-    border-radius: 5px;
-    margin: 15px 20px 15px 20px;
-}
-.Save_btn button:active{
-    background-color: rgba(var(--AccentColor),.8);
-}
-.name_lastname{
-    display: flex;
-    flex-direction: row;
-   
-    margin:20px;
-}
-.name_lastname .first_name,.name_lastname .last_name{
-    display:flex;
-    flex-direction: column;
-    width: 50%;
-}
-.name_lastname .first_name{
-    margin-right: 15px;
-}
-.first_name_input,.last_name_input{
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    border: 1px solid #ababab;
-    margin-top: 10px;
-}
+
 .phone_num{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin:20px;
 }
-.phone_num .inputs{
-    width: 100%;
-    display:flex;
-    flex-direction: row;
-}
-.inputs .country_num{
-    width: 50px;
-    height: 40px;
-    border-radius: 8px;
-    border: 1px solid #ababab;
-    margin-top: 10px;
-    margin-left: 8px;
-    padding: 8px 0;
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
 
-}
-.inputs .num{
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    border: 1px solid #ababab;
-    margin-top: 10px;
-}
 .address{
     display:flex;
     flex-direction: column;
     justify-content: center;
     margin: 20px;
 }
-.address_input{
-    width: 100%;
-    margin-top: 10px;
-    height: 120px;
-    border-radius: 8px;
-    border: 1px solid #ababab;
-}
-.region,.city{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 20px;
-}
-.region #region_id,.city #city_id{
-   margin-top: 10px;
-   width: 100%;
-   border-radius: 8px;
-   border: 1px solid #ababab;
-   height: 40px;
-}
+
 .address .section2{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.exit_button{
-    position: absolute;
-    font-size: 25px;
-    font-weight: 600;
-    top: -5px;
-    right: 25px;
-    cursor: pointer;
-}
-.editphone {
-    display: flex;
-    flex-direction: row-reverse !important;
-}
+
 
    @media only screen and (max-width: 1000px) {
 
@@ -466,20 +349,20 @@ hr{
         <div class="section2">
 
             <div class="address_info">
-                <div class="name">{form.info.name}</div>
+                <div class="name">{$user.displayName}</div>
                 <div class="address_location">
-                    {#if ['address', 'state', 'city'].some((item) => {return form.info[item].length == 0;})}
-                        Please press Edit and input your address
+                    {#if ['address', 'state', 'city', 'postal'].some((item) => {return form.info[item].length == 0;})}
+                        <span class="address-notification" class:address-error={addressError}>Please press Edit and input your address</span> 
                     {:else}
-                        {form.info.address}, {form.info.state != "Other" ? form.info.state: ""} , {form.info.city != "Other" ? form.info.city : ""}
+                        {form.info.address}, {form.info.state != "Other" ? form.info.state: ""}, {form.info.city != form.info.state ? (form.info.city + ", ") : ""}{form.info.postal != "Other" ? form.info.postal : ""}
                     {/if}
                 </div>
                 <div class="phone_num">{$user.phoneNumber}</div>
             </div>
 
             <div class="edit" on:click="{()=>{
-                popup=true;
-                removeScroll();
+                addressError = false;
+                $popup=true;
             }}"><i class="far fa-edit" />Edit</div>
 
             </div>
@@ -567,78 +450,12 @@ hr{
         <hr />
         <span class="total">Total: {normalTotal} DT</span>
 
-        <button class="finilize_btn">Finalize Your Order</button>
+        <button on:click={finalizeOrder} class="finilize_btn">Finalize Your Order</button>
     </div>
 
 </div>
+{#if $popup}
+    <Popup bind:form bind:popup />
+{/if}
 
-
-<div class="bg_edit_address_popup" style="display:{popup ? "flex" : "none"}">
-
-    <div class="popup_title">
-            <div class="popup_title_text">
-                Modifier l'adresse
-                <div class="exit_button" 
-        on:click="{()=>{
-            popup=false;
-            removeScroll();
-        }}">
-        X
-    </div>
-            </div> 
-            <hr>
-    </div>
-    <div class="edit_address_popup">
-        <div class="name_lastname">
-            <div class="first_name">
-                Name *:
-                <input type="text" bind:value={form.info.name} class="first_name_input">
-            </div>
-            
-            
-        </div>
-
-        <div class="phone_num">
-            <div class="phone_num_text">Phone Number *:</div>
-            <div class="inputs editphone">
-                <a href="/phoneverification" use:link class="country_num">Edit</a>
-                <input disabled type="text" value={$user.phoneNumber} class="num" >  
-            </div>
-            
-        </div>
-        <div class="address">
-            Address *:
-            <textarea bind:value={form.info.address} type="text"  class="address_input"></textarea>
-        </div>
-
-        <div class="region">
-            Region *:
-            <select bind:value={form.info.state} name="region" id="region_id">
-                <option >Nabeul</option>
-                <option >Ariana</option>
-                <option >Kef</option>
-                <option >Gabes</option>
-                <option> Other</option>
-            </select>
-        </div>
-        <div class="city">
-            City *:
-            <select bind:value={form.info.city} name="city" id="city_id">
-                <option >kelibia</option>
-                <option >el mourouj</option>
-                <option >rades</option>
-                <option >Other</option>
-            </select>
-        </div>
-        
-
-    </div>
-
-    <div class="Save_btn">
-        <hr>
-        <button >Save</button>
-    </div>
-
-
-</div>
 

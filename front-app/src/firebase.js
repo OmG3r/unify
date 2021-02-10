@@ -13,22 +13,22 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth()
 export const db = firebase.firestore()
-/* 0 => uninitialized 
-    undefined => there is no user logged in
-    else (object) => user logged in
-*/
+    /* 0 => uninitialized 
+        undefined => there is no user logged in
+        else (object) => user logged in
+    */
 export const user = writable(0)
 auth.onAuthStateChanged(function(kuser) {
     if (kuser) {
         user.set(kuser)
         console.log(kuser)
-      // User is signed in.
+            // User is signed in.
     } else {
-      // No user is signed in.
-      console.log('no user')
-      user.set(undefined)
+        // No user is signed in.
+        console.log('no user')
+        user.set(undefined)
     }
-  });
+});
 
 let cacheHours = 300000
 class FirebaseDBWrapper {
@@ -39,7 +39,27 @@ class FirebaseDBWrapper {
 
     }
 
-    async get(path) {
+    async get(path, fresh = false) {
+        if (fresh) {
+            console.log(path)
+            let doc = await this.db.doc(path).get()
+            let docData = doc.data()
+            console.log(docData)
+                //console.log(docData)
+                //console.log(path)
+            if (docData) {
+                let writing = {
+                    data: docData,
+                    timestamp: Date.now() / 1000
+                }
+                localStorage.setItem(path, JSON.stringify(writing))
+                    //console.log("serving from db and saving")
+                return docData
+            } else {
+                localStorage.setItem(path, JSON.stringify({}))
+                return {}
+            }
+        }
         let lData = localStorage.getItem(path)
         if (lData != null) {
             /* if we have cached data send it */
@@ -54,7 +74,7 @@ class FirebaseDBWrapper {
                 return {}
             }
 
-            
+
         }
         /* no cache, read from db then cache */
         let doc = await this.db.doc(path).get()
@@ -68,7 +88,7 @@ class FirebaseDBWrapper {
                 timestamp: Date.now() / 1000
             }
             localStorage.setItem(path, JSON.stringify(writing))
-            //console.log("serving from db and saving")
+                //console.log("serving from db and saving")
             return docData
         } else {
             localStorage.setItem(path, JSON.stringify({}))
@@ -90,9 +110,9 @@ class FirebaseDBWrapper {
         if (this.activeListeners[path] != undefined) {
 
             this.activeListeners[path]['hasListener'] = true
-            /* if we have an active listening store 
-                return that store
-            */
+                /* if we have an active listening store 
+                    return that store
+                */
 
 
             return this.activeListeners[path]['store']
@@ -116,11 +136,11 @@ class FirebaseDBWrapper {
 
                 if (!activeListeners[path]['listening']) {
                     activeListeners[path]['listening'] = true
-                    unsubscribe = db.doc(path).onSnapshot(function (xdoc) {
+                    unsubscribe = db.doc(path).onSnapshot(function(xdoc) {
 
 
                         activeListeners[path]['emits']++
-                        set(xdoc)
+                            set(xdoc)
                     });
                 }
 

@@ -50,7 +50,7 @@
         <UserProfile />
         <Footer/>
     </Route>
-    <Route  let:params path="/myaccount/:type/">
+    <Route  let:params path="/myaccount/*">
         <NavbarUnify/> 
         <UserProfile {params}/>
         <Footer/>

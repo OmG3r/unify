@@ -1,8 +1,9 @@
 import { writable } from 'svelte/store';
 
 
-import { nanoid } from 'nanoid'
-
+import { customAlphabet } from 'nanoid'
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const nanoid = customAlphabet(alphabet, 10);
 
 
 export const lang = writable("fr")
@@ -27,6 +28,9 @@ function createCartStore() {
     if (saved.cartID == undefined) {
         saved.cartID = nanoid()
         localStorage.setItem('cart', JSON.stringify(saved))
+    }
+    if (saved.items == undefined) {
+        saved.items = []
     }
     console.log(saved)
     const { subscribe, set, update } = writable(saved);
@@ -66,7 +70,10 @@ function createCartStore() {
         },
         reset: () => {
             localStorage.setItem('cart', JSON.stringify({}))
-            set({})
+            set({
+                cartID: nanoid(),
+                items: []
+            })
         }
 
     };

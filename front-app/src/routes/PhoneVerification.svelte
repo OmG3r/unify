@@ -30,6 +30,9 @@
                 })();
             }
         });
+        console.log(location.search)
+        let params = new URLSearchParams(location.search)
+        console.log(params.get('backurl'))
     })
     const SendCode = async () => {
         if (sendingCode) {
@@ -83,6 +86,11 @@
             $user.updatePhoneNumber(credential)
             console.log($user)
             succOperation = true
+        }
+
+        let params = new URLSearchParams(location.search)
+        if (params.get('backurl') != null) {
+            navigate(params.get('backurl'))
         }
         return
         window.confirmationResult.confirm(code.value).then((result) => {

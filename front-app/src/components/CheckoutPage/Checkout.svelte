@@ -33,7 +33,7 @@ import Summary from './orderSummary.svelte';
             validated = true
         })
 
-        if (Object.keys($cart.items.length == 0)) {
+        if (Object.keys($cart.items).length == 0) {
             navigate("/")
         }
     })
