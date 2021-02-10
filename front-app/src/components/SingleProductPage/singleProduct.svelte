@@ -4,7 +4,7 @@
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import { dbWrapper } from "../../firebase.js";
-    import { uuidToImageLink, colors } from '../../utils.js'
+    import { uuidToImageLink, colors, notification } from '../../utils.js'
     import {navigate} from 'svelte-routing'
     import {writable} from 'svelte/store'
     if (activeItem == undefined) {
@@ -49,7 +49,29 @@
     });
 
     const addToCart = () => {
-
+        if ($activeSize == '') {
+            notification.set({
+                accentColor: "error",
+                title: "Error",
+                content: "Please Select Size",
+            })
+            return
+        }  
+        cart.add({
+            [params.userid + params.itemid]: {
+                ...activeItem,
+                quantity: $activeQuantity,
+                color: $activeColor,
+                size: $activeSize
+            }
+        }) 
+        console.log($cart)
+        notification.set({
+            accentColor: 'success',
+            Title: 'Success',
+            content: 'Item added to cart'
+        })
+        
     }
     let show = false;
     let quantity = 1;

@@ -44,6 +44,20 @@
             
         };
     };
+
+    const updateColor = (key, col) => {
+        $cart = {
+            ...$cart,
+            items: {
+                ...$cart.items,
+                [key]: {
+                    ...$cart.items[key],
+                    color: col,
+                }
+            }
+            
+        };
+    }
     const isSelected = () => {
         return;
     };
@@ -105,7 +119,7 @@
                         <div class="p_img">
                             <img
                                 crossorigin="anonymous"
-                                src={value.imgs[value.featuredFace]}
+                                src={value.imgs[value.color][value.featuredFace]}
                                 alt="order"
                             />
                         </div>
@@ -118,12 +132,17 @@
                             </div>
                             <div class="color">
                                 Color:
-                                <div
-                                    style={"background-color:" +
-                                        textToHex(value.color) +
-                                        ";"}
-                                    class="shape"
-                                />
+                                {#each value.colors as col}
+                                    <div
+                                        on:click={() => {updateColor(key, col)}}
+                                        style={"background-color:" +
+                                            textToHex(col) +
+                                            ";"}
+                                            class:active={col == value.color}
+                                        class="shape"
+                                    />
+                                {/each}
+                                
                             </div>
                             <div class="size">
                                 Size:
@@ -518,6 +537,11 @@
         margin-top: 15px;
         font-weight: 600;
         align-items: center;
+    }
+    .shape.active {
+        border-width: 2px;
+        border: 3px solid black;
+        padding: 10px;
     }
     .article .info .size .shape {
         margin-left: 15px;

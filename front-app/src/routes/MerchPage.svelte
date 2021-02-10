@@ -24,15 +24,20 @@
     let validated = false;
     let data = {}
     onMount(async () => {
+        console.log("merch page mounted")
         data = await dbWrapper.get('/creators/' + params.userid)
         if (Object.keys(data).length == 0) {
             navigate('/')
             return
         }
         for (let x of ['logo', 'banner']) {
-            data[x] = uuidToImageLink(data[x], 'creators/' + params.userid + '/' + x)
+            if (data[x]) {
+                data[x] = uuidToImageLink(data[x], 'creators/' + params.userid + '/' + x)
+            }
+            
         }
         data = data
+        console.log("creator data xd")
         console.log(data)
         validated = true
     })
@@ -40,7 +45,7 @@
 </script>
 
 {#if validated}
-    <Navbar creatorData={data}/>
+    <Navbar bind:creatorData={data}/>
     <Merch creatorData={data} {params}/>
 
 {:else}

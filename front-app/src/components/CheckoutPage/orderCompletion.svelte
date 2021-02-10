@@ -70,7 +70,7 @@
             token: await $user.getIdToken(true)
         }
 
-        let rep = await urlPostReq('http://localhost:3001/addOrder', form)
+        let rep = await urlPostReq('https://api.unify.tn/.netlify/functions/express/addOrder', form)
         cart.reset()
         navigate('/myaccount/orders')
         submitting = false;

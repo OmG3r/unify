@@ -191,7 +191,7 @@
     <div class="orders">
         {#each Object.entries($cart.items) as [key, order]}
             <div class="single_product">
-                <div class="p_img"><img src="{order.imgs[order.featuredFace]}" alt="tshirt" /></div>
+                <div class="p_img"><img src="{order.imgs[order.color][order.featuredFace]}" alt="tshirt" /></div>
                 <div class="info">
                     <span class="p_title">{order.name}</span>
                     <span class="p_sub_title">{order.creator}</span>

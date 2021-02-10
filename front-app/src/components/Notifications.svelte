@@ -2,7 +2,7 @@
     .u-notifications {
         height: 80vh;
         width: 390px;
-        position: absolute;
+        position: fixed;
         right: 80px;
         z-index: 60;
         padding: 0 30px 15px 10px;

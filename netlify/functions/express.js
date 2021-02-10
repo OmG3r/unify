@@ -91,6 +91,87 @@ router.post('/createCreator', async(req, res) => {
         })
 })
 
+router.post('/addOrder', async(req, res) => {
+    let data = req.body
+    Object.entries(data).forEach(([key, value]) => {
+        try {
+            data[key] = JSON.parse(value)
+        } catch {
+
+        }
+    })
+    let gerror = false
+    let userData = {}
+    await admin.auth().verifyIdToken(data.token)
+        .then((decodedToken) => {
+            userData = decodedToken
+            const uid = decodedToken.uid;
+            console.log(decodedToken)
+                // ...
+        })
+        .catch((error) => {
+            // Handle error
+            gerror = true
+
+        });
+    if (gerror) {
+        res.send(JSON.stringify({ success: false, error: 'auth/invalid-auth-token', msg: 'invalid token, try loggin in' }))
+        return
+    }
+    if (userData.email_verified == false) {
+        res.send(JSON.stringify({ success: false, error: 'auth/unverified-email', msg: 'email not verified, verify your email' }))
+        return
+    }
+    if (userData.phone_number == undefined || userData.phone_number == null || userData.phone_number == '') {
+        res.send(JSON.stringify({ success: false, error: 'auth/no-phone-number', msg: 'no phone number,please add a phone number to your account' }))
+        return
+    }
+
+    data.info = {
+        ...data.info,
+        phoneNumber: userData.phone_number,
+        name: userData.name
+
+    }
+    let xdata = {
+        ...data.info,
+        ...data.cart,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+    }
+    const batch = db.batch();
+    batch.set(db.collection('orders').doc(data.cart.cartID), xdata)
+        //db.collection('orders').doc(data.cart.cartID).set(xdata);
+        /*db.collection('orders').doc('all').set({
+            [data.cartID]: xdata
+        }, { merge: true })*/
+    batch.set(db.collection('orders').doc('all'), {
+            [xdata.cartID]: xdata
+        }, { merge: true })
+        /*db.collection('users').doc(userData.uid).set({
+            ['orders.' + xdata.cardID]: xdata
+        }, { merge: true })*/
+    batch.set(db.collection('users').doc(userData.uid), {
+        ['orders']: {
+            [xdata.cartID]: xdata
+        }
+    }, { merge: true })
+    let creatorOrders = {}
+    Object.entries(data.cart.items).forEach(([key, value]) => {
+        creatorOrders[value.creator] = creatorOrders[value.creator] || {...data.info, cartID: xdata.cartID, timestamp: xdata.timestamp, items: {} }
+        creatorOrders[value.creator].items[key] = value
+    })
+    Object.entries(creatorOrders).forEach(([creator, order]) => {
+        batch.set(db.collection('creators').doc(creator), {
+            ['orders']: {
+                [xdata.cartID]: order
+            }
+
+        }, { merge: true })
+    })
+    await batch.commit()
+    res.send(JSON.stringify({ success: true }))
+});
+
 
 app.use('/.netlify/functions/express', router); // path must route to lambda
 /*app.listen(8222, () => {

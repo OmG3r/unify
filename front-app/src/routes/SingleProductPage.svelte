@@ -13,9 +13,11 @@
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     let validated = false
+    let data = {}
+    let creatorData = {}
     onMount(async () => {
-        console.log("mounted")
-        let data = await dbWrapper.get('/creators/' + params.userid + "/merch/all")
+        creatorData = await dbWrapper.get('/creators/' + params.userid)
+        data = await dbWrapper.get('/creators/' + params.userid + "/merch/all")
         if (data[params.itemid] == undefined) {
             
             navigate('/' + params.userid)
@@ -26,7 +28,7 @@
 
 </script>
 {#if validated}
-    <NavbarCC />
+    <NavbarCC {creatorData} />
     <Single {params} />
 {:else}
     <div class="u-view">

@@ -76,16 +76,27 @@
         sendingCode = false
     }
     let succOperation = false
-    const verifyCode = () => {
+    const verifyCode = async () => {
         console.log("first")
-        var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value);
+        let erx = false
+        
+        var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value)
         console.log("second")
         console.log(credential)
         if ($user) {
             console.log('4')
-            $user.updatePhoneNumber(credential)
-            console.log($user)
-            succOperation = true
+            try {
+                await $user.updatePhoneNumber(credential)
+                console.log($user)
+                succOperation = true
+            } catch (error) {
+                if (error.code == "auth/invalid-verification-code") {
+                    errorMessage = "The code is incorrect, please verify it."
+                    succOperation = false
+                }
+            }
+            
+            
         }
 
         let params = new URLSearchParams(location.search)

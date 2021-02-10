@@ -659,8 +659,8 @@
     <div class="u-pattern" />
 
     <div class="u-logo">
-        <img crossorigin="anonymous" src={creatorData.logo} alt="u-logo" />
-        <span>{creatorData.name}</span>
+        <img crossorigin="anonymous" src={creatorData.logo ? creatorData.logo : '/img/Logo.svg'} alt="u-logo" />
+        <span>{creatorData.name ? creatorData.name : (creatorData.username + "' store")}</span>
 
         <div class="userSocial">
             <!--
