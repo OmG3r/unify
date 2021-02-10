@@ -58,7 +58,7 @@
     }
    
     .under{
-        width: 100%;
+        width: 80%;
         max-width: 500px;
         position: absolute;
         top:0;
@@ -73,7 +73,7 @@
         width: 200px;
         height: 200px;
         border-radius: 50%;
-        background-color: #46b9786b;
+        background-color: #46b9785c;
         top:0;
         bottom: 0;
         right: 0;
@@ -93,11 +93,11 @@
         <img src="./img/logo.png" alt="logo" />Unify
     </a>
     <div class="title">
-        Under construction
+        Contact us at contact@unify.tn
     </div>
     <div style="position:relative;width: 300px;height:300px">
         <div class="shadow"/>
-        <img class="under"src="/img/under.png" alt="cloud">
+        <img class="under"src="/img/contact.png" alt="cloud">
     </div>
     
     

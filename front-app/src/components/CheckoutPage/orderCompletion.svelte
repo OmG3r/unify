@@ -41,7 +41,7 @@
             items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, {id: values.id, creator: values.creator, quantity: values.quantity, size: values.size}]))
         },
         info: {
-            address: 'cc',
+            address: '',
             state: 'Tunis',
             city: 'Tunis',
             postal: '1000',

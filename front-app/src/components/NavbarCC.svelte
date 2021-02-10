@@ -1,10 +1,17 @@
 <script>
     import { lang } from "../store.js";
     import { socialMedias } from "../utils.js";
-    import {link} from 'svelte-routing'
+    import {link,navigate} from 'svelte-routing'
     import Cart from './misc/Cart.svelte'
+    import {user} from '../firebase.js'
+    import { onMount } from "svelte";
     
 
+    $: signedin = $user;
+     let myAccount = false;
+    
+
+    let mobileMenuColor = "#FFFFFF";
 
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
@@ -14,6 +21,9 @@
         }
     });
 
+
+    
+    
     /**************OnScroll***********/
     let isScroll = false;
     let oldscroll = 0;
@@ -400,6 +410,137 @@
             opacity: 1;
         }
     }
+
+
+
+
+
+.my_account{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+    .menu_item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        padding: 5px;   
+    }
+    .menu_item:active {
+        background-color: #46b978;
+        color: white;
+        height: 45px;
+        border-radius: 5px;
+    }
+  .menu_item{
+         width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .menu_item.myAccount {
+        background-color: #46b978;
+        color: white;
+        height: 45px;
+        border-radius: 5px;
+    }
+    
+    .user_avatar img {
+        width: 30px;
+        border-radius: 50%;
+        margin: 5px 0px 0px 4px;
+    }
+    .popup_myaccount .first_part img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    .popup_myaccount {
+        position: absolute;
+        background-color: white;
+        border-radius: 8px;
+        padding: 15px;
+        top: 70px;
+        box-shadow: 0px 0px 5px #181d225c;
+        display: none;
+    }
+    .popup_myaccount.myAccount {
+        display: block !important;
+    }
+
+    .popup_myaccount{
+            position: absolute;
+            box-shadow: none;
+            width: 180px;
+        }
+        .first_part {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+   
+     .user_info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .u_name {
+        text-align: center;
+        color:#181d22;
+    }
+
+    .edit_btn .btn {
+        background-color: #46b978;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px;
+        margin-top: 10px;
+        width: 100px;
+        cursor: pointer;
+        outline: none;
+    }
+    .edit_btn .btn:active {
+        background-color: #46b978c7;
+    }
+    .second_part {
+        font-weight: 400;
+    }
+    .second_part div {
+        cursor: pointer;
+    }
+    .second_part div:active {
+        color: #46b978;
+    }
+     .second_part .help,.second_part .logout{
+        display: block;
+        color:#181d22
+    }
+    .help_logout{
+        display: none !important;
+    }
+    @media only screen and (max-width: 1180px) {
+    .help_logout{
+            display: block !important;
+            font-size:15px;
+            font-weight: 400;
+        }
+    .popup_myaccount{
+        position: static;
+        color:#181d22;
+    }
+    .second_part .help,.second_part .logout{
+        display: none;
+        color:#181d22
+    }
+     .first_part img {display: none;}
+    }
 </style>
 
 <nav class={isScroll ? 'isScroll' : 'isScrollReverse'}>
@@ -412,7 +553,47 @@
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="#">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a href="#">{{ en: 'donation', fr: 'don' }[$lang]}</a>
+        {#if signedin}
+            <div
+                
+                class="my_account"
+                id="myAccount"
+                on:click={() => (myAccount = !myAccount)}>
+                <div class="menu_item" class:myAccount>
+                    {{ en: 'My Account', fr: 'Mon Compte' }[$lang]}
+                    <div class="user_avatar">
+                        <img src="/img/misc/user-white.png" alt="avatar" />
+                    </div>
+                </div>
+
+                <div class="popup_myaccount" class:myAccount style="background-color:{mobileMenuColor}">
+                    <div class="first_part">
+                        <img src="/img/misc/user.png" alt="avatar" />
+                        <div class="user_info">
+                        <div class="u_name" >{$user && $user.displayName ? $user.displayName : "User"}</div>
+                            <div class="edit_btn">
+                            <button class="btn" on:click="{()=>{navigate("/myaccount")}}">
+                                    {{ en: 'Edit Profile', fr: 'Modifier votre profil' }[$lang]}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="second_part">
+                        <div class="help" >Help & Support</div>
+                        <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
+                    </div>
+                </div>
+            </div>
+            <div class="help_logout">
+                <div class="help" >Help & Support</div>
+                <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
+            </div>
+            
+        {/if}
+        {#if !signedin}
         <a use:link href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
+        {/if}
         <div class="nav-lang">
             {#if $lang == 'fr'}
                 <img

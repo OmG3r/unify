@@ -399,6 +399,11 @@
         .second_part .help,.second_part .logout{
         display: none;
     }
+    .help_logout{
+        display: block !important;
+        font-size:15px;
+        font-weight: 400;
+    }
     }
     
     .menu_item{
@@ -406,11 +411,7 @@
         display: flex;
         justify-content: center;
     }
-    .help_logout{
-        display: block;
-        font-size:15px;
-        font-weight: 400;
-    }
+    
 </style>
 
 <div id="transparent" class:myAccount />
@@ -457,14 +458,14 @@
                     </div>
                     <hr />
                     <div class="second_part">
-                        <div class="help" >Help & Sypport</div>
-                        <div on:click={() => {firebase.auth().signOut()}} class="logout" >xLogout</div>
+                        <div class="help" >Help & Support</div>
+                        <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
-                <div class="help" >Help & Sypport</div>
-                <div on:click={() => {firebase.auth().signOut()}} class="logout" >zLogout</div>
+                <div class="help" >Help & Support</div>
+                <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
             </div>
             
         {/if}

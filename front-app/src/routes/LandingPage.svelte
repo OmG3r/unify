@@ -1,5 +1,14 @@
 <script>
+    import {onMount} from 'svelte';
+    import AOS from 'aos';
+    import 'aos/dist/aos.css'; // You can also use <link> for styles
+    // ..
     export let params = {};
+
+    onMount(async () => {
+            AOS.init();
+        });
+   
 </script>
 
 <style>
@@ -181,11 +190,10 @@
     }
 
     .section2 .part_two img {
-        position: absolute;
-        bottom: 0;
-        width: 65%;
+        width: 125%;
     }
 
+    
     @media only screen and (max-width: 1180px) {
         .slider {
             right: 0;
@@ -268,14 +276,15 @@
 <!--header-->
 <header>
     <div class="left_part">
-        <div class="title">All-in-one Place Unified</div>
-        <div class="sub_title">Design and sell branded merch</div>
+        <div class="title" data-aos="fade-right" data-aos-duration="1000">All-in-one Place Unified</div>
+        <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">Design and sell branded merch</div>
         <div class="get_started_btn">
-            <button class="btn"> <a href="https://creator.unify.tn">Get Started Now</a></button>
+            <button class="btn" data-aos="fade-up" data-aos-delay="800" data-aos-duration="600">
+                <a href="https://creator.unify.tn">Get Started Now</a></button>
         </div>
     </div>
 
-    <div class="slider"><img src="./img/beki.png" alt="content_creator" /></div>
+    <div class="slider" data-aos="fade-up"  data-aos-duration="1000"><img src="./img/beki.png" alt="content_creator" /></div>
 
     <div class="shape_top_left" />
     <div class="shape_bottom_left" />
@@ -302,7 +311,7 @@
             <div style="color:#747474 !important">From Your Hobby</div>
         </div>
     </div>
-    <div class="socialMedia part_two">
+    <div class="socialMedia part_two" data-aos="fade-up">
         <img src="/img/socialMedia/yt_colored.svg" alt="yt" />
         <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
         <img src="/img/socialMedia/fb_colored.svg" alt="fb" />
@@ -329,6 +338,6 @@
         </div>
         <button><a href="https://creator.unify.tn">Start Your Store Now</a></button>
     </div>
-    <div class="part_two"><img src="/img/section2.png" alt="section2" /></div>
+    <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>
 </div>
 <!------End Section 2------>

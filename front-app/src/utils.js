@@ -1,3 +1,5 @@
+import { writable } from 'svelte/store'
+
 export const itemBaseStorageLink = "https://firebasestorage.googleapis.com/v0/b/unify-tn.appspot.com/o/"
 
 export const uuidToImageLink = (uuid, path) => {
@@ -25,6 +27,7 @@ export const textToHex = (text) => {
     }
     return colors["black"]
 }
+export const notification = writable(0)
 
 export const urlPostReq = async(url, xdata) => {
     let data = JSON.parse(JSON.stringify(xdata))

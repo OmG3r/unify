@@ -20,9 +20,12 @@
     import EmailVerification from './routes/EmailVerification.svelte'
     import Footer from "./components/Footer.svelte"
     import InProgress from "./routes/InProgress.svelte"
+    import ContactUs from "./routes/ContactUs.svelte"
+    import Notifications from './components/Notifications.svelte'
+
     export let url = "";
 </script>
-
+<Notifications />
 <Router url="{url}">
     <Route path="/">
         <NavbarUnify/> 
@@ -33,6 +36,9 @@
     
     <Route  path="/inprogress">
         <InProgress/>   
+    </Route>
+    <Route  path="/contactus">
+        <ContactUs/>   
     </Route>
     <Route  path="/checkout">
         <NavbarCheckout/>   

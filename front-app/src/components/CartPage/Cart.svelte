@@ -7,10 +7,12 @@
     let quantity = 1;
     let loaded = false;
     let unsubscribeCart = () => {};
+    let cartItems=0;
     onMount(() => {
-        if (Object.keys($cart.items).length == 0) {
+        cartItems= Object.keys($cart.items).length
+        /* if (Object.keys($cart.items).length == 0) {
             navigate("/");
-        }
+        } */
         loaded = true;
     });
     const handleChangeSize = (key, fsize) => {
@@ -88,6 +90,7 @@
         {#if noSize}
             <div class="size-error">Please select size(s) for your article(s)</div>
         {/if}
+        {#if cartItems !=0}
         <div class="orders_container">
             <span class="article_title desktop_items">Article</span>
             <span class="quantity_title desktop_items">Quantity</span>
@@ -254,6 +257,7 @@
                 <hr />
             {/each}
         </div>
+        
         {#if false}
             <div class="discount_container">
                 <span class="title">Promo code:</span>
@@ -289,7 +293,11 @@
             {#if false}<button class="continue">Continue Shopping</button>{/if}
             <a href="/checkout" on:click|preventDefault={verifyBeforeFinalize} class="finilize">Finalize Your Order</a>
         </div>
+        {:else}
+        <div class="emptyCart">Your cart is empty!</div>
+        {/if}
     </div>
+    
 {/if}
 
 <style>
@@ -300,10 +308,15 @@
         background-color: #e84e38;
         color: #f7f7f7
     }
+    .emptyCart{
+        font-size:45px;
+        text-align: center;    
+        }
     .container {
         display: flex;
         flex-direction: column;
         padding: 100px 50px 0 50px;
+        min-height: 80vh;
     }
     .container .title {
         font-size: 30px;

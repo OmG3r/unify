@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
     import { dbWrapper } from "../../firebase.js";
-    import { uuidToImageLink, socialMedias } from "../../utils.js";
+    import { uuidToImageLink, socialMedias,notification } from "../../utils.js";
     import { link } from "svelte-routing";
     export let params = {};
     export let creatorData = {};
@@ -37,6 +37,14 @@
         console.log(displayProducts);
         let loaded = true;
     });
+    let hel = () =>{
+         notification.set({
+                accentColor: "success",
+                title: "success",
+                content: "Article Added to Cart",
+          });
+                                    
+    }
 </script>
 
 <style>
@@ -335,6 +343,9 @@
                                         '/' +
                                         product.id]: {...product, quantity: 1},
                                     });
+                                   hel()
+                                    console.log("notif");
+                                    
                                 }} />
                         </div>
                         <div class="icon2">

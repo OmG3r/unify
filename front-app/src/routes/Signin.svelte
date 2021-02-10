@@ -26,7 +26,7 @@
         }
         sub = true
         let lform = Object.fromEntries(Object.entries(form).map(([key, el]) => [key, el.value]))
-        await firebase.auth().signInWithEmailAndPassword(email, password)
+        await firebase.auth().signInWithEmailAndPassword(lform.email, lform.password)
         .then((user) => {
             sub = false
         })

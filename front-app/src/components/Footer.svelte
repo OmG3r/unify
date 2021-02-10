@@ -184,7 +184,7 @@ footer{
                 <div class="items">
                     <a href="/inprogress" class="item">About</a>
                     <a href="/inprogress" class="item">Help & Support</a>
-                    <a href="/inprogress" class="item">Contact</a>
+                    <a href="/contactus" class="item">Contact</a>
                     <a href="/inprogress" class="item">Privacy & Policy</a>
                 </div>
             </div>
