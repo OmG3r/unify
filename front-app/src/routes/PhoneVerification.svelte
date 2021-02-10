@@ -90,8 +90,12 @@
                 console.log($user)
                 succOperation = true
             } catch (error) {
+                console.log(error)
                 if (error.code == "auth/invalid-verification-code") {
                     errorMessage = "The code is incorrect, please verify it."
+                    succOperation = false
+                } else if (error.code == "auth/credential-already-in-use") {
+                    errorMessage = "Phone number already in use by another account"
                     succOperation = false
                 }
             }
