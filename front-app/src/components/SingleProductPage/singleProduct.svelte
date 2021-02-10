@@ -1,11 +1,12 @@
 <script>
     export let activeItem;
     export let params
-    import { lang } from "../../store.js";
+    import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import { dbWrapper } from "../../firebase.js";
-    import { uuidToImageLink } from '../../utils.js'
+    import { uuidToImageLink, colors } from '../../utils.js'
     import {navigate} from 'svelte-routing'
+    import {writable} from 'svelte/store'
     if (activeItem == undefined) {
         activeItem = {
             name: "Ahmed Shirt",
@@ -26,29 +27,49 @@
         } else {
             validated = true;
             activeItem  = data[params.itemid]
-            Object.entries(activeItem.imgs).forEach(([key, value]) => {
-                activeItem.imgs[key] = uuidToImageLink(value, "creators/" + params.userid + "/merch/" + params.itemid + "/" + key )
-            })
+            $activeColor = activeItem.featuredColor
+            $activeFacade = activeItem.featuredFace
+            
+            for (let [col, facades]  of Object.entries(activeItem.imgs)) {
+                console.log(facades)
+                for (let [facade, id] of Object.entries(facades)) {
+                    let path = 'creators/' + params.userid + "/merch/" + params.itemid + "/" + facade + "-" + col
+                    console.log(id)
+                    let link = uuidToImageLink(id, path)
+                    console.log(link)
+                    activeItem.imgs[col][facade] = link
+                    console.log(activeItem.imgs[col][facade])
+                } 
+            }
+                
+            
             activeItem = activeItem
             console.log(activeItem)
         }
     });
 
-    let colors = ["0e80f6", "d40019", "ffffff", "737372"];
+    const addToCart = () => {
+
+    }
     let show = false;
     let quantity = 1;
     let rotateLeft = false;
     let rotateRight = false;
     let rotating = false;
+    const activeColor = writable('Black')
+    const activeFacade = writable('front')
+    const activeSize = writable('')
+    const activeQuantity = writable(1)
     let rotate = (type) => {
-        let img = document.querySelector(".p_main_img .product_img");
+        
+        $activeFacade == 'front' ? $activeFacade = 'back' : $activeFacade = 'front'
         if (type == "left") {
             rotateLeft = true;
-            img.src = "/img/tshirt.png";
+            
             rotating = true;
         } else {
             rotateRight = true;
-            img.src = "/img/hoodie.png";
+            
             rotating = true;
         }
 
@@ -149,12 +170,14 @@
                 <!--end-->
 
                 <div class="p_back_circle" />
-                <img
-                    src="/img/tshirt.png"
-                    alt="product"
-                    class="product_img"
-                    class:rotating
-                />
+                {#if activeItem && activeItem.imgs}
+                    <img
+                        src={activeItem.imgs[$activeColor][$activeFacade]}
+                        alt="product"
+                        class="product_img"
+                        class:rotating
+                    />
+                {/if}
             </div>
 
             <div class="p_slider">
@@ -181,10 +204,14 @@
             c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"
                     />
                 </svg>
-
-                <img src="/img/tshirt.png" alt="product" />
-                <img src="/img/tshirt.png" alt="product" />
-                <img src="/img/tshirt.png" alt="product" />
+                {#if activeItem && activeItem.imgs && activeItem.imgs[$activeColor]}
+                    
+                        {#each Object.entries(activeItem.imgs[$activeColor]) as [facade, link]}
+                            <img on:click={() => {$activeFacade = facade}} crossorigin="anonymous" src={link} alt="product" />
+                        
+                        {/each}
+                    
+                {/if}
 
                 <!--Arrow right-->
                 <svg
@@ -213,14 +240,14 @@
         </div>
         <div class="all_info">
             <div class="p_info">
-                <span class="p_title">T-Shirt</span>
+                <span class="p_title">{activeItem.name}</span>
                 <span class="p_subTitle">
-                    Best T-shirts
-                    <span>quality</span>
+                    
+                    <span>{activeItem.creator}</span>
                 </span>
                 <hr />
                 <span class="p_price">
-                    50
+                    {activeItem.price}
                     <span>TND</span>
                 </span>
             </div>
@@ -231,17 +258,21 @@
                         >{{ en: "Colors", fr: "couleurs" }[$lang]}:</span
                     >
                     <span class="colors">
-                        {#each colors as color}
-                            <div
-                                class="color_border"
-                                style="border:0px solid #{color};"
-                            >
+                        {#if activeItem && activeItem.colors}
+                            {#each activeItem.colors as color}
                                 <div
-                                    class="color"
-                                    style="background-color:#{color}"
-                                />
-                            </div>
-                        {/each}
+                                    on:click={() => {$activeColor = color}}
+                                    class="color_border" class:active={$activeColor == color}
+                                    style="border:0px solid black;"
+                                >
+                            
+                                    <div
+                                        class="color"
+                                        style="background-color:{colors[color.toLowerCase()]}"
+                                    />
+                                </div>
+                            {/each}
+                        {/if}
                     </span>
                 </div>
 
@@ -249,14 +280,18 @@
                     <span class="title"
                         >{{ en: "Size", fr: "Taille" }[$lang]}:</span
                     >
-                    <span class="sizes">
-                        <div class="size">XS</div>
-                        <div class="size">S</div>
-                        <div class="size">M</div>
-                        <div class="size">L</div>
-                        <div class="size">XL</div>
-                        <div class="size">XXL</div>
-                    </span>
+                    {#if activeItem && activeItem.sizes}
+                        {#each activeItem.sizes as size}
+                            <div class:active={size == $activeSize} on:click={() => {$activeSize = size}} class="size">{size}</div>
+                        {/each}
+                    {:else}
+                        <span class="sizes">
+                            {#each ['S', 'M', 'L', 'XL'] as size}
+                                <div class:active={size == $activeSize} on:click={() => {$activeSize = size}} class="size">{size}</div>
+                            {/each}
+                        </span>
+                    {/if}
+                    
                 </div>
 
                 <div class="p_quantity">
@@ -268,8 +303,8 @@
                         <svg
                             on:click={() => {
                                 quantity <= 1
-                                    ? (quantity = 1)
-                                    : (quantity -= 1);
+                                    ? ($activeQuantity = 1)
+                                    : ($activeQuantity -= 1);
                             }}
                             version="1.1"
                             id="Layer_1"
@@ -291,13 +326,13 @@
                         </svg>
                         <input
                             type="number"
-                            value:bind={quantity}
-                            value={quantity}
+                            bind:value={$activeQuantity}
+                            
                         />
                         <!--Arrow right-->
                         <svg
                             on:click={() => {
-                                quantity += 1;
+                                $activeQuantity += 1;
                             }}
                             version="1.1"
                             id="Layer_1"
@@ -321,7 +356,7 @@
                 </div>
 
                 <div class="btns">
-                    <button type="button" class="add_cart_btn">
+                    <button on:click={addToCart} type="button" class="add_cart_btn">
                         {{ en: "Add to cart", fr: "J'achète" }[$lang]}
                         <svg
                             id="Capa_1"
@@ -503,7 +538,7 @@
         stop-color: rgb(var(--AccentColor));
     }
     .p_back_circle {
-        background-color: #cbcbcb;
+        background-color: #f6f6f8;
         max-width: 480px;
         max-height: 480px;
         width: 70vw;
@@ -579,7 +614,7 @@
         cursor: pointer;
         font-weight: 700;
     }
-    .size:hover {
+    .size:hover, .size.active {
         background-color: rgb(var(--AccentColor));
     }
     .p_colors {
@@ -605,7 +640,7 @@
         display: flex;
         cursor: pointer;
     }
-    .color_border:hover {
+    .color_border:hover, .color_border.active {
         border-width: 2px !important;
     }
     .p_order_details > div {

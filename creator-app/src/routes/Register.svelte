@@ -303,7 +303,7 @@
 
 
 <script>
-    import {user, db} from '../firebase.js'
+    import {user,auth, db} from '../firebase.js'
     import {onDestroy} from 'svelte'
     import { navigate, link } from "svelte-routing";
     import {urlPostReq} from '../utils.js'
@@ -370,6 +370,8 @@
         console.log(data)
         if (data.success == false) {
             errorMessage = data.xerror.message
+        } else {
+            auth.signInWithCustomToken(data.authToken)
         }
         submitting = false
         return

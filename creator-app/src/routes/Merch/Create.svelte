@@ -148,7 +148,7 @@
 
                             </p>
                             <p>{item.material}</p>
-                            <p>{item.sizes}</p>
+                            <p>{item.sizes[0]} - {item.sizes[item.sizes.length - 1]}</p>
                         </div>
         
                         

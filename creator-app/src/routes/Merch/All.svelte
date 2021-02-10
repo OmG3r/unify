@@ -118,7 +118,7 @@
     }
     */
     let listener = () => {}
-    listener = db.doc("/creators/" + $user.docData.username + "/merch/all").onSnapshot((doc) => {
+    listener = db.doc("/creators/" + $user.claims.username + "/merch/all").onSnapshot((doc) => {
         loaded = true
         let data = doc.data()
         console.log(data)
@@ -128,11 +128,15 @@
         }
         for (let [key, value] of Object.entries(data)) {
             console.log(value)
-            for (let x of ['front','back']) {
-                let path = 'creators/' + $user.docData.username + "/merch/" + key + "/" + x
-                value.imgs[x] = uuidToImageLink(value.imgs[x], path)
-                console.log(value.imgs[x])
-            } 
+            for (let [col, facades]  of Object.entries(value.imgs)) {
+                console.log(facades)
+                for (let [facade, id] of Object.entries(facades)) {
+                    let path = 'creators/' + $user.claims.username + "/merch/" + key + "/" + facade + "-" + col
+                    value.imgs[col][facade] = uuidToImageLink(id, path)
+                    console.log(value.imgs[col][facade])
+                } 
+            }
+            
         }
         products = data
         console.log(products)
@@ -159,7 +163,7 @@
                         <div class="prod-card">
                             <div class="u-image-area">
                                 <ImageBackground
-                                img={product.imgs.front} 
+                                img={product.imgs[product.featuredColor][product.featuredFace]} 
                                 bgColor={textToHex(product.color)} />
 
                             </div>

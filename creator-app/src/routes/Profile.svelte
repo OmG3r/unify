@@ -438,11 +438,11 @@
         }
         updating = true
         if (typeof profile.logo != "string") {
-            profile.logo = (await uploadImage(profile.logo, $user.docData.username + "/logo" )).split('token=', 2)[1]
+            profile.logo = (await uploadImage(profile.logo, $user.claims.username + "/logo" )).split('token=', 2)[1]
         }
 
         if (typeof profile.banner != "string") {
-            profile.banner = (await uploadImage(profile.banner, $user.docData.username + "/banner" )).split('token=', 2)[1]
+            profile.banner = (await uploadImage(profile.banner, $user.claims.username + "/banner" )).split('token=', 2)[1]
         }
         let modification = false
         for (let key of Object.keys($user.docData)) {
@@ -464,7 +464,7 @@
             }
         }
         if (modification == true) {
-            await db.doc('/creators/' + $user.docData.username).update(profile)
+            await db.doc('/creators/' + $user.claims.username).set(profile, {merge: true})
             notification.set(
             {
                 accentColor: "success",
@@ -512,7 +512,7 @@
             <input on:change={handleExplorerBanner} type="file" id="banner-upload">
             
             {#if typeof profile.banner == "string" && profile.banner.length > 0}
-                <img crossorigin="anonymous" class="banner-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.docData.username + "/banner")} alt="baaner">
+                <img crossorigin="anonymous" class="banner-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + "/banner")} alt="baaner">
             {:else if typeof profile.banner != "string"}
                 <div class="banner-image" style="background-image:url({URL.createObjectURL(profile.banner)})"/>
             {:else}
@@ -526,13 +526,13 @@
         on:dragover|preventDefault|stopPropagation class="logo">
             <input on:change={handleExplorerLogo} type="file"  id="logo-upload">
             {#if typeof profile.logo == "string" && profile.logo.length > 0}
-                <img crossorigin="anonymous" class="logo-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.docData.username + "/logo")} alt="logo">
+                <img crossorigin="anonymous" class="logo-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + "/logo")} alt="logo">
             {:else if typeof profile.logo != "string" }
                 <img class="logo-image" src={URL.createObjectURL(profile.logo)} alt="logo">
             {:else}
                 <img class="logo-image" src="/imgs/defaultUser.png" alt="logo"/>
             {/if}
-            <div class="creator_name">ti3leh</div>
+            <div class="creator_name">{$user.claims.username}</div>
         </label>
         
 
@@ -541,7 +541,7 @@
     <section class="u-info-area">
         <div class="input myStore">
                 <div class="inputContainer">
-                    <input type="text" class="name" id ="myStoreID" value="https://unify.tn/ti3leh/merch"/>
+                    <input type="text" class="name" id ="myStoreID" value={"https://unify.tn/" + $user.claims.username + "/merch"}/>
                 <div class="copyimg" on:click="{copyStore}"><img src="/imgs/misc/copy.png" alt="copy"></div>
                 </div>
                 
@@ -556,7 +556,7 @@
                     type="email"
                     class="email"
                     
-                    value="contact.ahmedbm@gmail.com" />
+                    value={$user.email ? $user.email : ""} />
             </div>
             <div class="input">
                 <div class="title">Phone Number</div>
@@ -564,14 +564,14 @@
                     type="phone"
                     class="phone_num"
                     
-                    value="26612708" />
+                    value={$user.phoneNumber ? $user.phoneNumber : ""} />
             </div>
         </div>
         <div class="personal_data">
             <div class="title">Personal Data</div>
             <div class="input">
                 <div class="title">Name</div>
-                <input type="text" class="name" value="Ahmed Ben Mahmoud"/>
+                <input type="text" class="name" value={$user.displayName ? $user.displayName : ""}/>
             </div>
             <div class="input">
                 <div class="title">Date of Birth</div>

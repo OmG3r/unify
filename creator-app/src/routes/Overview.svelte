@@ -128,7 +128,7 @@
         padding: 30px 30px;
         border-radius: 3px;
         display: flex;
-        width: 320px;
+        width: 100%;
         background-color: white;
         margin: 0 16px;
         border-radius: 15px;

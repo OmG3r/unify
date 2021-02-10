@@ -137,17 +137,23 @@
     let itemData = undefined
     let savedData = undefined
     onMount(async () => {
-        let resp = await db.doc("/creators/" + $user.docData.username + "/merch/" + params.itemid).get()
+        let resp = await db.doc("/creators/" + $user.claims.username + "/merch/" + params.itemid).get()
         let data = resp.data()
         if (data == undefined) {
             navigate('/merch/all')
         }
 
-        for (let x of ['front','back']) {
-            let path = 'creators/' + $user.docData.username + "/merch/" + params.itemid + "/" + x
-            data.imgs[x] = uuidToImageLink(data.imgs[x], path)
-            console.log(data.imgs[x])
+        for (let [col, facades]  of Object.entries(data.imgs)) {
+            console.log(facades)
+            for (let [facade, id] of Object.entries(facades)) {
+                let path = 'creators/' + $user.claims.username + "/merch/" + params.itemid + "/" + facade + "-" + col
+                data.imgs[col][facade] = uuidToImageLink(id, path)
+                console.log(data.imgs[col][facade])
+            } 
         }
+            
+       
+        
         console.log(data)
         data.cost = creations[data.mockup].cost
         data.profit = creations[data.mockup].profit
@@ -175,8 +181,8 @@
         )
         if (resp == 'true') {
             let batch = db.batch()
-            batch.update(db.doc("/creators/" + $user.docData.username + "/merch/" + params.itemid), {deleted: true})
-            batch.update(db.doc("/creators/" + $user.docData.username + "/merch/all"), {[params.itemid + "." + deleted]: true})
+            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/" + params.itemid), {deleted: true})
+            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/all"), {[params.itemid + "." + deleted]: true})
             await batch.commit()
             notification.set({
                 accentColor: "success",
@@ -228,8 +234,8 @@
 
         if (Object.keys(updateDoc).length != 0) {
             let batch = db.batch()
-            batch.update(db.doc("/creators/" + $user.docData.username + "/merch/" + params.itemid), updateDoc);
-            batch.update(db.doc("/creators/" + $user.docData.username + "/merch/all"), updateAll)
+            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/" + params.itemid), updateDoc);
+            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/all"), updateAll)
             await batch.commit()
             notification.set({
                 accentColor: "success",
@@ -269,12 +275,12 @@
 
             <div class="u-image-section">
                 <div class="image-container">
-                    <img src={itemData.imgs.front} alt="front">
+                    <img src={itemData.imgs[itemData.featuredColor].front} alt="front">
     
                 </div>
     
                 <div class="image-container">
-                    <img src={itemData.imgs.back} alt="back">
+                    <img src={itemData.imgs[itemData.featuredColor].back} alt="back">
                     
                 </div>
     

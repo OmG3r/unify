@@ -22,14 +22,18 @@
 
         displayProducts = Object.entries(data).map(([key, value]) => {
             value.id = key;
-            for (let x of ["front", "back"]) {
-                value.imgs[x] = uuidToImageLink(
-                    value.imgs[x],
-                    "creators/" + params.userid + "/merch/" + key + "/" + x
-                );
+            for (let [col, facades]  of Object.entries(value.imgs)) {
+                console.log(facades)
+                for (let [facade, id] of Object.entries(facades)) {
+                    let path = 'creators/' + params.userid + "/merch/" + key + "/" + facade + "-" + col
+                    value.imgs[col][facade] = uuidToImageLink(id, path)
+                    console.log(value.imgs[col][facade])
+                } 
             }
             return value;
         });
+
+        
         console.log(displayProducts);
         let loaded = true;
     });
@@ -316,7 +320,7 @@
                         href='/{params.userid}/merch/{product.id}'>
                         <img
                             class="product_img"
-                            src={product.imgs[product.featuredFace]}
+                            src={product.imgs[product.featuredColor][product.featuredFace]}
                             alt="product" />
                     </a>
 

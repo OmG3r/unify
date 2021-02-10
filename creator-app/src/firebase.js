@@ -1,4 +1,4 @@
-import {writable} from 'svelte/store'
+import { writable } from 'svelte/store'
 
 const firebaseConfig = {
     apiKey: "AIzaSyDucnhtBFM0HOg8dxk3lUIRcV8pHmifzXc",
@@ -20,11 +20,10 @@ export const storage = firebase.storage()
 auth.onAuthStateChanged(async function(kuser) {
     if (kuser) {
         let resp = {}
-        await db.collection("creators").where('email', "==", kuser.email).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                resp = doc.data()
-            });
-        })
+        let tokenRes = await kuser.getIdTokenResult()
+        kuser.claims = tokenRes.claims
+        console.log(tokenRes)
+        kuser.docData = await db.collection("creators").doc(tokenRes.claims.username).get()
         kuser.docData = resp
         console.log(kuser)
         user.set(kuser)

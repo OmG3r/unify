@@ -255,7 +255,8 @@
     
     const action = writable('Design')
     const facade = writable('Front')
-    const selectedColor = writable(Object.values(colors)[0])
+    const selectedColor = writable('Blue')
+    const merchColors = writable([])
     const handleKeypress = (e) => {
             e = e || window.event;
             // use e.keyCode
@@ -294,6 +295,8 @@
         recievedMockData = true;
         $navCollapsable = false
         $navCollapse = true
+        $selectedColor = mockup.colors[0]
+        $merchColors = [mockup.colors[0]]
         document.addEventListener('keyup', handleKeypress)
         
     })
@@ -310,6 +313,7 @@
     }
 
     const addImage = async (img) => {
+        console.log("adding image to " + $facade.toLocaleLowerCase())
         let activeCanva = canvas[$facade.toLocaleLowerCase()]
         await fabric.Image.fromURL(URL.createObjectURL(img), function(oImg) {
             let gid = nanoid()
@@ -320,6 +324,9 @@
             oImg.center()
             activeCanva.canva.add(oImg)
             oImg.center()
+            oImg.set({top: mockup.printable[$facade.toLocaleLowerCase()].top + 5})
+            oImg.setCoords();
+            oImg.saveState();
             console.log(oImg._originalElement.currentSrc)
         });
         setTimeout(() => {
@@ -390,10 +397,10 @@
         }
         spinit = true
 
-       merchData.creator = $user.docData.username
-       merchData.price = $priceCalculatorData.price
-       merchData.profit = $priceCalculatorData.profit
-
+        merchData.creator = $user.claims.username
+        merchData.price = $priceCalculatorData.price
+        merchData.profit = $priceCalculatorData.profit
+        merchData.sizes = mockup.sizes
 
         let uploadImage = (f, npath) => {
             return new Promise(async (resolve, reject) => {
@@ -421,12 +428,26 @@
         }
         //console.log(canvas.front.canva.toDataURL({format: 'jpeg',quality: 0.3}))
         $showBoundaries = false
-        let frontPath = $user.docData.username + "/merch/" + merchData.id + "/front"
-        let backPath = $user.docData.username + "/merch/" + merchData.id + "/back"
+        merchData.colors = $merchColors
+        let initColor = $selectedColor
+        merchData.featuredColor = initColor
+        for (let col of merchData.colors) {
+            $selectedColor = col
+            let frontPath = $user.claims.username + "/merch/" + merchData.id + "/front-" + col
+            let backPath = $user.claims.username + "/merch/" + merchData.id + "/back-" + col
+            merchData.imgs[col] = merchData.imgs[col] || {}
+            merchData.imgs[col].front = (await uploadImage(canvas.front.canva.toDataURL({format: 'jpeg',quality: 0.9}), frontPath)).split('token=', 2)[1]
+            merchData.imgs[col].back = (await uploadImage(canvas.back.canva.toDataURL({format: 'jpeg',quality: 0.9}), backPath)).split('token=', 2)[1]
+        }
+        /*
+        let frontPath = $user.claims.username + "/merch/" + merchData.id + "/front"
+        let backPath = $user.claims.username + "/merch/" + merchData.id + "/back"
         merchData.imgs.front = (await uploadImage(canvas.front.canva.toDataURL({format: 'jpeg',quality: 0.9}), frontPath)).split('token=', 2)[1]
         
         merchData.imgs.back = (await uploadImage(canvas.back.canva.toDataURL({format: 'jpeg',quality: 0.9}), backPath)).split('token=', 2)[1]
+        */
         $showBoundaries = true
+        $selectedColor = initColor
         function blobToDataURL(blob, callback) {
             var a = new FileReader();
             a.onload = function(e) {callback(e.target.result);}
@@ -436,7 +457,7 @@
         for (let [i, fabobj] of [...canvas.front.items, ...canvas.back.items].entries()) {
             
             let compID = nanoid()
-            let compPath = $user.docData.username + "/merch/" + merchData.id + "/" + compID + ".png"
+            let compPath = $user.claims.username + "/merch/" + merchData.id + "/" + compID + ".png"
             
             
             let img = (await uploadImage(imageOriginals[fabobj.originalGID], compPath)).split('token=', 2)[1]
@@ -460,8 +481,8 @@
         merchData.color = $selectedColor
         console.log(merchData)
 
-        await db.doc('/creators/' + $user.docData.username + "/merch/all").set({[merchData.id]: merchData}, {merge: true})
-        await db.doc('/creators/' + $user.docData.username + "/merch/" + merchData.id).set(merchData)
+        await db.doc('/creators/' + $user.claims.username + "/merch/all").set({[merchData.id]: merchData}, {merge: true})
+        await db.doc('/creators/' + $user.claims.username + "/merch/" + merchData.id).set(merchData)
     
         spinit = false;
 
@@ -474,6 +495,20 @@
 
         }
     let nameError = false;
+    const ascertainColorClick = (name) => {
+        if ($merchColors.includes(name)) {
+            $merchColors = $merchColors.filter((item) => item != name)
+            if ($merchColors.length == 0) {
+                $merchColors = [mockup.colors[0]]
+                $selectedColor = mockup.colors[0]
+            } else {
+                $selectedColor = $merchColors[0]
+            }
+        } else {
+            $merchColors = [...$merchColors, name]
+            $selectedColor = name
+        }
+    }
 </script>
 
 <div 
@@ -518,17 +553,19 @@ class="u-view">
         <div class="control-container">
             <div class="control-title">Select Product Color</div>
             <div class="colors-container">
-                    {#each Object.entries(colors) as [name, hex]}
-                    <abbr class="color-circle-container" title={name}>
-                        <div 
-                        on:click={() => {$selectedColor ==  hex ? "" : $selectedColor =  hex}}
-                        class:active={$selectedColor ==  hex} 
-                        style={formatCssStyle({'background-color': hex})} 
-                        class="color-circle">
+                {#if mockup && mockup.colors}
+                    {#each mockup.colors as name}
+                        <abbr class="color-circle-container" title={name}>
+                            <div 
+                            on:click={() => {ascertainColorClick(name)}}
+                            class:active={$merchColors.includes(name)} 
+                            style={formatCssStyle({'background-color': colors[name.toLocaleLowerCase()]})} 
+                            class="color-circle">
 
-                        </div>
-                    </abbr>
-                {/each}
+                            </div>
+                        </abbr>
+                    {/each}
+                {/if}
             </div>
         </div>
 
@@ -586,6 +623,7 @@ class="u-view">
                         {selectedColor} 
                         mockupURL={mockup.imgs.front}
                         {showBoundaries}
+                        boundaryData={mockup.printable.front}
                         />
                     {/if}
                 </div>
@@ -597,6 +635,7 @@ class="u-view">
                         {selectedColor} 
                         mockupURL={mockup.imgs.back}
                         {showBoundaries}
+                        boundaryData={mockup.printable.back}
                         />
                     {/if}
                 </div>

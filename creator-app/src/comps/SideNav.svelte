@@ -37,7 +37,7 @@
   };
   const ascertainImage = () => {
     if ($user.docData && $user.docData.logo && $user.docData.logo.length > 0) {
-      return uuidToImageLink($user.docData.logo, 'creators/' + $user.docData.username +"/logo" )
+      return uuidToImageLink($user.docData.logo, 'creators/' + $user.claims.username +"/logo" )
     } else {
       return '/imgs/misc/nav/user.png'
     }
