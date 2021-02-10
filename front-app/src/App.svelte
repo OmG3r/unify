@@ -19,6 +19,7 @@
     import ForgotPassword from './routes/ForgotPassword.svelte'
     import EmailVerification from './routes/EmailVerification.svelte'
     import Footer from "./components/Footer.svelte"
+    import InProgress from "./routes/InProgress.svelte"
     export let url = "";
 </script>
 
@@ -28,6 +29,10 @@
         <LandingPage />
         <Footer/>
     
+    </Route>
+    
+    <Route  path="/inprogress">
+        <InProgress/>   
     </Route>
     <Route  path="/checkout">
         <NavbarCheckout/>   

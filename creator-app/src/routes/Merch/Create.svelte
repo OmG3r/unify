@@ -45,14 +45,15 @@
         width: 300px;
         display: flex;
         flex-direction: column;
-        background-color: white;
+        background-color: #f6f6f8;
         border-radius: 3px;
         margin: 16px;
-        box-shadow: 0 0 0 1px #ddd;
         border-radius: 4px;
         overflow: hidden;
         cursor: pointer;
+        border-radius: 20px;
     }
+  
 
     .u-image-area {
         width: 100%;

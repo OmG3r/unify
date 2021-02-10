@@ -174,18 +174,18 @@ footer{
             <div class="using">
                 <div class="title">USING UNIFY</div>
                 <div class="items">
-                    <a href="#" class="item">Sell merch online</a>
-                    <a href="#" class="item">Donation & tipping</a>
-                    <a href="#" class="item">Custom Design</a>
+                    <a href="https://creator.unify.tn" class="item">Sell merch online</a>
+                    <a href="/inprogress" class="item">Donation & tipping</a>
+                    <a href="/inprogress" class="item">Custom Design</a>
                 </div>
             </div>
             <div class="about">
                 <div class="title">ABOUT UNIFY</div>
                 <div class="items">
-                    <a href="#" class="item">About</a>
-                    <a href="#" class="item">Help & Support</a>
-                    <a href="#" class="item">Contact</a>
-                    <a href="#" class="item">Privacy & Policy</a>
+                    <a href="/inprogress" class="item">About</a>
+                    <a href="/inprogress" class="item">Help & Support</a>
+                    <a href="/inprogress" class="item">Contact</a>
+                    <a href="/inprogress" class="item">Privacy & Policy</a>
                 </div>
             </div>
             <div class="follow">

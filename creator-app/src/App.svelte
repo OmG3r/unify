@@ -5,7 +5,12 @@
         justify-content: flex-start;
         align-items: flex-start;
     }
-
+@media only screen and (max-width: 1180px) {
+    .app-container {
+        position: relative;
+        overflow-x: hidden;
+    }
+}
 
 </style>
 
@@ -21,6 +26,7 @@
     import Test from './routes/Test.svelte'
     import Register from './routes/Register.svelte'
     import PhoneVerification from './routes/PhoneVerification.svelte'
+    import Design from  './routes/Design.svelte'
     
 
 
@@ -59,6 +65,11 @@
         <Route path="/merch/*">
             <VerifyLogin >
                <Merch />
+            </VerifyLogin>
+        </Route>
+        <Route path="/design">
+            <VerifyLogin >
+               <Design />
             </VerifyLogin>
         </Route>
         <Route path="/test">

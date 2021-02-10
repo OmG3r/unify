@@ -34,7 +34,11 @@
         filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
     }
 
-
+  @media only screen and (max-width: 1180px) {
+      header{
+          display: none;
+      }
+  }
     
 </style>
 

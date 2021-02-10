@@ -1,6 +1,7 @@
 <script>
     import { link } from "svelte-routing";
     import ViewNav from '../comps/ViewNav.svelte'
+    import Orders from '../comps/orders.svelte'
     const kpis = {
         orders: {
             img: "/imgs/misc/receipt.png",
@@ -29,7 +30,7 @@
 <style>
     .u-view {
         width: 100%;
-        padding-top: 75px;
+        padding: 80px 80px 80px 80px
     }
     header {
         width: 100%;
@@ -160,6 +161,18 @@
         font-size: 20px;
         opacity: 0.8;
     }
+    @media only screen and (max-width: 1180px) {
+        .kpi-cards{
+            flex-direction: column;
+        }
+        .kpi-cards div{
+            margin: 10px 0 10px 0;
+            width: 100%;  
+        }
+        .u-view{
+            padding: 80px 0 80px 0
+        }
+    }
 </style>
 
 <div class="u-view">
@@ -200,4 +213,6 @@
             {/each}
         </div>
     </section>
+
+    <Orders/>
 </div>

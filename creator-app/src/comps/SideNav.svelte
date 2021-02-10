@@ -25,9 +25,9 @@
       img: "/imgs/misc/nav/store.png"
     },
     {
-      name: "Make a design",
-      routerLink: "/merch/design",
-      path: "/merch/design",
+      name: "Design",
+      routerLink: "/design",
+      path: "/design",
       img: "/imgs/misc/nav/design.png"
     }
   ];
@@ -285,6 +285,45 @@
   .no-padding {
     padding: 0;
   }
+  @media only screen and (max-width: 1180px) {
+      nav{
+          min-height: 80px;
+          height: 80px;
+          position: fixed;
+            bottom: 0;
+            z-index: 5;
+      }
+    nav.collapse{
+        max-width: 100vw;
+        width: 100vw;
+        padding:0;
+    }
+    .user-card,.u-unify,.signout,.resize-button{
+        display: none;
+    }
+    .navs{
+        flex-direction: row; 
+        justify-content: center;
+        height: 100%;
+    }
+    .navs a{
+        
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .navs a img{
+        min-height: 32px;
+    }
+    .navs a .nav-item-name{
+        display: block;
+        margin-left: 0px;
+    }
+    .u-nav-item.active{
+        height: 100%;
+    }
+  }
+
 </style>
 
 {#if !['/login', '/register'].includes(activeURI)}

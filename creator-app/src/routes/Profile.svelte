@@ -1,3 +1,4 @@
+
 <style>
 
 
@@ -7,6 +8,7 @@
         max-height: 100vh;
         overflow-y: scroll;
         position: relative;
+        padding: 0 0 100px 0;
 
     }
 
@@ -20,6 +22,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
     
@@ -27,18 +30,25 @@
 
     .logo {
         position: absolute;
-        bottom: -40px;
+        top:0;
+        bottom: 0;
         right: 0;
         left: 0;
         margin: auto;
         width: 150px;
         height: 150px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        
+        cursor: pointer; 
     }
+   .creator_name{
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+   }
 
     .logo.filled  {
         background-color: transparent;
@@ -109,8 +119,6 @@
         max-width: 100%;
     }
     .logo-image{
-        border-radius: 50%;
-        border: 5px solid white;
         width: 150px;
         height: 150px;
     }
@@ -263,13 +271,65 @@
     hr {
         width: 100%;
     }
+    .signout{
+        font-size: 18px;
+        font-weight: 600;
+        color: white;
+        background-color: #46B978;
+        width: 60%;
+        margin-top: 10px;
+        border-radius: 4px;
+        max-width: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+    }
+    .signout:hover{
+        background-color:rgb(87,210,141)
+    }
+    .myStore{
+        display: flex;
+        justify-content: center;
+    }
+    .inputContainer{
+        position: relative;
+        width: 100%;
+        max-width:600px;
+        cursor: pointer;
+        font-size: 18px !important;
+    }
+    .inputContainer img{
+        filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(194deg) brightness(108%) contrast(101%);
+        width: 50%;
+    }
+    .copyimg{
+        background-color: #181d22;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50px;
+        height: 100%;
+        border-radius:0 8px 8px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .copyimg:hover{
+        background-color: #485058;
+    }
+    .copyimg:active{
+        background-color: #181d22;
+    }
     @media only screen and (max-width: 1180px) {
      
     }
+    
 </style>
 
 
 <script>
+    
     import {link} from 'svelte-routing'
     import Input from '../comps/InputField.svelte'
     import InputColor from '../comps/InputColor.svelte'
@@ -422,6 +482,22 @@
         }
         updating = false
     }
+
+    let copyStore= () =>{
+        var copyText = document.getElementById("myStoreID");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+        notification.set({
+                accentColor: "success",
+                title: "success",
+                content: "Link copied to clipboard",
+            })
+    }
 </script>
 
 <div class="u-view">
@@ -456,12 +532,22 @@
             {:else}
                 <img class="logo-image" src="/imgs/defaultUser.png" alt="logo"/>
             {/if}
+            <div class="creator_name">ti3leh</div>
         </label>
+        
 
     </section>
 
     <section class="u-info-area">
+        <div class="input myStore">
+                <div class="inputContainer">
+                    <input type="text" class="name" id ="myStoreID" value="https://unify.tn/ti3leh/merch"/>
+                <div class="copyimg" on:click="{copyStore}"><img src="/imgs/misc/copy.png" alt="copy"></div>
+                </div>
+                
+        </div>
         <div class="user_data">
+            
         <div class="account_data">
             <div class="title">Account Data</div>
             <div class="input">
@@ -506,6 +592,9 @@
             <Input placeholder={"Username"} title="Facebook" bind:text={profile.facebook} />
             <Input placeholder={"Username"} title="Instagram" bind:text={profile.instagram} />
             <Input placeholder={"Username"} title="Twitch" bind:text={profile.twitch} />
+            <Input placeholder={"Username"} title="Twitter" bind:text={profile.twitter} />
+            <Input placeholder={"Username"} title="Baaz" bind:text={profile.baaz} />
+            <Input placeholder={"Username"} title="Tiktok" bind:text={profile.Tiktok} />
         </div>
         
         <button on:click={doUpdate} class="save-btn">
@@ -515,5 +604,6 @@
                 Save
             {/if}
         </button>
+        <div on:click={() => {firebase.auth().signOut()}}  class="signout">Logout</div>
     </section>
 </div>

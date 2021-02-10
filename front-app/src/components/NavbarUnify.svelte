@@ -31,13 +31,14 @@
     let isScrollReverse = false;
     window.onscroll = () => {
         let currentScrollPos = window.pageYOffset;
+        console.log(currentScrollPos);
         if (currentScrollPos <= 150) {
             isScroll = false;
             isScrollReverse = true;
             $downColor = "#181D22";
             mobileMenuColor = "#FFFFFF";
         }
-        if (currentScrollPos > 100) {
+        if (currentScrollPos > 180) {
             isScroll = true;
             isScrollReverse = false;
             $downColor = "#FFFFFF";
@@ -70,12 +71,12 @@
         justify-content: space-between;
         align-items: center;
         padding: 0px 50px 0px 50px;
-        background-color: transparent;
+        background-color: white;
         height: 70px;
         color: #181d22;
         font-size: 18px;
         font-weight: 600;
-        width: 100%;
+        width: 100vw;
         position: absolute;
         top: 0;
         z-index: 500;
@@ -143,10 +144,13 @@
         cursor: pointer;
         color: white;
     }
-    .join_btn:hover {
+    .join_btn a{
+        margin: 0 !important;   
+         }
+    .join_btn a:hover {
         color: white !important;
     }
-    .join_btn:active {
+    .join_btn a:active {
         background-color: rgba(var(--AccentColor), 0.8);
     }
     .isScroll {
@@ -160,7 +164,7 @@
         animation: scrollAnimReverse 0.3s ease-out;
         height: 70px;
         position: absolute;
-        background-color: transparent;
+        background-color: white;
     }
     .closeMobileMenu {
         position: absolute;
@@ -272,6 +276,7 @@
         align-items: center;
         cursor: pointer;
         padding: 5px;
+       
     }
     .menu_item:active {
         background-color: #46b978;
@@ -323,6 +328,7 @@
             right: 0;
             justify-content: flex-start;
             box-shadow: 0px 0px 5px #181d225c;
+            background: white;
         }
 
         .menuItems.isActive {
@@ -374,7 +380,9 @@
         }
         .join_btn {
             margin: 18px !important;
+            height: 50px;
         }
+       
 
         .my_account{
             display: flex;
@@ -418,12 +426,13 @@
 
     <div
         class="menuItems {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"
-        style="background-color:{true ? "" :mobileMenuColor}">
+        style="background-color:{mobileMenuColor} !important">
         <a use:link href="/">{{ en: 'Home', fr: 'Acceuil' }[$lang]}</a>
         <a use:link href="/merch">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a use:link href="/tips">{{ en: 'Donations', fr: 'don' }[$lang]}</a>
         {#if signedin}
             <div
+                
                 class="my_account"
                 id="myAccount"
                 on:click={() => (myAccount = !myAccount)}>
@@ -486,7 +495,10 @@
         {/if}
         {#if !signedin}
             <div class="join_btn">
+                <a href="https://creator.unify.tn">
                 {{ en: 'Join Us', fr: 'Rejoignez-nous' }[$lang]}
+            </a>
+                
             </div>
         {/if}
     </div>
