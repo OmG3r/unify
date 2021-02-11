@@ -13,7 +13,7 @@ admin.initializeApp({
     databaseURL: "https://unify-tn.firebaseio.com"
 });
 const db = admin.firestore()
-
+let cacheCreatorMerch = {}
 
 app.use(express.urlencoded());
 
@@ -137,6 +137,24 @@ router.post('/addOrder', async(req, res) => {
         ...data.cart,
         timestamp: admin.firestore.FieldValue.serverTimestamp()
     }
+
+    let creatorOrders = {}
+    for (let [key, value] of Object.entries(data.cart.items)) {
+        /* trustfully set the price and profit of each item at this instance */
+        if (cacheCreatorMerch[value.creator] == undefined) {
+            cacheCreatorMerch[value.creator] = (await db.doc('creators/' + value.creator + "/merch/all").get()).data()
+        }
+
+        value.price = cacheCreatorMerch[value.creator][value.id].price
+        value.profit = cacheCreatorMerch[value.creator][value.id].profit
+        creatorOrders[value.creator] = creatorOrders[value.creator] || {...data.info, cartID: xdata.cartID, timestamp: xdata.timestamp, items: {} }
+        creatorOrders[value.creator].items[key] = value
+    }
+
+
+
+
+
     const batch = db.batch();
     batch.set(db.collection('orders').doc(data.cart.cartID), xdata)
         //db.collection('orders').doc(data.cart.cartID).set(xdata);
@@ -154,11 +172,7 @@ router.post('/addOrder', async(req, res) => {
             [xdata.cartID]: xdata
         }
     }, { merge: true })
-    let creatorOrders = {}
-    Object.entries(data.cart.items).forEach(([key, value]) => {
-        creatorOrders[value.creator] = creatorOrders[value.creator] || {...data.info, cartID: xdata.cartID, timestamp: xdata.timestamp, items: {} }
-        creatorOrders[value.creator].items[key] = value
-    })
+
     Object.entries(creatorOrders).forEach(([creator, order]) => {
         batch.set(db.collection('creators').doc(creator), {
             ['orders']: {

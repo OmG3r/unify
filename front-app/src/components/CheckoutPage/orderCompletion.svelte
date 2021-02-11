@@ -3,6 +3,7 @@
     import {onMount, onDestroy} from 'svelte'
     import {user} from '../../firebase.js'
     import {link, navigate} from 'svelte-routing'
+    import MaterialSpinner from '../misc/MaterialSpinner.svelte'
     import Popup from './Popup.svelte'
     import {writable} from 'svelte/store'
     import {urlPostReq, notification, generateDeliveryDate} from '../../utils.js'
@@ -79,7 +80,7 @@
             ...form,
             token: await $user.getIdToken(true)
         }
-
+        //
         let rep = await urlPostReq('https://api.unify.tn/.netlify/functions/express/addOrder', form)
         
         navigate('/completed?orderid=' + $cart.cartID + "&backurl=/myaccount/orders" )
@@ -310,6 +311,7 @@
     font-size: 18px;
     font-weight: 700;
     border-radius: 12px;
+    padding: 8px 0;
   }
 
 hr{
@@ -461,7 +463,13 @@ hr{
         <hr />
         <span class="total">Total: {normalTotal} DT</span>
 
-        <button on:click={finalizeOrder} class="finilize_btn">Finalize Your Order</button>
+        <button on:click={finalizeOrder} class="finilize_btn">
+            {#if submitting}
+                <MaterialSpinner />
+            {:else}
+                Finalize Your Order
+            {/if}
+        </button>
     </div>
 
 </div>
