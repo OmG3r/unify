@@ -408,6 +408,7 @@
             display: block;
             opacity: 1;
         }
+        
     }
 
 
