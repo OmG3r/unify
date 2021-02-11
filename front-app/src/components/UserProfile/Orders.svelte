@@ -5,6 +5,7 @@
     import { link } from "svelte-routing";
     import {onDestroy } from 'svelte'
     import MaterialSpinner from '../misc/MaterialSpinner.svelte'
+
     export let params = {};
     let loaded = false;
     let displayProducts = 
@@ -123,7 +124,7 @@
             let path = "users/" + v.uid
             console.log(path)
             let data = await dbWrapper.get(path, true)
-            orders = data.orders
+            orders = data.orders || {}
             console.log("eorders")
             console.log(data)
             console.log("orders")
@@ -132,11 +133,12 @@
                 return
             }
             displayProducts = []
-            await Object.entries(orders).forEach(async ([key, values]) => {
-                Object.entries(values.items).forEach(async ([lkey, iteminfo]) => {
+            
+            for ( let [key, values] of Object.entries(orders)){
+                    for  ( let [lkey, iteminfo] of Object.entries(values.items)) {
                     console.log(iteminfo.creator)
                     let path = "creators/" + iteminfo.creator + "/merch/all"
-                    let data = await dbWrapper.get(path)
+                    let data = await dbWrapper.get(path, true)
                     console.log("d")
                     console.log(data)
                     console.log("iteminfo")
@@ -152,9 +154,11 @@
                         iteminfo.status = "In Progress"
                     }
                     displayProducts.push(iteminfo)
-                })
+                    
+                }
                 
-            })
+            }
+            
             
             displayProducts.sort((a, b) => parseFloat(b.timestamp) - parseFloat(a.timestamp));
             displayProducts = displayProducts

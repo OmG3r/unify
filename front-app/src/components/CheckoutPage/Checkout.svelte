@@ -25,10 +25,10 @@ import Summary from './orderSummary.svelte';
 
             if (!v.phoneNumber) {
                 console.log("sending to phone verification")
-                navigate('/phoneverification')
+                navigate('/phoneverification?backurl=/checkout')
             } else if (!v.emailVerified) {
                 console.log("sending to email verification")
-                navigate('/emailverification')
+                navigate('/emailverification?backurl=/checkout')
             }
             validated = true
         })
