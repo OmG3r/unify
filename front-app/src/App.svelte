@@ -23,7 +23,7 @@
     import ContactUs from "./routes/ContactUs.svelte"
     import Notifications from './components/Notifications.svelte'
     import FooterCC from "./components/FooterCC.svelte"
-
+    import OrderCompleted from "./components/CheckoutPage/OrderCompleted.svelte"
     export let url = "";
 </script>
 <Notifications />
@@ -34,7 +34,9 @@
         <Footer/>
     
     </Route>
-    
+    <Route  path="/completed">
+        <OrderCompleted/>   
+    </Route>
     <Route  path="/inprogress">
         <InProgress/>   
     </Route>

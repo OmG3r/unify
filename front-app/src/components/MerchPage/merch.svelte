@@ -379,7 +379,7 @@
                                 }} />
                         </div>
                         <div on:click={() => {addWishlist(params.userid + '-' +product.id)}} class="icon2">
-                            <img src={$user.docData?.wishlist[params.userid + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
+                            <img src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
                         </div>
                     </div>
                     <div class="productInfo">

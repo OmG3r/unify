@@ -298,7 +298,7 @@
                         <div class="btns">
                             <img
                             on:click={addWishlist(value.creator + '-' +value.id) }
-                             class="heart-img" src={$user.docData?.wishlist[value.creator + '-' +value.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png"} alt="eart">
+                             class="heart-img" src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[value.creator + '-' +value.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png"} alt="eart">
                             <i on:click={() => {removeItem(key)}} class="fas fa-minus" />
                         </div>
                     </div>
