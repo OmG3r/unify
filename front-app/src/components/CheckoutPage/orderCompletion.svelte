@@ -5,7 +5,7 @@
     import {link, navigate} from 'svelte-routing'
     import Popup from './Popup.svelte'
     import {writable} from 'svelte/store'
-    import {urlPostReq} from '../../utils.js'
+    import {urlPostReq, notification} from '../../utils.js'
     let AccentColor = getComputedStyle(document.body).getPropertyValue(
         "--AccentColor"
     );
@@ -41,6 +41,7 @@
             items: Object.fromEntries(Object.entries($cart.items).map(([key, values]) => [key, {id: values.id, creator: values.creator, quantity: values.quantity, size: values.size, color: values.color}]))
         },
         info: {
+            name: $user.displayName ? $user.displayName : '',
             address: '',
             state: 'Tunis',
             city: 'Tunis',
@@ -56,11 +57,17 @@
         if (submitting == true) {
             return
         }
+
         console.log("after if")
         submitting = true
         if (['address', 'state', 'city', 'postal'].some((item) => {console.log(form.info[item]); return form.info[item].length == 0;})) {
             addressError = true
             document.querySelector('.address-notification').scrollIntoView({block: "center"});
+            notification.set({
+                accentColor: 'alert',
+                title: 'Alert',
+                conent: 'Fill out your Address'
+            })
             submitting = false
             return
         }
@@ -349,7 +356,7 @@ hr{
         <div class="section2">
 
             <div class="address_info">
-                <div class="name">{$user.displayName}</div>
+                <div class="name">{form.info.name}</div>
                 <div class="address_location">
                     {#if ['address', 'state', 'city', 'postal'].some((item) => {return form.info[item].length == 0;})}
                         <span class="address-notification" class:address-error={addressError}>Please press Edit and input your address</span> 

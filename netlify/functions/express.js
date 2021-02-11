@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
     next();
 });
 app.options('*', cors({ origin: true, credentials: true }))
+app.post('*', cors({ origin: true, credentials: true }))
 const router = express.Router();
 router.get('/', (req, res) => {
     res.end('hello')
@@ -129,9 +130,7 @@ router.post('/addOrder', async(req, res) => {
 
     data.info = {
         ...data.info,
-        phoneNumber: userData.phone_number,
-        name: userData.name
-
+        phoneNumber: userData.phone_number
     }
     let xdata = {
         ...data.info,
