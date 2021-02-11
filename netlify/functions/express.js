@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
     next();
 });
 app.options('*', cors({ origin: true, credentials: true }))
+app.post('*', cors({ origin: true, credentials: true }))
 const router = express.Router();
 router.get('/', (req, res) => {
     res.end('hello')
