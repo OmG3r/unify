@@ -56,15 +56,11 @@
     <Route  path="/signin">  
         <Signin/>
     </Route>
-    <Route  path="/myaccount">
-        <NavbarUnify /> 
-        <UserProfile />
-        <Footer/>
-    </Route>
+    
     <Route  let:params path="/myaccount/*">
-        <NavbarUnify/> 
+        
         <UserProfile {params}/>
-        <Footer/>
+        
     </Route>
     <Route  path="/phoneverification">  
         <PhoneVerification/>

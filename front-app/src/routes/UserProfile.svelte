@@ -1,6 +1,6 @@
 <script>
 import Layout from "../components/UserProfile/Layout.svelte";
-import {onMount} from 'svelte'
+import {onMount, onDestroy} from 'svelte'
 import {navigate} from "svelte-routing";
 import { Router, Link, Route, link} from "svelte-routing";
 import {user} from '../firebase.js'
@@ -8,9 +8,27 @@ import Profile from "../components/UserProfile/Profile.svelte";
 import Orders from "../components/UserProfile/Orders.svelte";
 import Wishlist from "../components/UserProfile/Wishlist.svelte";
 import Redirector from '../components/misc/Redirector.svelte'
+import Footer from '../components/Footer.svelte'
+import NavbarUnify from "../components/NavbarUnify.svelte";
 export let params = {}
 console.log(params)
 export let url;
+let unsubscribeUser = () => {};
+let allowed = false;
+onMount(() => {
+    unsubscribeUser = user.subscribe((v) => {
+        if (v == undefined) {
+            navigate("/")
+        } else if (v == 0) {
+            
+        } else {
+            allowed = true
+        }
+    })
+})
+onDestroy(() => {
+    unsubscribeUser()
+})
 $: currentPage = params['*']
 </script>
 
@@ -110,6 +128,8 @@ $: currentPage = params['*']
  }
 </style>
 
+{#if allowed}
+<NavbarUnify />
 <Router url="{url}">
     <div class="layout User_profile">
         <div class="profile_pic">
@@ -143,6 +163,7 @@ $: currentPage = params['*']
         </div>
     </div>
 </Router>
+<Footer/>
 
-
+{/if}
 

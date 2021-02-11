@@ -26,6 +26,7 @@
                 console.log(facades)
                 for (let [facade, id] of Object.entries(facades)) {
                     let path = 'creators/' + params.userid + "/merch/" + key + "/" + facade + "-" + col
+                    console.log(value.imgs)
                     value.imgs[col][facade] = uuidToImageLink(id, path)
                     console.log(value.imgs[col][facade])
                 } 

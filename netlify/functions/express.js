@@ -59,7 +59,7 @@ router.post('/createCreator', async(req, res) => {
     let data = await admin.firestore().doc('/creators/' + req.body.username).get()
     console.log(data)
     if (data.exists) {
-        res.end(JSON.stringify({ success: false, msg: 'username already taken' }))
+        res.end(JSON.stringify({ success: false, error: { message: 'username already taken' } }))
         return
     }
 

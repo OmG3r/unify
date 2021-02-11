@@ -16,15 +16,27 @@ export const db = firebase.firestore()
 export const auth = firebase.auth()
 export const user = writable("init")
 export const storage = firebase.storage()
-
+import { notification } from './utils.js'
 auth.onAuthStateChanged(async function(kuser) {
     if (kuser) {
         let resp = {}
+        console.log(kuser)
+
         let tokenRes = await kuser.getIdTokenResult()
+        console.log(tokenRes)
         kuser.claims = tokenRes.claims
+        if (kuser.claims.username == undefined) {
+            notification.set({
+                accentColor: 'error',
+                title: 'Error',
+                content: 'This is user account, not a content creator account'
+            })
+            await firebase.auth().signOut()
+            return
+        }
         console.log(tokenRes)
         kuser.docData = (await db.collection("creators").doc(tokenRes.claims.username).get()).data()
-        
+
         console.log("the kuser")
         console.log(kuser)
         user.set(kuser)
