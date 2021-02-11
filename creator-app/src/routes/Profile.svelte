@@ -371,6 +371,7 @@
     }
     .input textarea{
         height: 300px !important;
+        padding: 15px;
     }
     .input .title {
         font-size: 18px;
@@ -379,9 +380,9 @@
         top: -12px;
         left: 30px;
         color: #46c092;
-        background-color: whtie;
+        background-color: white;
         padding: 0 5px 0 5px;
-        height: 13px;
+        
     }
     input:focus,
     button:focus {
@@ -556,7 +557,7 @@
             on:dragover|preventDefault|stopPropagation
             class="logo">
             <input
-                on:change={handlFeExplorerLogo}
+                on:change={handleExplorerLogo}
                 type="file"
                 id="logo-upload" />
 
@@ -671,6 +672,10 @@
                 placeholder={'Username'}
                 title="Twitch"
                 bind:text={profile.twitch} />
+                <Input
+                placeholder={'Username'}
+                title="Nimo"
+                bind:text={profile.nimo} />
             <Input
                 placeholder={'Username'}
                 title="Twitter"

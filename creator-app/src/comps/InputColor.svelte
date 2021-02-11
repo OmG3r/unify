@@ -26,7 +26,7 @@
         top: -12px;
         left: 30px;
         color: #46c092;
-        background-color: #F1F4F6;
+        background-color: white;
         padding: 0 5px 0 5px;
         height: 13px;
         }

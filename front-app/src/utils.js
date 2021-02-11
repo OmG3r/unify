@@ -9,7 +9,11 @@ export const socialMedias = [
     { type: 'facebook', link: 'https://facebook.com' },
     { type: 'youtube', link: 'https://youtube.com' },
     { type: 'instagram', link: 'https://instagram.com' },
-    { type: 'twitch', link: 'https://twitch.tv' }
+    { type: 'twitch', link: 'https://twitch.tv' },
+    { type: 'nimo', link: 'https://www.nimo.tv' },
+    { type: 'twitter', link: 'https://twitter.com/' },
+    { type: 'Tiktok', link: 'https://www.tiktok.com' },
+    { type: 'baaz', link: 'https://twitch.tv' },
 ]
 
 export const colors = {

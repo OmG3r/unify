@@ -272,7 +272,7 @@
                                 alt="cart"
                                 on:click={() => {
                                     cart.add({
-                                        [params.userid +
+                                        [product.creator +
                                         '-' +
                                         product.id]: {...product, quantity: 1},
                                     });
