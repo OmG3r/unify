@@ -255,7 +255,7 @@
                 <div class="single_product">
                     <a
                         use:link
-                        href={'/' + params.userid + '/merch/' + product.id}>
+                        href={'/' + product.creator + '/merch/' + product.id}>
                         <img
                             class="product_img"
                             src={product.imgs[product.featuredColor][product.featuredFace]}
