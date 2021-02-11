@@ -934,7 +934,7 @@
                         -->
                     </div>
                     <div class="delivery">
-                        <span>{{ en: 'DELIVERY & RETURNS', fr: 'LIVRAISON & RETOURS' }[$lang]}
+                        <span>{{ en: 'DELIVERY', fr: 'LIVRAISON' }[$lang]}
                         </span>
                         <span class="desc">Delivered between {minDdate}
                             and {maxDdate}. Please check exact dates in the
