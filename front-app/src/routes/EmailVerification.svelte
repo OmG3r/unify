@@ -112,9 +112,16 @@
             if (v == undefined) {
                 navigate("/signin")
             } else if ($user.emailVerified) {
-                navigate("/")
+                let params = new URLSearchParams(location.search)
+                if (params.get('backurl') != null) {
+                    navigate(params.get('backurl'))
+                }else{
+                    navigate("/")
+                }
             }
         })
+
+        
     })
 
     onDestroy(() => {
@@ -137,7 +144,7 @@
 
 </script>
 
-
+{#if $user.emailVerified}
 <div class="left_side">
     <a href="/" use:link class="u_logo">
         <img src="./img/logo.png" alt="logo" />Unify
@@ -166,3 +173,4 @@
     <div class="circle_top" />
     <div class="circle_bottom" />
 </div>
+{/if}

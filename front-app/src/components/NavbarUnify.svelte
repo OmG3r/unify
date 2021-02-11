@@ -45,6 +45,11 @@
             mobileMenuColor = "#181D22";
         }
     };
+
+let signoutFunc = () =>{
+    firebase.auth().signOut()
+    navigate("/")
+}
 </script>
 
 <style>
@@ -459,13 +464,13 @@
                     <hr />
                     <div class="second_part">
                         <div class="help" >Help & Support</div>
-                        <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
+                        <div on:click={() => {signoutFunc()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
                 <div class="help" >Help & Support</div>
-                <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
+                <div on:click={()=>{signoutFunc()}} class="logout" >Logout</div>
             </div>
             
         {/if}

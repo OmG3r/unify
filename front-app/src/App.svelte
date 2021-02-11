@@ -22,6 +22,7 @@
     import InProgress from "./routes/InProgress.svelte"
     import ContactUs from "./routes/ContactUs.svelte"
     import Notifications from './components/Notifications.svelte'
+    import FooterCC from "./components/FooterCC.svelte"
 
     export let url = "";
 </script>
@@ -81,6 +82,7 @@
     <Route let:params path="/:userid/merch">
         
         <MerchPage {params} />
+        <FooterCC/>
     
     </Route>
 
