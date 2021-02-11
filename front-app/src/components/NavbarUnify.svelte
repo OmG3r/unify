@@ -418,12 +418,12 @@
 <nav
     class:isScroll
     class="{isScroll ? 'isScroll' : ''} {isScrollReverse ? 'isScrollReverse' : ''}">
-<div class="u_logo" style="color:{$downColor}">
-        <div class="logo_img">
+<a use:link href="/" class="u_logo" style="color:{$downColor}">
+        <div  class="logo_img">
             <Logo />
         </div>
         Unify
-    </div>
+    </a>
 
     <div
         class="menuItems {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"

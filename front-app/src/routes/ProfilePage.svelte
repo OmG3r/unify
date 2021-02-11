@@ -17,7 +17,7 @@
             navigate('/')
         } else {
             console.log("sending")
-            navigate('/' + params.userid + '/merch')
+            navigate('/' + params.userid + '/merch', { replace: true })
         }
 
         

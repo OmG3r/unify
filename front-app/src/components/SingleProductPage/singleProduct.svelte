@@ -3,9 +3,9 @@
     export let params
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
-    import { dbWrapper } from "../../firebase.js";
+    import { dbWrapper, user, db } from "../../firebase.js";
     import { uuidToImageLink, colors, notification } from '../../utils.js'
-    import {navigate} from 'svelte-routing'
+    import {navigate, link} from 'svelte-routing'
     import {writable} from 'svelte/store'
     if (activeItem == undefined) {
         activeItem = {
@@ -58,7 +58,7 @@
             return
         }  
         cart.add({
-            [params.userid + "/" + params.itemid]: {
+            [params.userid + "-" + params.itemid]: {
                 ...activeItem,
                 quantity: $activeQuantity,
                 color: $activeColor,
@@ -82,6 +82,35 @@
     const activeFacade = writable('front')
     const activeSize = writable('')
     const activeQuantity = writable(1)
+
+    const addWishlist = (nid) => {
+        if ( $user ==0 || $user == undefined) {
+            navigate('/signin?backurl=/' + params.userid + "/merch/"  + activeItem.id)
+            return
+        }
+
+        if ($user.docData.wishlist && Object.keys($user.docData.wishlist).includes(nid)) {
+            // remove it
+            console.log("removing " + nid)
+            db.collection('users').doc($user.uid).update({["wishlist." + nid]: firebase.firestore.FieldValue.delete()})
+            delete $user.docData.wishlist[nid]
+            $user = $user
+        } else {
+            console.log("adding " + nid)
+            db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
+            $user = {
+                ...$user,
+                docData: {
+                    ...$user.docData,
+                    wishlist: {
+                        ...$user.docData.wishlist,
+                        [nid]: true
+                    }
+                }
+            }
+        }
+        
+    }
     let rotate = (type) => {
         
         $activeFacade == 'front' ? $activeFacade = 'back' : $activeFacade = 'front'
@@ -265,7 +294,7 @@
                 <span class="p_title">{activeItem.name}</span>
                 <span class="p_subTitle">
                     
-                    <span>{activeItem.creator}</span>
+                    <a use:link href={"/" + activeItem.creator}>   <span>{activeItem.creator}</span></a>
                 </span>
                 <hr />
                 <span class="p_price">
@@ -466,10 +495,11 @@
                 on:mouseleave={() => {
                     show = false;
                 }}
+                on:click={addWishlist(params.userid + '-' +activeItem.id)}
             >
-                <i class="far fa-heart" />
+               <img class="heart-img" src={$user.docData?.wishlist[params.userid + '-' +activeItem.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/empty-heart.png"} alt="eart">
                 <span class="popuptext" class:show id="myPopup"
-                    >Add to wishlist</span
+                    >{$user.docData?.wishlist[params.userid + '-' +activeItem.id] ? "Remove from " : "Add to "} wishlist</span
                 >
             </button>
         </div>
@@ -477,6 +507,9 @@
 </div>
 
 <style>
+    .heart-img {
+        max-width: 100%;
+    }
     .container {
         background-color: white;
         color: #181d22;

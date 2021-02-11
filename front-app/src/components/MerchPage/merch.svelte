@@ -3,9 +3,9 @@
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
-    import { dbWrapper } from "../../firebase.js";
+    import { db, dbWrapper,user } from "../../firebase.js";
     import { uuidToImageLink, socialMedias,notification } from "../../utils.js";
-    import { link } from "svelte-routing";
+    import { link, navigate } from "svelte-routing";
     export let params = {};
     export let creatorData = {};
     let loaded = false;
@@ -45,6 +45,35 @@
                 content: "Article Added to Cart",
           });
                                     
+    }
+
+    const addWishlist = (nid) => {
+        if ( $user ==0 || $user == undefined) {
+            navigate('/signin?backurl=/' + params.userid + "/merch")
+            return
+        }
+
+        if ($user.docData.wishlist && Object.keys($user.docData.wishlist).includes(nid)) {
+            // remove it
+            console.log("removing " + nid)
+            db.collection('users').doc($user.uid).update({["wishlist." + nid]: firebase.firestore.FieldValue.delete()})
+            delete $user.docData.wishlist[nid]
+            $user = $user
+        } else {
+            console.log("adding " + nid)
+            db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
+            $user = {
+                ...$user,
+                docData: {
+                    ...$user.docData,
+                    wishlist: {
+                        ...$user.docData.wishlist,
+                        [nid]: true
+                    }
+                }
+            }
+        }
+        
     }
 </script>
 
@@ -341,7 +370,7 @@
                                 on:click={() => {
                                     cart.add({
                                         [params.userid +
-                                        '/' +
+                                        '-' +
                                         product.id]: {...product, quantity: 1},
                                     });
                                    hel()
@@ -349,8 +378,8 @@
                                     
                                 }} />
                         </div>
-                        <div class="icon2">
-                            <img src="/img/misc/heart.png" alt="heart" />
+                        <div on:click={() => {addWishlist(params.userid + '-' +product.id)}} class="icon2">
+                            <img src={$user.docData?.wishlist[params.userid + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
                         </div>
                     </div>
                     <div class="productInfo">

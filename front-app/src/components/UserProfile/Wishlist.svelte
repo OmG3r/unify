@@ -1,34 +1,76 @@
 <script>
-    import { dbWrapper } from "../../firebase.js";
+    import { dbWrapper, user, db } from "../../firebase.js";
     import { uuidToImageLink, socialMedias } from "../../utils.js";
+    import {cart} from '../../store.js'
     import { link } from "svelte-routing";
+    import { onMount, onDestroy } from "svelte";
 
+    let unsubscribeUser = () => {}
+    onMount(async () => {
+        unsubscribeUser = user.subscribe(async () => {
+            if ($user?.docData?.wishlist) {
+                let mapped =  {}
+                for( let slug of Object.keys($user.docData.wishlist)) {
+                    let [creatorid, itemid] = slug.split("-", 2)
+                    mapped[creatorid] = mapped[creatorid] || []
+                    mapped[creatorid].push(itemid)
+                }
+
+                for (let [creatorid, items] of Object.entries(mapped)) {
+                    let data = await dbWrapper.get('/creators/' + creatorid + "/merch/all")
+                    for (let item of items) {
+                        let ditem = data[item]
+                        for (let [col, facades]  of Object.entries(ditem.imgs)) {
+                            console.log(facades)
+                            for (let [facade, id] of Object.entries(facades)) {
+                                let path = 'creators/' + creatorid + "/merch/" + item + "/" + facade + "-" + col
+                                console.log(ditem.imgs)
+                                ditem.imgs[col][facade] = uuidToImageLink(id, path)
+                                console.log(ditem.imgs[col][facade])
+                                
+                            } 
+                        }
+                        displayProducts.push(ditem)
+                    }
+                }
+            }
+            displayProducts = displayProducts
+        })
+        
+    })
+    onDestroy(() => {
+        unsubscribeUser()
+    })
     export let params = {};
     let loaded = false;
     let displayProducts = [];
     let colors = ["0e80f6", "d40019", "46B978", "737372"];
+    const addWishlist = (nid) => {
+        
 
-    dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
-        console.log(data);
-        if (data == undefined) {
-            displayProducts = [];
-            loaded = true;
-            return;
-        }
-
-        displayProducts = Object.entries(data).map(([key, value]) => {
-            value.id = key;
-            for (let x of ["front", "back"]) {
-                value.imgs[x] = uuidToImageLink(
-                    value.imgs[x],
-                    "creators/omg3r/merch/" + key + "/" + x
-                );
+        if ($user.docData.wishlist && Object.keys($user.docData.wishlist).includes(nid)) {
+            // remove it
+            console.log("removing " + nid)
+            db.collection('users').doc($user.uid).update({["wishlist." + nid]: firebase.firestore.FieldValue.delete()})
+            delete $user.docData.wishlist[nid]
+            $user = $user
+        } else {
+            console.log("adding " + nid)
+            db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
+            $user = {
+                ...$user,
+                docData: {
+                    ...$user.docData,
+                    wishlist: {
+                        ...$user.docData.wishlist,
+                        [nid]: true
+                    }
+                }
             }
-            return value;
-        });
-        console.log(displayProducts);
-        let loaded = true;
-    });
+        }
+        
+    }
+    
 </script>
 
 <style>
@@ -215,7 +257,7 @@
                         href={'/' + params.userid + '/merch/' + product.id}>
                         <img
                             class="product_img"
-                            src={product.imgs[product.featuredFace]}
+                            src={product.imgs[product.featuredColor][product.featuredFace]}
                             alt="product" />
                     </a>
 
@@ -226,14 +268,15 @@
                                 alt="cart"
                                 on:click={() => {
                                     cart.add({
-                                        [params.userid +
-                                        '/' +
+                                        [product.creator +
+                                        '-' +
                                         product.id]: product,
                                     });
                                 }} />
                         </div>
-                        <div class="icon2">
-                            <img src="/img/misc/heart.png" alt="heart" />
+                        <div on:click={() => {addWishlist(product.creator + '-' +product.id)}} class="icon2">
+                            
+                            <img src={$user.docData?.wishlist[product.creator + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
                         </div>
                     </div>
                     <div class="productInfo">

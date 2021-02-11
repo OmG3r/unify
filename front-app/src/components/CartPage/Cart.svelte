@@ -1,5 +1,6 @@
 <script>
     import { cart } from "../../store.js";
+    import {user, db} from '../../firebase.js'
     import { navigate } from "svelte-routing";
     import { onMount, onDestroy } from "svelte";
     import { textToHex } from "../../utils.js";
@@ -93,6 +94,35 @@
     onDestroy(() => {
         unsubscribeCart()
     })
+
+    const addWishlist = (nid) => {
+        if ( $user ==0 || $user == undefined) {
+            navigate('/signin?backurl=/cart')
+            return
+        }
+
+        if ($user.docData.wishlist && Object.keys($user.docData.wishlist).includes(nid)) {
+            // remove it
+            console.log("removing " + nid)
+            db.collection('users').doc($user.uid).update({["wishlist." + nid]: firebase.firestore.FieldValue.delete()})
+            delete $user.docData.wishlist[nid]
+            $user = $user
+        } else {
+            console.log("adding " + nid)
+            db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
+            $user = {
+                ...$user,
+                docData: {
+                    ...$user.docData,
+                    wishlist: {
+                        ...$user.docData.wishlist,
+                        [nid]: true
+                    }
+                }
+            }
+        }
+        
+    }
 </script>
 
 {#if loaded}
@@ -125,7 +155,7 @@
                         </div>
                         <div class="info">
                             <div class="p_title">
-                                <a href={"/" + value.creator + "/" + value.id} class="title">{value.name}</a>
+                                <a use:link href={"/" + value.creator + "/merch/" + value.id} class="title">{value.name}</a>
                                 <span class="sub_title"
                                     >from <a use:link href={"/" + value.creator}> {value.creator} </a></span
                                 >
@@ -266,7 +296,9 @@
                                 (value.quantity ? value.quantity : 1)} TND
                         </div>
                         <div class="btns">
-                            <i class="far fa-heart" />
+                            <img
+                            on:click={addWishlist(value.creator + '-' +value.id) }
+                             class="heart-img" src={$user.docData?.wishlist[value.creator + '-' +value.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png"} alt="eart">
                             <i on:click={() => {removeItem(key)}} class="fas fa-minus" />
                         </div>
                     </div>
@@ -320,6 +352,9 @@
 {/if}
 
 <style>
+    .heart-img {
+        max-width: 24px;
+    }
     .size-error {
         padding: 16px;
         border-radius: 4px;

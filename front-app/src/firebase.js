@@ -18,11 +18,12 @@ export const db = firebase.firestore()
         else (object) => user logged in
     */
 export const user = writable(0)
-auth.onAuthStateChanged(function(kuser) {
+auth.onAuthStateChanged(async function(kuser) {
     if (kuser) {
-        user.set(kuser)
+
         console.log(kuser)
-            // User is signed in.
+        kuser.docData = (await db.collection('users').doc(kuser.uid).get()).data() || {}
+        user.set(kuser)
     } else {
         // No user is signed in.
         console.log('no user')
