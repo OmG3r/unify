@@ -1,7 +1,200 @@
+<script>
+    import { link } from "svelte-routing";
+    import Input from "../comps/InputField.svelte";
+    import InputColor from "../comps/InputColor.svelte";
+    import ViewNav from "../comps/ViewNav.svelte";
+    import { db, user, storage } from "../firebase.js";
+    import { notification, uuidToImageLink } from "../utils.js";
+    import MaterialSpinner from "../comps/MaterialSpinner.svelte";
+    import { lang } from "../store.js";
+
+    let profile = {
+        banner: "",
+        logo: "",
+        ...$user.docData,
+    };
+
+    console.log(profile);
+    console.log($user.docData);
+
+    const MAX_BANNER_SIZE = 1;
+    const MAX_PROFIL_PIC_SIZE = 0.5;
+
+    const handleDropBanner = (event) => {
+        console.log("got banner");
+        let f = event.dataTransfer.files[0];
+        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content:
+                    "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
+            });
+            return;
+        }
+        profile.banner = f;
+    };
+    setInterval(() => {
+        console.log(profile);
+    }, 1500);
+    const handleDropLogo = (event) => {
+        let f = event.dataTransfer.files[0];
+        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content:
+                    "Profile picture size should not exceed " +
+                    MAX_PROFIL_PIC_SIZE +
+                    " MB",
+            });
+            return;
+        }
+
+        profile.logo = f;
+    };
+    $: console.log(profile.logo);
+    const handleExplorerBanner = (event) => {
+        let f = event.target.files[0];
+        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content:
+                    "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
+            });
+            return;
+        }
+        profile.banner = f;
+    };
+
+    const handleExplorerLogo = (event) => {
+        let f = event.target.files[0];
+
+        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
+            notification.set({
+                accentColor: "error",
+                title: "Image Size",
+                content:
+                    "Profile picture size should not exceed " +
+                    MAX_PROFIL_PIC_SIZE +
+                    " MB",
+            });
+            return;
+        }
+        profile.logo = f;
+    };
+
+    const uploadImage = (f, npath) => {
+        return new Promise(async (resolve, reject) => {
+            let path = "creators/" + npath;
+            let create = storage.ref().child(path);
+            let upping = undefined;
+            if (typeof f == "string") {
+                upping = create.putString(f, "data_url");
+            } else {
+                upping = create.put(f);
+            }
+
+            let listen = (snapshot) => {
+                let uploadPercentage = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+            };
+            let errfunc = (er) => {
+                console.log(er);
+                reject(er);
+            };
+            let successfunc = async () => {
+                resolve(await upping.snapshot.ref.getDownloadURL());
+            };
+            upping.on("state_changed", listen, errfunc, successfunc);
+        });
+    };
+
+    let updating = false;
+    const doUpdate = async () => {
+        if (updating == true) {
+            return;
+        }
+        updating = true;
+        if (typeof profile.logo != "string") {
+            profile.logo = (
+                await uploadImage(profile.logo, $user.claims.username + "/logo")
+            ).split("token=", 2)[1];
+        }
+
+        if (typeof profile.banner != "string") {
+            profile.banner = (
+                await uploadImage(
+                    profile.banner,
+                    $user.claims.username + "/banner"
+                )
+            ).split("token=", 2)[1];
+        }
+        let modification = false;
+        for (let key of Object.keys($user.docData)) {
+            if ($user.docData[key] != profile[key]) {
+                modification = true;
+            }
+        }
+        let docKeys = Object.keys($user.docData);
+        let profileKeys = Object.keys(profile);
+
+        if (
+            !(
+                docKeys.every((item) => profileKeys.includes(item)) &&
+                docKeys.length == profileKeys.length
+            )
+        ) {
+            modification = true;
+        }
+
+        for (let media of ["facebook", "twitch", "youtube", "instagram"]) {
+            if (profile[media].includes("/")) {
+                let sp = profile[media].split("/");
+                profile[media] = sp[sp.length - 1];
+            }
+        }
+        if (modification == true) {
+            await db
+                .doc("/creators/" + $user.claims.username)
+                .set(profile, { merge: true });
+            notification.set({
+                accentColor: "success",
+                title: "Success",
+                content: "Profile updated",
+            });
+        }
+
+        $user = {
+            ...$user,
+            docData: {
+                ...$user.docData,
+                ...profile,
+            },
+        };
+        updating = false;
+    };
+
+    let copyStore = () => {
+        var copyText = document.getElementById("myStoreID");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+        notification.set({
+            accentColor: "success",
+            title: "success",
+            content: "Link copied to clipboard",
+        });
+    };
+</script>
 
 <style>
-
-
     .u-view {
         width: 100%;
         min-height: 100vh;
@@ -9,7 +202,6 @@
         overflow-y: scroll;
         position: relative;
         padding: 0 0 100px 0;
-
     }
 
     .banner-logo-area {
@@ -25,12 +217,9 @@
         cursor: pointer;
     }
 
-    
-  
-
     .logo {
         position: absolute;
-        top:0;
+        top: 0;
         bottom: 0;
         right: 0;
         left: 0;
@@ -42,20 +231,21 @@
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        cursor: pointer; 
+        cursor: pointer;
     }
-   .creator_name{
+    .creator_name {
         font-size: 20px;
         font-weight: 600;
         color: white;
-   }
+    }
 
-    .logo.filled  {
+    .logo.filled {
         background-color: transparent;
         border: none;
     }
 
-    #logo-upload, #banner-upload {
+    #logo-upload,
+    #banner-upload {
         visibility: hidden;
         position: absolute;
     }
@@ -74,23 +264,22 @@
         width: 100%;
         max-width: 600px;
         border-bottom: 1px solid #dce4fa;
-    margin-bottom: 12px;
+        margin-bottom: 12px;
     }
 
     .save-btn {
-  
         height: 2.5rem;
         line-height: 2.5rem;
         padding: 0 1rem;
-        border-radius: .25rem;
+        border-radius: 0.25rem;
         font-weight: 600;
         white-space: nowrap;
         text-transform: capitalize;
         color: inherit;
         color: grey;
         display: inline-block;
-        -webkit-transition: background-color .15s ease-in-out;
-        transition: background-color .15s ease-in-out;
+        -webkit-transition: background-color 0.15s ease-in-out;
+        transition: background-color 0.15s ease-in-out;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -101,7 +290,7 @@
         -ms-flex-align: center;
         align-items: center;
         cursor: pointer;
-        background-color: #46B978;
+        background-color: #46b978;
 
         text-shadow: none;
         box-shadow: none;
@@ -113,17 +302,17 @@
         max-width: 400px;
     }
     .save-btn:hover {
-        background-color: rgb(87,210,141);
+        background-color: rgb(87, 210, 141);
     }
     .banner-image {
         max-width: 100%;
     }
-    .logo-image{
+    .logo-image {
         width: 150px;
         height: 150px;
     }
-    .banner-image{
-        background-image:url("/imgs/defaultBanner.png");
+    .banner-image {
+        background-image: url("/imgs/defaultBanner.png");
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: scroll;
@@ -133,7 +322,7 @@
     }
 
     /*************/
-      .profile_container {
+    .profile_container {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -154,7 +343,7 @@
     .pwd_change {
         display: flex;
         flex-direction: column;
-        width:100%;
+        width: 100%;
         align-items: center;
     }
     .account_data .title,
@@ -169,7 +358,8 @@
         margin: 15px 0 15px 0;
         width: 100%;
     }
-    .input input {
+    .input input,
+    .input textarea {
         width: 300px;
         height: 45px;
         border-radius: 8px;
@@ -179,6 +369,9 @@
         font-weight: 600;
         width: 100%;
     }
+    .input textarea{
+        height: 300px !important;
+    }
     .input .title {
         font-size: 18px;
         font-weight: 600;
@@ -186,7 +379,7 @@
         top: -12px;
         left: 30px;
         color: #46c092;
-        background-color: #F1F4F6;
+        background-color: whtie;
         padding: 0 5px 0 5px;
         height: 13px;
     }
@@ -271,11 +464,11 @@
     hr {
         width: 100%;
     }
-    .signout{
+    .signout {
         font-size: 18px;
         font-weight: 600;
         color: white;
-        background-color: #46B978;
+        background-color: #46b978;
         width: 60%;
         margin-top: 10px;
         border-radius: 4px;
@@ -285,333 +478,226 @@
         align-items: center;
         height: 40px;
     }
-    .signout:hover{
-        background-color:rgb(87,210,141)
+    .signout:hover {
+        background-color: rgb(87, 210, 141);
     }
-    .myStore{
+    .myStore {
         display: flex;
         justify-content: center;
     }
-    .inputContainer{
+    .inputContainer {
         position: relative;
         width: 100%;
-        max-width:600px;
+        max-width: 600px;
         cursor: pointer;
         font-size: 18px !important;
     }
-    .inputContainer img{
-        filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(194deg) brightness(108%) contrast(101%);
+    .inputContainer img {
+        filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(194deg)
+            brightness(108%) contrast(101%);
         width: 50%;
     }
-    .copyimg{
+    .copyimg {
         background-color: #181d22;
         position: absolute;
         right: 0;
         top: 0;
         width: 50px;
         height: 100%;
-        border-radius:0 8px 8px 0;
+        border-radius: 0 8px 8px 0;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .copyimg:hover{
+    .copyimg:hover {
         background-color: #485058;
     }
-    .copyimg:active{
+    .copyimg:active {
         background-color: #181d22;
     }
     @media only screen and (max-width: 1180px) {
-     
     }
-    
 </style>
-
-
-<script>
-    
-    import {link} from 'svelte-routing'
-    import Input from '../comps/InputField.svelte'
-    import InputColor from '../comps/InputColor.svelte'
-    import ViewNav from '../comps/ViewNav.svelte'
-    import {db, user, storage} from '../firebase.js'
-    import {notification, uuidToImageLink} from '../utils.js'
-    import MaterialSpinner from '../comps/MaterialSpinner.svelte'
-
-
-    let profile = {
-        
-        banner: "",
-        logo: "",
-        ...$user.docData,
-    }
-
-    
-    console.log(profile)
-    console.log($user.docData)
-
-    const MAX_BANNER_SIZE = 1
-    const MAX_PROFIL_PIC_SIZE = 0.5
-
-    const handleDropBanner = (event) => {
-        console.log("got banner")
-        let f = event.dataTransfer.files[0]
-        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
-            notification.set({
-                accentColor: "error",
-                title: "Image Size",
-                content: "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
-            })
-            return
-        }
-        profile.banner = f
-    }
-    setInterval(() => {
-        console.log(profile)
-    },   1500)
-    const handleDropLogo = (event) => {
-        let f = event.dataTransfer.files[0]
-        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
-            notification.set({
-                accentColor: "error",
-                title: "Image Size",
-                content: "Profile picture size should not exceed " + MAX_PROFIL_PIC_SIZE + " MB",
-            })
-            return
-        }
-
-        profile.logo = f
-         
-    }
-$: console.log(profile.logo);
-    const handleExplorerBanner = (event) => {
-        let f = event.target.files[0]
-        if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
-            notification.set({
-                accentColor: "error",
-                title: "Image Size",
-                content: "Banner size should not exceed " + MAX_BANNER_SIZE + " MB",
-            })
-            return
-        }
-        profile.banner = f
-
-
-    }
-
-    const handleExplorerLogo = (event) => {
-        let f = event.target.files[0]
-
-        if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
-            notification.set({
-                accentColor: "error",
-                title: "Image Size",
-                content: "Profile picture size should not exceed " + MAX_PROFIL_PIC_SIZE + " MB",
-            })
-            return
-        }
-        profile.logo = f
-    }
-
-    const uploadImage = (f, npath) => {
-            return new Promise(async (resolve, reject) => {
-                let path = 'creators/' + npath
-                let create = storage.ref().child(path);
-                let upping = undefined
-                if (typeof f == "string") {
-                    upping = create.putString(f, "data_url")
-                } else {
-                    upping = create.put(f)
-                }
-                
-                let listen = (snapshot) => {
-                    let uploadPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-                }
-                let errfunc = (er) => {
-                    console.log(er)
-                    reject(er)
-                }
-                let successfunc = async () => {
-                    resolve(await upping.snapshot.ref.getDownloadURL())
-                }
-                upping.on('state_changed', listen, errfunc, successfunc)
-            })
-        }
-
-    let updating = false
-    const doUpdate = async () => {
-        if (updating == true) {
-            return
-        }
-        updating = true
-        if (typeof profile.logo != "string") {
-            profile.logo = (await uploadImage(profile.logo, $user.claims.username + "/logo" )).split('token=', 2)[1]
-        }
-
-        if (typeof profile.banner != "string") {
-            profile.banner = (await uploadImage(profile.banner, $user.claims.username + "/banner" )).split('token=', 2)[1]
-        }
-        let modification = false
-        for (let key of Object.keys($user.docData)) {
-            if ($user.docData[key] != profile[key]) {
-                modification = true
-            }
-        }
-        let docKeys = Object.keys($user.docData)
-        let profileKeys = Object.keys(profile)
-
-        if (!(docKeys.every((item) => profileKeys.includes(item)) && docKeys.length == profileKeys.length)) {
-            modification = true
-        }
-
-        for (let media of ['facebook', 'twitch', 'youtube', 'instagram']) {
-            if (profile[media].includes('/')) {
-                let sp = profile[media].split("/")
-                profile[media] = sp[sp.length - 1]
-            }
-        }
-        if (modification == true) {
-            await db.doc('/creators/' + $user.claims.username).set(profile, {merge: true})
-            notification.set(
-            {
-                accentColor: "success",
-                title: "Success",
-                content: "Profile updated",
-            })
-        }
-        
-        $user = {
-            ...$user,
-            docData: {
-                ...$user.docData,
-                ...profile
-            }
-        }
-        updating = false
-    }
-
-    let copyStore= () =>{
-        var copyText = document.getElementById("myStoreID");
-
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-        /* Copy the text inside the text field */
-        document.execCommand("copy");
-        notification.set({
-                accentColor: "success",
-                title: "success",
-                content: "Link copied to clipboard",
-            })
-    }
-</script>
 
 <div class="u-view">
     <ViewNav />
 
-
     <section class="banner-logo-area">
-        <label for="banner-upload"
-        class:filled={profile.banner} 
-        on:drop|preventDefault={handleDropBanner}
-        on:dragover|preventDefault|stopPropagation class="banner">
-            <input on:change={handleExplorerBanner} type="file" id="banner-upload">
-            
-            {#if typeof profile.banner == "string" && profile.banner.length > 0}
-                <img crossorigin="anonymous" class="banner-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + "/banner")} alt="baaner">
-            {:else if typeof profile.banner != "string"}
-                <div class="banner-image" style="background-image:url({URL.createObjectURL(profile.banner)})"/>
+        <label
+            for="banner-upload"
+            class:filled={profile.banner}
+            on:drop|preventDefault={handleDropBanner}
+            on:dragover|preventDefault|stopPropagation
+            class="banner">
+            <input
+                on:change={handleExplorerBanner}
+                type="file"
+                id="banner-upload" />
+
+            {#if typeof profile.banner == 'string' && profile.banner.length > 0}
+                <img
+                    crossorigin="anonymous"
+                    class="banner-image"
+                    src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/banner')}
+                    alt="baaner" />
+            {:else if typeof profile.banner != 'string'}
+                <div
+                    class="banner-image"
+                    style="background-image:url({URL.createObjectURL(profile.banner)})" />
             {:else}
-                <div class="banner-image"/>
+                <div class="banner-image" />
             {/if}
         </label>
 
-        <label for="logo-upload"
-        class:filled={profile.logo} 
-        on:drop|preventDefault={handleDropLogo}
-        on:dragover|preventDefault|stopPropagation class="logo">
-            <input on:change={handleExplorerLogo} type="file"  id="logo-upload">
-            
-            {#if typeof profile.logo == "string" && profile.logo.length > 0}
-                <img crossorigin="anonymous" class="logo-image" src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + "/logo")} alt="logo">
-            {:else if typeof profile.logo != "string" }
-                <img class="logo-image" src={URL.createObjectURL(profile.logo)} alt="logo">
+        <label
+            for="logo-upload"
+            class:filled={profile.logo}
+            on:drop|preventDefault={handleDropLogo}
+            on:dragover|preventDefault|stopPropagation
+            class="logo">
+            <input
+                on:change={handlFeExplorerLogo}
+                type="file"
+                id="logo-upload" />
+
+            {#if typeof profile.logo == 'string' && profile.logo.length > 0}
+                <img
+                    crossorigin="anonymous"
+                    class="logo-image"
+                    src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/logo')}
+                    alt="logo" />
+            {:else if typeof profile.logo != 'string'}
+                <img
+                    class="logo-image"
+                    src={URL.createObjectURL(profile.logo)}
+                    alt="logo" />
             {:else}
-                <img class="logo-image" src="/imgs/defaultUser.png" alt={profile.logo}/>
+                <img
+                    class="logo-image"
+                    src="/imgs/defaultUser.png"
+                    alt={profile.logo} />
             {/if}
             <div class="creator_name">{$user.claims.username}</div>
         </label>
-        
-
     </section>
 
     <section class="u-info-area">
         <div class="input myStore">
-                <div class="inputContainer">
-                    <input type="text" class="name" id ="myStoreID" value={"https://unify.tn/" + $user.claims.username + "/merch"}/>
-                <div class="copyimg" on:click="{copyStore}"><img src="/imgs/misc/copy.png" alt="copy"></div>
+            <div class="inputContainer">
+                <input
+                    type="text"
+                    class="name"
+                    id="myStoreID"
+                    value={'https://unify.tn/' + $user.claims.username + '/merch'} />
+                <div class="copyimg" on:click={copyStore}>
+                    <img src="/imgs/misc/copy.png" alt="copy" />
                 </div>
-                
+            </div>
         </div>
         <div class="user_data">
-            
-        <div class="account_data">
-            <div class="title">Account Data</div>
-            <div class="input">
-                <div class="title">Email</div>
-                <input
-                    type="email"
-                    class="email"
-                    
-                    value={$user.email ? $user.email : ""} />
+            <div class="account_data">
+                <div class="title">
+                    {{ fr: 'Données de compte', en: 'Account Data' }[$lang]}
+                </div>
+                <div class="input">
+                    <div class="title">
+                        {{ fr: 'Email', en: 'Email' }[$lang]}
+                    </div>
+                    <input
+                        type="email"
+                        class="email"
+                        value={$user.email ? $user.email : ''} />
+                </div>
+                <div class="input">
+                    <div class="title">
+                        {{ fr: 'Numéro de téléphone', en: 'Phone Number' }[$lang]}
+                    </div>
+                    <input
+                        type="phone"
+                        class="phone_num"
+                        value={$user.phoneNumber ? $user.phoneNumber : ''} />
+                </div>
             </div>
-            <div class="input">
-                <div class="title">Phone Number</div>
-                <input
-                    type="phone"
-                    class="phone_num"
-                    
-                    value={$user.phoneNumber ? $user.phoneNumber : ""} />
+            <div class="personal_data">
+                <div class="title">
+                    {{ fr: 'Données personnelles', en: 'Personal Data' }[$lang]}
+                </div>
+                <div class="input">
+                    <div class="title">
+                        {{ fr: 'Nom', en: 'Name' }[$lang]}
+                    </div>
+                    <input
+                        type="text"
+                        class="name"
+                        value={$user.displayName ? $user.displayName : ''} />
+                </div>
+                <div class="input">
+                    <div class="title">
+                        {{ fr: 'Date de naissance', en: 'Date of Birth' }[$lang]}
+                    </div>
+                    <input type="date" class="birth_date" />
+                </div>
             </div>
         </div>
-        <div class="personal_data">
-            <div class="title">Personal Data</div>
-            <div class="input">
-                <div class="title">Name</div>
-                <input type="text" class="name" value={$user.displayName ? $user.displayName : ""}/>
-            </div>
-            <div class="input">
-                <div class="title">Date of Birth</div>
-                <input type="date" class="birth_date" />
-            </div>
-        </div>
-    </div>
-    
-    <div class="u-information-box">
-        <Input title="Profile Name" bind:text={profile.name} />
-        <InputColor title="Accent Color" bind:text={profile.accentColor} />
-    </div>
-  
 
-        <div class="u-section-title">Social Media</div>
         <div class="u-information-box">
-            <Input placeholder={"Username"} title="Youtube" bind:text={profile.youtube} />
-            <Input placeholder={"Username"} title="Facebook" bind:text={profile.facebook} />
-            <Input placeholder={"Username"} title="Instagram" bind:text={profile.instagram} />
-            <Input placeholder={"Username"} title="Twitch" bind:text={profile.twitch} />
-            <Input placeholder={"Username"} title="Twitter" bind:text={profile.twitter} />
-            <Input placeholder={"Username"} title="Baaz" bind:text={profile.baaz} />
-            <Input placeholder={"Username"} title="Tiktok" bind:text={profile.Tiktok} />
+            <Input title="Profile Name" bind:text={profile.name} />
+            <InputColor title="Accent Color" bind:text={profile.accentColor} />
+            <div class="input">
+                <div class="title">
+                    {{ fr: 'Date de naissance', en: 'Date of Birth' }[$lang]}
+                </div>
+                <textarea class="description" name="description" />
+            </div>
         </div>
-        
+
+        <div class="u-section-title">
+            {{ fr: 'Réseaux sociaux', en: 'Social Media' }[$lang]}
+        </div>
+        <div class="u-information-box">
+            <Input
+                placeholder={'Username'}
+                title="Youtube"
+                bind:text={profile.youtube} />
+            <Input
+                placeholder={'Username'}
+                title="Facebook"
+                bind:text={profile.facebook} />
+            <Input
+                placeholder={'Username'}
+                title="Instagram"
+                bind:text={profile.instagram} />
+            <Input
+                placeholder={'Username'}
+                title="Twitch"
+                bind:text={profile.twitch} />
+            <Input
+                placeholder={'Username'}
+                title="Twitter"
+                bind:text={profile.twitter} />
+            <Input
+                placeholder={'Username'}
+                title="Baaz"
+                bind:text={profile.baaz} />
+            <Input
+                placeholder={'Username'}
+                title="Tiktok"
+                bind:text={profile.Tiktok} />
+        </div>
+
         <button on:click={doUpdate} class="save-btn">
             {#if updating}
                 <MaterialSpinner />
             {:else}
-                Save
+                {{ fr: 'Enregistrer', en: 'Save' }[$lang]}
             {/if}
         </button>
-        <div on:click={() => {firebase.auth().signOut()}}  class="signout">Logout</div>
+        <div
+            on:click={() => {
+                firebase.auth().signOut();
+            }}
+            class="signout">
+            {{ fr: 'Se déconnecter', en: 'Logout' }[$lang]}
+        </div>
     </section>
 </div>

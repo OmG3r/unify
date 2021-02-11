@@ -1,7 +1,7 @@
 import {writable} from 'svelte/store'
 
 
-
+export const lang = writable("fr")
 function createSideNavStore() {
     let saved = Boolean(localStorage.getItem('sideNav')) || false
 	const { subscribe, set, update } = writable(saved);

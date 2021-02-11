@@ -332,13 +332,28 @@
 </style>
 
 <div class="profile_container">
-    <div class="big_title">My Account</div>
+    <div class="big_title">{
+                            {
+                                'fr': 'Mon Compte',
+                                'en': 'My Account'
+                            }[$lang]
+                        }</div>
     <hr />
     <div class="user_data">
         <div class="account_data">
-            <div class="title">Account Data</div>
+            <div class="title">{
+                            {
+                                'fr': 'Données de compte',
+                                'en': 'Account Data'
+                            }[$lang]
+                        }</div>
             <div class="input">
-                <div class="title">Email</div>
+                <div class="title">{
+                            {
+                                'fr': 'Email',
+                                'en': 'Email'
+                            }[$lang]
+                        }</div>
                 <input
                     type="email"
                     class="email"
@@ -346,7 +361,12 @@
                     value={$user.email ? $user.email : ""} />
             </div>
             <div class="input">
-                <div class="title">Phone Number</div>
+                <div class="title">{
+                            {
+                                'fr': 'Numéro de téléphone',
+                                'en': 'Phone Number'
+                            }[$lang]
+                        }</div>
                 <input
                     type="phone"
                     class="phone_num"
@@ -355,20 +375,46 @@
             </div>
         </div>
         <div class="personal_data">
-            <div class="title">Personal Data</div>
+            <div class="title">{
+                            {
+                                'fr': 'Données personnelles',
+                                'en': 'Personal Data'
+                            }[$lang]
+                        }</div>
             <div class="input">
-                <div class="title">Name</div>
+                <div class="title">{
+                            {
+                                'fr': 'Nom',
+                                'en': 'Name'
+                            }[$lang]
+                        }</div>
                 <input bind:this={varname} type="text" class="name" value={$user.displayName ? $user.displayName : ""} />
             </div>
             <div class="input">
-                <div class="title">Date of Birth</div>
+                <div class="title">{
+                            {
+                                'fr': 'Date de naissance',
+                                'en': 'Date of Birth'
+                            }[$lang]
+                        }</div>
                 <input bind:this={varbirth} type="date" value={$user.docData?.birthdate ? $user.docData?.birthdate : ""} class="birth_date" />
             </div>
         </div>
     </div>
-    <button on:click={doUpdate} class="save_btn">Save</button>
+    <button on:click={doUpdate} class="save_btn">{
+                            {
+                                'fr': 'Enregistrer',
+                                'en': 'Save'
+                            }[$lang]
+                        }
+                        </button>
     <div class="link_social_media">
-        <div class="title">Link Your Accounts</div>
+        <div class="title">{
+                            {
+                                'fr': 'Liez vos comptes',
+                                'en': 'Link Your Accounts'
+                            }[$lang]
+                        }</div>
         <div on:click={handleFacebook} class="fb">
             {#if !handlingFacebook}
                 <i class="fab fa-facebook-f svelte-1l2nsjq" aria-hidden="true" />
@@ -423,20 +469,45 @@
     </div>
 
     <form on:submit|preventDefault={doPassword} class="pwd_change">
-        <div class="title">Change Password</div>
+        <div class="title">{
+                            {
+                                'fr': 'Changez Votre Mot de Passe',
+                                'en': 'Change Your Password'
+                            }[$lang]
+                        }</div>
         <div class="input">
-            <div class="title">Old Password</div>
+            <div class="title">{
+                            {
+                                'fr': 'Mot de Passe Actuel',
+                                'en': 'Actual Password'
+                            }[$lang]
+                        }</div>
             <input bind:this={oldPassvar} autocomplete="off" type="password" class="new_pwd" />
         </div>
         <div class="input">
-            <div class="title">New Password</div>
+            <div class="title">{
+                            {
+                                'fr': 'Nouveau Mot de Passe',
+                                'en': 'New Password'
+                            }[$lang]
+                        }</div>
             <input bind:this={newPassvar} autocomplete="off" type="password" class="new_pwd" />
         </div>
         <div class="input">
-            <div class="title">Confirm Password</div>
+            <div class="title">{
+                            {
+                                'fr': 'Confirmez le Mot de Passe',
+                                'en': 'Confirm Password'
+                            }[$lang]
+                        }</div>
             <input bind:this={renewPassvar} autocomplete="off" type="password" class="confirm_pwd" />
         </div>
-        <button type="submit" class="save_btn">Save</button>
+        <button type="submit" class="save_btn">{
+                            {
+                                'fr': 'Changer le Mot de Dasse',
+                                'en': 'Change Password'
+                            }[$lang]
+                        }</button>
     </form>
     
 </div>

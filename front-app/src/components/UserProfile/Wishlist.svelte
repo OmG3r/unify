@@ -1,6 +1,6 @@
 <script>
     import { dbWrapper, user, db } from "../../firebase.js";
-    import { uuidToImageLink, socialMedias } from "../../utils.js";
+    import { uuidToImageLink, socialMedias,notification, colors } from "../../utils.js";
     import {cart} from '../../store.js'
     import { link } from "svelte-routing";
     import { onMount, onDestroy } from "svelte";
@@ -45,7 +45,6 @@
     export let params = {};
     let loaded = false;
     let displayProducts = [];
-    let colors = ["0e80f6", "d40019", "46B978", "737372"];
     const addWishlist = (nid) => {
         
 
@@ -242,6 +241,10 @@
             flex: 0 0 100%;
         }
     }
+
+    .color_border:hover, .color_border.active {
+        border-width: 2px !important;
+    }
 </style>
 
 <div class="profile_container">
@@ -258,7 +261,7 @@
                         href={'/' + product.creator + '/merch/' + product.id}>
                         <img
                             class="product_img"
-                            src={product.imgs[product.featuredColor][product.featuredFace]}
+                            src={product.imgs[product.color ? product.color :  product.featuredColor][product.featuredFace]}
                             alt="product" />
                     </a>
 
@@ -269,10 +272,15 @@
                                 alt="cart"
                                 on:click={() => {
                                     cart.add({
-                                        [product.creator +
+                                        [params.userid +
                                         '-' +
-                                        product.id]: product,
+                                        product.id]: {...product, quantity: 1},
                                     });
+                                    notification.set({
+                                    accentColor: "success",
+                                    title: "success",
+                                    content: "Article Added to Cart",
+                                });
                                 }} />
                         </div>
                         <div on:click={() => {addWishlist(product.creator + '-' +product.id)}} class="icon2">
@@ -284,22 +292,30 @@
                         <span class="product_title">{product.name}</span>
                         <span class="product_creator">{product.creator}</span>
                         <div class="product_price">
-                            <span class="current_price">{product.price}
+                            {#if product.discount}
+                            <span class="current_price">{product.price * (1 - product.discount)}
                                 TND</span>
                             <span class="old_price">
-                                <span class="price">50 TND</span>
-                                <span class="percentage_discount">-20%</span>
+                                <span class="price">{product.price}</span>
+                                <span class="percentage_discount">-{product.discount * 100}%</span>
                             </span>
+                            {:else}
+                            <span class="current_price">{product.price} TND</span>
+                            {/if}
                         </div>
                     </div>
                     <div class="colors">
-                        {#each colors as color}
+                        {#each product.colors as color}
                             <div
                                 class="color_border"
-                                style="border:0px solid #{color};">
+                                class:active={product.color == color}
+                                on:click={() => {product.color = color;
+                                console.log(product.color,color);
+                                }}
+                                style="border:0px solid {colors[color.toLowerCase()]} ;">
                                 <div
                                     class="color"
-                                    style="background-color:#{color}" />
+                                    style="background-color:{colors[color.toLowerCase()]}" />
                             </div>
                         {/each}
                     </div>
