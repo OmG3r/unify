@@ -18,7 +18,9 @@
         v ? document.body.style.overflowY="hidden" : document.body.style.overflowY="scroll";
     })
 
-   
+    onMount(() => {
+        document.title = "Unify - Checkout"
+    })
     
     let normalTotal = 0;
     let unsubscribeCart = () => {};
@@ -78,8 +80,9 @@
         }
 
         let rep = await urlPostReq('https://api.unify.tn/.netlify/functions/express/addOrder', form)
+        
+        navigate('/completed?orderid=' + $cart.cartID + "&backurl=/myaccount/orders" )
         cart.reset()
-        navigate('/myaccount/orders')
         submitting = false;
     }
 </script>

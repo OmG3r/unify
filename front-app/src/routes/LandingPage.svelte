@@ -4,7 +4,7 @@
     import 'aos/dist/aos.css'; // You can also use <link> for styles
     // ..
     export let params = {};
-
+    document.title = "Unify"
     onMount(async () => {
             AOS.init();
         });

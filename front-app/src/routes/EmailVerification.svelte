@@ -108,6 +108,7 @@
     import {navigate, link} from 'svelte-routing'
     let unsubscribeUser = () => {};
     onMount(() => {
+        document.title = "Unify - Email Verification"
         unsubscribeUser = user.subscribe((v) => {
             if (v == undefined) {
                 navigate("/signin")

@@ -23,6 +23,7 @@ onMount(() => {
             
         } else {
             allowed = true
+            document.title = "Unify - Profile"
         }
     })
 })
@@ -120,6 +121,7 @@ $: currentPage = params['*']
     }
 .User_profile{
     padding: 100px 50px 30px 50px;
+    min-height: 74vh;
 }
  @media only screen and (max-width: 1180px) {
      .User_profile{

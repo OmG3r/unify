@@ -84,7 +84,12 @@
 </style>
 
 <script>
- 
+    import {link} from 'svelte-routing'
+    import {onMount} from 'svelte'
+
+    onMount(() => {
+        document.title = "Unify - Contact Us"
+    })
 </script>
 
 

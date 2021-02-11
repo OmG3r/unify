@@ -6,6 +6,7 @@
     import {onMount, onDestroy} from 'svelte'
     let unsubscribeUser = () => {} ;
     onMount(() => {
+        document.title = "Unify - Signup"
         unsubscribeUser = user.subscribe((v) => {
             if (v == 0) {
                 console.log("uninited")

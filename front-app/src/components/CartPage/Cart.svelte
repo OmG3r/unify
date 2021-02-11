@@ -10,6 +10,7 @@
     let unsubscribeCart = () => {};
     let cartItems=0;
     onMount(() => {
+        document.title = "Unify - Cart"
         cartItems= Object.keys($cart.items).length
         /* if (Object.keys($cart.items).length == 0) {
             navigate("/");

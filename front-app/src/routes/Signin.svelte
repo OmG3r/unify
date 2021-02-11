@@ -7,6 +7,7 @@
     let unsubscribeUser = () => {} ;
     let sub = false
     onMount(() => {
+        document.title = "Unify - Signin"
         unsubscribeUser = user.subscribe((v) => {
             if (v == 0) {
                 console.log("uninited")

@@ -30,7 +30,7 @@
             navigate('/' + params.userid)
         } else {
             validated = true;
-
+            document.title = "Unify - " +  (creatorData.name ? creatorData.name : creatorData.username) + " - Store"
         }  
     })
 

@@ -1,13 +1,26 @@
 
 <script>
-let OrderID = 54767523
-let drawn = true;
+    import {onMount} from 'svelte'
+    import {link} from 'svelte-routing'
+    let orderID = "-"
+    let drawn = false;
+    let backurl = "/"
+    onMount(() => {
+        setTimeout(() => {
+            drawn = true
+        }, 400)
+        document.title = "Unify - Order Completed"
+        let params = new URLSearchParams(location.search) 
+        orderID = params.get('orderid') || "-" 
+        backurl = params.get('backurl') || "/"
+    })
+    
 </script>
 
 <style>
     .container {
         background:#46B978;
-        background-image: url("/img/logo_white_small.png");
+        
         background-size: 160px;
         width: 100vw;
         height: 100vh;
@@ -15,7 +28,16 @@ let drawn = true;
         
     }
    
-  
+    .u-button {
+        font-size: 18px;
+        color: white;
+        background-color: #273441;
+        display: block;
+        margin-top: 16px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-align: center;
+    }
     
 
     .opacity {
@@ -51,7 +73,7 @@ let drawn = true;
     -o-transition: all 1s;
     transition: all 1s;
 }
-#tick{
+.tick{
     stroke-dasharray: 50;
     stroke-dashoffset: 50;
     -webkit-transition: stroke-dashoffset 1s 0.5s ease-out;
@@ -86,8 +108,9 @@ let drawn = true;
     <div class="orderInfo">
         Your order has been registred.
         <div class="orderID">
-            Order Number : {OrderID}
+            Order Number : {orderID}
         </div>
+        <a class="u-button" use:link href={backurl}>Go back</a>
     </div>
 
     </div>

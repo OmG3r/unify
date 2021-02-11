@@ -135,9 +135,14 @@
 <script>
     import {auth} from '../firebase.js'
     import {link} from 'svelte-routing'
+    import {onMount} from 'svelte'
     let errorMessage;
     let email;
     let sent = false
+
+    onMount(() => {
+        document.title = "Unify - Password Reset"
+    })
 
     const sendRecovery = async () => {
         sent = false
