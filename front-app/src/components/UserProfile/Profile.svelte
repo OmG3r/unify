@@ -1,5 +1,138 @@
 <script>
-    import {user} from '../../firebase.js'
+    import {user, db} from '../../firebase.js'
+    import {notification} from '../../utils.js'
+    import {lang} from '../../store.js'
+    import {onMount, onDestroy} from 'svelte'
+    import MaterialSpinner from '../misc/MaterialSpinner.svelte'
+    let varname = "";
+    let varbirth = "";
+    let providers = []
+    user.subscribe((v) => {
+        if (v == 0 || v == undefined) {
+            return
+        }
+        providers = v.providerData.map((item) => item.providerId)
+
+    })
+
+    const doUpdate = async () => {
+        let updated = false
+        if (varname.value != $user.displayName) {
+            await $user.updateProfile({
+                displayName: varname.value
+            })
+            
+            $user = $user
+            updated = true
+        }
+        if ($user?.docData?.birthdate == undefined || $user?.docData?.birthdate != varbirth.value) {
+            await db.collection('users').doc($user.uid).set({birthdate: varbirth.value}, {merge:true})
+            $user  = {
+                ...$user,
+                docData: {
+                    ...$user.docData,
+                    birthdate: varbirth.value
+                }
+            }
+            updated = true
+        }
+
+        if (updated) {
+            notification.set({
+                accentColor: 'success',
+                title: 'Success',
+                content: 'Profile Updated'
+            })
+        }
+    }
+
+    let handlingGoogle = false
+    const handleGoogle = async () => {
+        if (handlingGoogle) {
+            return
+        }
+        handlingGoogle = true
+   
+        if (providers.includes('google.com')) {
+            await $user.unlink('google.com')
+            providers = providers.filter((item) => item != "google.com")
+            console.log(providers)
+        } else {
+            let provider = new firebase.auth.GoogleAuthProvider();
+            await $user.linkWithPopup(provider).then(function(result) {
+                // Accounts successfully linked.
+                var credential = result.credential;
+                var user = result.user;
+                console.log(result)
+                providers = [...providers, 'google.com']
+            }).catch(function(error) {
+                console.log(error)
+            });
+        }
+        handlingGoogle = false
+    }
+    let handlingFacebook = false
+    const handleFacebook = async () => {
+        if ( handlingFacebook ) {
+            return
+        }
+        handlingFacebook  = true
+        
+        if (providers.includes('facebook.com')) {
+            await $user.unlink('facebook.com')
+            providers = providers.filter((item) => item != "facebook.com")
+            console.log(providers)
+        } else {
+            let provider = new firebase.auth.FacebookAuthProvider();
+            await $user.linkWithPopup(provider).then(function(result) {
+                // Accounts successfully linked.
+                var credential = result.credential;
+                var user = result.user;
+                console.log(result)
+                providers = [...providers, 'facebook.com']
+            }).catch(function(error) {
+                console.log(error)
+                
+                // Handle Errors here.
+                // ...
+            });
+        }  
+         handlingFacebook  = false
+    }
+    let newPassvar
+    let renewPassvar
+    let oldPassvar
+    const doPassword = async () => {
+        if (newPassvar.value != renewPassvar.value) {
+            notification.set({
+                accentColor: 'alert',
+                title: 'Alert',
+                content: 'Password do not match'
+            })
+            return
+        }
+
+        await $user.updatePassword(newPassvar.value).then(function() {
+        // Update successful.
+        }).catch(async function(error) {
+        // An error happened.
+            if (error.code == "auth/requires-recent-login") {
+
+                
+                var credentials = firebase.auth.EmailAuthProvider.credential(
+                    $user.email,
+                    oldPassvar.value
+                );
+                await $user.reauthenticateWithCredential(credentials);
+                await $user.updatePassword(newPassvar.value)
+            }
+        });
+        notification.set({
+            accentColor: 'success',
+            title: 'Success',
+            content: 'Password Updated'
+        })
+    }
 </script>
 
 <style>
@@ -195,46 +328,85 @@
             <div class="title">Personal Data</div>
             <div class="input">
                 <div class="title">Name</div>
-                <input type="text" class="name" value={$user.displayName ? $user.displayName : ""} />
+                <input bind:this={varname} type="text" class="name" value={$user.displayName ? $user.displayName : ""} />
             </div>
             <div class="input">
                 <div class="title">Date of Birth</div>
-                <input type="date" class="birth_date" />
+                <input bind:this={varbirth} type="date" value={$user.docData?.birthdate ? $user.docData?.birthdate : ""} class="birth_date" />
             </div>
         </div>
     </div>
-    <button class="save_btn">Save</button>
+    <button on:click={doUpdate} class="save_btn">Save</button>
     <div class="link_social_media">
         <div class="title">Link Your Accounts</div>
-        <div class="fb">
-            <i class="fab fa-facebook-f svelte-1l2nsjq" aria-hidden="true" />
-            Connect Your Facebook Account
+        <div on:click={handleFacebook} class="fb">
+            {#if !handlingFacebook}
+                <i class="fab fa-facebook-f svelte-1l2nsjq" aria-hidden="true" />
+                {#if providers.includes('facebook.com')}
+                        {
+                            {
+                                'fr': 'Dissocier Facebook',
+                                'en': 'Unlink Facebook'
+                            }[$lang]
+                        }
+                    {:else}
+                        {
+                            {
+                                'fr': 'Connecter avec Facebook',
+                                'en': 'Connect with Facebook'
+                            }[$lang]
+                        }
+                    {/if}
+            {:else}
+                <MaterialSpinner/>
+            {/if}
         </div>
-        <div class="youtube">
-            <i class="fab fa-google-plus-g svelte-1l2nsjq" aria-hidden="true" />
-            Connect Your Google Account
+        <div on:click={handleGoogle} class="youtube">
+            {#if !handlingGoogle}
+                <i class="fab fa-google-plus-g svelte-1l2nsjq" aria-hidden="true" />
+                
+                    {#if providers.includes('google.com')}
+                        {
+                            {
+                                'fr': 'Dissocier Google',
+                                'en': 'Unlink Google'
+                            }[$lang]
+                        }
+                    {:else}
+                        {
+                            {
+                                'fr': 'Connecter avec Google',
+                                'en': 'Connect with Google'
+                            }[$lang]
+                        }
+                    {/if}
+            {:else}
+                <MaterialSpinner/>
+            {/if}
         </div>
+        <!--
         <div class="twitch">
             <i class="fab fa-twitch" />
             Connect Your Twitch Account
         </div>
+        -->
     </div>
 
-    <div class="pwd_change">
+    <form on:submit|preventDefault={doPassword} class="pwd_change">
         <div class="title">Change Password</div>
-
         <div class="input">
             <div class="title">Old Password</div>
-            <input type="password" class="old_pwd" />
+            <input bind:this={oldPassvar} autocomplete="off" type="password" class="new_pwd" />
         </div>
         <div class="input">
             <div class="title">New Password</div>
-            <input type="password" class="new_pwd" />
+            <input bind:this={newPassvar} autocomplete="off" type="password" class="new_pwd" />
         </div>
         <div class="input">
             <div class="title">Confirm Password</div>
-            <input type="password" class="confirm_pwd" />
+            <input bind:this={renewPassvar} autocomplete="off" type="password" class="confirm_pwd" />
         </div>
-    </div>
-    <button class="save_btn">Save</button>
+        <button type="submit" class="save_btn">Save</button>
+    </form>
+    
 </div>
