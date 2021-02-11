@@ -4,7 +4,7 @@
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import { dbWrapper, user, db } from "../../firebase.js";
-    import { uuidToImageLink, colors, notification } from "../../utils.js";
+    import { uuidToImageLink, colors, notification, generateDeliveryDate } from "../../utils.js";
     import { navigate, link as routlink } from "svelte-routing";
     import { writable } from "svelte/store";
     if (activeItem == undefined) {
@@ -16,6 +16,7 @@
             id: "MMX8E7",
         };
     }
+    let [minDdate, maxDdate] = generateDeliveryDate()
     console.log("in singe");
     let validated = false;
     onMount(async () => {
@@ -153,6 +154,7 @@
         }, 1000);
     };
     console.log("ended script");
+   
 </script>
 
 <style>
@@ -818,7 +820,7 @@
                             class="title">{{ en: 'Quantity', fr: 'Quantité' }[$lang]}:
                         </span>
                         <div class="input_number">
-                            Arrow left
+                            
                             <svg
                                 on:click={() => {
                                     quantity <= 1 ? ($activeQuantity = 1) : ($activeQuantity -= 1);
@@ -908,7 +910,7 @@
                         </button>
                     </div>
                 </div>
-
+                <!--
                 <div class="p_desc">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                     Molestiae maxime provident rerum dolorum, quia accusantium
@@ -916,21 +918,26 @@
                     voluptatibus libero nulla totam recusandae corrupti
                     laudantium exercitationem!
                 </div>
+                -->
                 <hr />
                 <div class="policies">
+                    
                     <div class="socialShare">
+                        <!--
                         <span>{{ en: 'SHARE THIS PRODUCT', fr: 'PARTAGEZ CE PRODUIT' }[$lang]}
                         </span>
+                        
                         <div class="socialmedia">
                             <i class="fab fa-facebook" />
                             <i class="fab fa-instagram" />
                         </div>
+                        -->
                     </div>
                     <div class="delivery">
                         <span>{{ en: 'DELIVERY & RETURNS', fr: 'LIVRAISON & RETOURS' }[$lang]}
                         </span>
-                        <span class="desc">Delivered between Wednesday 30 Dec
-                            and Sunday 3 Jan. Please check exact dates in the
+                        <span class="desc">Delivered between {minDdate}
+                            and {maxDdate}. Please check exact dates in the
                             checkout page.
                         </span>
                     </div>

@@ -5,7 +5,8 @@
     import {link, navigate} from 'svelte-routing'
     import Popup from './Popup.svelte'
     import {writable} from 'svelte/store'
-    import {urlPostReq, notification} from '../../utils.js'
+    import {urlPostReq, notification, generateDeliveryDate} from '../../utils.js'
+    let [minDdate, maxdDate] = generateDeliveryDate()
     let AccentColor = getComputedStyle(document.body).getPropertyValue(
         "--AccentColor"
     );
@@ -68,7 +69,7 @@
             notification.set({
                 accentColor: 'alert',
                 title: 'Alert',
-                conent: 'Fill out your Address'
+                content: 'Fill out your Address'
             })
             submitting = false
             return
@@ -392,9 +393,9 @@ hr{
                 <div class="method_title"><div class="shape_border"><div class="shape" /></div> Standard</div>
                 <div class="method_desc">
                     Your delivery will arrive between the
-                    <span class="Accent_color">1st of january</span>
+                    <span class="Accent_color">{minDdate}</span>
                     and the
-                    <span class="Accent_color">4th of january</span>
+                    <span class="Accent_color">{maxdDate}</span>
                 </div>
                 <div class="method_fees">
                     Delivery fees:

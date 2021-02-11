@@ -9,6 +9,7 @@
     onMount(async () => {
         unsubscribeUser = user.subscribe(async () => {
             if ($user?.docData?.wishlist) {
+                displayProducts = []
                 let mapped =  {}
                 for( let slug of Object.keys($user.docData.wishlist)) {
                     let [creatorid, itemid] = slug.split("-", 2)

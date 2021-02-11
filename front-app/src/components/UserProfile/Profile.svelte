@@ -67,6 +67,13 @@
                 providers = [...providers, 'google.com']
             }).catch(function(error) {
                 console.log(error)
+                if (error.code == "auth/email-already-in-use") {
+                    notification.set({
+                        accentColor: 'error',
+                        title: 'Error',
+                        contnet: 'Email already in use'
+                    })
+                }
             });
         }
         handlingGoogle = false
@@ -92,7 +99,11 @@
                 providers = [...providers, 'facebook.com']
             }).catch(function(error) {
                 console.log(error)
-                
+                notification.set({
+                    accentColor: 'error',
+                    title: 'Error',
+                    contnet: 'Email already in use'
+                })
                 // Handle Errors here.
                 // ...
             });
@@ -110,8 +121,26 @@
                 content: 'Password do not match'
             })
             return
+        }  
+        var credentials = firebase.auth.EmailAuthProvider.credential(
+            $user.email,
+            oldPassvar.value
+        );
+        let failed = false
+        await $user.reauthenticateWithCredential(credentials).catch((error) => {
+            console.log("error")
+            notification.set({
+                accentColor: 'error',
+                title: 'Incorrect old password',
+                content: 'Old password is incorrect'
+            })
+            failed = true
+        })
+        if (failed) {
+            return
         }
-
+        await $user.updatePassword(newPassvar.value)
+        /*
         await $user.updatePassword(newPassvar.value).then(function() {
         // Update successful.
         }).catch(async function(error) {
@@ -127,6 +156,7 @@
                 await $user.updatePassword(newPassvar.value)
             }
         });
+        */
         notification.set({
             accentColor: 'success',
             title: 'Success',

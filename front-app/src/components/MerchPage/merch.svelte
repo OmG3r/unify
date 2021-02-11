@@ -4,13 +4,13 @@
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
     import { db, dbWrapper,user } from "../../firebase.js";
-    import { uuidToImageLink, socialMedias,notification } from "../../utils.js";
+    import { uuidToImageLink, socialMedias,notification, colors } from "../../utils.js";
     import { link, navigate } from "svelte-routing";
     export let params = {};
     export let creatorData = {};
     let loaded = false;
     let displayProducts = [];
-    let colors = ["0e80f6", "d40019", "46B978", "737372"];
+    
 
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
         console.log(data);
@@ -308,7 +308,7 @@
         display: flex;
         cursor: pointer;
     }
-    .color_border:hover {
+    .color_border:hover, .color_border.active {
         border-width: 2px !important;
     }
 </style>
@@ -358,7 +358,7 @@
                         href='/{params.userid}/merch/{product.id}'>
                         <img
                             class="product_img"
-                            src={product.imgs[product.featuredColor][product.featuredFace]}
+                            src={product.imgs[product.color ? product.color :  product.featuredColor][product.featuredFace]}
                             alt="product" />
                     </a>
 
@@ -399,13 +399,15 @@
                         </div>
                     </div>
                     <div class="colors">
-                        {#each colors as color}
+                        {#each product.colors as color}
                             <div
                                 class="color_border"
-                                style="border:0px solid #{color};">
+                                class:active={product.color == color}
+                                on:click={() => {product.color = color}}
+                                style="border:0px solid black;">
                                 <div
                                     class="color"
-                                    style="background-color:#{color}" />
+                                    style="background-color:{colors[color.toLowerCase()]}" />
                             </div>
                         {/each}
                     </div>

@@ -270,6 +270,8 @@ let signoutFunc = () =>{
         width: 100px;
         cursor: pointer;
         outline: none;
+        display: block;
+    text-align: center;
     }
     .edit_btn .btn:active {
         background-color: #46b978c7;
@@ -434,8 +436,10 @@ let signoutFunc = () =>{
         class="menuItems {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"
         style="background-color:{mobileMenuColor} !important">
         <a use:link href="/">{{ en: 'Home', fr: 'Acceuil' }[$lang]}</a>
+        <!--
         <a use:link href="/merch">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a use:link href="/tips">{{ en: 'Donations', fr: 'don' }[$lang]}</a>
+        -->
         {#if signedin}
             <div
                 
@@ -455,9 +459,9 @@ let signoutFunc = () =>{
                         <div class="user_info">
                         <div class="u_name" >{$user && $user.displayName ? $user.displayName : "User"}</div>
                             <div class="edit_btn">
-                            <button class="btn" on:click="{()=>{navigate("/myaccount")}}">
+                            <a use:link href="/myaccount/profile" class="btn" >
                                     {{ en: 'Edit Profile', fr: 'Modifier votre profil' }[$lang]}
-                                </button>
+                            </a>
                             </div>
                         </div>
                     </div>

@@ -50,3 +50,22 @@ export const urlPostReq = async(url, xdata) => {
     })
     return resp
 }
+
+export const generateDeliveryDate = () => {
+    let d = new Date()
+    const date = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0);
+    let todayUnix = date.getTime() / 1000
+    let minWaitDays = 5
+    let maxWaitDays = minWaitDays + 3
+    const minWaitStamp = todayUnix + minWaitDays * 3600 * 24
+    const minDate = new Date(minWaitStamp * 1000)
+    const maxWaitStamp = todayUnix + maxWaitDays * 3600 * 24
+    const maxDate = new Date(maxWaitStamp * 1000)
+
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let minFormat = String(days[minDate.getDay()] + " " + minDate.getDate() + " " + months[minDate.getMonth()])
+    let maxFormat = String(days[maxDate.getDay()] + " " + maxDate.getDate() + " " + months[minDate.getMonth()])
+
+    return [minFormat, maxFormat]
+}
