@@ -3,7 +3,7 @@
     import {user, db} from '../../firebase.js'
     import { navigate } from "svelte-routing";
     import { onMount, onDestroy } from "svelte";
-    import { textToHex } from "../../utils.js";
+    import { textToHex,notification } from "../../utils.js";
     import { link } from "svelte-routing";
     let quantity = 1;
     let loaded = false;
@@ -110,6 +110,11 @@
             $user = $user
         } else {
             console.log("adding " + nid)
+            notification.set({
+                accentColor: "success",
+                title: "success",
+                content: "Article Added to WishList",
+            });
             db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
             $user = {
                 ...$user,

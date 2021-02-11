@@ -77,7 +77,7 @@
         console.log($cart);
         notification.set({
             accentColor: "success",
-            Title: "Success",
+            title: "Success",
             content: "Item added to cart",
         });
     };
@@ -115,6 +115,11 @@
             delete $user.docData.wishlist[nid];
             $user = $user;
         } else {
+            notification.set({
+                accentColor: "success",
+                title: "success",
+                content: "Article Added to WishList",
+            });
             console.log("adding " + nid);
             db.collection("users")
                 .doc($user.uid)

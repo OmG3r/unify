@@ -38,14 +38,7 @@
         console.log(displayProducts);
         let loaded = true;
     });
-    let hel = () =>{
-         notification.set({
-                accentColor: "success",
-                title: "success",
-                content: "Article Added to Cart",
-          });
-                                    
-    }
+   
 
     const addWishlist = (nid) => {
         if ( $user ==0 || $user == undefined) {
@@ -61,6 +54,11 @@
             $user = $user
         } else {
             console.log("adding " + nid)
+            notification.set({
+                accentColor: "success",
+                title: "success",
+                content: "Article Added to WishList",
+            });
             db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
             $user = {
                 ...$user,
@@ -373,12 +371,18 @@
                                         '-' +
                                         product.id]: {...product, quantity: 1},
                                     });
-                                   hel()
-                                    console.log("notif");
+                                notification.set({
+                                    accentColor: "success",
+                                    title: "success",
+                                    content: "Article Added to Cart",
+                                });
+                                    
                                     
                                 }} />
                         </div>
-                        <div on:click={() => {addWishlist(params.userid + '-' +product.id)}} class="icon2">
+                        <div on:click={() => {
+                            addWishlist(params.userid + '-' +product.id);
+                            }} class="icon2">
                             <img src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
                         </div>
                     </div>
