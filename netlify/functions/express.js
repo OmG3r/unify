@@ -130,7 +130,8 @@ router.post('/addOrder', async(req, res) => {
 
     data.info = {
         ...data.info,
-        phoneNumber: userData.phone_number
+        phoneNumber: userData.phone_number,
+        useruid: userData.uid
     }
     let xdata = {
         ...data.info,
@@ -174,7 +175,7 @@ router.post('/addOrder', async(req, res) => {
     }, { merge: true })
 
     Object.entries(creatorOrders).forEach(([creator, order]) => {
-        batch.set(db.collection('creators').doc(creator), {
+        batch.set(db.doc('creators/' + creator + '/orders/all'), {
             ['orders']: {
                 [xdata.cartID]: order
             }

@@ -101,4 +101,14 @@
         <NotFound />
     
     </Route>
+    <Route path="*/*">
+            
+        <NotFound />
+    
+    </Route>
+    <Route path="**">
+            
+        <NotFound />
+    
+    </Route>
 </Router>

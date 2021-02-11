@@ -2,7 +2,8 @@
     //import { dbWrapper } from "../../firebase.js";
     //import { uuidToImageLink, socialMedias } from "../../utils.js";
     import { link } from "svelte-routing";
-
+    import {db} from '../firebase.js'
+    import {onMount, onDestroy} from 'svelte'
     export let params = {};
     let loaded = false;
     let displayProducts = 
