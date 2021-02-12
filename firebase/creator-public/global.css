@@ -1,0 +1,34 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+* {
+	box-sizing: border-box;	
+}
+body {
+	color: #333;
+	background-color: white;
+	margin: 0;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:visited {
+	color: inherit;
+}
+
+p {
+	margin: 0;
+}

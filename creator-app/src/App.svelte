@@ -27,7 +27,7 @@
     import Register from './routes/Register.svelte'
     import PhoneVerification from './routes/PhoneVerification.svelte'
     import Design from  './routes/Design.svelte'
-    
+    import ForgotPassword from './routes/ForgotPassword.svelte'
 
 
     import VerifyLogin from './comps/VerifyLogin.svelte'
@@ -91,8 +91,10 @@
         <Route  path="/phoneverification">  
             <PhoneVerification/>
         </Route>
-    
-    
+        
+        <Route  path="/forgotpassword">  
+            <ForgotPassword/>
+        </Route>
     
         <Route path="*">
             

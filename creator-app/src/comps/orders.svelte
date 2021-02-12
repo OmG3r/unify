@@ -4,10 +4,11 @@
     import { link } from "svelte-routing";
     import {db} from '../firebase.js'
     import {onMount, onDestroy} from 'svelte'
-
+    import MaterialSpinner from '../comps/misc/MaterialSpinner.svelte'
     import {statusColors} from '../utils.js'
     export let carts = []
     export let params = {};
+    export let first = true;
     let loaded = false;
     let displayProducts = 
     [
@@ -152,7 +153,7 @@
         color: #46B978;
     }
     .quantity {
-        margin-left: 15px;
+        margin-left: 0px;
     }
     hr {
         border-top: 1px solid rgba(21,29,34, 0.3) !important;
@@ -211,12 +212,25 @@
         box-shadow: 0px 0px 15px #0000001c;
         width: 98%;
     }
-    .id_title,.id{width: 19%;}
+    .id_title,.id{width: 12%;}
+    .name-area_title, .name-area {width: 15%}
     .Product_title,.product{width: 24.5%;}
     .Quantity_title,.quantity{width: 6%;}
-    .Price_title,.total_price{width: 15.5%;}
-    .Date_title,.date{width: 17.5%;}
+    .Price_title,.total_price{width: 12.5%;}
+    .Date_title,.date{width: 12.5%;}
     .Status_title,.status{width: 17.5%;}
+    .id_title, .Product_title, .Quantity_title, .Product_title, .Date_title, .Status_title, .id_title {
+        display: flex;
+        justify-content: center;
+    }
+    .name-area {
+        font-size: 14px;
+        text-overflow: ellipsis;
+    overflow: hidden; 
+    
+    max-width: 15%;
+    white-space: nowrap;
+    }
     .id{
         font-size: 12px;
         font-weight: 700;
@@ -393,6 +407,14 @@
             margin-right: 10px;
         }
     }
+
+    .u-center-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
 </style>
 
 <div class="profile_container">
@@ -402,6 +424,7 @@
     <div class="product_container">
         <div class="titles">
             <div class="id_title">ID</div>
+            <div class="name-area_title">Name</div>
             <div class="Product_title">Product</div>
             <div class="Quantity_title">Quantity</div>
             <div class="Price_title">Price</div>
@@ -410,55 +433,70 @@
         </div>
         <hr class="hr_to_remove" />
         <div class="u_products">
-            {#each carts as cart}
+            {#if first}
+                <div class="u-center-area">
+                    <MaterialSpinner width="75px" height="75px" />
 
-                {#each Object.entries(cart.items) as [key, product]}
-                 
-                <div class="single_product">
-                    <div class="right_part">
-                        <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
-                            <img class="product_img" src={product.img} alt="product" />
-                        </a>
-                    </div>
-                    <div class="left_part">
-                        <div class="id">#{cart.cartID}</div>
-
-                    <div class="product">
-                        <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
-                            <img class="product_img" src={product.img} alt="product" />
-                        </a>
-                        <div class="p_info">
-                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}#{product.id}</div>
-                            <div class="p_content_creator">{product.creator}</div>
-                            <div class="color_size">
-                                <div class="color">
-                                    Color:
-                                    <div class="shape" style="background-color:#{product.color}" />
-                                </div>
-                                <div class="size">
-                                    Size:
-                                    <div class="shape">{product.size}</div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="quantity"><div class="reference">Quantity: </div>{product.quantity}</div>
-
-                    <div class="total_price"><div class="reference">Price: </div>{product.price} TND</div>
-
-                    <div class="date"><div class="reference">Date: </div>{formatTimestampToDate(cart.timestamp)}</div><!--Order Date-->
-
-                <div class="status" style="background-color:#{statusColors[product.status]}">{product.status}</div><!--Order Status-->
-                    </div>
-                    
-                
-                    
                 </div>
                 
+            {:else}
+                {#each carts as cart}
+
+                    {#each Object.entries(cart.items) as [key, product]}
+                    
+                    <div class="single_product">
+                        <div class="right_part">
+                            <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                                <img class="product_img" src={product.img} alt="product" />
+                            </a>
+                        </div>
+                        <div class="left_part">
+                            <div class="id">#{cart.cartID}</div>
+                                <div class="name-area">{cart.name}</div>
+                        <div class="product">
+                            <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
+                                <img class="product_img" src={product.img} alt="product" />
+                            </a>
+                            <div class="p_info">
+                                <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}#{product.id}</div>
+                                <div class="p_content_creator">{product.creator}</div>
+                                <div class="color_size">
+                                    <div class="color">
+                                        Color:
+                                        <div class="shape" style="background-color:#{product.color}" />
+                                    </div>
+                                    <div class="size">
+                                        Size:
+                                        <div class="shape">{product.size}</div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="quantity"><div class="reference">Quantity: </div>{product.quantity}</div>
+
+                        <div class="total_price"><div class="reference">Price: </div>{product.price} TND</div>
+
+                        <div class="date"><div class="reference">Date: </div>{formatTimestampToDate(cart.timestamp)}</div><!--Order Date-->
+
+                    <div class="status" style="background-color:#{statusColors[product.status]}">{product.status}</div><!--Order Status-->
+                        </div>
+                        
+                    
+                        
+                    </div>
+                    
+                    {/each}
+                {:else}
+
+                    <div class="u-center-area">
+                        No orders
+
+                    </div>
                 {/each}
-            {/each}
+            {/if}
+            
             <hr />
         </div>
     </div>

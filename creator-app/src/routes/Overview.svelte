@@ -5,27 +5,22 @@
     import {onMount, onDestroy} from 'svelte'
     import {auth, db, user} from '../firebase.js'
     import {uuidToImageLink} from '../utils.js'
+
     document.title = "Unify Creator - Overview"
-    const kpis = {
+    let kpis = {
         orders: {
             img: "/imgs/misc/receipt.png",
-            value: (async () => {
-                return "42";
-            })(),
+            value: "Loading...",
             desc: "Number of orders",
         },
         profit: {
             img: "/imgs/misc/profit.png",
-            value: (async () => {
-                return "TND 142";
-            })(),
+            value: "Loading...",
             desc: "Profit",
         },
         pay: {
             img: "imgs/misc/pay.png",
-            value: (async () => {
-                return "TND 31";
-            })(),
+            value: 0,
             desc: "Money to be paid out",
         },
     };
@@ -59,6 +54,34 @@
             })
             carts.sort((a, b) => b.timestamp - a.timestamp)
             carts = carts
+            
+            let escrow = 0
+            let secured = 0
+            let kpiVaues = {
+                orders : {
+                    secured: 0,
+                    escrow: 0
+                },
+                profit: {
+                    secured: 0,
+                    escrow: 0
+                }
+            }
+            for (let cart of carts) {
+                for (let [key, item] of Object.entries(cart.items)) {
+                    if ([undefined, "In Progress", "Printig", "In Delivery"].some((i) => item.status == i)) {
+                        kpiVaues.profit.escrow += (item.profit * item.quantity)
+                        kpiVaues.orders.escrow += 1
+                    } else if (item.status == "Delivered") {
+                        kpiVaues.profit.secured += (item.profit * item.quantity)
+                        kpiVaues.orders.secured + 1
+                    }
+                }
+            }
+
+            kpis.orders.value = String(kpiVaues.orders.secured) + " (" + kpiVaues.orders.escrow + ")"
+            kpis.profit.value = String(kpiVaues.profit.secured) + " (" + kpiVaues.profit.escrow + ")"
+            kpis = kpis
             if (!document[hidden]) {
                 lastcart = carts
             } else {

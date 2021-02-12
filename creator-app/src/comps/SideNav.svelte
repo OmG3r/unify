@@ -326,7 +326,7 @@
 
 </style>
 
-{#if !['/login', '/register'].includes(activeURI)}
+{#if !['/login', '/register', '/forgotpassword', '/phoneverification'].includes(activeURI)}
   <nav class:collapse={$navCollapse}  class:noCollapse={!$navCollapse}>
     {#if $navCollapsable}
       <div

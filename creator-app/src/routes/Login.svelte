@@ -324,11 +324,13 @@
 
         <div class="right_side" >
             <div class="title">Sign in to Unify</div>
+            <!--
             <div class="signupAlternatives">
                 <div class="googleBtn"><img src="/imgs/misc/google.png" alt="google"><div class="text">Google</div> </div>
                 <div class="fbBtn"><img src="/imgs/misc/fb.png" alt="fb"> <div class="text">Facebook</div> </div>
             </div>
-            <div class="orEmailText">Or use your email account</div>
+            -->
+            <div class="orEmailText">use your email account</div>
             <div class="no-have-acc">Don't have an account ? <a use:link href="/register">Sign up here</a></div>
             <form on:submit|preventDefault={doSubmit}>
                  {#if errorMessage}
@@ -348,7 +350,7 @@
                     </div>
                 
             </div>
-            <div class="forget"><a href="#">Forget Your Password?</a> </div>
+            <div class="forget"><a use:link href="/forgotpassword">Forget Your Password?</a> </div>
             <div class="signup"><button class="signup_btn" type="submit">Sign in</button></div>
             </form>
         </div>

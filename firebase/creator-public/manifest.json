@@ -1,0 +1,23 @@
+{
+    "name": "Unify Creator",
+    "short_name": "Unify",
+    "start_url": "/",
+    "display": "minimal-ui",
+    "background_color": "#121117",
+    "theme_color": "#121117",
+    "description": "Creator application for Unify.tn",
+    "icons": [
+        {
+            "src": "imgs/icons/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "imgs/icons/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

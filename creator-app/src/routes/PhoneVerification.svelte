@@ -1,11 +1,9 @@
 <script>
     import {onMount} from 'svelte'
     import {user, auth} from '../firebase.js'
-    import MaterialSpinner from '../comps/misc/MaterialSpinner.svelte'
-    import {navigate} from 'svelte-routing'
- 
+    import MaterialSpinner from  '../comps/misc/MaterialSpinner.svelte'
+    import {navigate, link} from 'svelte-routing'
 
-   
     user.subscribe((v) => {
         if (v == 0) {
             console.log("initng")
@@ -32,6 +30,10 @@
                 })();
             }
         });
+        console.log(location.search)
+        let params = new URLSearchParams(location.search)
+        console.log(params.get('backurl'))
+        document.title = "Unify Creator - Phone Verification"
     })
     const SendCode = async () => {
         if (sendingCode) {
@@ -74,16 +76,37 @@
         });
         sendingCode = false
     }
-
-    const verifyCode = () => {
+    let succOperation = false
+    const verifyCode = async () => {
         console.log("first")
-        var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value);
+        let erx = false
+        
+        var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value)
         console.log("second")
         console.log(credential)
         if ($user) {
             console.log('4')
-            $user.updatePhoneNumber(credential)
-            console.log($user)
+            try {
+                await $user.updatePhoneNumber(credential)
+                console.log($user)
+                succOperation = true
+            } catch (error) {
+                console.log(error)
+                if (error.code == "auth/invalid-verification-code") {
+                    errorMessage = "The code is incorrect, please verify it."
+                    succOperation = false
+                } else if (error.code == "auth/credential-already-in-use") {
+                    errorMessage = "Phone number already in use by another account"
+                    succOperation = false
+                }
+            }
+            
+            
+        }
+
+        let params = new URLSearchParams(location.search)
+        if (params.get('backurl') != null) {
+            navigate(params.get('backurl'))
         }
         return
         window.confirmationResult.confirm(code.value).then((result) => {
@@ -106,9 +129,10 @@
 </script>
 
 <div class="left_side">
-    <div class="u_logo">
-        <img src="/imgs/icons/logo_transaprent.png" alt="logo" />Unify
-    </div>
+    <a use:link href="/" class="u_logo">
+        <img src="/imgs/logo.png" alt="logo" />Unify
+    </a>
+    {#if succOperation == false}
     <div class="title">
         {#if $user && $user.phoneNumber}
             Update your phone number
@@ -122,7 +146,7 @@
         </div>
     {/if}
     <div class="inputContainer">
-        <div class="input">
+        <form on:submit|preventDefault={SendCode} class="input">
             <i class="fas fa-phone" />
             <input
                 bind:this={phone}
@@ -131,9 +155,9 @@
                 placeholder="Phone Number"
                 value={$user && $user.phoneNumber ? $user.phoneNumber : ''}
             />
-        </div>
+        </form>
         {#if confResInitied}
-            <div class="input">
+            <form on:submit|preventDefault={verifyCode} class="input">
                 <i class="fas fa-key" />
                 <input
                 bind:this={code}
@@ -141,7 +165,7 @@
                     class="verification"
                     placeholder="Verification Code"
                 />
-            </div>
+            </form>
         {/if}
     </div>
     <div class="verification_btns">
@@ -158,6 +182,12 @@
             </button>
         </div>
     </div>
+    {:else}
+        <div class="title">
+            Success: Phone Updated.
+        </div>
+
+    {/if}
 
     <div class="circle_top" />
     <div class="circle_bottom" />
@@ -200,8 +230,8 @@
         left: 10px;
     }
     .left_side .u_logo img {
-        width: 35px;
-        margin-right: 10px;
+        width: 50px;
+        height: 50px;
     }
     .left_side .title {
         font-size: 30px;
@@ -288,6 +318,7 @@
     .resend_btn {
         background-color: white !important;
         color: rgb(var(--userColor)) !important;
+        padding: 4px 0;
     }
     .send_btn:active {
         background-color: rgba(var(--AccentColor), 0.8);

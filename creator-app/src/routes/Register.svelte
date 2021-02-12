@@ -447,7 +447,9 @@
         </div>
 
         <div class="right_side">
+
             <div class="title">Sign up to Unify</div>
+            <!--
             <div class="signupAlternatives">
                 <div class="googleBtn">
                     <img src="/imgs/misc/google.png" alt="google">
@@ -458,7 +460,8 @@
                     <div class="text">Facebook</div>
                 </div>
             </div>
-            <div class="orEmailText">Or sign up using your email</div>
+            -->
+            <div class="orEmailText">sign up using your email</div>
             <div class="have-acc">Aready have an account ? <a use:link href="/login">Sign in here</a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                 {#if errorMessage}
