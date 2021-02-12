@@ -4,6 +4,9 @@
     import { link } from "svelte-routing";
     import {db} from '../firebase.js'
     import {onMount, onDestroy} from 'svelte'
+
+    import {statusColors} from '../utils.js'
+    export let carts = []
     export let params = {};
     let loaded = false;
     let displayProducts = 
@@ -101,6 +104,14 @@
         console.log(displayProducts);
         let loaded = true;
     });*/
+    
+    const formatTimestampToDate = (t) => {
+        const a = new Date(t* 1000);
+        const year = a.getFullYear();
+        const month = a.getMonth() + 1;
+        const date = a.getDate() + 1;
+        return date + "/" + month + "/" + year
+    }
 </script>
 
 <style>
@@ -137,7 +148,7 @@
     }
 
     .total_price {
-        margin-left: 15px;
+        
         color: #46B978;
     }
     .quantity {
@@ -190,7 +201,7 @@
         margin-bottom: 20px;
     }
     .titles{
-        margin-top: 50px;
+        margin-top: 5px;
         display: flex;
         flex-direction: row;
         flex-direction: row;
@@ -200,10 +211,10 @@
         box-shadow: 0px 0px 15px #0000001c;
         width: 98%;
     }
-    .id_title,.id{width: 8%;}
+    .id_title,.id{width: 19%;}
     .Product_title,.product{width: 24.5%;}
-    .Quantity_title,.quantity{width: 15%;}
-    .Price_title,.total_price{width: 17.5%;}
+    .Quantity_title,.quantity{width: 6%;}
+    .Price_title,.total_price{width: 15.5%;}
     .Date_title,.date{width: 17.5%;}
     .Status_title,.status{width: 17.5%;}
     .id{
@@ -399,7 +410,9 @@
         </div>
         <hr class="hr_to_remove" />
         <div class="u_products">
-                 {#each displayProducts as product}
+            {#each carts as cart}
+
+                {#each Object.entries(cart.items) as [key, product]}
                  
                 <div class="single_product">
                     <div class="right_part">
@@ -408,14 +421,14 @@
                         </a>
                     </div>
                     <div class="left_part">
-                        <div class="id">#{product.id}</div>
+                        <div class="id">#{cart.cartID}</div>
 
                     <div class="product">
                         <a use:link href={'/' + params.userid + '/merch/' + product.id} class="p_img">
                             <img class="product_img" src={product.img} alt="product" />
                         </a>
                         <div class="p_info">
-                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}</div>
+                            <div class="p_title" >{product.name.length > 15 ? product.name.substr(0,15)+"..." :product.name}#{product.id}</div>
                             <div class="p_content_creator">{product.creator}</div>
                             <div class="color_size">
                                 <div class="color">
@@ -431,20 +444,22 @@
                         </div>
                     </div>
 
-                    <div class="quantity"><div class="reference">Quantity: </div>{product.qty}</div>
+                    <div class="quantity"><div class="reference">Quantity: </div>{product.quantity}</div>
 
                     <div class="total_price"><div class="reference">Price: </div>{product.price} TND</div>
 
-                    <div class="date"><div class="reference">Date: </div>{product.date}</div><!--Order Date-->
+                    <div class="date"><div class="reference">Date: </div>{formatTimestampToDate(cart.timestamp)}</div><!--Order Date-->
 
-                <div class="status" style="background-color:#{product.statusColor}">{product.status}</div><!--Order Status-->
+                <div class="status" style="background-color:#{statusColors[product.status]}">{product.status}</div><!--Order Status-->
                     </div>
                     
                 
                     
-            </div>
-            <hr />
+                </div>
+                
+                {/each}
             {/each}
+            <hr />
         </div>
     </div>
 </div>

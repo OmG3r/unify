@@ -2,6 +2,10 @@
     import { link } from "svelte-routing";
     import ViewNav from '../comps/ViewNav.svelte'
     import Orders from '../comps/orders.svelte'
+    import {onMount, onDestroy} from 'svelte'
+    import {auth, db, user} from '../firebase.js'
+    import {uuidToImageLink} from '../utils.js'
+    document.title = "Unify Creator - Overview"
     const kpis = {
         orders: {
             img: "/imgs/misc/receipt.png",
@@ -25,12 +29,123 @@
             desc: "Money to be paid out",
         },
     };
+    let carts = []
+    let first = true
+    let unsubscribeDB = () => {};
+    onMount(async () => {
+        if (Notification.permission !== "denied" && Notification.permission != "granted") {
+            Notification.requestPermission()
+        }
+        
+        document.addEventListener(visibilityChange, handleVisibilityChange, false);
+        let merchData =(await db.doc('/creators/' + $user.claims.username + "/merch/all").get()).data()
+        unsubscribeDB = db.doc('creators/' + $user.claims.username + "/orders/all").onSnapshot((doc) => {
+            let data = doc.data()
+            let orders = data.orders
+            carts = Object.entries(orders).map(([cartID, cart]) => {
+                cart.cartID = cartID
+                cart.timestamp = cart.timestamp.seconds
+                for( let [key, item] of Object.entries(cart.items)) {
+                    let itemData = merchData[item.id]
+                    let uuid = itemData.imgs[item.color][itemData.featuredFace]
+                    let path = "creators/" + $user.claims.username + "/merch/" + item.id + "/" + itemData.featuredFace + "-" + item.color 
+                    item.img = uuidToImageLink(uuid, path)
+                    item.name = itemData.name
+                    if (item.status == undefined) {
+                        item.status = "In Progress"
+                    }
+                }
+                return cart
+            })
+            carts.sort((a, b) => b.timestamp - a.timestamp)
+            carts = carts
+            if (!document[hidden]) {
+                lastcart = carts
+            } else {
+                if (!first) {
+                    
+                    
+                    let diff = carts.filter((item) => !lastcart.some((x) => x.cartID == item.cartID))
+                    document.title = "(" + String(diff.length) + ") Orders"
+                    
+                    const greeting = new Notification('Unify',{
+                        body: "(" + String(diff.length) + ") Orders",
+                        icon: './imgs/icon.png'
+                    });
+                    
+                    setTimeout(() => {
+                        if (nameInter) {
+                            clearInterval(nameInter)
+                        }
+                        nameInter = setInterval(() => {
+                            document.title = "(" + String(diff.length) + ") Orders"
+                        }, 2000);  
+                    }, 1000);
+                    
+                    if (orderInter) {
+                        clearInterval(orderInter)
+                    }
+                    orderInter = setInterval(() => {
+                        document.title = "Unify Creator - Overview"
+                    }, 2000);
+                }
+                   
+                
+                
+            }
+            console.log(carts)
+            /*
+            for (let [cartID, cart] of Object.entries(orders)) {
+                for(let [itemSlug, value] of cart.items) {
+                    value.cartID = cartID
+                    value.name = cart.name
+                    value.timestamp = cart.timestamp
+                }
+            } 
+            */
+           first = false
+        })
+    })
+    let nameInter = undefined
+    let orderInter = undefined
+     var hidden, visibilityChange;
+    if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+    hidden = "hidden";
+    visibilityChange = "visibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+    hidden = "msHidden";
+    visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
+    hidden = "webkitHidden";
+    visibilityChange = "webkitvisibilitychange";
+    }
+    let lastcart = []
+    const handleVisibilityChange = () => {
+        if (document[hidden]) {
+            lastcart = carts
+        } else {
+            if (document.title.includes('Orders')) {
+                document.title = "Unify Creator - Overview"
+                
+            }
+            clearInterval(nameInter)
+                clearInterval(orderInter)
+        }
+    }
+   
+    
+    onDestroy(() => {
+        unsubscribeDB()
+        document.removeEventListener(visibilityChange, handleVisibilityChange)
+    })
 </script>
 
 <style>
     .u-view {
         width: 100%;
-        padding: 80px 80px 80px 80px
+        padding: 80px 80px 80px 80px;
+        overflow-y: scroll;
+        max-height: 100vh;
     }
     header {
         width: 100%;
@@ -214,5 +329,5 @@
         </div>
     </section>
 
-    <Orders/>
+    <Orders {carts}/>
 </div>

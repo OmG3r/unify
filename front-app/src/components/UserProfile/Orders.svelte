@@ -173,8 +173,8 @@
     const formatTimestampToDate = (t) => {
         const a = new Date(t* 1000);
         const year = a.getFullYear();
-        const month = a.getMonth();
-        const date = a.getDate();
+        const month = a.getMonth() + 1;
+        const date = a.getDate() + 1;
         return date + "/" + month + "/" + year
     }
     onDestroy(() => {

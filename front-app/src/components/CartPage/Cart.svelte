@@ -83,6 +83,7 @@
             console.log(item)
             if (item.size == undefined) {
                 noSize = true
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
 
