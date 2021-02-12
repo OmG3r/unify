@@ -14,9 +14,6 @@
         ...$user.docData,
     };
 
-    console.log(profile);
-    console.log($user.docData);
-
     const MAX_BANNER_SIZE = 1;
     const MAX_PROFIL_PIC_SIZE = 0.5;
 
@@ -34,9 +31,9 @@
         }
         profile.banner = f;
     };
-    setInterval(() => {
+  /*   setInterval(() => {
         console.log(profile);
-    }, 1500);
+    }, 1500); */
     const handleDropLogo = (event) => {
         let f = event.dataTransfer.files[0];
         if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
@@ -53,7 +50,7 @@
 
         profile.logo = f;
     };
-    $: console.log(profile.logo);
+    //$: console.log(profile.logo);
     const handleExplorerBanner = (event) => {
         let f = event.target.files[0];
         if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
@@ -150,12 +147,16 @@
             modification = true;
         }
 
-        for (let media of ["facebook", "twitch", "youtube", "instagram"]) {
-            if (profile[media].includes("/")) {
-                let sp = profile[media].split("/");
-                profile[media] = sp[sp.length - 1];
+        for (let media of ["youtube","facebook","instagram", "twitch", "nimo","twitter","baaz","Tiktok","pinterest"]) {
+            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com"].some((item)=>profile[media].includes(item))) {
+                notification.set({
+                    accentColor: "alert",
+                    title: "Error",
+                    content: media + " link is malformed",
+                })
+                modification  = false;
             }
-        }
+            }
         if (modification == true) {
             await db
                 .doc("/creators/" + $user.claims.username)
@@ -360,7 +361,7 @@
     }
     .input input,
     .input textarea {
-        width: 300px;
+        width: 180px;
         height: 45px;
         border-radius: 8px;
         border: 1px solid #b9bbbc;
@@ -646,9 +647,9 @@
             <InputColor title="Accent Color" bind:text={profile.accentColor} />
             <div class="input">
                 <div class="title">
-                    {{ fr: 'Date de naissance', en: 'Date of Birth' }[$lang]}
+                    {{ fr: 'Description', en: 'Description' }[$lang]}
                 </div>
-                <textarea class="description" name="description" />
+            <textarea class="description" name="description"  maxlength="350" bind:value ={profile.description} />
             </div>
         </div>
 
@@ -657,37 +658,41 @@
         </div>
         <div class="u-information-box">
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Youtube"
                 bind:text={profile.youtube} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Facebook"
                 bind:text={profile.facebook} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Instagram"
                 bind:text={profile.instagram} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Twitch"
                 bind:text={profile.twitch} />
                 <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Nimo"
                 bind:text={profile.nimo} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Twitter"
                 bind:text={profile.twitter} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Baaz"
                 bind:text={profile.baaz} />
             <Input
-                placeholder={'Username'}
+                placeholder={'Link'}
                 title="Tiktok"
                 bind:text={profile.Tiktok} />
+            <Input
+                placeholder={'Link'}
+                title="pinterest"
+                bind:text={profile.pinterest} />    
         </div>
 
         <button on:click={doUpdate} class="save-btn">

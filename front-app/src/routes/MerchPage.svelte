@@ -50,7 +50,11 @@
 
 {:else}
     <div class="u-view">
+<<<<<<< HEAD
         <MaterialSpinner width="100px" height="100px" />
+=======
+        <MaterialSpinner  width="100px" height="100px"/>
+>>>>>>> up
 
     </div>
 {/if}
