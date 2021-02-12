@@ -27,7 +27,7 @@
     .left_part {
         display: flex;
         flex-direction: column;
-        width: 70%;
+        width: max-content;
         z-index: 6;
     }
     .left_part .title {
@@ -39,7 +39,6 @@
         font-weight: 400;
     }
     .get_started_btn {
-        margin-left: 25px;
     }
     button:focus {
         outline: 0;
@@ -276,7 +275,7 @@
 <!--header-->
 <header>
     <div class="left_part">
-        <div class="title" data-aos="fade-right" data-aos-duration="1000">All-in-one Place Unified</div>
+        <div class="title" data-aos="fade-right" data-aos-duration="1000">All-in-one <br/>Place <br/>Unified</div>
         <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">Design and sell branded merch</div>
         <div class="get_started_btn">
             <button class="btn" data-aos="fade-up" data-aos-delay="800" data-aos-duration="600">

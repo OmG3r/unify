@@ -142,7 +142,7 @@
         width: 100%;
         z-index: 500;
     }
-    .u-logo img {
+    .u-logo .logo_img {
         position: absolute;
         left: 0;
         top: 0;
@@ -338,12 +338,15 @@
         position: absolute;
         top: 72%;
     }
-    .userSocial i {
-        font-size: 22px;
-        color: white;
+    .userSocial img {
+        width:25px;
+        filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(47deg) brightness(104%) contrast(101%);
         margin: 0 3px;
     }
-    .userSocial i:hover {
+    .userSocial a {
+        width:25px;
+    }
+    .userSocial img:hover {
         color: rgb(var(--AccentColor));
         cursor: pointer;
     }
@@ -661,7 +664,7 @@
     <div class="u-pattern" />
 
     <div class="u-logo">
-        <img crossorigin="anonymous" src={creatorData.logo ? creatorData.logo : '/img/Logo.svg'} alt="u-logo" />
+        <img class="logo_img" crossorigin="anonymous" src={creatorData.logo ? creatorData.logo : '/img/Logo.svg'} alt="u-logo" />
         <span>{creatorData.name ? creatorData.name : (creatorData.username + "' store")}</span>
 
         <div class="userSocial">
@@ -673,9 +676,13 @@
         -->
             {#each socialMedias as media}
                 {#if creatorData[media.type] && creatorData[media.type].length > 0}
-                    <a href={media.link + '/' + creatorData[media.type]}>
-                        <i class="fab fa-{media.type}" />
+                    <a target="_blank" href={creatorData[media.type].includes("http") ? creatorData[media.type] : "https://" + creatorData[media.type]}>
+                        <img
+                        style="width:{media.type == "baaz" ? "50px" :" 30px"}"
+                                src="/img/socialMedia/{media.type}.svg"
+                                alt="" />
                     </a>
+                    
                 {/if}
             {/each}
         </div>

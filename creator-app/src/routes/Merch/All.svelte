@@ -85,6 +85,7 @@
 
     .active-products {
         display: flex;
+        flex-wrap: wrap;
     }
 
     .u-section-title {
@@ -156,6 +157,13 @@
     .u-modify:hover {
         color: #181d22;
         background-color: white;
+    }
+
+    @media only screen and (max-width: 1180px) {
+
+        .active-products{
+            justify-content: center;
+        }
     }
 </style>
 

@@ -3,14 +3,18 @@
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
-    import { db, dbWrapper,user } from "../../firebase.js";
-    import { uuidToImageLink, socialMedias,notification, colors } from "../../utils.js";
+    import { db, dbWrapper, user } from "../../firebase.js";
+    import {
+        uuidToImageLink,
+        socialMedias,
+        notification,
+        colors,
+    } from "../../utils.js";
     import { link, navigate } from "svelte-routing";
     export let params = {};
     export let creatorData = {};
     let loaded = false;
     let displayProducts = [];
-    
 
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
         console.log(data);
@@ -22,57 +26,71 @@
 
         displayProducts = Object.entries(data).map(([key, value]) => {
             value.id = key;
-            for (let [col, facades]  of Object.entries(value.imgs)) {
-                console.log(facades)
+            for (let [col, facades] of Object.entries(value.imgs)) {
+                console.log(facades);
                 for (let [facade, id] of Object.entries(facades)) {
-                    let path = 'creators/' + params.userid + "/merch/" + key + "/" + facade + "-" + col
-                    console.log(value.imgs)
-                    value.imgs[col][facade] = uuidToImageLink(id, path)
-                    console.log(value.imgs[col][facade])
-                } 
+                    let path =
+                        "creators/" +
+                        params.userid +
+                        "/merch/" +
+                        key +
+                        "/" +
+                        facade +
+                        "-" +
+                        col;
+                    console.log(value.imgs);
+                    value.imgs[col][facade] = uuidToImageLink(id, path);
+                    console.log(value.imgs[col][facade]);
+                }
             }
             return value;
         });
 
-        
         console.log(displayProducts);
         let loaded = true;
     });
-   
 
     const addWishlist = (nid) => {
-        if ( $user ==0 || $user == undefined) {
-            navigate('/signin?backurl=/' + params.userid + "/merch")
-            return
+        if ($user == 0 || $user == undefined) {
+            navigate("/signin?backurl=/" + params.userid + "/merch");
+            return;
         }
 
-        if ($user.docData.wishlist && Object.keys($user.docData.wishlist).includes(nid)) {
+        if (
+            $user.docData.wishlist &&
+            Object.keys($user.docData.wishlist).includes(nid)
+        ) {
             // remove it
-            console.log("removing " + nid)
-            db.collection('users').doc($user.uid).update({["wishlist." + nid]: firebase.firestore.FieldValue.delete()})
-            delete $user.docData.wishlist[nid]
-            $user = $user
+            console.log("removing " + nid);
+            db.collection("users")
+                .doc($user.uid)
+                .update({
+                    ["wishlist." + nid]: firebase.firestore.FieldValue.delete(),
+                });
+            delete $user.docData.wishlist[nid];
+            $user = $user;
         } else {
-            console.log("adding " + nid)
+            console.log("adding " + nid);
             notification.set({
                 accentColor: "success",
                 title: "success",
                 content: "Article Added to WishList",
             });
-            db.collection('users').doc($user.uid).set({wishlist: {[nid]: true}}, {merge: true})
+            db.collection("users")
+                .doc($user.uid)
+                .set({ wishlist: { [nid]: true } }, { merge: true });
             $user = {
                 ...$user,
                 docData: {
                     ...$user.docData,
                     wishlist: {
                         ...$user.docData.wishlist,
-                        [nid]: true
-                    }
-                }
-            }
+                        [nid]: true,
+                    },
+                },
+            };
         }
-        
-    }
+    };
 </script>
 
 <style>
@@ -84,7 +102,6 @@
     }
 
     .u_products {
-        min-height: 100%;
         padding: 20px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -103,11 +120,12 @@
         min-height: 240px;
         cursor: pointer;
         user-select: none;
+        padding-bottom: 15px;
     }
     .single_product img {
         max-width: 100%;
     }
-    .single_product .product_img{
+    .single_product .product_img {
         border-radius: 20px;
     }
     .likebtn {
@@ -136,7 +154,8 @@
     }
     .cartBtns div img {
         width: 25px;
-        filter: invert(100%) sepia(0%) saturate(7428%) hue-rotate(68deg) brightness(101%) contrast(87%);
+        filter: invert(100%) sepia(0%) saturate(7428%) hue-rotate(68deg)
+            brightness(101%) contrast(87%);
         margin: 5px 0px 5px 0px;
         cursor: pointer;
     }
@@ -145,14 +164,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100%; 
+        height: 100%;
     }
     .cartBtns .icon1:active {
-        background-color: #46B978;
+        background-color: #46b978;
         border-radius: 0 17px 0 0;
     }
     .cartBtns .icon2:active {
-        background-color: #46B978;
+        background-color: #46b978;
         border-radius: 0 0px 0 17px;
     }
     .productInfo {
@@ -243,13 +262,19 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
     }
-    .social_icons i {
-        font-size: 30px;
+    .social_icons a {
+        padding: 5px;
+    }
+    .social_icons img {
+        width: 35px;
         margin-right: 15px;
     }
-    .social_icons i:hover {
-        color: rgb(var(--AccentColor));
+    .social_icons img:hover {
+        filter: invert(61%) sepia(36%) saturate(648%) hue-rotate(93deg)
+            brightness(95%) contrast(88%);
         cursor: pointer;
     }
     .u_info {
@@ -257,7 +282,8 @@
         color: #181d22;
     }
     .u_desc {
-        color: rgba(0, 0, 0, 0.5);
+        color:#7b7f84;
+        line-break: anywhere;
     }
     .title_container {
         position: relative;
@@ -306,7 +332,8 @@
         display: flex;
         cursor: pointer;
     }
-    .color_border:hover, .color_border.active {
+    .color_border:hover,
+    .color_border.active {
         border-width: 2px !important;
     }
 </style>
@@ -317,8 +344,7 @@
             <h2 class="info_title">{{ en: 'Info', fr: 'Info' }[$lang]}</h2>
             <hr />
             <p class="u_desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua
+                 {creatorData.description}
             </p>
         </div>
 
@@ -331,10 +357,11 @@
             <div class="social_icons">
                 {#each socialMedias as media}
                     {#if creatorData[media.type] && creatorData[media.type].length > 0}
-                        <a
-                            target="_self"
-                            href={media.link + '/' + creatorData[media.type]}>
-                            <i class="fab fa-{media.type}" />
+                        <a target="_blank" href={creatorData[media.type].includes("http") ? creatorData[media.type] : "https://" + creatorData[media.type]}>
+                            <img
+                        style="width:{media.type == "baaz" ? "50px" :" 30px"}"
+                                src="/img/socialMedia/{media.type}.svg"
+                                alt="" />
                         </a>
                     {/if}
                 {/each}
@@ -351,12 +378,10 @@
         <div class="u_products">
             {#each displayProducts as product}
                 <div class="single_product">
-                    <a
-                        use:link
-                        href='/{params.userid}/merch/{product.id}'>
+                    <a use:link href="/{params.userid}/merch/{product.id}">
                         <img
                             class="product_img"
-                            src={product.imgs[product.color ? product.color :  product.featuredColor][product.featuredFace]}
+                            src={product.imgs[product.color ? product.color : product.featuredColor][product.featuredFace]}
                             alt="product" />
                     </a>
 
@@ -367,38 +392,43 @@
                                 alt="cart"
                                 on:click={() => {
                                     cart.add({
-                                        [params.userid +
-                                        '-' +
-                                        product.id]: {...product, quantity: 1},
+                                        [params.userid + '-' + product.id]: {
+                                            ...product,
+                                            quantity: 1,
+                                        },
                                     });
-                                notification.set({
-                                    accentColor: "success",
-                                    title: "success",
-                                    content: "Article Added to Cart",
-                                });
-                                    
-                                    
+                                    notification.set({
+                                        accentColor: 'success',
+                                        title: 'success',
+                                        content: 'Article Added to Cart',
+                                    });
                                 }} />
                         </div>
-                        <div on:click={() => {
-                            addWishlist(params.userid + '-' +product.id);
-                            }} class="icon2">
-                            <img src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' +product.id] ? "/img/misc/filled-heart-1.png" : "/img/misc/heart.png" } alt="heart" />
+                        <div
+                            on:click={() => {
+                                addWishlist(params.userid + '-' + product.id);
+                            }}
+                            class="icon2">
+                            <img
+                                src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + product.id] ? '/img/misc/filled-heart-1.png' : '/img/misc/heart.png'}
+                                alt="heart" />
                         </div>
                     </div>
                     <div class="productInfo">
                         <span class="product_title">{product.name}</span>
                         <div class="product_price">
                             {#if product.discount}
-                            <span class="current_price">{product.price * (1 - product.discount)}
-                                TND</span>
-                            <span class="old_price">
-                                <span class="price">{product.price}</span>
-                                <span class="percentage_discount">-{product.discount * 100}%</span>
-                            </span>
+                                <span
+                                    class="current_price">{product.price * (1 - product.discount)}
+                                    TND</span>
+                                <span class="old_price">
+                                    <span class="price">{product.price}</span>
+                                    <span
+                                        class="percentage_discount">-{product.discount * 100}%</span>
+                                </span>
                             {:else}
-                            <span class="current_price">{product.price}
-                                TND</span>
+                                <span class="current_price">{product.price}
+                                    TND</span>
                             {/if}
                         </div>
                     </div>
@@ -407,7 +437,9 @@
                             <div
                                 class="color_border"
                                 class:active={product.color == color}
-                                on:click={() => {product.color = color}}
+                                on:click={() => {
+                                    product.color = color;
+                                }}
                                 style="border:0px solid black;">
                                 <div
                                     class="color"

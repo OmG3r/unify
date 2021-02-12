@@ -18,6 +18,7 @@
     const doUpdate = async () => {
         let updated = false
         if (varname.value != $user.displayName) {
+            
             await $user.updateProfile({
                 displayName: varname.value
             })

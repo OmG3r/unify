@@ -15,6 +15,7 @@ footer{
     flex-direction: row;
     justify-content: space-between;
     z-index: 1;
+    width: 90%;
 }
 .left_part{
     display:flex;
@@ -40,17 +41,17 @@ footer{
 .right_part{
     display:flex;
     flex-direction: row;
-    width: 70%;
+    width: 80%;
 }
 
-.using,.about,.follow{
+.using,.about,.follow,.newsletter{
     color:white;
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 0 40px 0 40px;
+    margin: 0 20px 0 20px;
 }
-.using .title,.about .title,.follow .title{
+.using .title,.about .title,.follow .title,.newsletter .title{
     color:#848484;
     font-weight: 600;
     margin-bottom: 15px;
@@ -62,7 +63,9 @@ footer{
     display: flex;
     flex-direction: column;
 }
-
+.items a {
+    margin: 2.5px 0 2.5px 0;
+}
 .follow .items{
      display: flex;
      flex-direction: row;
@@ -77,6 +80,7 @@ footer{
 .follow .items img:hover{
     filter: invert(54%) sepia(66%) saturate(375%) hue-rotate(93deg) brightness(102%) contrast(85%);
 }
+
 .copyright{
     color: white;
     display: flex;
@@ -127,17 +131,26 @@ footer{
             margin-bottom: 0;
        }
        .right_part{
-           width: max-content;
+           width: 100%;
+       }
+       .left_part .sub_text{
+           width: 300px;
        }
    }
    @media only screen and (max-width: 800px) {
+       .right_part{
+           align-items: center;
+       }
+       .about,.follow,.newsletter,.using{
+           max-width: 115px;
+       }
        .left_part,.right_part{
            flex-direction: column;
        }
        .left_part .logo {
            margin-bottom: 15px;
        }
-       .using,.about,.follow{
+       .using,.about,.follow,.newsletter{
            margin-bottom: 15px;
        }
        .right_top_shape,.left_bottom_shape{
@@ -167,25 +180,27 @@ footer{
                 Unify
             </div>
 
-            <div class="sub_text">Lorem, ipsum dolor sit amet consectetur</div>
+            <div class="sub_text">Unify is the first platform dedicated to content creation in Tunisia that connects content creators and their supporters.</div>
         </div>
         <div class="right_part">
 
             <div class="using">
                 <div class="title">USING UNIFY</div>
                 <div class="items">
-                    <a href="https://creator.unify.tn" class="item">Sell merch online</a>
-                    <a href="/inprogress" class="item">Donation & tipping</a>
+                    <a href="https://creator.unify.tn" class="item">Merch</a>
                     <a href="/inprogress" class="item">Custom Design</a>
+                    <a href="/inprogress" class="item">Donation</a>
+                    <a href="/inprogress" class="item">Subscription</a>
                 </div>
             </div>
             <div class="about">
                 <div class="title">ABOUT UNIFY</div>
                 <div class="items">
                     <a href="/inprogress" class="item">About</a>
-                    <a href="/inprogress" class="item">Help & Support</a>
+                    <a href="/inprogress" class="item">Brand</a>
                     <a href="/contactus" class="item">Contact</a>
-                    <a href="/inprogress" class="item">Privacy & Policy</a>
+                    <a href="/inprogress" class="item">Help & Support</a>
+                    <a href="/inprogress" class="item">Terms & Policies</a>
                 </div>
             </div>
             <div class="follow">
@@ -196,12 +211,18 @@ footer{
                     
                 </div>
             </div>
+            <div class="newsletter">
+                <div class="title">NEWSLETTER</div>
+                <div class="items">
+                    Subscribe and be the first to hear about new features and exclusive offers. 
+                </div>
+            </div>
 
         </div>
 
     </div>
     <div class="copyright">
-        Made with <img src="/img/misc/heart2.png" alt="heart"> By <span>UNIFY</span>.All right reserved
+        Crafted with <img src="/img/misc/heart2.png" alt="heart"> By <span>UNIFY</span> @ All right reserved
     </div>
 
     <div class="right_top_shape"></div>
