@@ -27,11 +27,22 @@ export const creations = {
             back: '/imgs/clothes/hoodies/normal-back.png'
         },
         colors: ["Black", "Red", "Green", "White"],
-        printable: varprint
+        printable: {
+            front: {
+                top: 150,
+                width: 280,
+                height: 190
+            },
+            back: {
+                top: 140,
+                width: 270,
+                height: 360
+            }
+        }
     },
     "X8E7FC": {
         type: "hoodie",
-        name: 'Premium Pullover Hoodie',
+        name: 'Premium Unisex Hoodie',
         cost: 29,
         profit: 8,
         delivery: 7,
@@ -42,8 +53,74 @@ export const creations = {
             back: '/imgs/clothes/hoodies/premium-back.png'
         },
         colors: ["Red", "Green"],
-        printable: varprint
+        printable: {
+            front: {
+                top: 140,
+                width: 280,
+                height: 220
+            },
+            back: {
+                top: 170,
+                width: 230,
+                height: 350
+            }
+        }
     },
+    "EF7CEX": {
+        type: "hoodie",
+        name: 'Zip Hoodie',
+        cost: 32,
+        profit: 10,
+        delivery: 7,
+        material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
+        sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
+        imgs: {
+            front: '/imgs/clothes/hoodies/ziphoodie-front.png',
+            back: '/imgs/clothes/hoodies/ziphoodie-back.png'
+        },
+        colors: ["Red", "Green"],
+        printable: {
+            front: {
+                top: 160,
+                width: 280,
+                height: 210
+            },
+            back: {
+                top: 140,
+                width: 265,
+                height: 360
+            }
+        }
+    },
+    "25X8E7": {
+        type: "sweatshirt",
+        name: 'Premium Unisex Sweatshirt',
+        cost: 17,
+        profit: 7,
+        delivery: 7,
+        material: 'Slim fit, premium soft cotton, unisex',
+        sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
+        imgs: {
+            front: '/imgs/clothes/sweatshirts/normal-front.png',
+            back: '/imgs/clothes/sweatshirts/normal-back.png'
+        },
+        colors: ["Black", "Red", "Green", "White"],
+        printable: {
+            front: {
+                top: 130,
+                width: 255,
+                height: 330
+            },
+            back: {
+                top: 120,
+                width: 220,
+                height: 360
+            }
+        }
+    },
+}
+
+export const phasedOut = {
     "NV7ECZ": {
         type: "long-tee",
         name: 'Classic Long Sleeve Tee',
@@ -70,21 +147,6 @@ export const creations = {
         imgs: {
             front: '/imgs/clothes/long-tee/premium-front.png',
             back: '/imgs/clothes/long-tee/premium-back.png'
-        },
-        colors: ["Black", "Red", "Green", "White"],
-        printable: varprint
-    },
-    "25X8E7": {
-        type: "sweatshirt",
-        name: 'Premium Long Sleeve Tee',
-        cost: 17,
-        profit: 7,
-        delivery: 7,
-        material: 'Slim fit, premium soft cotton, unisex',
-        sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
-        imgs: {
-            front: '/imgs/clothes/sweatshirts/normal-front.png',
-            back: '/imgs/clothes/sweatshirts/normal-back.png'
         },
         colors: ["Black", "Red", "Green", "White"],
         printable: varprint

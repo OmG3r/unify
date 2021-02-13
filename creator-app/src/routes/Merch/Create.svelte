@@ -125,38 +125,39 @@
     </header>
     <div class="u-categories">
         <div class="view-title">Select a product to design</div>
-        {#each Object.entries(categories) as [key, cat]} 
-            <section id={key} class="cat-section">
-                <div class="cat-title">{cat.title}</div>
-                <hr style='width: 100%;'>
-                <div class="u-items">
-                    {#each Object.entries(cat.items) as [key, item]}
-                    <a use:link href={"/merch/create/" + key} id={key} class="prod-card">
-                        <div class="u-image-area">
-                            <ImageBackground
-                            img={item.imgs.front} 
-                            bgColor={textToHex(item.colors[0])} />
-        
-                        </div>
-                        <div class="u-informations">
-                            <div class="u-name">
-                                {item.name}
-        
+        {#each Object.entries(categories) as [key, cat]}
+            {#if Object.keys(cat.items).length != 0} 
+                <section id={key} class="cat-section">
+                    <div class="cat-title">{cat.title}</div>
+                    <hr style='width: 100%;'>
+                    <div class="u-items">
+                        {#each Object.entries(cat.items) as [key, item]}
+                        <a use:link href={"/merch/create/" + key} id={key} class="prod-card">
+                            <div class="u-image-area">
+                                <ImageBackground
+                                img={item.imgs.front} 
+                                bgColor={textToHex(item.colors[0])} />
+            
                             </div>
-                            <p class="u-price">
-                                Base Cost: {item.cost} TND
+                            <div class="u-informations">
+                                <div class="u-name">
+                                    {item.name}
+            
+                                </div>
+                                <p class="u-price">
+                                    Base Cost: {item.cost} TND
 
-                            </p>
-                            <p>{item.material}</p>
-                            <p>{item.sizes[0]} - {item.sizes[item.sizes.length - 1]}</p>
-                        </div>
-        
-                        
-                    </a>
-                    {/each}
-                </div>
-            </section>
-
+                                </p>
+                                <p>{item.material}</p>
+                                <p>{item.sizes[0]} - {item.sizes[item.sizes.length - 1]}</p>
+                            </div>
+            
+                            
+                        </a>
+                        {/each}
+                    </div>
+                </section>
+            {/if}
         {/each}
 
     </div>

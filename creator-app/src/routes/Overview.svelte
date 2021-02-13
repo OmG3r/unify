@@ -35,6 +35,7 @@
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
         let merchData =(await db.doc('/creators/' + $user.claims.username + "/merch/all").get()).data()
         unsubscribeDB = db.doc('creators/' + $user.claims.username + "/orders/all").onSnapshot((doc) => {
+            first = false
             let data = doc.data()
             let orders = data.orders
             carts = Object.entries(orders).map(([cartID, cart]) => {
@@ -352,5 +353,5 @@
         </div>
     </section>
 
-    <Orders {carts}/>
+    <Orders {first} {carts}/>
 </div>

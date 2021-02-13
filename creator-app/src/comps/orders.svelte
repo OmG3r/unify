@@ -429,7 +429,7 @@
             <div class="Quantity_title">Quantity</div>
             <div class="Price_title">Price</div>
             <div class="Date_title">Date</div>
-            <div class="Status_title">Status</div>
+            <div class="Status_title">Status {first}</div>
         </div>
         <hr class="hr_to_remove" />
         <div class="u_products">
