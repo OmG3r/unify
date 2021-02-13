@@ -2,6 +2,8 @@
     import {onMount} from 'svelte';
     import AOS from 'aos';
     import 'aos/dist/aos.css'; // You can also use <link> for styles
+    import { lang } from "../store.js";
+
     // ..
     export let params = {};
     document.title = "Unify"
@@ -23,23 +25,26 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0px 0px 15px black;
+       
+    }
+    header .shapes{
+        position:absolute;
+        top: 0;
+        right: 0;
     }
     .left_part {
         display: flex;
         flex-direction: column;
-        width: max-content;
+        width: 70%;
         z-index: 6;
     }
-    .left_part .title {
-        max-width: 290px;
-    }
+    
 
     .left_part .sub_title {
         font-size: 25px;
         font-weight: 400;
     }
-    .get_started_btn {
-    }
+    
     button:focus {
         outline: 0;
     }
@@ -51,8 +56,10 @@
         font-size: 25px;
         font-weight: 600;
         height: 70px;
-        width: 300px;
+        width: max-content;
+        min-width: 300px;
         cursor: pointer;
+        padding: 5px 10px;
     }
     .get_started_btn button:active {
         background-color: #49d29b;
@@ -89,28 +96,30 @@
 
     .shape1 {
         background-color: white;
-        width: 50vw;
-        height: 50vw;
+        width: 900px;
+        height: 900px;
         border-radius: 50%;
         position: absolute;
         top: -19%;
         right: -12%;
         z-index: 4;
+        
     }
     .shape2 {
         background-color: #00ce7c;
-        width: 50vw;
-        height: 50vw;
+        width: 900px;
+        height: 900px;
         border-radius: 50%;
         position: absolute;
         top: -38%;
         right: 12%;
         z-index: 3;
+        
     }
     .shape3 {
         background-color: #273441;
-        width: 50vw;
-        height: 50vw;
+        width: 900px;
+        height: 900px;
         border-radius: 50%;
         position: absolute;
         bottom: -23%;
@@ -121,22 +130,26 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
-        height: 600px;
+        padding: 0 140px 0 140px;
+        height: 500px;
     }
     .section1 .part_one {
-        width: 40%;
+        width: 100%;
+        
     }
     .section1 .part_one .paragraph {
         color: #181d22;
         font-size: 50px;
         font-weight: 600;
     }
+    .section1 .part_one .paragraph .div_sub{
+        width: max-content;
+    }
     .section1 .part_two {
-        width: 40%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
+        width: 100%;
     }
     .section1 .part_two img {
         width: 100px;
@@ -148,11 +161,11 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        padding: 40px 0 40px 0;
+        padding: 40px 0px 40px 140px;
         position: relative;
     }
     .section2 .part_one {
-        width: 40%;
+        width: 100%;
         color: #3d4853;
         font-size: 50px;
         font-weight: 600;
@@ -174,8 +187,10 @@
         border-radius: 20px;
         font-size: 30px;
         font-weight: 600;
-        height: 75px;
-        width: 380px;
+        padding: 15px 30px;
+        height: max-content;
+        min-height: 75px;
+        width: 380px;;
         border: none;
         
         margin: 25px auto 0 auto;
@@ -185,45 +200,79 @@
         background-color: #49d29b;
     }
     .section2 .part_two {
-        width: 40%;
+        width: 100%;
+        overflow: hidden;
     }
 
     .section2 .part_two img {
-        width: 125%;
+        width: 1200px;
     }
 
     
+
+    @media only screen and (max-width: 1500px) {
+        .shape1 {
+            width: 700px;
+            height: 700px;
+        }
+        .shape2 {
+            width: 700px;
+            height: 700px;
+        }
+        .shape3 {
+            width: 700px;
+            height: 700px;
+        }
+    }
+    @media only screen and (max-width: 1200px) {
+        .shape1 {
+            width: 500px;
+            height: 500px;
+            top: 0%;
+            right: -12%;
+        }
+        .shape2 {
+            width: 500px;
+            height: 500px;
+            top: 0;
+        }
+        .shape3 {
+            width: 500px;
+            height: 500px;
+            bottom: -5%;
+        }
+      
+
+    }
     @media only screen and (max-width: 1180px) {
+
         .slider {
             right: 0;
         }
-        .slider img {
-            width: 50vw;
-            min-width: 500px;
-        }
-        .shape1 {
-            top: -10%;
-        }
-        .shape2 {
-            top: -20%;
-        }
-        .shape3 {
-            bottom: -10%;
-        }
+        
+        
         .section1 {
             flex-direction: column;
+            padding: 0;
+            justify-content: center;
         }
         .section1 .part_one {
             width: 100%;
             padding: 10px;
+            text-align: center;
+            margin: 0;
         }
         .section1 .part_one .paragraph {
-            font-size: 30px;
+            font-size: 40px;
+        }
+        .section1 .part_one .paragraph .div_sub{
+            width: 100%;
         }
         .section1 .socialMedia {
             width: 100%;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: center;
+            margin: 0;
         }
         .section1 .socialMedia img {
             width: 70px;
@@ -235,6 +284,7 @@
         }
         .section2 {
             flex-direction: column;
+            padding: 40px;
         }
         .section2 .part_one {
             width: 90%;
@@ -249,8 +299,20 @@
             max-width: 80%;
             font-size: 20px;
         }
+        header .shapes{
+            width: 800px;
+        }
+    }
+    @media only screen and (max-width: 950px) {
+        header .shapes{
+            width: 600px;
+        }
     }
     @media only screen and (max-width: 800px) {
+        
+        header .shapes{
+            display: none;
+        }
         .slider {
             display: none;
         }
@@ -269,17 +331,25 @@
             top: -200px;
             left: -200px;
         }
+
+        .left_part{
+            width: max-content;
+
+        }
     }
 </style>
 
 <!--header-->
 <header>
     <div class="left_part">
-        <div class="title" data-aos="fade-right" data-aos-duration="1000">All-in-one <br/>Place <br/>Unified</div>
-        <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">Design and sell branded merch</div>
+        <div class="title" data-aos="fade-right" data-aos-duration="1000">
+            {{ en: 'All-In-One', fr: 'Tout-En-Une' }[$lang]}<br/>
+            {{ en: 'Platform', fr: 'Plateforme' }[$lang]}<br/>
+             {{ en: 'Unified', fr: 'Unifiée' }[$lang]}</div>
+        <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
         <div class="get_started_btn">
             <button class="btn" data-aos="fade-up" data-aos-delay="800" data-aos-duration="600">
-                <a href="https://creator.unify.tn">Get Started Now</a></button>
+                <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
         </div>
     </div>
 
@@ -287,13 +357,10 @@
 
     <div class="shape_top_left" />
     <div class="shape_bottom_left" />
-
-    <div class="shape1" />
-    <!--White circle-->
+    <img src="/img/shapes.png" alt="shapes" class="shapes">
+    <!-- <div class="shape1" />
     <div class="shape2" />
-    <!--green circle-->
-    <div class="shape3" />
-    <!--gray circle-->
+    <div class="shape3" /> -->
 </header>
 <!-- End header-->
 
@@ -302,18 +369,18 @@
     <div class="part_one">
         <div class="paragraph">
             <div class="div_p">
-                Start
-                <span style="color:#00CE7C !important">Generating</span>
-                Revenues
+                {{ en: 'Start', fr: 'Commencer' }[$lang]}
+                <span style="color:#00CE7C !important">{{ en: 'Generating', fr: 'à Générer' }[$lang]}</span>
+                {{ en: 'Revenues', fr: 'Des Revenus' }[$lang]}
             </div>
 
-            <div style="color:#747474 !important">From Your Hobby</div>
+            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: 'à partir De Votre Passion' }[$lang]}</p>
         </div>
     </div>
     <div class="socialMedia part_two" data-aos="fade-up">
-        <img src="/img/socialMedia/yt_colored.svg" alt="yt" />
+        <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
         <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
-        <img src="/img/socialMedia/fb_colored.svg" alt="fb" />
+        <img src="/img/socialMedia/facebook_colored.svg" alt="fb" />
         <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" />
         <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
     </div>
@@ -324,18 +391,27 @@
 <div class="section2">
     <div class="part_one">
         <div class="title">
-            Start Selling Your
-            <span style="color:#00CE7C !important">Customized</span>
-            Merch Online
+            {{ en: 'Start Selling Your', fr: 'Commencez à vendre votre' }[$lang]}
+            
+            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Merchandise' }[$lang]}</span>
+            {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
         </div>
         <div class="paragraph">
-            We handle it all from printing to support.
+            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression au support." }[$lang]}
+           
             <div>
-                focus on your hobby. we'll take care of printing, shipping,
-                customer support and more.
+                {{ 
+                en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
+                fr: "concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition,support client et plus." 
+                }[$lang]}
+            
             </div>
         </div>
-        <button><a href="https://creator.unify.tn">Start Your Store Now</a></button>
+        <button><a href="https://creator.unify.tn/register">
+            {{ 
+                en: "Start Your Store Now",
+                fr: "Démarrez votre boutique maintenant" 
+                }[$lang]}</a></button>
     </div>
     <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>
 </div>

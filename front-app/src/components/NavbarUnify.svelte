@@ -10,11 +10,7 @@
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
     let myAccount = false;
-    onMount(async () => {
-        document.getElementById("transparent").addEventListener("click", () => {
-            myAccount = false;
-        });
-    });
+    
 
     window.addEventListener("resize", () => {
         if (window.innerWidth > 1180) {
@@ -26,24 +22,47 @@
     let headerVisible = false;
     let oldscroll = 0;
     let mobileMenuColor = "#FFFFFF";
+    onMount(async () => {
+        document.getElementById("transparent").addEventListener("click", () => {
+            myAccount = false;
+        });
+
+        let w = window.innerWidth
+        if (w > 1180){
+            mobileMenuColor ="transparent"
+        }
+        
+    });
+    
     /* When the user scrolls down, navbar -> background white */
     let isScroll = false;
     let isScrollReverse = false;
     window.onscroll = () => {
         let currentScrollPos = window.pageYOffset;
-        console.log(currentScrollPos);
-        if (currentScrollPos <= 150) {
-            isScroll = false;
-            isScrollReverse = true;
-            $downColor = "#181D22";
-            mobileMenuColor = "#FFFFFF";
-        }
-        if (currentScrollPos > 180) {
-            isScroll = true;
-            isScrollReverse = false;
-            $downColor = "#FFFFFF";
-            mobileMenuColor = "#181D22";
-        }
+        let w = window.innerWidth
+            if (currentScrollPos <= 150) {
+                isScroll = false;
+                isScrollReverse = true;
+                $downColor = "#181D22";
+                if(w > 1180){
+                mobileMenuColor ="transparent"
+                }else{
+                    mobileMenuColor ="#FFFFFF"
+                }
+                
+            }
+
+            if (currentScrollPos > 180) {
+                isScroll = true;
+                isScrollReverse = false;
+                $downColor = "#FFFFFF";
+                if(w > 1180){
+                mobileMenuColor ="transparent"
+                }else{
+                    mobileMenuColor ="#181D22"
+                }
+            }
+          
     };
 
 let signoutFunc = () =>{
@@ -92,7 +111,6 @@ let signoutFunc = () =>{
         align-items: center;
         width: 30px;
         height: 100%;
-        fill: white;
         cursor: pointer;
         display: none;
         position: absolute;
@@ -117,6 +135,7 @@ let signoutFunc = () =>{
         justify-content: center;
         align-items: center;
         font-size: 16px;
+        background-color: transparent !important;
     }
     .menuItems a {
         margin: 0 5px 0 5px;
@@ -467,13 +486,13 @@ let signoutFunc = () =>{
                     </div>
                     <hr />
                     <div class="second_part">
-                        <div class="help" >Help & Support</div>
+                        <div class="help" >{{ en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</div>
                         <div on:click={() => {signoutFunc()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
-                <div class="help" >Help & Support</div>
+                <div class="help" >{{ en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</div>
                 <div on:click={()=>{signoutFunc()}} class="logout" >Logout</div>
             </div>
             
@@ -522,8 +541,11 @@ let signoutFunc = () =>{
         }}>
         X
     </div>
+
+
     <svg
-        class="menuBtn"
+        class="menuBtn" 
+        style="fill:{$downColor}"
         height="384pt"
         viewBox="0 -53 384 384"
         width="384pt"
@@ -531,8 +553,8 @@ let signoutFunc = () =>{
         class:isActive
         on:click={() => {
             isActive = !isActive;
-        }}
-        style="fill:{$downColor}">
+        }}>
+>
         <path
             d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16
       16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
@@ -542,5 +564,8 @@ let signoutFunc = () =>{
         <path
             d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16
       16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
-    </svg>
+</svg>
+    
+    
+    
 </nav>

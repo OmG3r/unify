@@ -169,6 +169,7 @@ footer{
 </style>
 
 <script>
+    import { lang } from "../store.js";
 
 </script>
 <footer>
@@ -180,31 +181,36 @@ footer{
                 Unify
             </div>
 
-            <div class="sub_text">Unify is the first platform dedicated to content creation in Tunisia that connects content creators and their supporters.</div>
+            <div class="sub_text">
+                {{
+                    en: 'Unify is the first platform dedicated to content creation in Tunisia that connects content creators and their supporters.', 
+                    fr: 'Unify est la première plateforme dédiée à la création de contenu en Tunisie qui met en relation les créateurs de contenu et et leurs fans.' 
+                }[$lang]}
+            </div>
         </div>
         <div class="right_part">
 
             <div class="using">
-                <div class="title">USING UNIFY</div>
+                <div class="title">{{en: 'Creators’ Hub', fr: 'Hub des créateurs' }[$lang]}</div>
                 <div class="items">
-                    <a href="https://creator.unify.tn" class="item">Merch</a>
-                    <a href="/inprogress" class="item">Custom Design</a>
-                    <a href="/inprogress" class="item">Donation</a>
-                    <a href="/inprogress" class="item">Subscription</a>
+                    <a href="https://creator.unify.tn" class="item">{{en: 'Merch', fr: 'Marchandise' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Custom Design', fr: 'Design Personnalisé' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Donation', fr: 'Don' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Subscription', fr: 'Abonnements' }[$lang]}</a>
                 </div>
             </div>
             <div class="about">
-                <div class="title">ABOUT UNIFY</div>
+                <div class="title">{{en: 'Unify', fr: 'Unify' }[$lang]}</div>
                 <div class="items">
-                    <a href="/inprogress" class="item">About</a>
-                    <a href="/inprogress" class="item">Brand</a>
-                    <a href="/contactus" class="item">Contact</a>
-                    <a href="/inprogress" class="item">Help & Support</a>
-                    <a href="/inprogress" class="item">Terms & Policies</a>
+                    <a href="/inprogress" class="item">{{en: 'About', fr: 'À propos' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Brand', fr: 'Brand' }[$lang]}</a>
+                    <a href="/contactus" class="item">{{en: 'Contact us', fr: 'Contactez-nous' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</a>
+                    <a href="/inprogress" class="item">{{en: 'Terms & Policies', fr: 'Conditions et politiques' }[$lang]}</a>
                 </div>
             </div>
             <div class="follow">
-                <div class="title">FOLLOW UNIFY</div>
+                <div class="title">{{en: 'Social Media', fr: 'Réseaux sociaux' }[$lang]}</div>
                 <div class="items">
                     <a href="#"><img src="/img/misc/fb.png" alt="fb"></a>
                     <a href="#"><img src="/img/misc/instagram.png" alt="fb"></a>
@@ -212,9 +218,13 @@ footer{
                 </div>
             </div>
             <div class="newsletter">
-                <div class="title">NEWSLETTER</div>
+                <div class="title">{{en: 'Newsletter', fr: 'Newsletter' }[$lang]}</div>
                 <div class="items">
-                    Subscribe and be the first to hear about new features and exclusive offers. 
+                    {{
+                        en: 'Subscribe and be the first to hear about new features and exclusive offers.', 
+                        fr: 'Abonnez-vous et soyez les premiers à être informés des nouvelles fonctionnalités et des offres exclusives.' 
+                    }[$lang]}
+                     
                 </div>
             </div>
 
@@ -222,7 +232,20 @@ footer{
 
     </div>
     <div class="copyright">
-        Crafted with <img src="/img/misc/heart2.png" alt="heart"> By <span>UNIFY</span> @ All right reserved
+        {{
+            en: 'Crafted With', 
+            fr: 'Réalisé avec' 
+         }[$lang]}
+         <img src="/img/misc/heart2.png" alt="heart"> 
+         {{
+            en: 'By', 
+            fr: 'Par ' 
+         }[$lang]} 
+         <span>UNIFY</span>
+         {{
+            en: '@ All right reserved', 
+            fr: '@ Tous droits réservés ' 
+         }[$lang]} 
     </div>
 
     <div class="right_top_shape"></div>

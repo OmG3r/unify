@@ -108,6 +108,7 @@
         if (params.get('backurl') != null) {
             navigate(params.get('backurl'))
         }
+
         return
         window.confirmationResult.confirm(code.value).then((result) => {
         // User signed in successfully.
