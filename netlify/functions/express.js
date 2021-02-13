@@ -39,16 +39,73 @@ router.post('/', (req, res) => {
 });
 
 router.post('/initializeClaims', async(req, res) => {
+    let template = {
+        target: 'text',
+        operation: 'add/overwrite',
+        claims: {},
+        issuerToken: ''
+    }
+    let data = req.body
+    let theError = undefined
+    let userData = undefined
+    if (data.target.includes('@')) {
+        // email
+        userData = await admin.auth().getUserByEmail(data.target).catch((error) => {
+            console.log(error)
+            theError = error
+        })
+    } else {
+        // uid
+        userData = await admin.auth().getUser(data.target).catch((error) => {
+            console.log(error)
+            theError = error
+        })
+    }
+    if (theError) {
+        res.end(JSON.stringify({ success: false, ...theError }))
+        return
+    }
 
-    let resp = await admin.auth().setCustomUserClaims(req.body.uid, req.body.claims)
-    console.log(resp)
+    let writeClaims = {}
+    if (data.operation == "add") {
+        if (userData.customClaims) {
+            writeClaims = {
+                ...userData.customClaims,
+                ...data.claims
+            }
+        } else {
+            writeClaims = data.claims
+        }
+
+    } else if (data.operation == "overwrite") {
+        writeClaims = data.claims
+    }
+    let resp = await admin.auth().setCustomUserClaims(userData.uid, writeClaims)
+    console.log(writeClaims)
     res.end(JSON.stringify(resp))
 })
 
 router.post('/getClaims', async(req, res) => {
-    let userRecord = await admin.auth().getUser(req.body.uid)
-    console.log(userRecord)
-    res.end(JSON.stringify(userRecord, null, 4))
+    let data = req.body
+    let theError = undefined
+    let userData = undefined
+    if (data.target.includes('@')) {
+        // email
+        userData = await admin.auth().getUserByEmail(data.target).catch((error) => {
+            console.log(error)
+            theError = error
+        })
+    } else {
+        // uid
+        userData = await admin.auth().getUser(data.target).catch((error) => {
+            console.log(error)
+            theError = error
+        })
+    }
+
+
+    console.log(userData)
+    res.end(JSON.stringify(userData, null, 4))
 })
 
 router.post('/createCreator', async(req, res) => {

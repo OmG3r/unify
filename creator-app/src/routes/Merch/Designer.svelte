@@ -592,6 +592,7 @@ class="u-view">
                 <PriceCalculator
                 unifyProfit={mockup.profit}
                 cost={mockup.cost}
+                delivery={mockup.delivery}
                 {priceCalculatorData}
                 />
             {/if}

@@ -1,7 +1,7 @@
 <script>
     import { dbWrapper, user } from "../../firebase.js";
 
-    import { uuidToImageLink, socialMedias } from "../../utils.js";
+    import { uuidToImageLink, socialMedias, colors } from "../../utils.js";
     import { link } from "svelte-routing";
     import {onDestroy } from 'svelte'
     import MaterialSpinner from '../misc/MaterialSpinner.svelte'
@@ -71,24 +71,7 @@
 
     }
     displayProducts = []
-    let colors = [
-        {
-            color:"0e80f6",
-            border:2
-        },
-         
-         {
-            color:"d40019",
-            border:0
-        }, 
-        {
-            color:"46B978",
-            border:0
-        }, 
-        {
-            color:"737372",
-            border:0
-        }];
+    
         let name =""
    /* dbWrapper.get("/creators/omg3r/merch/all").then((data) => {
         console.log(data);
@@ -527,7 +510,7 @@
                             <div class="color_size">
                                 <div class="color">
                                     Color:
-                                    <div class="shape" style="background-color:#{product.color}" />
+                                    <div class="shape" style="background-color:{colors[product.color.toLowerCase()]}" />
                                 </div>
                                 <div class="size">
                                     Size:

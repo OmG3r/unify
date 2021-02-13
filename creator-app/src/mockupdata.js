@@ -19,6 +19,7 @@ export const creations = {
         name: 'Eco Unisex Hoodie',
         cost: 32,
         profit: 6,
+        delivery: 7,
         material: '80% Certified Organic Cotton, 20% Recycled Polyester',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -33,6 +34,7 @@ export const creations = {
         name: 'Premium Pullover Hoodie',
         cost: 29,
         profit: 8,
+        delivery: 7,
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -47,6 +49,7 @@ export const creations = {
         name: 'Classic Long Sleeve Tee',
         cost: 14,
         profit: 5,
+        delivery: 7,
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -61,6 +64,7 @@ export const creations = {
         name: 'Premium Long Sleeve Tee',
         cost: 17,
         profit: 6,
+        delivery: 7,
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -75,6 +79,7 @@ export const creations = {
         name: 'Premium Long Sleeve Tee',
         cost: 17,
         profit: 7,
+        delivery: 7,
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {

@@ -59,15 +59,16 @@
     export let cost
     export let unifyProfit;
     export let priceCalculatorData;
+    export let delivery
     
     
-    export let price = Math.floor((cost + unifyProfit ) * (1 + taxRate)) + 2
+    export let price = Math.floor((cost + unifyProfit + delivery ) * (1 + taxRate)) + 2
 
 
-    let adjustedTVA = clicPayRate - ((unifyProfit + cost) * clicPayRate ) / price
+    let adjustedTVA = clicPayRate - ((unifyProfit + cost + delivery) * clicPayRate ) / price
 
 
-    let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+    let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit + delivery) ))
     let profitable = !(profit < 1)
     console.log(profit)
     $priceCalculatorData = {profit, price, profitable}
@@ -81,7 +82,7 @@
         console.log(price)
         console.log(cost)
         console.log(unifyProfit)
-        profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit) ))
+        profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit + delivery) ))
         console.log(profit)
         profitable = !(profit < 1)
 
