@@ -355,15 +355,17 @@
             })
         })
         */
-
+        //http://localhost:3001
+        //https://api.unify.tn/.netlify/functions/express/createCreator
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
-        let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
+        let resp = await urlPostReq('http://localhost:3001/createCreator', {
             email: email.value,
             password: password.value,
-            username: username.value
+            username: username.value,
+            persoName: name.value
         })
 
         let data = await resp.json()

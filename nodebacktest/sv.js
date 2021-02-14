@@ -111,10 +111,15 @@ app.post('/createCreator', async(req, res) => {
             promises.push(pro)
             pro = admin.firestore().doc("/creators/" + req.body.username).set({
                 username: req.body.username,
+                storeEnabled: false
             })
             promises.push(pro)
             pro = admin.firestore().doc('/creators/all').set({
-                [req.body.username]: true
+                [req.body.username]: {
+                    email: req.body.email,
+                    persoName: req.body.persoName,
+                    storeEnabled: false
+                }
             }, { merge: true })
             promises.push(pro)
             await Promise.all(promises)

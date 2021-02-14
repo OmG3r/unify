@@ -12,14 +12,14 @@
 
 
 <script>
-	import Merch from "../components/MerchPage/merch.svelte";
+	import Merch from "../../components/MerchPage/merch.svelte";
     export let params = {}
     import {onMount} from 'svelte'
-    import {dbWrapper} from '../firebase.js'
+    import {dbWrapper} from '../../firebase.js'
     import {navigate} from 'svelte-routing'
-    import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
-    import {uuidToImageLink} from '../utils.js'
-    import Navbar from "../components/NavbarCC.svelte";
+    import MaterialSpinner from '../../components/misc/MaterialSpinner.svelte'
+    import {uuidToImageLink} from '../../utils.js'
+    import Navbar from "../../components/NavbarCC.svelte";
 
     let validated = false;
     let data = {}
@@ -36,6 +36,10 @@
             }
             
         }
+        if (data.accentColor == undefined) {
+            data.accentColor = "#46b978"
+        }
+        
         data = data
         console.log("creator data xd")
         console.log(data)

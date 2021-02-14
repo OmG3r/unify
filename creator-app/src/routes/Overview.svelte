@@ -37,6 +37,12 @@
         unsubscribeDB = db.doc('creators/' + $user.claims.username + "/orders/all").onSnapshot((doc) => {
             first = false
             let data = doc.data()
+            if (data == undefined) {
+                carts = []
+                kpis.profit.value = 0
+                kpis.orders.value  = 0
+                return
+            }
             let orders = data.orders
             carts = Object.entries(orders).map(([cartID, cart]) => {
                 cart.cartID = cartID

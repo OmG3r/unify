@@ -5,9 +5,11 @@
 
     import LandingPage from './routes/LandingPage.svelte'
     import ProfilePage from './routes/ProfilePage.svelte'
-    import MerchPage from './routes/MerchPage.svelte'
-    import SingleProductPage from './routes/SingleProductPage.svelte'
+    import MerchPage from './routes/Creator/MerchPage.svelte'
+    import SingleProductPage from './routes/Creator/SingleProductPage.svelte'
     
+    import RouteCreator from './routes/Creator/EntryCreator.svelte'
+
     import NavbarUnify from "./components/NavbarUnify.svelte";
     import NavbarCheckout from "./components/NavbarCheckout.svelte";
     import Cart from "./routes/CartPage.svelte";
@@ -78,7 +80,7 @@
     <Route  path="/forgotpassword">  
         <ForgotPassword/>
     </Route>
-
+    <!--
     <Route let:params path="/:userid">
         
         <ProfilePage {params} />
@@ -96,6 +98,13 @@
         
         <SingleProductPage {params} />
         <FooterCC/>
+    
+    </Route>
+    -->
+    <Route let:params path="/:userid/*">
+        
+        <RouteCreator  {params} />
+        
     
     </Route>
 

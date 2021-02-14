@@ -27,7 +27,7 @@
     console.log(filter);
     
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
-  
+        console.log(data)
         if (data == undefined) {
             displayProducts = [];
             loaded = true;
@@ -358,7 +358,7 @@
             <h2 class="info_title">{{ en: 'Info', fr: 'Info' }[$lang]}</h2>
             <hr />
             <p class="u_desc">
-                 {creatorData.description}
+                 {creatorData.description ? creatorData.description : {en: "This user did not write anything about themselves", fr: "Cet utilisateur n'a rien écrit sur lui-même "}[$lang]}
             </p>
         </div>
 
@@ -378,6 +378,8 @@
                                 alt="" />
                         </a>
                     {/if}
+                {:else}
+                        <div>none</div>
                 {/each}
             </div>
         </div>

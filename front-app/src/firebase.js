@@ -40,7 +40,7 @@ class FirebaseDBWrapper {
 
     }
 
-    async get(path, fresh = false) {
+    async get(path, fresh = false, showCached = false) {
         if (fresh) {
             console.log(path)
             let doc = await this.db.doc(path).get()
@@ -55,7 +55,7 @@ class FirebaseDBWrapper {
                 }
                 localStorage.setItem(path, JSON.stringify(writing))
                     //console.log("serving from db and saving")
-                return docData
+                return showCached ? {...docData, fromCache: false } : docData
             } else {
                 localStorage.setItem(path, JSON.stringify({}))
                 return {}
@@ -68,7 +68,7 @@ class FirebaseDBWrapper {
             if (pData.data) {
                 if (((Date.now() / 1000) - pData.timestamp) < cacheHours * 3600) {
                     console.log("serving from localStorage")
-                    return pData.data
+                    return showCached ? {...pData.data, fromCache: true } : pData.data
                 }
             } else {
                 //console.log(path + " is unavaiable")
@@ -90,7 +90,7 @@ class FirebaseDBWrapper {
             }
             localStorage.setItem(path, JSON.stringify(writing))
                 //console.log("serving from db and saving")
-            return docData
+            return showCached ? {...docData, fromCache: false } : docData
         } else {
             localStorage.setItem(path, JSON.stringify({}))
         }
