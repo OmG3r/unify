@@ -74,7 +74,7 @@
         color: rgb(var(--userColor));
     }
     .nav a.active {
-        background-color: rgb(var(--AccentColor));
+        background-color: #46b978;
         color: white;
         border-radius: 10px;
         padding: 0 5px 0 5px;

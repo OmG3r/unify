@@ -6,7 +6,7 @@
     import {user} from '../firebase.js'
     import { onMount } from "svelte";
     
-
+  
     $: signedin = $user;
      let myAccount = false;
     
@@ -34,6 +34,7 @@
                 if (isScroll != true) {
                     isScroll = true;
                 }
+
             }
             oldscroll = currentScroll;
         } else if (Math.abs(currentScroll) < 100) {
@@ -51,9 +52,10 @@
 <style>
     :global(:root) {
         --navBarHeight: 70px;
-        --headerHeight: 400px;
+        --headerHeight: 350px;
         --userColor: 24, 29, 34; /*its an RGB code color*/
         --AccentColor: 70, 185, 120;
+        --AccentColorFilter: 70, 185, 120;
     }
     nav {
         display: grid;
@@ -156,7 +158,7 @@
         font-size: 30px;
         font-weight: 600;
         color: white;
-        top: 70%;
+        top: 75%;
         left: 50%;
         transform: translate(-50%, -50%);
         position: absolute;
@@ -195,7 +197,7 @@
     /*--isScroll animation*/
     .header.isScroll .u-layer {
         animation: scrollAnim 0.5s ease;
-        height: 0px;
+        height: 70px;
         opacity: 0;
     }
     .header.isScroll .u-pattern {
@@ -247,7 +249,7 @@
     }
     @keyframes scrollAnim2 {
         from {
-            height: var(--headerHeight);
+            height: 250px;
         }
         to {
             height: 70px;
@@ -259,7 +261,7 @@
             opacity: 1;
         }
         to {
-            height: 0px;
+            height: 70px;
             opacity: 0;
         }
     }
@@ -336,7 +338,7 @@
     .userSocial {
         margin-top: 20px;
         position: absolute;
-        top: 72%;
+        top: 80%;
     }
     .userSocial img {
         width:25px;
@@ -402,6 +404,7 @@
         .menu-items.isActive .nav-lang,
         .menu-items.isActive a {
             margin-top: 18px;
+            margin: 10px;
         }
         .closeMobileMenu.isActive {
             display: block;
@@ -414,15 +417,12 @@
         
     }
 
-
-
-
-
 .my_account{
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            margin-left: 30px;
         }
 
     .menu_item {
@@ -474,10 +474,9 @@
     }
 
     .popup_myaccount{
-            position: absolute;
-            box-shadow: none;
-            width: 180px;
-        }
+        position: absolute;
+        width: 180px;
+    }
         .first_part {
         display: flex;
         flex-direction: row;
@@ -533,8 +532,9 @@
     @media only screen and (max-width: 1180px) {
     .help_logout{
             display: block !important;
-            font-size:15px;
-            font-weight: 400;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
         }
     .popup_myaccount{
         position: static;
@@ -546,6 +546,16 @@
     }
      .first_part img {display: none;}
     }
+    @media only screen and (max-width: 800px) {
+        .u-logo span{
+            width: max-content;
+            top: 70%;
+        }
+        .u-logo .userSocial{
+            top: 75%;
+        }
+    }
+        
 </style>
 
 <nav class={isScroll ? 'isScroll' : 'isScrollReverse'}>

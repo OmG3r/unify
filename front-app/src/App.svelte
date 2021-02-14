@@ -24,6 +24,7 @@
     import Notifications from './components/Notifications.svelte'
     import FooterCC from "./components/FooterCC.svelte"
     import OrderCompleted from "./components/CheckoutPage/OrderCompleted.svelte"
+    import TermsPolicies from "./routes/TermsPolicies.svelte"
     export let url = "";
 </script>
 <Notifications />
@@ -33,6 +34,9 @@
         <LandingPage />
         <Footer/>
     
+    </Route>
+    <Route  path="/terms&privacy">
+        <TermsPolicies/>   
     </Route>
     <Route  path="/completed">
         <OrderCompleted/>   
@@ -91,6 +95,7 @@
     <Route let:params path="/:userid/merch/:itemid">
         
         <SingleProductPage {params} />
+        <FooterCC/>
     
     </Route>
 

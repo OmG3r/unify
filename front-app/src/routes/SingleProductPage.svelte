@@ -37,7 +37,7 @@
 </script>
 {#if validated}
     <NavbarCC {creatorData} />
-    <Single {params} />
+    <Single {params} {creatorData} />
 {:else}
     <div class="u-view">
         <MaterialSpinner />

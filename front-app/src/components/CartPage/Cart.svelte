@@ -474,7 +474,7 @@
         user-select: none;
     }
     .quantity .qty_btn .minus:active {
-        background-color: rgba(var(--AccentColor), 0.8);
+        background-color: #6bc793;
     }
     .quantity .qty_btn .plus {
         color: white;
@@ -485,7 +485,7 @@
         cursor: pointer;
     }
     .quantity .qty_btn .plus:active {
-        background-color: rgba(var(--AccentColor), 0.8);
+        background-color: #6bc793;
     }
     .quantity .qty_btn .qty {
         font-size: 20px;
@@ -517,7 +517,7 @@
         color: rgba(var(--userColor), 0.5);
     }
     .unit_price .economie {
-        color: rgb(var(--AccentColor));
+        color:  #46b978;
     }
     .single_order .total_price {
         grid-column-start: 4;
@@ -538,7 +538,7 @@
         cursor: pointer;
     }
     .single_order .total_price .btns i:active {
-        color: rgb(var(--AccentColor));
+        color:  #46b978;
     }
 
     .article .info {
@@ -632,7 +632,7 @@
         font-weight: 600;
     }
     .discount_container .apply_btn {
-        background-color: rgb(var(--AccentColor));
+        background-color:  #46b978;
         color: white;
         width: 80px;
         border-radius: 0 15px 15px 0;
@@ -679,7 +679,7 @@
         font-weight: 600;
     }
     .final_total .prices .shipping {
-        color: rgb(var(--AccentColor));
+        color:  #46b978;
     }
     .total {
         display: flex;
@@ -715,10 +715,10 @@
         background-color: rgba(var(--userColor), 0.8);
     }
     .continue_finilize .finilize {
-        background-color: rgb(var(--AccentColor));
+        background-color:  #46b978;
     }
     .continue_finilize .finilize:active {
-        background-color: rgba(var(--AccentColor), 0.8);
+        background-color: #6bc793;
     }
 
     .sizes {
@@ -763,7 +763,7 @@
         display: none;
     }
     .size_label div.checked {
-        background-color: rgb(var(--AccentColor));
+        background-color:  #46b978;
     }
 
     .quantity_mobile {
@@ -802,7 +802,7 @@
         user-select: none;
     }
     .quantity_mobile .qty_btn .minus:active {
-        background-color: rgba(var(--AccentColor), 0.8);
+        background-color: #6bc793;
     }
     .quantity_mobile .qty_btn .plus {
         color: white;
@@ -812,7 +812,7 @@
         cursor: pointer;
     }
     .quantity_mobile .qty_btn .plus:active {
-        background-color: rgba(var(--AccentColor), 0.8);
+        background-color: #6bc793;
     }
     .unit_price_mobile,
     .total_price_mobile {

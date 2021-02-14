@@ -1,12 +1,14 @@
 <script>
     export let activeItem;
     export let params;
+    export let creatorData;
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import { dbWrapper, user, db } from "../../firebase.js";
     import { uuidToImageLink, colors, notification, generateDeliveryDate } from "../../utils.js";
     import { navigate, link as routlink } from "svelte-routing";
     import { writable } from "svelte/store";
+    import {convert} from "../../filter"
     if (activeItem == undefined) {
         activeItem = {
             name: "Ahmed Shirt",
@@ -16,6 +18,7 @@
             id: "MMX8E7",
         };
     }
+    let filter = convert(creatorData.accentColor);
     let [minDdate, maxDdate] = generateDeliveryDate()
     console.log("in singe");
     let validated = false;
@@ -24,6 +27,7 @@
         let data = await dbWrapper.get(
             "/creators/" + params.userid + "/merch/all"
         );
+        console.log("sdf " +params);
         if (data[params.itemid] == undefined) {
             navigate("/" + params.userid);
         } else {
@@ -55,6 +59,8 @@
             activeItem = activeItem;
             console.log(activeItem);
         }
+
+        
     });
 
     const addToCart = () => {
@@ -172,7 +178,6 @@
         display: flex;
         flex-direction: column;
         padding: 15px;
-        height: 100%;
     }
 
     .all_info {
@@ -245,9 +250,7 @@
     .circle_border .inside_color {
         fill: transparent !important;
     }
-    .circle_border defs linearGradient stop {
-        stop-color: rgb(var(--AccentColor));
-    }
+    
     .p_back_circle {
         background-color: #f6f6f8;
         max-width: 480px;
@@ -313,7 +316,7 @@
         column-gap: 5px;
     }
     .size {
-        background-color: #181d22;
+        background-color: #000;
         width: 35px;
         height: 35px;
         border-radius: 10px;
@@ -327,8 +330,8 @@
     }
     .size:hover,
     .size.active {
-        background-color: rgb(var(--AccentColor));
-    }
+        background-color: #181d22;
+    } 
     .p_colors {
         display: flex;
         flex-direction: row;
@@ -387,13 +390,13 @@
     }
     .input_number .arrow_left:active {
         border-radius: 0 14px 14px 0;
-        background-color: rgb(var(--AccentColor));
-        fill: white;
+        background-color: #181d22;
+        fill: white !important;
     }
     .input_number .arrow_right:active {
         border-radius: 0 14px 14px 0;
-        background-color: rgb(var(--AccentColor));
-        fill: white;
+        background-color: #181d22;
+        fill: white !important;
     }
     .input_number .arrow_left {
         transform: rotate(180deg);
@@ -438,7 +441,7 @@
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
-        border-color: rgb(var(--AccentColor)) transparent transparent
+        border-color: #181d22 transparent transparent
             transparent;
     }
 
@@ -490,6 +493,10 @@
         font-weight: 700;
         cursor: pointer;
         position: relative;
+        user-select: none;
+    }
+    .add_cart_btn:hover{
+        background-color:#181d22 !important;
     }
     .add_cart_btn:focus {
         outline: none;
@@ -573,7 +580,7 @@
     .policies .delivery {
         display: flex;
         flex-direction: column;
-        width: 45%;
+        width: 100%;
     }
     .policies .delivery .desc {
         font-size: 15px;
@@ -618,7 +625,10 @@
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="734"
                         height="734"
-                        viewBox="0 0 734 734">
+                        viewBox="0 0 734 734"
+                        style="{filter}"
+                        >
+                        
                         <defs>
                             <style>
                                 .cls-1 {
@@ -636,17 +646,17 @@
                                 x2="367"
                                 y2="6"
                                 gradientUnits="userSpaceOnUse">
-                                <stop offset="0" stop-color="#0e80f6" />
+                                <stop offset="0" stop-color="#000" />
                                 <stop
                                     offset="0.093"
-                                    stop-color="#0e80f6"
+                                    stop-color="#000"
                                     stop-opacity="0" />
                                 <stop
                                     offset="0.729"
-                                    stop-color="#0e80f6"
+                                    stop-color="#000"
                                     stop-opacity="0" />
-                                <stop offset="0.918" stop-color="#0e80f6" />
-                                <stop offset="1" stop-color="#0e80f6" />
+                                <stop offset="0.918" stop-color="#000" />
+                                <stop offset="1" stop-color="#000" />
                             </linearGradient>
                             <filter
                                 id="filter"
@@ -756,14 +766,14 @@
                     <span class="p_subTitle">
                         {#if activeItem.creator}
                             <a  href={"/" + activeItem.creator} use:routlink>
-                                <span>{activeItem.creator}</span>
+                            <span style="color:{creatorData.accentColor}">{activeItem.creator}</span>
                             </a>
                         {/if}
                     </span>
                     <hr />
                     <span class="p_price">
                         {activeItem.price}
-                        <span>TND</span>
+                        <span style="color:{creatorData.accentColor}">TND</span>
                     </span>
                 </div>
                 
@@ -797,8 +807,9 @@
                             {#each activeItem.sizes as size}
                                 <div
                                     class:active={size == $activeSize}
-                                    on:click={() => {
-                                        $activeSize = size;
+                                    style=background-color:{$activeSize == size ? creatorData.accentColor : ""}
+                                    on:click={(e) => {
+                                        $activeSize = size;       
                                     }}
                                     class="size">
                                     {size}
@@ -809,11 +820,15 @@
                                 {#each ['S', 'M', 'L', 'XL'] as size}
                                     <div
                                         class:active={size == $activeSize}
-                                        on:click={() => {
+                                        on:click={(e) => {
                                             $activeSize = size;
                                         }}
-                                        class="size">
-                                        {size}
+                                        class="size"
+                                        
+                                        style=background-color:{$activeSize == size ? creatorData.accentColor : ""}
+                                        >
+                                        
+                                        <span on:click>{size}</span>
                                     </div>
                                 {/each}
                             </span>
@@ -838,7 +853,7 @@
                                 x="0px"
                                 y="0px"
                                 viewBox="0 0 492.004 492.004"
-                                style="enable-background:new 0 0 492.004 492.004;"
+                            style="enable-background:new 0 0 492.004 492.004; fill:#181d22"
                                 xml:space="preserve">
                                 <path
                                     d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12
@@ -849,8 +864,9 @@
                             <input type="number" bind:value={$activeQuantity} />
 
                             <svg
-                                on:click={() => {
+                                on:click={(e) => {
                                     $activeQuantity += 1;
+                                    
                                 }}
                                 version="1.1"
                                 id="Layer_1"
@@ -860,7 +876,7 @@
                                 x="0px"
                                 y="0px"
                                 viewBox="0 0 492.004 492.004"
-                                style="enable-background:new 0 0 492.004 492.004;"
+                                style="enable-background:new 0 0 492.004 492.004; fill:#181d22"
                                 xml:space="preserve">
                                 <path
                                     d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12
@@ -875,6 +891,7 @@
                         <button
                             on:click={addToCart}
                             type="button"
+                            style="background-color:{creatorData.accentColor}"
                             class="add_cart_btn">
                             {{ en: 'Add to cart', fr: "J'achète" }[$lang]}
                             <svg
@@ -926,9 +943,9 @@
                 -->
                 <hr />
                 <div class="policies">
-                    
+                     <!--
                     <div class="socialShare">
-                        <!--
+                       
                         <span>{{ en: 'SHARE THIS PRODUCT', fr: 'PARTAGEZ CE PRODUIT' }[$lang]}
                         </span>
                         
@@ -936,13 +953,15 @@
                             <i class="fab fa-facebook" />
                             <i class="fab fa-instagram" />
                         </div>
-                        -->
+                       
                     </div>
+                     -->
                     <div class="delivery">
                         <span>{{ en: 'DELIVERY', fr: 'LIVRAISON' }[$lang]}
                         </span>
-                        <span class="desc">Delivered between {minDdate}
-                            and {maxDdate}. Please check exact dates in the
+                        <span class="desc">Delivered between 
+                            <span style="color:{creatorData.accentColor}; font-weight:600">{minDdate}</span>
+                    and <span style="color:{creatorData.accentColor};font-weight:600">{maxDdate}</span>. Please check exact dates in the
                             checkout page.
                         </span>
                     </div>
@@ -964,6 +983,7 @@
                     <span
                         class="popuptext"
                         class:show
+                        style="background-color:{creatorData.accentColor}"
                         id="myPopup">{$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + activeItem.id] ? 'Remove from ' : 'Add to '}
                         wishlist</span>
                 </button>

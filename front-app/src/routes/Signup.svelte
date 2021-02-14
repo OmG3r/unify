@@ -134,6 +134,7 @@
 </div>
 
 <style>
+  
     .have-acc {
         text-align: center;
         margin-bottom: 16px;
@@ -204,7 +205,7 @@
         position: absolute;
     }
     .circle_bottom {
-        background-color: rgb(var(--AccentColor));
+        background-color:  #46b978;
         bottom: -150px;
         left: -150px;
     }
@@ -270,7 +271,7 @@
         border: 1px solid rgba(var(--userColor), 0.5);
     }
     .signup_btn {
-        background-color: rgba(var(--AccentColor), 1);
+        background-color:  #46b978;
         border: none;
         width: 200px;
         height: 40px;
@@ -279,6 +280,7 @@
         font-size: 18px;
         font-weight: 700;
         border-radius: 30px;
+        cursor: pointer;
     }
     .signup {
         display: flex;

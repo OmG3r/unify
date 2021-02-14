@@ -1,4 +1,5 @@
 <script>
+    import {hexToRgb,convert} from "../../filter.js"
     import { writable } from "svelte/store";
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
@@ -16,8 +17,17 @@
     let loaded = false;
     let displayProducts = [];
 
+
+  
+    //change the global(:root) var of css
+    document.documentElement.style.setProperty('--AccentColor', hexToRgb(creatorData.accentColor));
+    let filter = convert(creatorData.accentColor).replace('filter:','').replace(";","");
+    
+	document.documentElement.style.setProperty('--AccentColorFilter', filter);
+    console.log(filter);
+    
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
-        console.log(data);
+  
         if (data == undefined) {
             displayProducts = [];
             loaded = true;
@@ -27,7 +37,6 @@
         displayProducts = Object.entries(data).map(([key, value]) => {
             value.id = key;
             for (let [col, facades] of Object.entries(value.imgs)) {
-                console.log(facades);
                 for (let [facade, id] of Object.entries(facades)) {
                     let path =
                         "creators/" +
@@ -38,15 +47,12 @@
                         facade +
                         "-" +
                         col;
-                    console.log(value.imgs);
                     value.imgs[col][facade] = uuidToImageLink(id, path);
-                    console.log(value.imgs[col][facade]);
                 }
             }
             return value;
         });
 
-        console.log(displayProducts);
         let loaded = true;
     });
 
@@ -61,7 +67,6 @@
             Object.keys($user.docData.wishlist).includes(nid)
         ) {
             // remove it
-            console.log("removing " + nid);
             db.collection("users")
                 .doc($user.uid)
                 .update({
@@ -70,7 +75,6 @@
             delete $user.docData.wishlist[nid];
             $user = $user;
         } else {
-            console.log("adding " + nid);
             notification.set({
                 accentColor: "success",
                 title: "success",
@@ -91,9 +95,15 @@
             };
         }
     };
+
+  
+    
+    
+    
 </script>
 
 <style>
+    
     .container {
         padding: 50px;
         min-height: 50vh;
@@ -152,10 +162,15 @@
         width: 45px;
         height: 90px;
     }
-    .cartBtns div img {
+    .cartBtns .icon1 img {
         width: 25px;
         filter: invert(100%) sepia(0%) saturate(7428%) hue-rotate(68deg)
             brightness(101%) contrast(87%);
+        margin: 5px 0px 5px 0px;
+        cursor: pointer;
+    }
+    .cartBtns .icon2 img {
+        width: 25px;
         margin: 5px 0px 5px 0px;
         cursor: pointer;
     }
@@ -167,13 +182,13 @@
         height: 100%;
     }
     .cartBtns .icon1:active {
-        background-color: #46b978;
+        background-color: rgba(var(--AccentColor));
         border-radius: 0 17px 0 0;
     }
     .cartBtns .icon2:active {
-        background-color: #46b978;
+        background-color: rgba(var(--AccentColor));
         border-radius: 0 0px 0 17px;
-    }
+    } 
     .productInfo {
         width: 100%;
         padding: 0px 20px 0px 20px;
@@ -273,8 +288,7 @@
         margin-right: 15px;
     }
     .social_icons img:hover {
-        filter: invert(61%) sepia(36%) saturate(648%) hue-rotate(93deg)
-            brightness(95%) contrast(88%);
+        filter:var(--AccentColorFilter);
         cursor: pointer;
     }
     .u_info {
@@ -385,8 +399,8 @@
                             alt="product" />
                     </a>
 
-                    <div class="cartBtns">
-                        <div class="icon1">
+                    <div class="cartBtns" >
+                    <div class="icon1" >
                             <img
                                 src="/img/misc/cart.png"
                                 alt="cart"
@@ -411,6 +425,7 @@
                             class="icon2">
                             <img
                                 src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + product.id] ? '/img/misc/filled-heart-1.png' : '/img/misc/heart.png'}
+                                style="{$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + product.id] ? 'filter:none' : 'filter:invert(100%) sepia(0%) saturate(7428%) hue-rotate(68deg) brightness(101%) contrast(87%);'}"
                                 alt="heart" />
                         </div>
                     </div>

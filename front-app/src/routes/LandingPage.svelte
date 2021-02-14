@@ -25,17 +25,25 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0px 0px 15px black;
-       
+        
+        
     }
-    header .shapes{
-        position:absolute;
-        top: 0;
-        right: 0;
+
+    header .socialMedia{
+        display: flex;
+        justify-content: center;
+        margin: 15px 0 15px 0;
     }
+    header .socialMedia img{
+        width: 50px;
+        margin:0 5px 0 5px
+    }
+    
     .left_part {
         display: flex;
         flex-direction: column;
-        width: 70%;
+        justify-content: center;
+        align-items: center;
         z-index: 6;
     }
     
@@ -43,6 +51,14 @@
     .left_part .sub_title {
         font-size: 25px;
         font-weight: 400;
+        text-align: center;
+        margin: 15px 0 15px 0;
+    }
+    .left_part .title{
+        text-align: center;
+        font-size: 50px;
+        margin: 15px 0 15px 0;
+        z-index: 5;
     }
     
     button:focus {
@@ -53,7 +69,7 @@
         border: none;
         border-radius: 18px;
         color: white;
-        font-size: 25px;
+        font-size: 20px;
         font-weight: 600;
         height: 70px;
         width: max-content;
@@ -69,29 +85,40 @@
         bottom: -220px;
         right: 15%;
         z-index: 5;
+        display: none;
     }
     .slider img {
         width: 600px;
     }
-    .shape_top_left {
-        width: 500px;
-        height: 250px;
-        background-color: #273441;
+    
+    .shape_top_right {
         position: absolute;
-        bottom: 0px;
-        left: -250px;
-        border-top-left-radius: 260px;
-        border-top-right-radius: 260px;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background-color: #273542;
+        border-bottom-left-radius: 300px;
+        border-right: 0;
         border-bottom: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
     }
     .shape_bottom_left {
-        background-color: white;
-        width: 500px;
-        height: 500px;
-        border-radius: 50%;
+
         position: absolute;
-        top: -250px;
-        left: -250px;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+        height: 300px;
+        background-color: #46b974;
+        border-top-right-radius: 300px;
+        border-right: 0;
+        border-bottom: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
     }
 
     .shape1 {
@@ -130,8 +157,8 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 0 140px 0 140px;
-        height: 500px;
+        padding: 100px 140px 100px 140px;
+        min-height: 500px;
     }
     .section1 .part_one {
         width: 100%;
@@ -148,6 +175,7 @@
     .section1 .part_two {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
         width: 100%;
     }
@@ -185,7 +213,7 @@
         background-color: #00ce7c;
         color: white;
         border-radius: 20px;
-        font-size: 30px;
+        font-size: 25px;
         font-weight: 600;
         padding: 15px 30px;
         height: max-content;
@@ -210,50 +238,12 @@
 
     
 
-    @media only screen and (max-width: 1500px) {
-        .shape1 {
-            width: 700px;
-            height: 700px;
-        }
-        .shape2 {
-            width: 700px;
-            height: 700px;
-        }
-        .shape3 {
-            width: 700px;
-            height: 700px;
-        }
-    }
-    @media only screen and (max-width: 1200px) {
-        .shape1 {
-            width: 500px;
-            height: 500px;
-            top: 0%;
-            right: -12%;
-        }
-        .shape2 {
-            width: 500px;
-            height: 500px;
-            top: 0;
-        }
-        .shape3 {
-            width: 500px;
-            height: 500px;
-            bottom: -5%;
-        }
-      
-
-    }
     @media only screen and (max-width: 1180px) {
 
-        .slider {
-            right: 0;
-        }
-        
         
         .section1 {
             flex-direction: column;
-            padding: 0;
+            padding: 100px 0 100px 0;
             justify-content: center;
         }
         .section1 .part_one {
@@ -299,65 +289,64 @@
             max-width: 80%;
             font-size: 20px;
         }
-        header .shapes{
-            width: 800px;
-        }
+      
     }
-    @media only screen and (max-width: 950px) {
-        header .shapes{
-            width: 600px;
-        }
-    }
+ 
     @media only screen and (max-width: 800px) {
-        
-        header .shapes{
-            display: none;
-        }
-        .slider {
-            display: none;
-        }
-        .shape1 {
-            display: none;
-        }
-        .shape2 {
-            display: none;
-        }
-        .shape3 {
-            display: none;
-        }
-        .shape_bottom_left {
-            width: 400px;
-            height: 400px;
-            top: -200px;
-            left: -200px;
-        }
-
-        .left_part{
-            width: max-content;
-
+        .left_part .title{
+            font-size: 40px;
         }
     }
+.half-circle {
+    width: 100px;
+    height: 100px;
+    background-color: skyblue;
+    border-top-right-radius: 100px;
+    border-right: 0;
+    border-bottom: 0;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.background{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 </style>
 
 <!--header-->
 <header>
     <div class="left_part">
         <div class="title" data-aos="fade-right" data-aos-duration="1000">
-            {{ en: 'All-In-One', fr: 'Tout-En-Une' }[$lang]}<br/>
-            {{ en: 'Platform', fr: 'Plateforme' }[$lang]}<br/>
-             {{ en: 'Unified', fr: 'Unifiée' }[$lang]}</div>
-        <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
-        <div class="get_started_btn">
-            <button class="btn" data-aos="fade-up" data-aos-delay="800" data-aos-duration="600">
-                <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
-        </div>
+            {{ en: 'The Essential Services For Creators', fr: 'Services Essentiels Pour Créateurs' }[$lang]}
+            <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
+        
+            <div class="socialMedia part_two" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" >
+            <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
+            <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
+            <img src="/img/socialMedia/facebook_colored.svg" alt="fb" />
+            <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" />
+            <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
+            </div>
+
+            <div class="get_started_btn">
+                <button class="btn" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="600">
+                    <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
+            </div>
     </div>
-
-    <div class="slider" data-aos="fade-up"  data-aos-duration="1000"><img src="./img/beki.png" alt="content_creator" /></div>
-
-    <div class="shape_top_left" />
-    <div class="shape_bottom_left" />
-    <img src="/img/shapes.png" alt="shapes" class="shapes">
+    <img class="background" src="/img/likes.png" alt="">
+<!--     <div class="slider" data-aos="fade-up"  data-aos-duration="1000"><img src="./img/beki.png" alt="content_creator" /></div>
+ -->
+    <div class="shape_top_right"></div>
+    <div class="shape_bottom_left"></div>
+    <!-- <img class="shape_top_right" src="/img/shape_top_right.png" alt="shape_top_right">
+    <img class="shape_bottom_left" src="/img/shape_bottom_left.png" alt="shape_bottom_left"> -->
+    <!-- <div class="shape_top_left" />
+    <div class="shape_bottom_left" /> -->
+    <!-- <img src="/img/shapes.png" alt="shapes" class="shapes"> -->
     <!-- <div class="shape1" />
     <div class="shape2" />
     <div class="shape3" /> -->

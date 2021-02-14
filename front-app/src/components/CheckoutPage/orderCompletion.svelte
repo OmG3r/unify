@@ -8,12 +8,7 @@
     import {writable} from 'svelte/store'
     import {urlPostReq, notification, generateDeliveryDate} from '../../utils.js'
     let [minDdate, maxdDate] = generateDeliveryDate()
-    let AccentColor = getComputedStyle(document.body).getPropertyValue(
-        "--AccentColor"
-    );
-    let userColor = getComputedStyle(document.body).getPropertyValue(
-        "--userColor"
-    );
+    
     let popup= writable(false);
 
     let unsubscribePopup = popup.subscribe((v) =>{
@@ -103,11 +98,11 @@
         width: 79%;
     }
     .Accent_color{
-        color:rgb(var(--AccentColor));
+        color: #46b978;
         font-weight: 600;
     }
     button{
-        background-color:rgb(var(--AccentColor));
+        background-color: #46b978;
         border: none;
         color: white;
     }
@@ -137,7 +132,7 @@
         width: 25px;
         height: 25px;
         border-radius: 50%;
-        background-color: rgb(var(--AccentColor));
+        background-color:  #46b978;
         display:flex;
         justify-content: center;
         align-items: center;
@@ -206,7 +201,7 @@
       border-radius: 12px;
   }
   .continue_btn:active{
-      background-color: rgba(var(--AccentColor),0.8);
+      background-color: #6bc793;
   }
   .delivery_methods,.payment_methods{
       margin-top: 18px;
@@ -218,13 +213,13 @@
   .method_title .shape{
       width: 15px;
       height: 15px;
-      background-color: rgba(var(--AccentColor),1);
+      background-color:  #46b978;
       border-radius: 50%;
   }
   .shape_border{
       width: 25px;
       height: 25px;
-      border:2px solid rgba(var(--AccentColor),1);
+      border:2px solid  #46b978;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -291,7 +286,7 @@
     font-weight: 600;
   }
   .final_total .prices .shipping {
-    color: rgb(var(--AccentColor));
+    color:  #46b978;
   }
   .total {
     display: flex;

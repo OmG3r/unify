@@ -30,6 +30,8 @@
         let w = window.innerWidth
         if (w > 1180){
             mobileMenuColor ="transparent"
+        }else{
+            mobileMenuColor ="#FFFFFF"
         }
         
     });
@@ -85,7 +87,7 @@ let signoutFunc = () =>{
     }
     :global(:root) {
         --navBarHeight: 70px;
-        --headerHeight: 400px;
+        --headerHeight: 350px;
         --userColor: 24, 29, 34; /*its an RGB code color*/
         --AccentColor: 70, 185, 120;
     }
@@ -138,7 +140,7 @@ let signoutFunc = () =>{
         background-color: transparent !important;
     }
     .menuItems a {
-        margin: 0 5px 0 5px;
+        margin: 0 14px 0 14px;
     }
     .menuItems div {
         margin: 0 5px 0 5px;
@@ -146,6 +148,7 @@ let signoutFunc = () =>{
     .menuItems a:hover {
         color: #46b978;
     }
+    
     .nav-lang {
         display: flex;
         justify-content: center;
@@ -193,7 +196,7 @@ let signoutFunc = () =>{
     .closeMobileMenu {
         position: absolute;
         top: 15px;
-        right: 15px;
+        right: 25px;
         font-size: 25px;
         display: none;
         cursor: pointer;
@@ -395,6 +398,7 @@ let signoutFunc = () =>{
         .menuItems.isActive .nav-lang,
         .menuItems.isActive a {
             margin-top: 18px;
+            margin:10px;
         }
         .closeMobileMenu.isActive {
             display: block;
@@ -415,6 +419,7 @@ let signoutFunc = () =>{
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            margin-left: 30px !important;
         }
         .popup_myaccount{
             position: static;
@@ -427,8 +432,12 @@ let signoutFunc = () =>{
     }
     .help_logout{
         display: block !important;
-        font-size:15px;
-        font-weight: 400;
+        font-size:18px;
+        font-weight: 600;
+        text-align: center;
+    }
+    .help_logout div{
+        margin:10px 0 10px 0;
     }
     }
     
