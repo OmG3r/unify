@@ -24,7 +24,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 0px 15px black;       
+        box-shadow: 0px 0px 15px black;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        background-image: url("/img/back.png");
+        padding: 8rem 0;     
     }
 
     header .socialMedia{
@@ -328,7 +333,18 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
+.left{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 4;
+}
+.right{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+}
 </style>
 
 <!--header-->
@@ -354,19 +370,11 @@
                     <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
             </div>
     </div>
-    <!-- <img class="background" src="/img/likes.png" alt=""> -->
-<!--     <div class="slider" data-aos="fade-up"  data-aos-duration="1000"><img src="./img/beki.png" alt="content_creator" /></div>
- -->
-    <div class="shape_top_right"></div>
-    <div class="shape_bottom_left"></div>
-    <!-- <img class="shape_top_right" src="/img/shape_top_right.png" alt="shape_top_right">
-    <img class="shape_bottom_left" src="/img/shape_bottom_left.png" alt="shape_bottom_left"> -->
-    <!-- <div class="shape_top_left" />
-    <div class="shape_bottom_left" /> -->
-    <!-- <img src="/img/shapes.png" alt="shapes" class="shapes"> -->
-    <!-- <div class="shape1" />
-    <div class="shape2" />
-    <div class="shape3" /> -->
+    <!-- <img class="left" src="/img/left.png" alt="left">
+    <img class="right" src="/img/right.png" alt="left"> -->
+    <!-- <div class="shape_top_right"></div>
+    <div class="shape_bottom_left"></div> -->
+
 </header>
 <!-- End header-->
 

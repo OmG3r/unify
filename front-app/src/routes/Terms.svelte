@@ -1,7 +1,5 @@
 <style>
-    :global(body){
-        background-color:#181d22 ;
-    }
+    
     .u-view {
         width: 100%;
         min-height: 100vh;
@@ -9,12 +7,17 @@
         background-color: #181d22;
         color:white
     }
-    h1,h4{
+    h1{
         margin: 25px auto;
         width: max-content;   
     }
-    h3{
+    .lastUpdate{
+        margin: 25px auto;
         width: max-content;
+        color:white;
+    }
+    .h3{
+       
         font-size: 17px;
         font-weight: 500;
         color:black;
@@ -38,7 +41,11 @@
         color:black;
         margin-left: 15px;
     }
-    
+    @media only screen and (max-width: 1180px) {
+        .u-container{
+            max-width: 100%;
+        }
+    }
 </style>
 
 
@@ -49,7 +56,7 @@
 
 <div class="u-view">
     <h1>Terms of Service</h1>
-    <h4>Last Updated on February 14, 2021</h4>
+    <h4 class="lastUpdate">Last Updated on February 14, 2021</h4>
     <div class="u-container">
     
         <div  class="head">OVERVIEW</div>
@@ -91,17 +98,16 @@
         </div>
      
      
-        <div  class="head">SENDING TIPS</div>
+        <div  class="head">THIRD PARTY SITE PROMOTIONS</div>
+        <div  class="body">
+            When using Unify, you may have the option to utilize a third party site to earn credits for the use of Unify as well as other promotional offers. You authorize Unify to share information with these third party sites if you choose to take part in the promotion. You additionally agree to the Terms of Service of these third party sites when utilizing them, as well as the Terms of Service of Unify when leaving the Unify site to take part in the third party site’s interface to earn these credits or promotions. Unify and the third party service reserve the right to withhold points earned for any reason. Unify reserves the right to remove your account credit balance if you are in breach of the Terms of Service, or suspected of a breach in the Terms of Service, on the third party site or on Unify.
+        </div>
+
+        <!-- <div  class="head">SENDING TIPS</div>
         <div  class="body">
             We allow you to send tips (also referred to as “donations”) through this Service using multiple payment methods. We reserve the right to change these payment methods at any time. We reserve the right to impose limits on the number of transactions you can send through our Service. When sending tips, the recipient is not required to accept or acknowledge them. You agree that you will not hold us liable for any unclaimed or unacknowledged tips.
             By sending a tip or donation to the recipient, you agree that the card is your own and authorize us to charge each tip transaction in full. This charge is non-refundable, non-profitable, and/or exchangeable and cannot be withdrawn or charged back. You acknowledge that you are not receiving any goods/services in return for this tip.
             Tippers will not pay for your fee at the point of the tip transaction. Due to currency exchange discrepancy from third-party payment processors the total charge to the tipper may be off by a minimal amount and any overcharged fees will be given to the Creator.
-        </div>
-     
-     
-        <div  class="head">THIRD PARTY SITE PROMOTIONS</div>
-        <div  class="body">
-            When using Unify, you may have the option to utilize a third party site to earn credits for the use of Unify as well as other promotional offers. You authorize Unify to share information with these third party sites if you choose to take part in the promotion. You additionally agree to the Terms of Service of these third party sites when utilizing them, as well as the Terms of Service of Unify when leaving the Unify site to take part in the third party site’s interface to earn these credits or promotions. Unify and the third party service reserve the right to withhold points earned for any reason. Unify reserves the right to remove your account credit balance if you are in breach of the Terms of Service, or suspected of a breach in the Terms of Service, on the third party site or on Unify.
         </div>
      
      
@@ -111,7 +117,7 @@
             You agree to send any type of identification that is asked for in order to complete a withdrawal request. You agree to pay a fee for any withdrawal. If bank account information is incorrect, you are subject to a delay in your withdrawal and/or losing your funds and/or account deletion. You must contact Unify support immediately.
             By accepting this agreement, you authorize us to hold, receive, and disburse funds on your behalf when such funds from the Card Networks are settled into your account. We may make available to you information in the Unify management dashboard regarding anticipated settlement amounts received on your behalf from the Card Networks and are being held pending settlement. This settlement information does not constitute a deposit or other obligation of Unify or our payment processor to you. This settlement information reflected in the Unify management dashboard is for reporting and informational purposes only, and you are not entitled to, and have no ownership or other rights in settlement funds, until such funds are credited to your designated bank settlement account. Your authorizations set forth herein will remain in full force and effect until your Unify account is closed or terminated.
             You agree to pay all fees assessed by us to you for providing our payment processors services. Tippers will not pay for your fee at the point of the tip transaction. Due to currency exchange discrepancy from the payment processor the total charge to the tipper may be off by a minimal amount and overcharged fees will be given to the Creator.
-        </div>
+        </div> -->
      
      
         <div  class="head">Registration</div>
@@ -127,11 +133,11 @@
         </div>
     
         <div  class="head">UNIFY MERCH</div>
-        <h3>- USER CONTENT</h3>
+        <div class="h3">- USER CONTENT</div >
         <div  class="body"> 
             You grant Unify a license to use the User Content and materials you post to the Site. By posting, downloading, displaying, performing, transmitting, or otherwise distributing User Content to the Site, you are granting Unify, its affiliates, officers, directors, employees, consultants, agents, and representatives a license to use User Content in connection with the operation of the Internet business of Unify, its affiliates, officers, directors, employees, consultants, agents, and representatives, including without limitation, a right to copy, distribute, transmit, publicly display, publicly perform, reproduce, edit, translate, and reformat User Content. You agree that Unify may publish or otherwise disclose your name in connection with your User Content. By posting User Content on the Site, you warrant and represent that you own the rights to the User Content or are otherwise authorized to post, distribute, display, perform, transmit, or otherwise distribute User Content.
         </div>
-        <h3>- COMPLIANCE WITH INTELLECTUAL PROPERTY LAWS</h3>
+        <div class="h3">- COMPLIANCE WITH INTELLECTUAL PROPERTY LAWS</div >
         <div class="body">
             When accessing or using the Site, you agree to obey the law and to respect the intellectual property rights of others. Your use of the Site is at all times governed by and subject to laws regarding copyright, trademark, patent, and trade secret ownership and use of intellectual property. You agree not to upload, download, display, perform, transmit, or otherwise distribute any information or Content in violation of any party's copyrights, trademarks, patents, trade secrets, or other intellectual property or proprietary rights. You agree to abide by laws regarding copyright, trademark, patent, and trade secret ownership and use of intellectual property, and you shall be solely responsible for any violations of any laws and for any infringements of any intellectual property rights caused by any Content you provide, post, or transmit, or that is provided or transmitted using your user name or user ID. The burden of proving that any Content does not violate any laws or intellectual property rights rests solely with you.
         </div>

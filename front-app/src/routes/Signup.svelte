@@ -168,6 +168,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
     .u_logo {
         display: flex;

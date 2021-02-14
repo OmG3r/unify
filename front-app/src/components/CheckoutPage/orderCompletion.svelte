@@ -7,6 +7,7 @@
     import Popup from './Popup.svelte'
     import {writable} from 'svelte/store'
     import {urlPostReq, notification, generateDeliveryDate} from '../../utils.js'
+    import { lang } from "../../store.js";
     let [minDdate, maxdDate] = generateDeliveryDate()
     
     let popup= writable(false);
@@ -419,9 +420,7 @@ hr{
                     <div class="shape_border"><div class="shape" /></div>Cash on delivery
                 </div>
                 <div class="method_desc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud .
+                    {{ en: 'Make sure to prepare the exact amount of the order. The delivery people do not always have cash on hand to give you change', fr: "Assurez-vous de préparer le montant exact de la commande. Les livreurs ne disposent pas toujours d'espèces pour vous rendre la monnaie." }[$lang]}
                 </div>
             </div>
         </div>

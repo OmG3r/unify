@@ -5,10 +5,28 @@
     import Cart from './misc/Cart.svelte'
     import {user} from '../firebase.js'
     import { onMount } from "svelte";
+    import {hexToRgb} from '../filter.js'
+    export let creatorData = {};
+
     
-  
     $: signedin = $user;
-     let myAccount = false;
+    let myAccount = false;
+    let accentColor = hexToRgb(creatorData.accentColor);
+    onMount(async () =>{
+        document.querySelector(".u-pattern").style.background="rgba("+accentColor+",0.8)";
+        
+    });
+
+    window.addEventListener("resize", () => {
+        let mobileItem = document.querySelector(".menu-items.isActive")
+        if (window.innerWidth > 1180) {
+            mobileItem.style.background= "transparent";
+        }else{
+            mobileItem.style.background= "rgb("+accentColor+")"
+        }
+    });
+    
+    
     
 
     let mobileMenuColor = "#FFFFFF";
@@ -46,7 +64,8 @@
     };
     /**************END OnScroll***********/
 
-    export let creatorData = {};
+    
+    
 </script>
 
 <style>
@@ -109,6 +128,9 @@
         flex-direction: row;
         align-items: center;
     }
+    .menu-items a {
+        margin: 0 14px;
+    }
     .closeMobileMenu {
         position: absolute;
         top: 15px;
@@ -126,8 +148,10 @@
 
     .nav-lang {
         width: 26px;
-        margin: 0 8px;
-        
+        margin: 0 14px;    
+    }
+    .basket-container{
+        margin: 0 14px; 
     }
 
     .nav-lang img {
@@ -167,12 +191,7 @@
     .u-pattern {
         height: var(--headerHeight);
         width: 100%;
-        background: linear-gradient(
-                to bottom,
-                rgba(var(--userColor), 0.9),
-                rgba(var(--userColor), 0.9)
-            ),
-            url(/../img/patterns.svg);
+        background: rgba(var(--userColor),0.8);
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: scroll;
@@ -417,12 +436,12 @@
         
     }
 
-.my_account{
+    .my_account{
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin-left: 30px;
+            margin: 0 14px;
         }
 
     .menu_item {
@@ -430,24 +449,23 @@
         flex-direction: row;
         align-items: center;
         cursor: pointer;
-        padding: 5px;   
+        padding: 0 18px;
+        user-select: none;
     }
     .menu_item:active {
         background-color: #46b978;
         color: white;
         height: 45px;
         border-radius: 5px;
+        margin: 0 14px;
     }
-  .menu_item{
-         width: 100%;
-        display: flex;
-        justify-content: center;
-    }
+  
     .menu_item.myAccount {
         background-color: #46b978;
         color: white;
         height: 45px;
         border-radius: 5px;
+        margin:0px !important; 
     }
     
     .user_avatar img {
@@ -468,15 +486,14 @@
         top: 70px;
         box-shadow: 0px 0px 5px #181d225c;
         display: none;
+        width: max-content;
+        
     }
     .popup_myaccount.myAccount {
         display: block !important;
     }
 
-    .popup_myaccount{
-        position: absolute;
-        width: 180px;
-    }
+   
         .first_part {
         display: flex;
         flex-direction: row;
@@ -522,30 +539,54 @@
     .second_part div:active {
         color: #46b978;
     }
+    .second_part .help{
+        display: flex !important;
+        align-items: center;
+        margin: 14px 0;
+    }
+    .second_part .help img{
+        width: 25px;
+    }
      .second_part .help,.second_part .logout{
         display: block;
-        color:#181d22
+        color:#181d22;
     }
     .help_logout{
         display: none !important;
     }
+    
+    .edit_btn .btn:hover{
+            color:white;
+    }
     @media only screen and (max-width: 1180px) {
-    .help_logout{
+        .my_account{
+            margin-left: 30px;
+        }
+        .help_logout{
             display: block !important;
             font-size: 18px;
             font-weight: 600;
             text-align: center;
         }
-    .popup_myaccount{
-        position: static;
-        color:#181d22;
-    }
-    .second_part .help,.second_part .logout{
-        display: none;
-        color:#181d22
-    }
-     .first_part img {display: none;}
-    }
+        .help_logout div{
+            margin: 10px 0px
+        }
+        
+        .menu-items a:hover,.help_logout div:hover{
+            color:#46b978;
+            cursor:pointer;
+        }
+        .popup_myaccount{
+            position: static;
+            color:#181d22;
+        }
+        .second_part .help,.second_part .logout{
+            display: none !important;
+            color:#181d22;
+            margin:0;
+        }
+        .first_part img {display: none;}
+        }
     @media only screen and (max-width: 800px) {
         .u-logo span{
             width: max-content;
@@ -563,7 +604,8 @@
     <div class="unify-plus">+</div>
 
     <div
-        class="menu-items {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}">
+        class="menu-items {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"
+        >
         <a use:link href="/">{{ en: 'Home', fr: 'Accueil' }[$lang]}</a>
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a use:link href={"/" + creatorData.username + "/merch"}>{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
@@ -595,13 +637,28 @@
                     </div>
                     <hr />
                     <div class="second_part">
-                        <div class="help" >Help & Support</div>
+
+                        <div class="help" >
+                            <img src="/img/misc/wishlist.png" alt="">
+                            <a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
+                        </div>
+
+                        <div class="help" >
+                            <img src="/img/misc/order.png" alt="">
+                            <a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                        </div>
+
                         <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
-                <div class="help" >Help & Support</div>
+                <div class="help" >
+                    <a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a>
+                </div>
+                <div class="help" >
+                    <a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                </div>
                 <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>
             </div>
             
@@ -642,6 +699,7 @@
             on:click={() => {
                 isActive = false;
                 isActiveReverse = true;
+                document.querySelector(".menu-items").style.background="transparent";
             }}>
             X
         </div>
@@ -655,6 +713,7 @@
         class:isActive
         on:click={() => {
             isActive = !isActive;
+            document.querySelector(".menu-items").style.background="rgb("+accentColor+")";
         }}>
         <path
             d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16

@@ -109,6 +109,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
     .u_logo {
         display: flex;
@@ -439,10 +440,9 @@
             <a href="/" use:link class="u_logo">
                 <img src="imgs/icons/logo_transaprent.png" alt="logo" />Unify
             </a>
-            <div class="title">Welcom to Our Website</div>
+            <div class="title">Dear creator,</div>
             <div class="desc">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Molestiae maxime provident rerum dolorum,
+                Are you ready to develop your merchandise platform? Start NOW.
             </div>
             <div class="circle_top" />
             <div class="circle_bottom" />

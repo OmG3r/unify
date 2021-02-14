@@ -27,6 +27,8 @@
     import FooterCC from "./components/FooterCC.svelte"
     import OrderCompleted from "./components/CheckoutPage/OrderCompleted.svelte"
     import Terms from "./routes/Terms.svelte"
+    import PaymentMethods from "./routes/PaymentMethods.svelte"
+    import ShippingDelivery from "./routes/ShippingDelivery.svelte"
     export let url = "";
 </script>
 <Notifications />
@@ -36,6 +38,16 @@
         <LandingPage />
         <Footer/>
     
+    </Route>
+    <Route  path="/shipping&delivery">
+        <NavbarUnify/> 
+        <ShippingDelivery/> 
+        <Footer/>  
+    </Route>
+    <Route  path="/payment">
+        <NavbarUnify/> 
+        <PaymentMethods/> 
+        <Footer/>  
     </Route>
     <Route  path="/terms">
         <NavbarUnify/> 

@@ -2,6 +2,7 @@
     import {link} from 'svelte-routing'
     import {cart} from '../../store.js'
     import {onMount, onDestroy} from 'svelte'
+    
     console.log($cart)
     let normalTotal = 0;
     let unsubscribeCart = () => {};
@@ -110,7 +111,7 @@
 
     .unit_price .price {
         margin-left: 15px;
-        color: rgb(var(--AccentColor));
+        color: #46b978;
     }
     .quantity .qty {
         margin-left: 15px;
@@ -148,7 +149,7 @@
         font-weight: 600;
     }
     .final_total .prices .shipping {
-        color: rgb(var(--AccentColor));
+        color: #46b978;
     }
     .total {
         display: flex;
@@ -159,7 +160,7 @@
         margin: 15px 0 15px 0;
     }
     .back_to_cart {
-        color: rgb(var(--AccentColor));
+        color: #46b978;
         font-size: 16px;
         font-weight: 700;
         display: flex;
@@ -167,7 +168,7 @@
         cursor: pointer;
     }
     .back_to_cart:active {
-        color: rgba(var(--AccentColor), 0.8);
+        color: #6bc793;
         user-select: none;
     }
    

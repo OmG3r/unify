@@ -10,6 +10,7 @@ import Wishlist from "../components/UserProfile/Wishlist.svelte";
 import Redirector from '../components/misc/Redirector.svelte'
 import Footer from '../components/Footer.svelte'
 import NavbarUnify from "../components/NavbarUnify.svelte";
+import { lang } from "../store.js";
 export let params = {}
 console.log(params)
 export let url;
@@ -77,7 +78,7 @@ $: currentPage = params['*']
         color: rgb(var(--userColor));
     }
     .nav a.active {
-        background-color: rgb(var(--AccentColor));
+        background-color: #46b978;
         color: white;
         border-radius: 10px;
         padding: 0 5px 0 5px;
@@ -138,9 +139,24 @@ $: currentPage = params['*']
             <img src="/img/misc/user.png" alt="profilepic" />
             <div class="u_name">{$user.displayName ? $user.displayName : "User"}</div>
             <div class="nav">
-                <a class={currentPage == 'profile' ? 'active' : ''} href="/myaccount/profile" use:link>Profile</a>
-                <a class={currentPage == 'wishlist' ? 'active' : ''} href="/myaccount/wishlist" use:link>Wishlist</a>
-                <a class={currentPage == 'orders' ? 'active' : ''} href="/myaccount/orders" use:link>Orders</a>
+                <a class={currentPage == 'profile' ? 'active' : ''} href="/myaccount/profile" use:link>
+                    {{
+                    en: 'Profile', 
+                    fr: 'Profile' 
+                }[$lang]}
+                </a>
+                <a class={currentPage == 'wishlist' ? 'active' : ''} href="/myaccount/wishlist" use:link>
+                    {{
+                    en: 'Wishlist', 
+                    fr: "Liste d'envies"
+                }[$lang]}
+                    </a>
+                <a class={currentPage == 'orders' ? 'active' : ''} href="/myaccount/orders" use:link>
+                    {{
+                    en: 'Orders', 
+                    fr: "Commandes"
+                }[$lang]}
+                    </a>
             </div>
             <hr class="mobilehr" />
         </div>

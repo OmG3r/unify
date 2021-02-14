@@ -60,6 +60,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
     .u_logo{
         display: flex;
@@ -313,10 +314,9 @@
             <a use:link href="/" class="u_logo">
                 <img src="./imgs/icons/logo_transaprent.png" alt="logo" />Unify
             </a>
-            <div class="title">Welcom Back To Our Website</div>
+            <div class="title">Welcome Back 😀</div>
             <div class="desc">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Molestiae maxime provident rerum dolorum,
+                Your universe is waiting for you
             </div>
             <div class="circle_top"></div>
             <div class="circle_bottom"></div>

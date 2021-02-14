@@ -148,7 +148,7 @@
         }
 
         for (let media of ["youtube","facebook","instagram", "twitch", "nimo","twitter","baaz","Tiktok","pinterest"]) {
-            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com"].some((item)=>profile[media].includes(item))) {
+            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com",""].some((item)=>profile[media].includes(item))) {
                 notification.set({
                     accentColor: "alert",
                     title: "Error",
@@ -226,7 +226,6 @@
         left: 0;
         margin: auto;
         width: 150px;
-        height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -310,7 +309,7 @@
     }
     .logo-image {
         width: 150px;
-        height: 150px;
+  
     }
     .banner-image {
         background-image: url("/imgs/defaultBanner.png");
@@ -537,11 +536,11 @@
                 id="banner-upload" />
 
             {#if typeof profile.banner == 'string' && profile.banner.length > 0}
-                <img
+                <div
                     crossorigin="anonymous"
                     class="banner-image"
-                    src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/banner')}
-                    alt="baaner" />
+                    style="background-image:url({uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/banner')})"
+                     />
             {:else if typeof profile.banner != 'string'}
                 <div
                     class="banner-image"
@@ -599,11 +598,11 @@
         <div class="user_data">
             <div class="account_data">
                 <div class="title">
-                    {{ fr: 'Données de compte', en: 'Account Data' }[$lang]}
+                    Account Data
                 </div>
                 <div class="input">
                     <div class="title">
-                        {{ fr: 'Email', en: 'Email' }[$lang]}
+                        Email
                     </div>
                     <input
                         type="email"
@@ -612,7 +611,7 @@
                 </div>
                 <div class="input">
                     <div class="title">
-                        {{ fr: 'Numéro de téléphone', en: 'Phone Number' }[$lang]}
+                        Phone Number
                     </div>
                     <input
                         type="phone"
@@ -622,11 +621,11 @@
             </div>
             <div class="personal_data">
                 <div class="title">
-                    {{ fr: 'Données personnelles', en: 'Personal Data' }[$lang]}
+                    Personal Data
                 </div>
                 <div class="input">
                     <div class="title">
-                        {{ fr: 'Nom', en: 'Name' }[$lang]}
+                        Name
                     </div>
                     <input
                         type="text"
@@ -635,7 +634,7 @@
                 </div>
                 <div class="input">
                     <div class="title">
-                        {{ fr: 'Date de naissance', en: 'Date of Birth' }[$lang]}
+                        Date of Birth
                     </div>
                     <input type="date" class="birth_date" />
                 </div>
@@ -647,14 +646,14 @@
             <InputColor title="Accent Color" bind:text={profile.accentColor} />
             <div class="input">
                 <div class="title">
-                    {{ fr: 'Description', en: 'Description' }[$lang]}
+                    Description
                 </div>
             <textarea class="description" name="description"  maxlength="350" bind:value ={profile.description} />
             </div>
         </div>
 
         <div class="u-section-title">
-            {{ fr: 'Réseaux sociaux', en: 'Social Media' }[$lang]}
+            Social Media
         </div>
         <div class="u-information-box">
             <Input
@@ -699,7 +698,7 @@
             {#if updating}
                 <MaterialSpinner />
             {:else}
-                {{ fr: 'Enregistrer', en: 'Save' }[$lang]}
+                Save
             {/if}
         </button>
         <div
@@ -707,7 +706,7 @@
                 firebase.auth().signOut();
             }}
             class="signout">
-            {{ fr: 'Se déconnecter', en: 'Logout' }[$lang]}
+            Logout
         </div>
     </section>
 </div>

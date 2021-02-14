@@ -8,7 +8,7 @@ footer{
     padding: 50px 0 15px 0;
     position: relative;
     overflow: hidden;
-    margin-top: 50px;
+    
 }
 .top{
     display: flex;
@@ -205,8 +205,10 @@ footer{
                     <a href="/inprogress" class="item">{{en: 'About', fr: 'À propos' }[$lang]}</a>
                     <a href="/inprogress" class="item">{{en: 'Brand', fr: 'Brand' }[$lang]}</a>
                     <a href="/contactus" class="item">{{en: 'Contact us', fr: 'Contactez-nous' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Terms & Policies', fr: 'Conditions et politiques' }[$lang]}</a>
+                    <a href="/payment" class="item">{{en: 'Methods of Payment', fr: 'Modes de paiement' }[$lang]}</a>
+                    <a href="/terms" class="item">{{en: 'Terms', fr: 'Termes' }[$lang]}</a>
+                    <a href="/policy" class="item">{{en: 'Policies', fr: 'Politiques' }[$lang]}</a>
+
                 </div>
             </div>
             <div class="follow">
@@ -217,7 +219,7 @@ footer{
                     
                 </div>
             </div>
-            <div class="newsletter">
+            <!-- <div class="newsletter">
                 <div class="title">{{en: 'Newsletter', fr: 'Newsletter' }[$lang]}</div>
                 <div class="items">
                     {{
@@ -226,7 +228,7 @@ footer{
                     }[$lang]}
                      
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

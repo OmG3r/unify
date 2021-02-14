@@ -5,6 +5,7 @@
     }
     .basket-container {
         position: relative;
+        margin : 0 14px;
     }
     .number {
         position: absolute;

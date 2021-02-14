@@ -130,6 +130,7 @@ let signoutFunc = () =>{
         position: absolute;
         right: 20px;
         z-index: 5003;
+        margin-right: 14px;
     }
     .u_logo {
         display: flex;
@@ -154,9 +155,7 @@ let signoutFunc = () =>{
     .menuItems a {
         margin: 0 14px 0 14px;
     }
-    .menuItems div {
-        margin: 0 5px 0 5px;
-    }
+   
     .menuItems a:hover {
         color: #46b978;
     }
@@ -169,7 +168,7 @@ let signoutFunc = () =>{
     }
     .nav-lang img {
         width: 30px;
-        margin: 0 5px 0 5px;
+        margin: 0 14px;
     }
     .join_btn {
         background-color: #46b978;
@@ -182,6 +181,7 @@ let signoutFunc = () =>{
         display: flex;
         cursor: pointer;
         color: white;
+        margin: 0 14px;
     }
     .join_btn a{
         margin: 0 !important;   
@@ -282,6 +282,7 @@ let signoutFunc = () =>{
         top: 70px;
         box-shadow: 0px 0px 5px #181d225c;
         display: none;
+        width: max-content;
     }
     .user_info {
         display: flex;
@@ -316,13 +317,24 @@ let signoutFunc = () =>{
         flex-direction: row;
         align-items: center;
         cursor: pointer;
-        padding: 5px;
-       
+        padding: 0 18px;
+        user-select: none;
+        
     }
     .menu_item:active {
         background-color: #46b978;
         color: white;
-        height: 70px;
+        height: 45px;
+        border-radius: 5px;
+        margin: 0 14px;
+    }
+    .menu_item.myAccount {
+        background-color: #46b978;
+        color: white;
+        height: 45px;
+        border-radius: 5px;
+        margin:0px !important; 
+
     }
     .user_avatar img {
         width: 30px;
@@ -338,12 +350,19 @@ let signoutFunc = () =>{
     .second_part div:active {
         color: #46b978;
     }
-    .menu_item.myAccount {
-        background-color: #46b978;
-        color: white;
-        height: 70px;
-        padding: 5px;
+    .second_part .help img{
+        width: 25px;
     }
+    .second_part .help{
+        display: flex !important;
+        align-items: center;
+        margin: 14px 0;
+    }
+     .second_part .help,.second_part .logout{
+        display: block;
+        color:#181d22;
+    }
+    
     .popup_myaccount.myAccount {
         display: block !important;
     }
@@ -351,7 +370,9 @@ let signoutFunc = () =>{
     .help_logout{
         display: none !important;
     }
-
+    .edit_btn .btn:hover{
+                color:white;
+    }
     @media only screen and (max-width: 1180px) {
 
 
@@ -384,6 +405,12 @@ let signoutFunc = () =>{
             animation: mobileMenuReverse 0.3s ease-out;
             opacity: 0;
             width: 0px;
+        }
+
+        
+        .menu-items a:hover,.help_logout div:hover{
+            color:#46b978;
+            cursor:pointer;
         }
 
         @keyframes mobileMenu {
@@ -431,7 +458,7 @@ let signoutFunc = () =>{
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin-left: 30px !important;
+            margin: 0 14px;
         }
         .popup_myaccount{
             position: static;
@@ -440,7 +467,7 @@ let signoutFunc = () =>{
         }
         .first_part img {display: none;}
         .second_part .help,.second_part .logout{
-        display: none;
+        display: none !important;
     }
     .help_logout{
         display: block !important;
@@ -453,11 +480,7 @@ let signoutFunc = () =>{
     }
     }
     
-    .menu_item{
-         width: 100%;
-        display: flex;
-        justify-content: center;
-    }
+    
     
 </style>
 
@@ -507,13 +530,21 @@ let signoutFunc = () =>{
                     </div>
                     <hr />
                     <div class="second_part">
-                        <div class="help" >{{ en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</div>
+                        <div class="help" >
+                            <img src="/img/misc/wishlist.png" alt="wishlist">
+                            <a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
+                        </div>
+                        <div class="help" >
+                            <img src="/img/misc/order.png" alt="order">
+                            <a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                        </div>
                         <div on:click={() => {signoutFunc()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
-                <div class="help" >{{ en: 'Help & Support', fr: 'Aide & Support' }[$lang]}</div>
+                <div class="help" ><a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> </div>
+                <div class="help" ><a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a> </div>
                 <div on:click={()=>{signoutFunc()}} class="logout" >Logout</div>
             </div>
             
