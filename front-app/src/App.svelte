@@ -24,7 +24,7 @@
     import Notifications from './components/Notifications.svelte'
     import FooterCC from "./components/FooterCC.svelte"
     import OrderCompleted from "./components/CheckoutPage/OrderCompleted.svelte"
-    import TermsPolicies from "./routes/TermsPolicies.svelte"
+    import Terms from "./routes/Terms.svelte"
     export let url = "";
 </script>
 <Notifications />
@@ -35,8 +35,8 @@
         <Footer/>
     
     </Route>
-    <Route  path="/terms&privacy">
-        <TermsPolicies/>   
+    <Route  path="/terms">
+        <Terms/>   
     </Route>
     <Route  path="/completed">
         <OrderCompleted/>   
