@@ -24,19 +24,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0px 0px 15px black;
-        
-        
+        box-shadow: 0px 0px 15px black;       
     }
 
     header .socialMedia{
         display: flex;
         justify-content: center;
-        margin: 15px 0 15px 0;
+        margin: 30px 0 15px 0;
     }
     header .socialMedia img{
         width: 50px;
-        margin:0 5px 0 5px
+        margin:0 10px 0 10px
     }
     
     .left_part {
@@ -49,16 +47,17 @@
     
 
     .left_part .sub_title {
-        font-size: 25px;
+        font-size: 22px;
         font-weight: 400;
         text-align: center;
-        margin: 15px 0 15px 0;
+        margin: 30px 0 20px 0;
     }
     .left_part .title{
         text-align: center;
-        font-size: 50px;
+        font-size: 70px;
         margin: 15px 0 15px 0;
         z-index: 5;
+        line-height: 1;
     }
     
     button:focus {
@@ -67,15 +66,14 @@
     .get_started_btn button {
         background-color: #00ce7c;
         border: none;
-        border-radius: 18px;
+        border-radius: 30px;
         color: white;
         font-size: 20px;
         font-weight: 600;
-        height: 70px;
+        height: max-content;
         width: max-content;
-        min-width: 300px;
         cursor: pointer;
-        padding: 5px 10px;
+        padding: 18px 30px;
     }
     .get_started_btn button:active {
         background-color: #49d29b;
@@ -218,9 +216,11 @@
         padding: 15px 30px;
         height: max-content;
         min-height: 75px;
-        width: 380px;;
+        width: max-content;
         border: none;
-        
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 25px auto 0 auto;
         cursor: pointer;
     }
@@ -296,6 +296,25 @@
         .left_part .title{
             font-size: 40px;
         }
+
+        header .socialMedia img{
+            width: 30px;
+            margin:0 10px 0 10px;
+            flex-wrap:wrap;
+        }
+        .shape_top_right,.shape_bottom_left{
+            width: 200px;
+            height: 200px;
+        }
+        .get_started_btn .btn{
+            padding: 15px 20px;
+        }
+        .section1 .part_one .paragraph,.section2 .part_one .title{
+            font-size: 30px;
+        }
+        .section2 .part_one .paragraph{
+            font-size: 20px;
+        }
     }
 .half-circle {
     width: 100px;
@@ -309,11 +328,6 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.background{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
 
 </style>
 
@@ -321,9 +335,9 @@
 <header>
     <div class="left_part">
         <div class="title" data-aos="fade-right" data-aos-duration="1000">
-            {{ en: 'The Essential Services For Creators', fr: 'Services Essentiels Pour Créateurs' }[$lang]}
-            <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
-        
+            {{ en: 'Tools for Gamers.', fr: 'Outils pour Gamers. ' }[$lang]}<br>
+            {{ en: 'Creators. Brands.', fr: 'Createurs. Brands.' }[$lang]}
+
             <div class="socialMedia part_two" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" >
             <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
             <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
@@ -332,12 +346,15 @@
             <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
             </div>
 
+            <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
+    
+
             <div class="get_started_btn">
                 <button class="btn" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="600">
                     <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
             </div>
     </div>
-    <img class="background" src="/img/likes.png" alt="">
+    <!-- <img class="background" src="/img/likes.png" alt=""> -->
 <!--     <div class="slider" data-aos="fade-up"  data-aos-duration="1000"><img src="./img/beki.png" alt="content_creator" /></div>
  -->
     <div class="shape_top_right"></div>
@@ -398,8 +415,8 @@
         </div>
         <button><a href="https://creator.unify.tn/register">
             {{ 
-                en: "Start Your Store Now",
-                fr: "Démarrez votre boutique maintenant" 
+                en: "Start Now",
+                fr: "Démarrez maintenant" 
                 }[$lang]}</a></button>
     </div>
     <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>

@@ -38,7 +38,9 @@
     
     </Route>
     <Route  path="/terms">
-        <Terms/>   
+        <NavbarUnify/> 
+        <Terms/>
+        <Footer/>  
     </Route>
     <Route  path="/completed">
         <OrderCompleted/>   

@@ -12,21 +12,18 @@
     let myAccount = false;
     
 
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 1180) {
-            isActiveReverse = false;
-        }
-    });
+    
     $upColor = "#45B877";
     $downColor = "#181D22";
     let headerVisible = false;
     let oldscroll = 0;
     let mobileMenuColor = "#FFFFFF";
+    let popup_myaccount = "#FFFFFF"
     onMount(async () => {
         document.getElementById("transparent").addEventListener("click", () => {
             myAccount = false;
         });
-
+    
         let w = window.innerWidth
         if (w > 1180){
             mobileMenuColor ="transparent"
@@ -35,7 +32,20 @@
         }
         
     });
-    
+    window.addEventListener("resize", () => {
+            if (window.innerWidth > 1180) {
+                isActiveReverse = false;
+                mobileMenuColor ="transparent"
+            }else{
+                let currentScrollPos = window.pageYOffset;
+                if (currentScrollPos <= 150) {
+                    mobileMenuColor ="#FFFFFF"
+                }
+                 if (currentScrollPos > 180) {
+                    mobileMenuColor ="#181D22"
+                 }
+            }
+    });
     /* When the user scrolls down, navbar -> background white */
     let isScroll = false;
     let isScrollReverse = false;
@@ -46,6 +56,7 @@
                 isScroll = false;
                 isScrollReverse = true;
                 $downColor = "#181D22";
+                popup_myaccount ="#FFFFFF"
                 if(w > 1180){
                 mobileMenuColor ="transparent"
                 }else{
@@ -58,6 +69,7 @@
                 isScroll = true;
                 isScrollReverse = false;
                 $downColor = "#FFFFFF";
+                popup_myaccount ="#181D22"
                 if(w > 1180){
                 mobileMenuColor ="transparent"
                 }else{
@@ -481,7 +493,7 @@ let signoutFunc = () =>{
                     </div>
                 </div>
 
-                <div class="popup_myaccount" class:myAccount style="background-color:{mobileMenuColor}">
+                <div class="popup_myaccount" class:myAccount style="background-color:{popup_myaccount}">
                     <div class="first_part">
                         <img src="/img/misc/user.png" alt="avatar" />
                         <div class="user_info">
