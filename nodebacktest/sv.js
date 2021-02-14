@@ -1,11 +1,7 @@
-'use strict';
 const express = require('express');
-const serverless = require('serverless-http');
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const admin = require("firebase-admin");
-
+const cors = require('cors');
 const serviceAccount = require("./unify-tn-firebase-adminsdk-6i0rp-5c5b822f0b.json");
 
 admin.initializeApp({
@@ -14,31 +10,13 @@ admin.initializeApp({
 });
 const db = admin.firestore()
 let cacheCreatorMerch = {}
-
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
-app.use(function(req, res, next) {
-    res.type('application/json');
-    next();
-});
-app.options('*', cors({ origin: true, credentials: true }))
-app.post('*', cors({ origin: true, credentials: true }))
-const router = express.Router();
-router.get('/', (req, res) => {
-    res.end('hello')
-});
-router.get('/another', (req, res) => {
-    res.json({ route: req.originalUrl })
-});
-router.post('/', (req, res) => {
-    console.log(req.body)
-    res.json({ postBody: req.body })
-});
 
-router.post('/initializeClaims', async(req, res) => {
+app.post('/initializeClaims', async(req, res) => {
     let template = {
         target: 'text',
         operation: 'add/overwrite',
@@ -85,7 +63,7 @@ router.post('/initializeClaims', async(req, res) => {
     res.end(JSON.stringify(resp))
 })
 
-router.post('/getClaims', async(req, res) => {
+app.post('/getClaims', async(req, res) => {
     let data = req.body
     let theError = undefined
     let userData = undefined
@@ -108,7 +86,7 @@ router.post('/getClaims', async(req, res) => {
     res.end(JSON.stringify(userData, null, 4))
 })
 
-router.post('/createCreator', async(req, res) => {
+app.post('/createCreator', async(req, res) => {
     if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
         return
@@ -153,7 +131,7 @@ router.post('/createCreator', async(req, res) => {
         })
 })
 
-router.post('/addOrder', async(req, res) => {
+app.post('/addOrder', async(req, res) => {
     let data = req.body
     Object.entries(data).forEach(([key, value]) => {
         try {
@@ -248,9 +226,6 @@ router.post('/addOrder', async(req, res) => {
 });
 
 
-app.use('/.netlify/functions/express', router); // path must route to lambda
-/*app.listen(8222, () => {
-    console.log("listened")
-})*/
-module.exports = app;
-module.exports.handler = serverless(app);
+app.listen(3001, () => {
+    console.log('Example app listening at http://localhost:3001')
+})
