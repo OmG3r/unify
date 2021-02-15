@@ -1,6 +1,7 @@
 import {writable} from 'svelte/store'
 
 
+export const accentColor = writable("#46b978")
 export const lang = writable("fr")
 function createSideNavStore() {
     let saved = Boolean(localStorage.getItem('sideNav')) || false
@@ -17,3 +18,5 @@ function createSideNavStore() {
 }
 export const navCollapse = createSideNavStore()
 export const navCollapsable = writable(true)
+
+

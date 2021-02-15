@@ -6,7 +6,7 @@
     import { db, user, storage } from "../firebase.js";
     import { notification, uuidToImageLink } from "../utils.js";
     import MaterialSpinner from "../comps/MaterialSpinner.svelte";
-    import { lang } from "../store.js";
+    import { accentColor } from "../store.js";
 import { is_empty } from "svelte/internal";
 
     let profile = {
@@ -176,6 +176,11 @@ import { is_empty } from "svelte/internal";
                 ...profile,
             },
         };
+        if ($user.docData?.accentColor ) {
+            $accentColor = $user.docData.accentColor 
+        }   
+        
+        console.log($user)
         updating = false;
     };
 
@@ -633,9 +638,9 @@ import { is_empty } from "svelte/internal";
                 </div>
             </div>
         {#if profile.name ==""}
-            <div class="creator_name" contenteditable="true">{$user.claims.username}</div>
+            <div on:click|stopPropagation|preventDefault on:input={(event) => {profile.name = event.target.innerHTML}} class="creator_name" contenteditable="true">{$user.claims.username}</div>
         {:else}
-            <div class="creator_name" contenteditable="true">{profile.name}</div>
+            <div on:click|stopPropagation|preventDefault on:input={(event) => {profile.name = event.target.innerHTML}} class="creator_name" contenteditable="true">{profile.name}</div>
         {/if}
             
             

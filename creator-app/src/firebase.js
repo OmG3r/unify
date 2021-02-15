@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-
+import {accentColor} from "./store.js"
 const firebaseConfig = {
     apiKey: "AIzaSyDucnhtBFM0HOg8dxk3lUIRcV8pHmifzXc",
     authDomain: "unify-tn.firebaseapp.com",
@@ -36,7 +36,9 @@ auth.onAuthStateChanged(async function(kuser) {
         }
         console.log(tokenRes)
         kuser.docData = (await db.collection("creators").doc(tokenRes.claims.username).get()).data()
-
+        if (kuser.docData.accentColor ){
+            accentColor.set(kuser.docData.accentColor)
+        }
         console.log("the kuser")
         console.log(kuser)
         user.set(kuser)

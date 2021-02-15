@@ -69,7 +69,8 @@
 </style>
 
 <script>
-    export let title = ""
+    import {accentColor} from "../store.js"
+     export let title = ""
     export let id;
     export let text = ""
     const handleColorSelectorChange = (event) => {
@@ -78,7 +79,7 @@
 </script>
 
 <div class="input-wrapper">
-    <label for={id ? id : title} required="required" class="input-label">
+<label style="color:{$accentColor}"for={id ? id : title} required="required" class="input-label">
         {title}
     </label>
     <div class="input-wrapper-container">
