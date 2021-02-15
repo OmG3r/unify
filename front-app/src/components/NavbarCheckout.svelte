@@ -2,15 +2,15 @@
     import Logo from "./misc/UnifyLogo.svelte";
     import { link } from "svelte-routing";
     import { onMount } from 'svelte';
-
-    let upColor = "#45B877";
-    let downColor = "#181D22";
+    import {upColor,downColor} from "../store.js";
+    $upColor = "#45B877";
+    $downColor = "#181D22";
    
 </script>
 
 <style>
     nav {
-        height: 70px;
+        min-height: 70px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -27,7 +27,6 @@
         font-weight: 600;
     }
     .help {
-        width: 400px;
         margin-right: 35px;
     }
     .help img {
@@ -45,9 +44,7 @@
         filter: invert(71%) sepia(14%) saturate(10%) hue-rotate(332deg)
             brightness(95%) contrast(85%);
     }
-    .help_text {
-        width: 370px;
-    }
+   
     .payment_text {
         width: 100px;
     }
@@ -65,8 +62,11 @@
     @media only screen and (max-width: 1180px) {
         nav {
             flex-direction: column;
-            height: 150px;
         }
+        .help{
+            margin: 10px 30px;
+        }
+        
     }
 </style>
 
