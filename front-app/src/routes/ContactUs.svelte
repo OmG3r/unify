@@ -12,6 +12,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        background-image: url("/img/back.png");
     }
     .u_logo {
         display: flex;
@@ -109,6 +113,6 @@
 
    
 
-    <div class="circle_top" />
-    <div class="circle_bottom" />
+    <!-- <div class="circle_top" />
+    <div class="circle_bottom" /> -->
 </div>

@@ -110,6 +110,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        background-image: url("/imgs/back_mobile.png");
+        text-align: center;
     }
     .u_logo {
         display: flex;
@@ -297,7 +302,7 @@
         }
         .signUp_container {
             flex-direction: column;
-            height: max-content;
+    
         }
     }
 </style>
@@ -444,8 +449,8 @@
             <div class="desc">
                 Are you ready to develop your merchandise platform? Start NOW.
             </div>
-            <div class="circle_top" />
-            <div class="circle_bottom" />
+           <!--  <div class="circle_top" />
+            <div class="circle_bottom" /> -->
         </div>
 
         <div class="right_side">

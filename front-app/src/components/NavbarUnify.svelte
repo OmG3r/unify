@@ -532,11 +532,11 @@ let signoutFunc = () =>{
                     <div class="second_part">
                         <div class="help" >
                             <img src="/img/misc/wishlist.png" alt="wishlist">
-                            <a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
+                            <a use:link href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
                         </div>
                         <div class="help" >
                             <img src="/img/misc/order.png" alt="order">
-                            <a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                            <a use:link href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
                         </div>
                         <div on:click={() => {signoutFunc()}} class="logout" >Logout</div>
                     </div>

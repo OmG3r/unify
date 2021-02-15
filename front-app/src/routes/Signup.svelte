@@ -63,8 +63,8 @@
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Molestiae maxime provident rerum dolorum,
             </div>
-            <div class="circle_top" />
-            <div class="circle_bottom" />
+            <!-- <div class="circle_top" />
+            <div class="circle_bottom" /> -->
         </div>
 
         <div class="right_side">
@@ -169,6 +169,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        background-image: url("/img/back_mobile.png");
     }
     .u_logo {
         display: flex;
@@ -303,7 +307,6 @@
         }
         .signUp_container {
             flex-direction: column;
-            height: max-content;
         }
     }
 </style>

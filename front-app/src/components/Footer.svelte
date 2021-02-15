@@ -41,7 +41,7 @@ footer{
 .right_part{
     display:flex;
     flex-direction: row;
-    width: 80%;
+    width: 70%;
 }
 
 .using,.about,.follow,.newsletter{
@@ -208,14 +208,15 @@ footer{
                     <a href="/payment" class="item">{{en: 'Methods of Payment', fr: 'Modes de paiement' }[$lang]}</a>
                     <a href="/terms" class="item">{{en: 'Terms', fr: 'Termes' }[$lang]}</a>
                     <a href="/policy" class="item">{{en: 'Policies', fr: 'Politiques' }[$lang]}</a>
+                    <a href="/policy" class="item">{{en: 'Shipping & Delivery', fr: 'Expédition & Livraison' }[$lang]}</a>
 
                 </div>
             </div>
             <div class="follow">
                 <div class="title">{{en: 'Social Media', fr: 'Réseaux sociaux' }[$lang]}</div>
                 <div class="items">
-                    <a href="#"><img src="/img/misc/fb.png" alt="fb"></a>
-                    <a href="#"><img src="/img/misc/instagram.png" alt="fb"></a>
+                    <a href="https://www.facebook.com/Unifytn-109100961216305"><img src="/img/misc/fb.png" alt="fb"></a>
+                    <a href="https://www.instagram.com/unify.tn"><img src="/img/misc/instagram.png" alt="fb"></a>
                     
                 </div>
             </div>

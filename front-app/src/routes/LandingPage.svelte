@@ -29,7 +29,7 @@
         background-position: 50%;
         background-size: cover;
         background-image: url("/img/back.png");
-        padding: 8rem 0;     
+      
     }
 
     header .socialMedia{

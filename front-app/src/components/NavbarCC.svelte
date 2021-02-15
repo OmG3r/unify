@@ -640,12 +640,12 @@
 
                         <div class="help" >
                             <img src="/img/misc/wishlist.png" alt="">
-                            <a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
+                            <a use:link href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
                         </div>
 
                         <div class="help" >
                             <img src="/img/misc/order.png" alt="">
-                            <a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                            <a use:link href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
                         </div>
 
                         <div on:click={() => {firebase.auth().signOut()}} class="logout" >Logout</div>

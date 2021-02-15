@@ -61,6 +61,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: cover;
+        background-image: url("/imgs/back_mobile.png");
+        text-align: center;
     }
     .u_logo{
         display: flex;
@@ -257,7 +262,6 @@
       }
       .signUp_container{
           flex-direction: column;
-          height: max-content;
       }
     }
 </style>
@@ -318,8 +322,8 @@
             <div class="desc">
                 Your universe is waiting for you
             </div>
-            <div class="circle_top"></div>
-            <div class="circle_bottom"></div>
+            <!-- <div class="circle_top"></div>
+            <div class="circle_bottom"></div> -->
         </div>
 
         <div class="right_side" >
