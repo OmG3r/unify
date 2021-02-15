@@ -35,6 +35,7 @@
     header .socialMedia{
         display: flex;
         justify-content: center;
+        align-items: center;
         margin: 30px 0 15px 0;
     }
     header .socialMedia img{
@@ -345,6 +346,15 @@
     bottom: 0;
     z-index: 4;
 }
+.instagram{
+    width: 45px;
+}
+.twitch{
+    width: 40px;
+}
+.fb{
+    width: 48px;
+}
 </style>
 
 <!--header-->
@@ -355,10 +365,10 @@
             {{ en: 'Creators. Brands.', fr: 'Createurs. Brands.' }[$lang]}
 
             <div class="socialMedia part_two" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" >
+            <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" class="instagram" />
+            <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" class="twitch" />
             <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
-            <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
-            <img src="/img/socialMedia/facebook_colored.svg" alt="fb" />
-            <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" />
+            <img src="/img/socialMedia/facebook_colored.svg" alt="fb"  class="fb"/>
             <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
             </div>
 
