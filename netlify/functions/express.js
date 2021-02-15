@@ -108,8 +108,8 @@ router.post('/getClaims', async(req, res) => {
     res.end(JSON.stringify(userData, null, 4))
 })
 
-router.post('/createCreator', async(req, res) => {
-    if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
+router.post('/createCreator', async (req, res) => {
+    if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
         return
     }
@@ -122,21 +122,26 @@ router.post('/createCreator', async(req, res) => {
     }
 
     admin.auth().createUser({
-            email: req.body.email,
-            emailVerified: false,
-            password: req.body.password,
-            disabled: false,
-        })
-        .then(async(userRecord) => {
+        email: req.body.email,
+        emailVerified: false,
+        password: req.body.password,
+        disabled: false,
+    })
+        .then(async (userRecord) => {
             let promises = []
             let pro = admin.auth().setCustomUserClaims(userRecord.uid, { username: req.body.username })
             promises.push(pro)
             pro = admin.firestore().doc("/creators/" + req.body.username).set({
                 username: req.body.username,
+                storeEnabled: false
             })
             promises.push(pro)
             pro = admin.firestore().doc('/creators/all').set({
-                [req.body.username]: true
+                [req.body.username]: {
+                    email: req.body.email,
+                    persoName: req.body.persoName,
+                    storeEnabled: false
+                }
             }, { merge: true })
             promises.push(pro)
             await Promise.all(promises)
@@ -152,7 +157,6 @@ router.post('/createCreator', async(req, res) => {
             res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error: { xerror } }))
         })
 })
-
 router.post('/addOrder', async(req, res) => {
     let data = req.body
     Object.entries(data).forEach(([key, value]) => {

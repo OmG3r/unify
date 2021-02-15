@@ -45,7 +45,7 @@
         display: flex;
         flex-direction: row;
         background-color: #eeeeee;
-        height: 100vh;
+        min-height: 100vh;
     }
     .container{
         width: 100%;

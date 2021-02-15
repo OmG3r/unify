@@ -215,8 +215,8 @@ footer{
             <div class="follow">
                 <div class="title">{{en: 'Social Media', fr: 'Réseaux sociaux' }[$lang]}</div>
                 <div class="items">
-                    <a href="https://www.facebook.com/Unifytn-109100961216305"><img src="/img/misc/fb.png" alt="fb"></a>
-                    <a href="https://www.instagram.com/unify.tn"><img src="/img/misc/instagram.png" alt="fb"></a>
+                    <a  target="_blank" href="https://www.facebook.com/Unifytn-109100961216305"><img src="/img/misc/fb.png" alt="fb"></a>
+                    <a  target="_blank" href="https://www.instagram.com/unify.tn"><img src="/img/misc/instagram.png" alt="fb"></a>
                     
                 </div>
             </div>

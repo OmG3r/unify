@@ -87,7 +87,7 @@ app.post('/getClaims', async(req, res) => {
 })
 
 app.post('/createCreator', async(req, res) => {
-    if (['email', 'password', 'username'].some((item) => req.body[item] == undefined)) {
+    if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
         return
     }

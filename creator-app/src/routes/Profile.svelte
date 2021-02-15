@@ -7,6 +7,7 @@
     import { notification, uuidToImageLink } from "../utils.js";
     import MaterialSpinner from "../comps/MaterialSpinner.svelte";
     import { lang } from "../store.js";
+import { is_empty } from "svelte/internal";
 
     let profile = {
         banner: "",
@@ -516,7 +517,45 @@
     .copyimg:active {
         background-color: #181d22;
     }
-    @media only screen and (max-width: 1180px) {
+    .banner .camera_container{
+            position: absolute;
+            bottom: 15px;
+            right: 50px;
+            width: max-content;
+            display: flex;
+            padding: 4px 12px;
+            background: #e4e6eb;
+            border-radius: 15px;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+    }
+    .banner .camera_container:hover{
+            background: #d7d9de;
+    }
+    .banner .camera_container img{
+        width: 25px;
+        margin-right: 15px;
+    }
+    .logo .camera_container{
+        z-index: 5000;
+        width: max-content;
+        background: #e4e6eb;
+        position: absolute;
+        padding: 2px 6px;
+        border-radius: 8px;
+        bottom: -px;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .logo .camera_container img{
+        width: 20px;
+    }
+    .logo_container{
+        position: relative;
+        padding: 4px 12px;
     }
 </style>
 
@@ -548,37 +587,58 @@
             {:else}
                 <div class="banner-image" />
             {/if}
+
+            <div class="camera_container">
+                <img src="/imgs/misc/camera.svg" alt="camera" class="camera">
+                Edit Cover Photo
+            </div>
         </label>
 
         <label
             for="logo-upload"
             class:filled={profile.logo}
-            on:drop|preventDefault={handleDropLogo}
-            on:dragover|preventDefault|stopPropagation
             class="logo">
             <input
                 on:change={handleExplorerLogo}
                 type="file"
                 id="logo-upload" />
-
+            <div 
+            class="logo_container"
+            on:drop|preventDefault={handleDropLogo}
+            on:dragover|preventDefault|stopPropagation
+            >
             {#if typeof profile.logo == 'string' && profile.logo.length > 0}
                 <img
                     crossorigin="anonymous"
                     class="logo-image"
                     src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/logo')}
-                    alt="logo" />
+                    alt="logo" />                                         
             {:else if typeof profile.logo != 'string'}
                 <img
                     class="logo-image"
                     src={URL.createObjectURL(profile.logo)}
-                    alt="logo" />
+                    alt="logo" />  
             {:else}
                 <img
                     class="logo-image"
                     src="/imgs/defaultUser.png"
-                    alt={profile.logo} />
+                    alt={profile.logo} > 
             {/if}
-            <div class="creator_name">{$user.claims.username}</div>
+                <div 
+                class="camera_container"
+                on:drop|preventDefault={handleDropLogo}
+                on:dragover|preventDefault|stopPropagation
+                >
+                    <img src="/imgs/misc/camera.svg" alt="camera" class="camera">
+                </div>
+            </div>
+        {#if profile.name ==""}
+            <div class="creator_name" contenteditable="true">{$user.claims.username}</div>
+        {:else}
+            <div class="creator_name" contenteditable="true">{profile.name}</div>
+        {/if}
+            
+            
         </label>
     </section>
 
@@ -642,7 +702,7 @@
         </div>
 
         <div class="u-information-box">
-            <Input title="Profile Name" bind:text={profile.name} />
+        <Input title="Profile Name" bind:value={profile.name} bind:text={profile.name} />
             <InputColor title="Accent Color" bind:text={profile.accentColor} />
             <div class="input">
                 <div class="title">

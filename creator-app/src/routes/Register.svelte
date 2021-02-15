@@ -97,7 +97,7 @@
         display: flex;
         flex-direction: row;
         background-color: #eeeeee;
-        height: 100vh;
+        min-height: 100vh;
     }
     .left_side {
         width: 40%;
@@ -367,7 +367,7 @@
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
-        let resp = await urlPostReq('http://localhost:3001/createCreator', {
+        let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
             email: email.value,
             password: password.value,
             username: username.value,
