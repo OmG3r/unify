@@ -16,6 +16,11 @@
             navigate("/");
         } */
         loaded = true;
+        let params = new URLSearchParams(location.search)
+        if (params.get('error') == 'sizes') {
+            noSize = true
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
     const handleChangeSize = (key, fsize) => {
         console.log(key)

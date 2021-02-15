@@ -10,6 +10,15 @@ import Summary from './orderSummary.svelte';
     let unsubscribeUser = () => {};
     onMount(() => {
         console.log($user)
+        if (Object.keys($cart.items).length == 0) {
+            navigate("/")
+            return
+        }
+        if (Object.entries($cart.items).filter(([id, value]) => value.size == undefined).length != 0) {
+            // no sizes
+            navigate("/cart?error=sizes")
+        }
+
        
         unsubscribeUser = user.subscribe((v) => {
             console.log(v)
@@ -26,16 +35,18 @@ import Summary from './orderSummary.svelte';
             if (!v.phoneNumber) {
                 console.log("sending to phone verification")
                 navigate('/phoneverification?backurl=/checkout')
+                return
             } else if (!v.emailVerified) {
                 console.log("sending to email verification")
                 navigate('/emailverification?backurl=/checkout')
+                return
             }
+
+
             validated = true
         })
 
-        if (Object.keys($cart.items).length == 0) {
-            navigate("/")
-        }
+        
     })
     onDestroy(() => {
         unsubscribeUser()
