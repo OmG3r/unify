@@ -544,7 +544,7 @@ import { is_empty } from "svelte/internal";
         position: absolute;
         padding: 2px 6px;
         border-radius: 8px;
-        bottom: -px;
+        bottom: -3px;
         right: 0;
         display: flex;
         justify-content: center;
