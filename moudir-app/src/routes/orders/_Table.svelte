@@ -122,13 +122,14 @@
             }
 
             if (v.date.start != 0) {
-                if (cart.timestamp.seconds < v.date.start) {
+
+                if (cart.timestamp < v.date.start) {
                     return false
                 }
             }
 
             if (v.date.end != 0) {
-                if (cart.timestamp.seconds > v.date.end) {
+                if (cart.timestamp > v.date.end) {
                     return false
                 }
             }

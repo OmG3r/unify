@@ -99,12 +99,33 @@
             $users = []
             return
         }
-        $users = Object.entries(data).map(([username, data]) => {
+        let arrayed = Object.entries(data).map(([username, data]) => {
             data.username = username
             return data
         })
+        console.log(arrayed)
+        arrayed.sort((a, b) => {return a.username.localeCompare(b.username)})
+        $users = arrayed
     })
-
+    const handleStoreStatus = async (user) => {
+        let batch = db.batch();
+        if (user.storeEnabled == true) {
+            console.log("1 false")
+            batch.set(db.doc('/creators/all'), {[user.username]: {storeEnabled: false} }, {merge: true})
+            console.log("2 false")
+            batch.set(db.doc('/creators/' + user.username), {storeEnabled: false}, {merge: true})
+            console.log("3 false")
+            user.storeEnabled = false
+        } else {
+            console.log("1 true")
+            batch.set(db.doc('/creators/all'), {[user.username]: {storeEnabled: true} }, {merge: true})
+            console.log("2 true")
+            batch.set(db.doc('/creators/' + user.username), {storeEnabled: true}, {merge: true})
+            console.log("3 true")
+            user.storeEnabled = true
+        }
+        await batch.commit()
+    }
     onDestroy(() => {
         unsubscribeDB()
     })
@@ -147,7 +168,7 @@
                     {/if}
                 </div>
                 <div class="u-body-store-status">
-                    <div  on:click={() => {user.storeEnabled = !user.storeEnabled}} class="noselect u-toggle-container">
+                    <div  on:click={() => {handleStoreStatus(user)}} class="noselect u-toggle-container">
                         <div
                         class:disabled={!user.storeEnabled}
                         class:enabled={user.storeEnabled} class="u-toggler">
