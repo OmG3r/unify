@@ -79,10 +79,13 @@
         height: max-content;
         width: max-content;
         cursor: pointer;
-        padding: 18px 30px;
     }
     .get_started_btn button:active {
         background-color: #49d29b;
+    }
+    .get_started_btn a {
+        padding: 18px 30px;
+        display: block;
     }
     .slider {
         position: absolute;
@@ -219,7 +222,6 @@
         border-radius: 20px;
         font-size: 25px;
         font-weight: 600;
-        padding: 15px 30px;
         height: max-content;
         min-height: 75px;
         width: max-content;
@@ -229,6 +231,11 @@
         align-items: center;
         margin: 25px auto 0 auto;
         cursor: pointer;
+    }
+    .section2 .part_one button a {
+        padding: 15px 30px;
+        display: block;
+
     }
     .section2 .part_one button:active {
         background-color: #49d29b;
@@ -377,7 +384,7 @@
 
             <div class="get_started_btn">
                 <button class="btn" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="600">
-                    <a href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
+                    <a  target="_blank" href="https://creator.unify.tn/register">{{ en: 'Get Started Now', fr: 'Commencez maintenant' }[$lang]}</a></button>
             </div>
     </div>
     <!-- <img class="left" src="/img/left.png" alt="left">
@@ -431,7 +438,7 @@
             
             </div>
         </div>
-        <button><a href="https://creator.unify.tn/register">
+        <button><a target="_blank" href="https://creator.unify.tn/register">
             {{ 
                 en: "Start Now",
                 fr: "Démarrez maintenant" 

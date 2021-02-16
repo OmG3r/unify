@@ -45,9 +45,9 @@
 
 <script>
     import {link} from 'svelte-routing'
-
+    import {accentColor} from "../store.js"
 </script>
 
 <header>
-    <a use:link href="/merch/create" class="u-button"> <img src="/imgs/misc/merch.png" alt=""> Create a Merch</a>
+    <a use:link href="/merch/create" class="u-button" style="background:{$accentColor}"> <img src="/imgs/misc/merch.png" alt=""> Create a Merch</a>
 </header>

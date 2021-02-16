@@ -3,7 +3,7 @@
     .u-view {
         width: 100%;
         min-height: 100vh;
-        padding: 90px;
+        padding: 90px 0;
         background-color: #181d22;
         color:white
     }
@@ -22,16 +22,25 @@
         font-weight: 600;
         color:black;
         margin-left: 15px;
+        margin-bottom: 15px;
     }
     .h4{
         margin-left: 32px;
         color:black;
         font-weight: 500;
+        margin-bottom: 15px;
     }
     .h5{
-        margin-left: 38px;
+        margin-left: 55px;
         color:black;
         font-weight: 400;
+        margin-bottom: 15px;
+    }
+    .h6{
+        font-weight: 400;
+        margin-left: 70px;
+        color:black;
+        margin-bottom: 10px;
     }
     
     .u-container{
@@ -52,12 +61,15 @@
     .body{
         color:black;
         margin-left: 15px;
+        margin-bottom: 15px;
         
     }
 
     @media only screen and (max-width: 1180px) {
         .u-container{
             max-width: 100%;
+            padding: 50px 20px;
+         border-radius: 0;
         }
     }
     
@@ -81,41 +93,41 @@ import { lang } from "../store.js";
             fr: 'Lors de la finalisation de la commande, vous pouvez visualiser le montant total de votre commande.'
             }[$lang]}  
         </div>
-        <div class="h3">{{en: '1) Payment in cash on delivery: ', fr: '1) Paiement en espèces à la livraison:' }[$lang]}</div>
-            <div class="h4">{{
+        <div class="h4">{{en: '1) Payment in cash on delivery: ', fr: '1) Paiement en espèces à la livraison:' }[$lang]}</div>
+            <div class="h5">{{
                     en: 'A- Make sure to prepare the exact amount of the order. The delivery people do not always have cash on hand to give you change', 
                     fr: "A- Assurez-vous de préparer le montant exact de la commande. Les livreurs ne disposent pas toujours d'espèces pour vous rendre la monnaie." 
                     }[$lang]}  
             </div>
-            <div class="h4">{{
+            <div class="h5">{{
                     en: 'B- We only accept payment in Tunisian Dinar.', 
                     fr: 'B- Nous acceptons uniquement le paiement en Dinar Tunisien.' 
                 }[$lang]}  
             </div>
 
 
-        <div class="h3">{{en: '2) Secure payment by national and international credit cards (coming soon): ', fr: '2) Paiement sécurisé par carte bancaire nationales et internationales (prochainement):' }[$lang]}</div>
+        <div class="h4">{{en: '2) Secure payment by national and international credit cards (coming soon): ', fr: '2) Paiement sécurisé par carte bancaire nationales et internationales (prochainement):' }[$lang]}</div>
             <div class="h4">{{
                     en: 'A- Once you have placed your order, simply select the online credit card payment option.', 
                     fr: "A- Après avoir procédé à la passation de commande, sélectionnez simplement l'option de paiement par carte bancaire en ligne." 
                     }[$lang]}  
             </div>
-            <div class="h4">{{
+            <div class="h5">{{
                     en: 'B- Enter your card details such as:', 
                     fr: 'B- Entrez les détails de votre carte tels que:' 
                 }[$lang]}  
             </div>
-                <div class="h5">{{
+                <div class="h6">{{
                         en: '- Card number', 
                         fr: '- Numéro de carte' 
                     }[$lang]}  
                 </div>
-                <div class="h5">{{
+                <div class="h6">{{
                         en: '- Expiry date', 
                         fr: "- Date d'expiration" 
                     }[$lang]}  
                 </div>
-                <div class="h5">{{
+                <div class="h6">{{
                         en: '- Security code', 
                         fr: '- Code de sécurité' 
                     }[$lang]}  

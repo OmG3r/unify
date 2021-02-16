@@ -23,7 +23,7 @@
         if (v === 0) {
             console.error("unauthorized")
             setTimeout(() => {
-                navigate("/login")
+                navigate("/login", {replace: true})
             }, 100)
         
         } else {

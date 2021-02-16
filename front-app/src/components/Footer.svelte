@@ -170,7 +170,7 @@ footer{
 
 <script>
     import { lang } from "../store.js";
-
+    import {link} from 'svelte-routing'
 </script>
 <footer>
     <div class="top">
@@ -193,22 +193,22 @@ footer{
             <div class="using">
                 <div class="title">{{en: 'Creators’ Hub', fr: 'Hub des créateurs' }[$lang]}</div>
                 <div class="items">
-                    <a href="https://creator.unify.tn" class="item">{{en: 'Merch', fr: 'Marchandise' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Custom Design', fr: 'Design Personnalisé' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Donation', fr: 'Don' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Subscription', fr: 'Abonnements' }[$lang]}</a>
+                    <a target="_blank" href="https://creator.unify.tn" class="item">{{en: 'Merch', fr: 'Marchandise' }[$lang]}</a>
+                    <a use:link href="/inprogress" class="item">{{en: 'Custom Design', fr: 'Design Personnalisé' }[$lang]}</a>
+                    <a use:link href="/inprogress" class="item">{{en: 'Donation', fr: 'Don' }[$lang]}</a>
+                    <a use:link href="/inprogress" class="item">{{en: 'Subscription', fr: 'Abonnements' }[$lang]}</a>
                 </div>
             </div>
             <div class="about">
                 <div class="title">{{en: 'Unify', fr: 'Unify' }[$lang]}</div>
                 <div class="items">
-                    <a href="/inprogress" class="item">{{en: 'About', fr: 'À propos' }[$lang]}</a>
-                    <a href="/inprogress" class="item">{{en: 'Brand', fr: 'Brand' }[$lang]}</a>
-                    <a href="/contactus" class="item">{{en: 'Contact us', fr: 'Contactez-nous' }[$lang]}</a>
-                    <a href="/payment" class="item">{{en: 'Methods of Payment', fr: 'Modes de paiement' }[$lang]}</a>
-                    <a href="/terms" class="item">{{en: 'Terms', fr: 'Termes' }[$lang]}</a>
-                    <a href="/policy" class="item">{{en: 'Policies', fr: 'Politiques' }[$lang]}</a>
-                    <a href="/policy" class="item">{{en: 'Shipping & Delivery', fr: 'Expédition & Livraison' }[$lang]}</a>
+                    <a use:link href="/inprogress" class="item">{{en: 'About', fr: 'À propos' }[$lang]}</a>
+                    <a use:link href="/inprogress" class="item">{{en: 'Brand', fr: 'Brand' }[$lang]}</a>
+                    <a use:link href="/contactus" class="item">{{en: 'Contact us', fr: 'Contactez-nous' }[$lang]}</a>
+                    <a use:link href="/payment" class="item">{{en: 'Methods of Payment', fr: 'Modes de paiement' }[$lang]}</a>
+                    <a use:link href="/terms" class="item">{{en: 'Terms', fr: 'Termes' }[$lang]}</a>
+                    <a use:link href="/policy" class="item">{{en: 'Policies', fr: 'Politiques' }[$lang]}</a>
+                    <a use:link href="/shipping&delivery" class="item">{{en: 'Shipping & Delivery', fr: 'Expédition & Livraison' }[$lang]}</a>
 
                 </div>
             </div>

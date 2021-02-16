@@ -5,6 +5,7 @@
     import {onMount, onDestroy} from 'svelte'
     import {auth, db, user} from '../firebase.js'
     import {uuidToImageLink} from '../utils.js'
+    import { accentColor } from "../store.js";
 
     document.title = "Unify Creator - Overview"
     let kpis = {
@@ -239,19 +240,13 @@
     }
     .analytics-filter {
         width: max-content;
-        padding: 6px 10px;
+        
         border-radius: 12px;
-        background-color: #46b978;
-        border-color: #46b978;
         color: white;
         cursor: pointer;
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.34),
-            0 0px 10px rgb(70 185 120 / 0.32);
+        
     }
-    .analytics-filter:hover {
-        box-shadow: 0 0px 10px rgb(70 185 120 / 0.5),
-            0 0px 10px rgb(70 185 120 / 0.5);
-    }
+    
 
     .analytics-filter select {
         background-color: #46b978;
@@ -261,6 +256,8 @@
         appearance: none;
         outline: none;
         cursor: pointer;
+            padding: 6px 10px;
+    border-radius: 12px;
     }
 
     .kpi-cards {
@@ -327,7 +324,7 @@
             <div class="kpi-header-title">Analytics Overview</div>
             <div class="analytics-filter">
                 <i class="far fa-calendar-alt" />
-                <select>
+            <select style="background-color:{$accentColor};">
                     <option>Active</option>
                     <option>Past week</option>
                     <option>Past Month</option>

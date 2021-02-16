@@ -11,12 +11,12 @@ import Summary from './orderSummary.svelte';
     onMount(() => {
         console.log($user)
         if (Object.keys($cart.items).length == 0) {
-            navigate("/")
+            navigate("/cart",  {replace: true})
             return
         }
         if (Object.entries($cart.items).filter(([id, value]) => value.size == undefined).length != 0) {
             // no sizes
-            navigate("/cart?error=sizes")
+            navigate("/cart?error=sizes", {replace: true})
         }
 
        
@@ -27,18 +27,18 @@ import Summary from './orderSummary.svelte';
             }
             if (v == undefined) {
                 console.log("sending sign up")
-                navigate("/signup")
+                navigate("/signup?backurl=/checkout",  {replace: true})
                 return
             }
 
 
             if (!v.phoneNumber) {
                 console.log("sending to phone verification")
-                navigate('/phoneverification?backurl=/checkout')
+                navigate('/phoneverification?backurl=/checkout',  {replace: true})
                 return
             } else if (!v.emailVerified) {
                 console.log("sending to email verification")
-                navigate('/emailverification?backurl=/checkout')
+                navigate('/emailverification?backurl=/checkout',  {replace: true})
                 return
             }
 

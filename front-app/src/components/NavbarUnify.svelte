@@ -6,6 +6,7 @@
     import { onMount } from "svelte";
     import {user} from '../firebase.js'
     import Cart from '../components/misc/Cart.svelte'
+    import {convert} from "../filter.js"
     $: signedin = $user;
     let isActive = false; // for mobile menu
     let isActiveReverse = false;
@@ -172,8 +173,6 @@ let signoutFunc = () =>{
     }
     .join_btn {
         background-color: #46b978;
-        width: 160px;
-        height: 35px;
         border-radius: 10px;
         margin-right: 15px;
         justify-content: center;
@@ -183,9 +182,13 @@ let signoutFunc = () =>{
         color: white;
         margin: 0 14px;
     }
+    
     .join_btn a{
-        margin: 0 !important;   
-         }
+        margin: 0 !important;
+        padding: 8px 18px;
+        display: block; 
+        border-radius:10px;
+    }
     .join_btn a:hover {
         color: white !important;
     }
@@ -324,9 +327,7 @@ let signoutFunc = () =>{
     .menu_item:active {
         background-color: #46b978;
         color: white;
-        height: 45px;
         border-radius: 5px;
-        margin: 0 14px;
     }
     .menu_item.myAccount {
         background-color: #46b978;
@@ -360,7 +361,6 @@ let signoutFunc = () =>{
     }
      .second_part .help,.second_part .logout{
         display: block;
-        color:#181d22;
     }
     
     .popup_myaccount.myAccount {
@@ -406,7 +406,40 @@ let signoutFunc = () =>{
             opacity: 0;
             width: 0px;
         }
-
+        .menuItems > a{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .my_account{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            margin: 0 !important;
+        }
+        .help_logout{
+            width: 100%;
+        }
+        .help_logout div{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .nav-lang{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .popup_myaccount hr {
+            display: none;
+        }
         
         .menu-items a:hover,.help_logout div:hover{
             color:#46b978;
@@ -518,7 +551,7 @@ let signoutFunc = () =>{
 
                 <div class="popup_myaccount" class:myAccount style="background-color:{popup_myaccount}">
                     <div class="first_part">
-                        <img src="/img/misc/user.png" alt="avatar" />
+                        <img src="/img/misc/user.png" alt="avatar" style={convert($downColor)}/>
                         <div class="user_info">
                         <div class="u_name" >{$user && $user.displayName ? $user.displayName : "User"}</div>
                             <div class="edit_btn">
@@ -529,23 +562,23 @@ let signoutFunc = () =>{
                         </div>
                     </div>
                     <hr />
-                    <div class="second_part">
-                        <div class="help" >
-                            <img src="/img/misc/wishlist.png" alt="wishlist">
-                            <a use:link href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
+                    <div class="second_part" >
+                    <div class="help" style="color:{$downColor}" >
+                            <img src="/img/misc/wishlist.png" alt="wishlist" style={convert($downColor)}>
+                            <a use:link href="/myaccount/wishlist" >{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> 
                         </div>
-                        <div class="help" >
-                            <img src="/img/misc/order.png" alt="order">
-                            <a use:link href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
+                        <div class="help" style="color:{$downColor}" >
+                            <img src="/img/misc/order.png" alt="order" style={convert($downColor)}>
+                            <a use:link href="/myaccount/orders" >{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a>
                         </div>
                         <div on:click={() => {signoutFunc()}} class="logout" >Logout</div>
                     </div>
                 </div>
             </div>
             <div class="help_logout">
-                <div class="help" ><a href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> </div>
-                <div class="help" ><a href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a> </div>
-                <div on:click={()=>{signoutFunc()}} class="logout" >Logout</div>
+                <div class="help" style="color:{$downColor}"><a use:link href="/myaccount/wishlist">{{en: 'Your Wishlist', fr: "Votre Liste d'envie" }[$lang]}</a> </div>
+                <div class="help" style="color:{$downColor}"><a use:link href="/myaccount/orders">{{en: 'Your Orders', fr: "Vos commandes" }[$lang]}</a> </div>
+                <div on:click={()=>{signoutFunc()}} class="logout"  style="color:{$downColor}">Logout</div>
             </div>
             
         {/if}
@@ -575,12 +608,14 @@ let signoutFunc = () =>{
             <Cart color={isScroll ? "#ffffff" : "#181d22"} />
         {/if}
         {#if !signedin}
-            <div class="join_btn">
+        <Cart color={isScroll ? "#ffffff" : "#181d22"} />
+            <div class="join_btn" target="_blank">
                 <a href="https://creator.unify.tn">
                 {{ en: 'Join Us', fr: 'Rejoignez-nous' }[$lang]}
-            </a>
+                </a>
                 
             </div>
+            
         {/if}
     </div>
     <div
@@ -606,7 +641,7 @@ let signoutFunc = () =>{
         on:click={() => {
             isActive = !isActive;
         }}>
->
+
         <path
             d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16
       16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />

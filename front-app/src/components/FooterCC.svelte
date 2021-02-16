@@ -1,9 +1,15 @@
+<script>
+    import {link} from 'svelte-routing'
+
+</script>
+
+
 <div class="footer">
-    <a href="https://unify.tn">
+    <a use:link href="/">
         <div class="poweredContainer">
             <img src="/img/logo_transaprent.png" alt="logo" />
             <div class="powered">
-                Powered By <a href="https://unify.tn" class="unify">Unify</a>
+                Powered By <span class="unify">Unify</span>
             </div>
         </div>
     </a>

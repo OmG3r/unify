@@ -5,6 +5,8 @@
     import ImageBackground from "../../comps/ImageBackground.svelte";
     import ViewNav from "../../comps/ViewNav.svelte";
     import { onDestroy } from "svelte";
+    import { accentColor } from "../../store.js";
+ 
 
     let format = "article-color-random5LettersCode";
     let products = [];
@@ -183,7 +185,7 @@
                                     img={product.imgs[product.featuredColor][product.featuredFace]}
                                     bgColor={textToHex(product.color)} />
                             </div>
-                            <div class="u-informations">
+                        <div class="u-informations" style="background:{$accentColor}">
                                 <div class="u-name">{product.name}</div>
 
                                 <div class="actions">

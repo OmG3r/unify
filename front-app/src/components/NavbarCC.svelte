@@ -433,6 +433,41 @@
             display: block;
             opacity: 1;
         }
+
+        .menuItems > a{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .my_account{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            margin: 0 !important;
+        }
+        .help_logout{
+            width: 100%;
+        }
+        .help_logout div{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .nav-lang{
+            border-top: 1px solid;
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            margin: 0 !important;
+        }
+        .popup_myaccount hr {
+            display: none;
+        }
         
     }
 

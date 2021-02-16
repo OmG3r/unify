@@ -9,7 +9,7 @@
     .controls {
         min-width: 350px;
         min-height: 100vh;
-        max-height: 100vh;
+        height: 100%;
         background-color: #212032;
     }
 

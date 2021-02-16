@@ -57,14 +57,15 @@
 </style>
 
 <script>
+    import {accentColor} from "../store.js"
     export let title = ""
     export let id;
     export let text = ""
     export let placeholder = ""
 </script>
 
-<div class="input-wrapper">
-    <label for={id ? id : title} required="required" class="input-label">
+<div class="input-wrapper" >
+    <label for={id ? id : title} required="required" class="input-label" style="color:{$accentColor}">
         {title}
     </label>
     <div class="input-wrapper-container">

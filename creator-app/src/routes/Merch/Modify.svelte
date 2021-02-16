@@ -1,3 +1,4 @@
+
 <style>
     .u-view  {
         width: 100%;
@@ -50,11 +51,7 @@
         border-color: #46b978;
         margin: auto auto 0 auto
     }
-    .u-update:hover{
-        color: #46b978;
-        background-color:white;
-        border:1px solid #46b978;
-    }
+    
     .u-button:hover {
         color: #d23149;
         background-color:white;
@@ -153,6 +150,7 @@
     import {writable} from 'svelte/store'
     import {creations} from '../../mockupdata.js'
     import {notification, popup} from '../../utils.js'
+    import {accentColor} from  "../../store.js"
     
 
     const priceCalculatorData = writable({})
@@ -280,6 +278,20 @@
     }
 
     let nameInput
+
+    let color = "white";
+    let background = $accentColor;
+    let border= $accentColor;
+    let handleMouseOver = (e) =>{
+        color = $accentColor;
+        background = "white";
+        border= $accentColor;
+    }
+    let handleMouseOut = (e) =>{
+        color = "white";
+        background = $accentColor;
+        border= $accentColor;
+    }
 </script>
 
 
@@ -324,8 +336,8 @@
                         price={itemData.price}
                     />
                 </div>
-                <div on:click={doUpdate} class="u-update">
-                    {#if updating}
+            <div on:click={doUpdate} class="u-update" style="background:{background};color:{color};border:1px solid {border}" on:mouseover={handleMouseOver} on:mouseout={handleMouseOut}> 
+                    {#if updating }
                         <MaterialSpinner />
                     {:else}
                         Update

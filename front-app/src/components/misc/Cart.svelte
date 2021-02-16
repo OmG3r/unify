@@ -5,7 +5,6 @@
     }
     .basket-container {
         position: relative;
-        margin : 0 14px;
     }
     .number {
         position: absolute;
@@ -22,6 +21,15 @@
         border-radius: 50%;
         color: white;
     }
+@media only screen and (max-width: 1180px) {
+    .basket-container{
+        border-top: 1px solid;
+        width: 100%;
+        text-align: center;
+        padding: 25px 0;
+    }
+
+}
 </style>
 
 
