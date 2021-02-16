@@ -32,7 +32,6 @@
         });
         console.log(location.search)
         let params = new URLSearchParams(location.search)
-        console.log(params.get('backurl'))
         document.title = "Unify - Phone Verification"
     })
     const SendCode = async () => {

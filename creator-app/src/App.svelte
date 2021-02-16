@@ -43,6 +43,11 @@
             activeURI = v.uri
             console.log(activeURI)
         })
+
+        setTimeout(() => {
+            let ref = document.getElementById('logo-loader')
+            ref.parentNode.removeChild(ref)
+        }, 1000)
     })
 </script>
 <Notifications />

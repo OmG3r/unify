@@ -222,6 +222,7 @@
          font-weight: 700;
          border-radius: 30px;
          cursor: pointer;
+         padding: 8px 0;
     }
     .signup_btn:focus{
         outline: none;
@@ -299,13 +300,19 @@
     let password = ""
 
     let errorMessage = ""
+    let submitting = false
     let doSubmit = async () => {
-        firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
+        if (submitting) {
+            return
+        }
+        submitting = true
+        await firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             errorMessage = error.message;
             // ...
         });
+        submitting = false
     }
 
 </script>
@@ -345,7 +352,7 @@
             <div class="inputContainer">
                     <div class="input">
                         <img src="/imgs/misc/login_register/envelope.png" alt="email">
-                    <input bind:value={username} class="input email"  name="username" type="text" placeholder="Email">
+                    <input bind:value={username} class="input email"  name="email" type="text" placeholder="Email">
                     </div>
                 
                     <div class="input">
@@ -355,7 +362,14 @@
                 
             </div>
             <div class="forget"><a use:link href="/forgotpassword">Forget Your Password?</a> </div>
-            <div class="signup"><button class="signup_btn" type="submit">Sign in</button></div>
+            <div class="signup"><button class="signup_btn" type="submit">
+                {#if submitting}
+                    <MaterialSpinner />
+                {:else}
+                    Submit
+                {/if}
+
+            </button></div>
             </form>
         </div>
     </div>

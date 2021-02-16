@@ -5,13 +5,21 @@
     import SignInProviders from '../components/misc/SigninProviders.svelte'
     import {onMount, onDestroy} from 'svelte'
     let unsubscribeUser = () => {} ;
+    let backurl = "";
+    let params
     onMount(() => {
         document.title = "Unify - Signup"
+        params = new URLSearchParams(location.search)
+        backurl = params.get('backurl') || ''
         unsubscribeUser = user.subscribe((v) => {
             if (v == 0) {
                 console.log("uninited")
             } else if (v) {
-                navigate("/")
+                if (params.get('backurl') != null) {
+                    navigate(params.get('backurl'), {replace:true} )
+                } else {
+                    navigate("/myaccount", {replace:true} )
+                }
             }
         })
     })
@@ -37,10 +45,18 @@
             await result.user.updateProfile({
                 displayName: lform.name
             })
+             let params = new URLSearchParams(location.search)
+           
             setTimeout(() => {
-                navigate('/phoneverification')
+                if (params.get('backurl')) {
+                    navigate('/phoneverification?backurl='+params.get('backurl'),{replace:true})
+                } else {
+                    navigate('/phoneverification', {replace:true})
+                }
+                
                 sub = false
             },300)
+           
         })
         .catch((error) => {
             errorMessage = error.message
@@ -71,7 +87,7 @@
             <div class="title">Sign up to Unify</div>
             <SignInProviders bind:errorMessage />
             <div class="orEmailText">Or sign up using your email</div>
-            <div class="have-acc">Aready have an account ? <a use:link href="/signin">Sign in here</a></div>
+            <div class="have-acc">Aready have an account ? <a use:link href={"/signin" + (backurl ? ("?backurl=" + backurl) : "" )}>Sign in here</a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                 {#if errorMessage}
                     <div class="error-container">

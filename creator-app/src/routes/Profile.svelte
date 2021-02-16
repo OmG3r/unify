@@ -7,14 +7,14 @@
     import { notification, uuidToImageLink } from "../utils.js";
     import MaterialSpinner from "../comps/MaterialSpinner.svelte";
     import { accentColor } from "../store.js";
-import { is_empty } from "svelte/internal";
-
+    
+    
     let profile = {
         banner: "",
         logo: "",
         ...$user.docData,
     };
-
+    let persoName = $user.displayName
     const MAX_BANNER_SIZE = 1;
     const MAX_PROFIL_PIC_SIZE = 0.5;
 
@@ -118,7 +118,7 @@ import { is_empty } from "svelte/internal";
         updating = true;
         if (typeof profile.logo != "string") {
             profile.logo = (
-                await uploadImage(profile.logo, $user.claims.username + "/logo")
+                await uploadImage(profile.logo, $user.claims?.username + "/logo")
             ).split("token=", 2)[1];
         }
 
@@ -126,10 +126,24 @@ import { is_empty } from "svelte/internal";
             profile.banner = (
                 await uploadImage(
                     profile.banner,
-                    $user.claims.username + "/banner"
+                    $user.claims?.username + "/banner"
                 )
             ).split("token=", 2)[1];
         }
+        let minorModification = false
+        if (persoName != $user.displayName) {
+            minorModification = true
+            let promises = []
+            let pro = $user.updateProfile({
+                displayName: persoName
+            })
+            promises.push(pro)
+            pro = db.doc('/creators/all').set({[$user.claims.username]: {persoName: persoName}}, {merge: true})
+            promises.push(pro)
+            await Promise.all(promises)
+        
+        }
+
         let modification = false;
         for (let key of Object.keys($user.docData)) {
             if ($user.docData[key] != profile[key]) {
@@ -149,7 +163,7 @@ import { is_empty } from "svelte/internal";
         }
 
         for (let media of ["youtube","facebook","instagram", "twitch", "nimo","twitter","baaz","Tiktok","pinterest"]) {
-            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com",""].some((item)=>profile[media].includes(item))) {
+            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com"].some((item)=>profile[media].includes(item) || profile[media].length == 0)) {
                 notification.set({
                     accentColor: "alert",
                     title: "Error",
@@ -160,8 +174,12 @@ import { is_empty } from "svelte/internal";
             }
         if (modification == true) {
             await db
-                .doc("/creators/" + $user.claims.username)
+                .doc("/creators/" + $user.claims?.username)
                 .set(profile, { merge: true });
+            
+        }
+
+        if (minorModification || modification) {
             notification.set({
                 accentColor: "success",
                 title: "Success",
@@ -184,15 +202,18 @@ import { is_empty } from "svelte/internal";
         updating = false;
     };
 
-    let copyStore = () => {
-        var copyText = document.getElementById("myStoreID");
+    let copyStore = async () => {
+        /*
+        var copyText = document.getElementById("myStoreID");*/
 
         /* Select the text field */
+        /*
         copyText.select();
         copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
+        
         /* Copy the text inside the text field */
-        document.execCommand("copy");
+        /*document.execCommand("copy");*/
+        await navigator.clipboard.writeText('https://unify.tn/' + $user.claims?.username + '/merch')
         notification.set({
             accentColor: "success",
             title: "success",
@@ -278,6 +299,7 @@ import { is_empty } from "svelte/internal";
         line-height: 2.5rem;
         padding: 0 1rem;
         border-radius: 0.25rem;
+        font-size: 18px;
         font-weight: 600;
         white-space: nowrap;
         text-transform: capitalize;
@@ -297,13 +319,11 @@ import { is_empty } from "svelte/internal";
         align-items: center;
         cursor: pointer;
         background-color: #46b978;
-
         text-shadow: none;
         box-shadow: none;
         outline: none;
         border: none;
         color: white;
-
         width: 60%;
         max-width: 400px;
     }
@@ -363,6 +383,15 @@ import { is_empty } from "svelte/internal";
         position: relative;
         margin: 15px 0 15px 0;
         width: 100%;
+    }
+    .u-edit {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 15px;
+        margin: auto;
+        width: 24px;
     }
     .input input,
     .input textarea {
@@ -477,16 +506,18 @@ import { is_empty } from "svelte/internal";
         color: white;
         background-color: #46b978;
         width: 60%;
-        margin-top: 10px;
+        margin-top: 30px;
         border-radius: 4px;
         max-width: 400px;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 40px;
+        background:#ff4444;
+        cursor: pointer;
     }
     .signout:hover {
-        background-color: rgb(87, 210, 141);
+        background-color: #cc0000;
     }
     .myStore {
         display: flex;
@@ -543,7 +574,7 @@ import { is_empty } from "svelte/internal";
         margin-right: 15px;
     }
     .logo .camera_container{
-        z-index: 5000;
+        z-index: 5;
         width: max-content;
         background: #e4e6eb;
         position: absolute;
@@ -583,7 +614,7 @@ import { is_empty } from "svelte/internal";
                 <div
                     crossorigin="anonymous"
                     class="banner-image"
-                    style="background-image:url({uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/banner')})"
+                    style="background-image:url({uuidToImageLink(profile.logo, 'creators/' + $user.claims?.username + '/banner')})"
                      />
             {:else if typeof profile.banner != 'string'}
                 <div
@@ -616,7 +647,7 @@ import { is_empty } from "svelte/internal";
                 <img
                     crossorigin="anonymous"
                     class="logo-image"
-                    src={uuidToImageLink(profile.logo, 'creators/' + $user.claims.username + '/logo')}
+                    src={uuidToImageLink(profile.logo, 'creators/' + $user.claims?.username + '/logo')}
                     alt="logo" />                                         
             {:else if typeof profile.logo != 'string'}
                 <img
@@ -638,7 +669,7 @@ import { is_empty } from "svelte/internal";
                 </div>
             </div>
         {#if profile.name ==""}
-            <div on:click|stopPropagation|preventDefault on:input={(event) => {profile.name = event.target.innerHTML}} class="creator_name" contenteditable="true">{$user.claims.username}</div>
+            <div on:click|stopPropagation|preventDefault on:input={(event) => {profile.name = event.target.innerHTML}} class="creator_name" contenteditable="true">{$user.claims?.username}</div>
         {:else}
             <div on:click|stopPropagation|preventDefault on:input={(event) => {profile.name = event.target.innerHTML}} class="creator_name" contenteditable="true">{profile.name}</div>
         {/if}
@@ -651,10 +682,11 @@ import { is_empty } from "svelte/internal";
         <div class="input myStore">
             <div class="inputContainer">
                 <input
+                disabled
                     type="text"
                     class="name"
                     id="myStoreID"
-                    value={'https://unify.tn/' + $user.claims.username + '/merch'} />
+                    value={'https://unify.tn/' + $user.claims?.username + '/merch'} />
                 <div class="copyimg" on:click={copyStore}>
                     <img src="/imgs/misc/copy.png" alt="copy" />
                 </div>
@@ -662,43 +694,48 @@ import { is_empty } from "svelte/internal";
         </div>
         <div class="user_data">
             <div class="account_data">
-                <div class="title">
+                <div class="title" style="color:{$accentColor}">
                     Account Data
                 </div>
                 <div class="input">
-                    <div class="title">
+                    <div class="title" style="color:{$accentColor}">
                         Email
                     </div>
                     <input
+                        disabled
                         type="email"
                         class="email"
                         value={$user.email ? $user.email : ''} />
                 </div>
                 <div class="input">
-                    <div class="title">
+                    <a use:link href="/phoneverification?backurl=/profile">
+                        <img class="u-edit" src="/imgs/misc/edit.svg" alt="edit">
+                    </a> 
+                    <div class="title" style="color:{$accentColor}">
                         Phone Number
                     </div>
-                    <input
+                    <input disabled
                         type="phone"
                         class="phone_num"
                         value={$user.phoneNumber ? $user.phoneNumber : ''} />
                 </div>
             </div>
             <div class="personal_data">
-                <div class="title">
+                <div class="title" style="color:{$accentColor}">
                     Personal Data
                 </div>
                 <div class="input">
-                    <div class="title">
+                    <div class="title" style="color:{$accentColor}">
                         Name
                     </div>
                     <input
                         type="text"
                         class="name"
+                        on:input={(event) => {persoName = event.target.value}}
                         value={$user.displayName ? $user.displayName : ''} />
                 </div>
                 <div class="input">
-                    <div class="title">
+                    <div class="title" style="color:{$accentColor}">
                         Date of Birth
                     </div>
                     <input type="date" class="birth_date" />
@@ -707,13 +744,13 @@ import { is_empty } from "svelte/internal";
         </div>
 
         <div class="u-information-box">
-        <Input title="Profile Name" bind:value={profile.name} bind:text={profile.name} />
-            <InputColor title="Accent Color" bind:text={profile.accentColor} />
+        <Input title="Store Name" bind:value={profile.name} bind:text={profile.name} />
+        <InputColor title="Accent Color" bind:text={profile.accentColor} />
             <div class="input">
-                <div class="title">
+                <div class="title" style="color:{$accentColor}">
                     Description
                 </div>
-            <textarea class="description" name="description"  maxlength="350" bind:value ={profile.description} />
+            <textarea  class="description" name="description"  maxlength="350" bind:value ={profile.description} />
             </div>
         </div>
 
@@ -759,7 +796,7 @@ import { is_empty } from "svelte/internal";
                 bind:text={profile.pinterest} />    
         </div>
 
-        <button on:click={doUpdate} class="save-btn">
+        <button on:click={doUpdate} class="save-btn" style="background:{$accentColor}">
             {#if updating}
                 <MaterialSpinner />
             {:else}
@@ -770,6 +807,7 @@ import { is_empty } from "svelte/internal";
             on:click={() => {
                 firebase.auth().signOut();
             }}
+           
             class="signout">
             Logout
         </div>

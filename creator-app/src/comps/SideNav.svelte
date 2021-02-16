@@ -3,8 +3,13 @@
   import {user} from '../firebase.js'
   import { link } from "svelte-routing";
   import {uuidToImageLink} from '../utils.js'
+  import {accentColor} from "../store.js"
+  import {hexToRgb} from "../filter.js"
+  import { onMount } from 'svelte';
   export let activeURI;
   console.log($user)
+   
+ 
   const navItems = [
     {
       name: "Overview",
@@ -43,7 +48,6 @@
     }
   }
 
-  
 </script>
 
 <style>
@@ -372,6 +376,7 @@
           class:active={activeURI == item.routerLink}
           use:link
           href={item.path}
+    style="color:{$accentColor};background-color:{activeURI == item.routerLink ? "rgba("+hexToRgb($accentColor)+",0.4)":"" }"
           class="u-nav-item">
           <img class:no-margin={$navCollapse} class="nav-item-img" src={item.img} alt="item img" />
           <div class="nav-item-name" class:hidden={$navCollapse}>
@@ -383,9 +388,9 @@
 
     </div>
 
-    <div on:click={() => {firebase.auth().signOut()}} class:justify-center={$navCollapse} class="signout">
+    <div on:click={() => {firebase.auth().signOut()}} class:justify-center={$navCollapse} style="background:{$accentColor}"class="signout">
       <img class="logout-icon" src="/imgs/misc/nav/logout.png" alt="logout" />
-      <div class:hidden={$navCollapse} class="logout-text">Logout</div>
+      <div class:hidden={$navCollapse} class="logout-text" style="background:{$accentColor}">Logout</div>
     </div>
   </nav>
 {/if}

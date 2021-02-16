@@ -497,12 +497,13 @@
 
                 <div class="input">
                     <img src="/imgs/misc/login_register/user.png" alt="email">
-                    <input required bind:this={username} type="text" class="username" placeholder="Username" />
+                    <input required bind:this={username} name="email" type="text" class="username" placeholder="Username" />
                 </div>
 
                 <div class="input">
                     <img src="/imgs/misc/login_register/unlock.png" alt="email">
                     <input
+                        name="password"
                         required bind:this={password}
                         type="password"
                         class="password"

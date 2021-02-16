@@ -6,13 +6,22 @@
     import SignInProviders from '../components/misc/SigninProviders.svelte'
     let unsubscribeUser = () => {} ;
     let sub = false
+    let params
+    let backurl = ''
     onMount(() => {
+        params = new URLSearchParams(location.search)
+        backurl = params.get('backurl') || ''
         document.title = "Unify - Signin"
         unsubscribeUser = user.subscribe((v) => {
             if (v == 0) {
                 console.log("uninited")
             } else if (v) {
-                navigate("/")
+
+                if (params.get('backurl') != null) {
+                    navigate(params.get('backurl'), {replace:true} )
+                } else {
+                    navigate("/myaccount", {replace:true} )
+                }
             }
         })
     })
@@ -29,6 +38,7 @@
         let lform = Object.fromEntries(Object.entries(form).map(([key, el]) => [key, el.value]))
         await firebase.auth().signInWithEmailAndPassword(lform.email, lform.password)
         .then((user) => {
+            
             sub = false
         })
         .catch((error) => {
@@ -294,7 +304,7 @@
             <div class="title">Sign in to Unify</div>
             <SignInProviders bind:errorMessage />
             <div class="orEmailText">Or use your email account</div>
-            <div class="no-have-acc">Don't have an account ? <a use:link href="/signup">Sign up here</a></div>
+            <div class="no-have-acc">Don't have an account ? <a use:link href={"/signup" + (backurl ? ("?backurl=" + backurl) : "" )}>Sign up here</a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                {#if errorMessage}
                     <div class="error-container">

@@ -56,6 +56,7 @@
     import {onMount} from 'svelte'
     const dispatch = createEventDispatcher();
     import {taxRate, clicPayRate} from '../../mockupdata.js'
+    import { accentColor } from '../../store.js';
     export let cost
     export let unifyProfit;
     export let priceCalculatorData;
@@ -98,7 +99,7 @@
         <input  on:input={handlePriceChange} class:red={!profitable}  value={price}  class="price-input" type="number">
     </div>
     
-    <div class:red={!profitable} class="u-profit">
+<div class:red={!profitable} class="u-profit" style="color:{$accentColor}">
         {#if profitable}
             TND {profit} profit/sale
         {:else}

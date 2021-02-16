@@ -29,6 +29,7 @@
     import Terms from "./routes/Terms.svelte"
     import PaymentMethods from "./routes/PaymentMethods.svelte"
     import ShippingDelivery from "./routes/ShippingDelivery.svelte"
+    import Policy from "./routes/Policy.svelte"
     export let url = "";
 </script>
 <Notifications />
@@ -37,7 +38,11 @@
         <NavbarUnify/> 
         <LandingPage />
         <Footer/>
-    
+    </Route>
+    <Route  path="/policy">
+        <NavbarUnify/> 
+        <Policy/> 
+        <Footer/>  
     </Route>
     <Route  path="/shipping&delivery">
         <NavbarUnify/> 

@@ -3,7 +3,7 @@
     .u-view {
         width: 100%;
         min-height: 100vh;
-        padding: 90px;
+        padding: 90px 0;
         background-color: #181d22;
         color:white
     }
@@ -21,6 +21,7 @@
         font-size: 17px;
         font-weight: 500;
         color:black;
+        margin-bottom: 15px;
     }
     .u-container{
         width: 100%;
@@ -40,10 +41,14 @@
     .body{
         color:black;
         margin-left: 15px;
+        margin-bottom: 15px;
     }
     @media only screen and (max-width: 1180px) {
         .u-container{
             max-width: 100%;
+            padding: 50px 20px;
+            border-radius: 0;
+
         }
     }
 </style>

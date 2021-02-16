@@ -1,6 +1,6 @@
 <script>
     import {onMount} from 'svelte'
-    import {user, auth} from '../firebase.js'
+    import {user, auth, db} from '../firebase.js'
     import MaterialSpinner from  '../comps/misc/MaterialSpinner.svelte'
     import {navigate, link} from 'svelte-routing'
 
@@ -75,9 +75,18 @@
             sendingCode = false
         });
         sendingCode = false
+        
     }
     let succOperation = false
+    let verifyingCode = false
     const verifyCode = async () => {
+        
+        if (verifyingCode) {
+            return
+        }
+        verifyingCode = true
+        succOperation = false
+        errorMessage = ""
         console.log("first")
         let erx = false
         
@@ -89,7 +98,12 @@
             try {
                 await $user.updatePhoneNumber(credential)
                 console.log($user)
+                await db.doc('/creators/all').set({[$user.claims.username]: {phoneNumber: $user.phoneNumber}}, {merge: true})
                 succOperation = true
+                let params = new URLSearchParams(location.search)
+                if (params.get('backurl') != null) {
+                    navigate(params.get('backurl'))
+                }
             } catch (error) {
                 console.log(error)
                 if (error.code == "auth/invalid-verification-code") {
@@ -103,11 +117,8 @@
             
             
         }
-
-        let params = new URLSearchParams(location.search)
-        if (params.get('backurl') != null) {
-            navigate(params.get('backurl'))
-        }
+        verifyingCode = false
+        
 
         return
         window.confirmationResult.confirm(code.value).then((result) => {
@@ -171,7 +182,13 @@
     </div>
     <div class="verification_btns">
         {#if confResInitied}
-            <div class="send"><button on:click={verifyCode}  class="send_btn">Verify</button></div>
+            <div class="send"><button on:click={verifyCode}  class="send_btn">
+                {#if verifyingCode}
+                    <MaterialSpinner />
+                {:else}
+                    Verify
+                {/if}
+            </button></div>
         {/if}
         <div class="resend">
             <button on:click={SendCode} id="sign-in-button" class="resend_btn">

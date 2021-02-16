@@ -1,6 +1,7 @@
 <script>
 
 import UnifyLogo from "../../../front-app/src/components/misc/UnifyLogo.svelte";
+import { accentColor } from "../store";
 
 </script>
 <style>
@@ -34,5 +35,5 @@ import UnifyLogo from "../../../front-app/src/components/misc/UnifyLogo.svelte";
         Unify give you the possibility to contact our designers to Make your
         future customized Design for your merch
     </div>
-    <div class="paragraph" >Contact us at <a href="mailto: contact@unify.tn" style="color:rgb(52, 191, 101) !important">contact@unify.tn</a></div>
+<div class="paragraph"  >Contact us at <a href="mailto: contact@unify.tn" style="color:{$accentColor} !important" >contact@unify.tn</a></div>
 </div>
