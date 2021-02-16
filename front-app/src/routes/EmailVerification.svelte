@@ -6,6 +6,7 @@
         color: white;
         margin: 12px 0;
         width: 300px;
+        max-width: 80vw;
         text-align: center;
     }
     .success-container {
@@ -100,17 +101,34 @@
     .send_btn:active {
         background-color: rgba(var(--AccentColor), 0.8);
     }
+    .send_btn {
+        padding: 8px 0;
+    }
+    .u-center-area {
+        width: 100%;
+
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
 </style>
 
 <script>
     import {auth, user} from '../firebase.js'
     import {onMount, onDestroy} from 'svelte'
     import {navigate, link} from 'svelte-routing'
+    import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     let unsubscribeUser = () => {};
     onMount(() => {
         document.title = "Unify - Email Verification"
         unsubscribeUser = user.subscribe((v) => {
-            if (v == undefined) {
+            if (v === 0) {
+                return
+            
+            
+            } else if (v === undefined) {
                 navigate("/signin")
             } else if ($user.emailVerified) {
                 let params = new URLSearchParams(location.search)
@@ -131,27 +149,43 @@
 
     let errorMessage
     let sent = false
-    
+    let submitting = false
     const sendEmail = async () => {
+        if (submitting) {
+            return
+        }
+        submitting = true
+        errorMessage = ""
         if ($user) {
             await $user.sendEmailVerification().then(function() {
                 sent = true
             }).catch(function(error) {
                 sent = false
+                errorMessage = error.errorMessage
             // An error happened.
             });
         }
+        submitting = false
     }
 
 </script>
 
-{#if $user.emailVerified}
+
+
+{#if $user === 0 || $user ===undefined}
+
+    <div class="u-center-area">
+        <MaterialSpinner width="75px" height="75px" />
+
+    </div>
+
+{:else if $user && $user.emailVerified == false}
 <div class="left_side">
     <a href="/" use:link class="u_logo">
         <img src="./img/logo.png" alt="logo" />Unify
     </a>
     <div class="title">
-        Send Email verification link.
+        Send email verification link.
     </div>
     {#if errorMessage}
         <div class="error-container">
@@ -166,7 +200,15 @@
 
     <div class="verification_btns">
 
-        <div class="send"><button on:click={sendEmail}  class="send_btn">Send</button></div>
+        <div class="send">
+            <button on:click={sendEmail}  class="send_btn">
+                {#if submitting}
+                    <MaterialSpinner />
+                {:else}
+                    Send
+                {/if}
+            </button>
+        </div>
 
         
     </div>

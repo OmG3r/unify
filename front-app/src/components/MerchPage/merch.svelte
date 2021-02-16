@@ -431,7 +431,7 @@
                                 alt="heart" />
                         </div>
                     </div>
-                    <div class="productInfo">
+                    <a use:link href="/{params.userid}/merch/{product.id}" class="productInfo">
                         <span class="product_title">{product.name}</span>
                         <div class="product_price">
                             {#if product.discount}
@@ -448,7 +448,7 @@
                                     TND</span>
                             {/if}
                         </div>
-                    </div>
+                    </a>
                     <div class="colors">
                         {#each product.colors as color}
                             <div

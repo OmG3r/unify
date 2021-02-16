@@ -88,13 +88,17 @@ footer{
     justify-content: center;
     margin-top: 80px;
     z-index: 1;
+    align-items: center;
 }
 .copyright img {
     width: 25px;
     filter: invert(43%) sepia(20%) saturate(4701%) hue-rotate(333deg) brightness(88%) contrast(83%);
     margin:0 5px 0 5px;
 }
-.copyright span{
+.copyright span {
+    white-space: nowrap;
+}
+.copyright .brand{
     color:#46B978;
     margin:0 5px 0 5px;
     font-weight: 600;
@@ -139,12 +143,17 @@ footer{
    }
    @media only screen and (max-width: 800px) {
        .right_part{
-           align-items: center;
+           
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+           
+
        }
        .about,.follow,.newsletter,.using{
            max-width: 115px;
        }
-       .left_part,.right_part{
+       .left_part{
            flex-direction: column;
        }
        .left_part .logo {
@@ -164,6 +173,21 @@ footer{
         .left_bottom_shape{
             left: -150px;
             bottom: -150px;
+        }
+   }
+   .credits {
+           display: flex;
+           align-items: center;
+       }
+   @media only screen and (max-width: 450px) {
+       
+        .copyright {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .copyright .brand {
+            color: white;
         }
    }
 </style>
@@ -235,20 +259,25 @@ footer{
 
     </div>
     <div class="copyright">
-        {{
-            en: 'Crafted With', 
-            fr: 'Réalisé avec' 
-         }[$lang]}
-         <img src="/img/misc/heart2.png" alt="heart"> 
-         {{
+        <span class="credits">
+            {{
+                en: 'Crafted With', 
+                fr: 'Réalisé avec' 
+            }[$lang]}
+            <img src="/img/misc/heart2.png" alt="heart">
+             {{
             en: 'By', 
             fr: 'Par ' 
          }[$lang]} 
-         <span>UNIFY</span>
-         {{
+        </span>
+        
+          
+        
+         <span class="brand">UNIFY</span>
+         <span>{{
             en: '@ All right reserved', 
             fr: '@ Tous droits réservés ' 
-         }[$lang]} 
+         }[$lang]} </span>
     </div>
 
     <div class="right_top_shape"></div>

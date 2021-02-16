@@ -44,6 +44,7 @@
         height: 45px;
         border: 1px solid grey;
         border-radius: 2px;
+        position: relative;
     }
     .separator {
         width: 100%;
@@ -91,6 +92,7 @@
         color: white;
         margin: 12px 0;
         width: 300px;
+        max-width: 80vw;
         text-align: center;
     }
     .signUp_container {

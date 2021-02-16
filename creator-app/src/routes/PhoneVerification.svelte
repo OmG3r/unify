@@ -219,6 +219,7 @@
         color: white;
         margin: 12px 0;
         width: 300px;
+        max-width: 80vw;
         text-align: center;
     }
     .fas.fa-key {

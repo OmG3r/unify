@@ -248,7 +248,9 @@
     .section2 .part_two img {
         width: 1200px;
     }
-
+.get_started_btn .btn a {
+            padding: 12px 24px;
+        }
     
 
     @media only screen and (max-width: 1180px) {
@@ -285,6 +287,9 @@
             max-width: 80%;
             font-size: 20px;
         }
+        .get_started_btn .btn a {
+            padding: 5px 10px;
+        }
         .section2 {
             flex-direction: column;
             padding: 40px;
@@ -319,9 +324,7 @@
             width: 200px;
             height: 200px;
         }
-        .get_started_btn .btn{
-            padding: 15px 20px;
-        }
+        
         .section1 .part_one .paragraph,.section2 .part_one .title{
             font-size: 30px;
         }

@@ -198,6 +198,7 @@
         border-radius: 4px;
         background-color: #ee5353;
         color: white;
+        max-width: 80vw;
         margin: 12px 0;
         width: 300px;
         text-align: center;

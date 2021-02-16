@@ -87,9 +87,7 @@
         border-bottom: 1px solid #ffffff24;
         height: var(--navBarHeight);
     }
-    nav a {
-        margin: 0 8px;
-    }
+    
     nav .menuBtn {
         justify-self: end;
         align-items: center;
@@ -105,12 +103,17 @@
     nav .menuBtn.isActive {
         display: none;
     }
-    .unify-logo {
+
+    .u-logo-container {
         max-width: 42px;
         position: absolute;
         top: 10%;
         left: 50%;
         transform: translateX(-50%);
+    }
+    .unify-logo {
+        max-width: 100%;
+        
     }
     .unify-logo img {
         max-width: 100%;
@@ -384,6 +387,7 @@
             font-size: 20px !important;
             z-index: 5001;
             width: 0px;
+            overflow-y: scroll;
         }
 
         .menu-items.isActive {
@@ -423,7 +427,6 @@
         .menu-items.isActive .nav-lang,
         .menu-items.isActive a {
             margin-top: 18px;
-            margin: 10px;
         }
         .closeMobileMenu.isActive {
             display: block;
@@ -434,7 +437,7 @@
             opacity: 1;
         }
 
-        .menuItems > a{
+        .menu-items.isActive a{
             border-top: 1px solid;
             width: 100%;
             text-align: center;
@@ -464,6 +467,8 @@
             text-align: center;
             padding: 25px 0;
             margin: 0 !important;
+            display: flex;
+            justify-content: center;
         }
         .popup_myaccount hr {
             display: none;
@@ -635,7 +640,12 @@
 </style>
 
 <nav class={isScroll ? 'isScroll' : 'isScrollReverse'}>
-    <a href="/" use:link class="unify-logo"><img src="/img/logo.png" alt="logo" /></a>
+    <div class="u-logo-container">
+        <a href="/" use:link class="unify-logo">
+            <img src="/img/logo.png" alt="logo" />
+        </a>
+    </div>
+    
     <div class="unify-plus">+</div>
 
     <div

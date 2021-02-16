@@ -62,6 +62,13 @@
               0 16px 16px rgba(0,0,0,0.05);
 
     }
+
+    @media only screen and (max-width: 750px) {
+            .u-notifications {
+                width: 100vw;
+                align-items: center;
+            }
+    }
 </style>
 
 <script>
