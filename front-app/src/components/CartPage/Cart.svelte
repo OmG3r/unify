@@ -140,7 +140,7 @@
 {#if loaded}
     <div class="container">
         <span class="title"
-            >Shopping cart ({Object.keys($cart.items).length} Articles )</span
+            >Shopping cart ({Object.keys($cart.items).length} Articles)</span
         >
         <span class="sub_title">Free Delivery</span>
         {#if noSize}
@@ -372,7 +372,8 @@
         border-radius: 4px;
         margin: 16px 0;
         background-color: #e84e38;
-        color: #f7f7f7
+        color: #f7f7f7;
+        max-width: 100%;
     }
     .emptyCart{
         font-size:45px;
@@ -858,6 +859,13 @@
         }
         .container {
             padding: 100px 10px 0 10px;
+        }
+    }
+
+    @media only screen and (max-width: 380px) {
+        .article {
+            flex-direction: column;
+            align-items: center;
         }
     }
 </style>

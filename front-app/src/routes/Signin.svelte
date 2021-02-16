@@ -4,6 +4,7 @@
     import {onMount, onDestroy} from 'svelte'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import SignInProviders from '../components/misc/SigninProviders.svelte'
+import { lang } from '../store.js';
     let unsubscribeUser = () => {} ;
     let sub = false
     let params
@@ -120,6 +121,7 @@
         color: white;
         margin: 12px 0;
         width: 300px;
+        max-width: 80vw;
         text-align: center;
     }
     .no-have-acc {
@@ -291,20 +293,39 @@
             <a use:link href="/" class="u_logo">
                 <img src="./img/logo.png" alt="logo" />Unify
             </a>
-            <div class="title">Welcom Back To Our Website</div>
+            <div class="title">Dear community,</div>
             <div class="desc">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Molestiae maxime provident rerum dolorum,
+                One of the greatest gifts a creator can get is SUPPORT.
             </div>
            <!--  <div class="circle_top"></div>
             <div class="circle_bottom"></div> -->
         </div>
 
         <div class="right_side" >
-            <div class="title">Sign in to Unify</div>
+            <div class="title">
+                {{
+                    en: 'Sign in to Unify',
+                    fr: 'Connectez-vous à Unify'
+                }[$lang]}
+                </div>
             <SignInProviders bind:errorMessage />
-            <div class="orEmailText">Or use your email account</div>
-            <div class="no-have-acc">Don't have an account ? <a use:link href={"/signup" + (backurl ? ("?backurl=" + backurl) : "" )}>Sign up here</a></div>
+            <div class="orEmailText">
+                {{
+                    en: 'Or use your email account',
+                    fr: 'Ou utilisez votre compte e-mail'
+                }[$lang]}
+                </div>
+            <div class="no-have-acc">
+                {{
+                    en: "Don't have an account ?",
+                    fr: "Vous n'avez pas de compte?"
+                }[$lang]}
+                 <a use:link href={"/signup" + (backurl ? ("?backurl=" + backurl) : "" )}>
+                    {{
+                    en: "Sign up here",
+                    fr: "Inscrivez-vous ici"
+                }[$lang]}
+                    </a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                {#if errorMessage}
                     <div class="error-container">
@@ -313,21 +334,40 @@
                 {/if}
                 <div class="input">
                     <i class="fas fa-envelope"></i>
-                <input bind:this={form.email} type="email" class="email" placeholder="Email">
+                <input bind:this={form.email} type="email" class="email" 
+                placeholder="
+                    {{
+                        en: "Email",
+                        fr: "Email"
+                    }[$lang]}
+                ">
                 </div>
                
                 <div class="input">
                     <i class="fas fa-unlock-alt"></i>
-                <input bind:this={form.password} type="password" class="password" placeholder="Password">
+                <input bind:this={form.password} type="password" class="password" 
+                placeholder="{{
+                        en: "Password",
+                        fr: "Mot de passe"
+                    }[$lang]}">
                 </div>
                 
-                <div class="forget"><a use:link href="/forgotpassword">Forget Your Password?</a> </div>
+                <div class="forget"><a use:link href="/forgotpassword">
+                    {{
+                        en: "Forget Your Password?",
+                        fr: "Mot de passe oublié?"
+                    }[$lang]}
+                    </a> </div>
                 <div class="signup">
                     <button type="submit" class="signup_btn">
                         {#if sub}
                             <MaterialSpinner />
                         {:else}
-                            Sign in
+                        {{
+                        en: "Sign in",
+                        fr: "S'identifier"
+                    }[$lang]}
+                            
                         {/if}
                     </button>
                 </div>

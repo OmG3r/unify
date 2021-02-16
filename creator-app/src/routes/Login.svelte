@@ -249,6 +249,7 @@
         justify-content: center;
         align-items: center;
         font-weight: 600;
+        max-width: 80vw;
     }
     @media (max-width: 900px) {
       .left_side,.right_side {

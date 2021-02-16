@@ -391,6 +391,7 @@ let signoutFunc = () =>{
             justify-content: flex-start;
             box-shadow: 0px 0px 5px #181d225c;
             background: white;
+            overflow-y: scroll;
         }
 
         .menuItems.isActive {
@@ -433,9 +434,10 @@ let signoutFunc = () =>{
         .nav-lang{
             border-top: 1px solid;
             width: 100%;
-            text-align: center;
             padding: 25px 0;
             margin: 0 !important;
+            display: flex;
+            justify-content: center;
         }
         .popup_myaccount hr {
             display: none;

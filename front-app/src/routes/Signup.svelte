@@ -4,6 +4,7 @@
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import SignInProviders from '../components/misc/SigninProviders.svelte'
     import {onMount, onDestroy} from 'svelte'
+import { lang } from '../store.js';
     let unsubscribeUser = () => {} ;
     let backurl = "";
     let params
@@ -74,20 +75,33 @@
             <a href="/" use:link class="u_logo">
                 <img src="./img/logo.png" alt="logo" />Unify
             </a>
-            <div class="title">Welcom to Our Website</div>
+            <div class="title">Did you know ?</div>
             <div class="desc">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Molestiae maxime provident rerum dolorum,
+                When you buy a merch of a creator , you're supporting a dream
             </div>
             <!-- <div class="circle_top" />
             <div class="circle_bottom" /> -->
         </div>
 
         <div class="right_side">
-            <div class="title">Sign up to Unify</div>
+            <div class="title">{{
+            en: 'Sign up to Unify',
+            fr: 'Inscrivez-vous à Unify'
+            }[$lang]}</div>
             <SignInProviders bind:errorMessage />
-            <div class="orEmailText">Or sign up using your email</div>
-            <div class="have-acc">Aready have an account ? <a use:link href={"/signin" + (backurl ? ("?backurl=" + backurl) : "" )}>Sign in here</a></div>
+            <div class="orEmailText">{{
+            en: 'Or sign up using your email',
+            fr: 'Ou inscrivez-vous en utilisant votre email'
+            }[$lang]}</div>
+            <div class="have-acc">{{
+            en: 'Already have an account ? ',
+            fr: 'Vous avez déjà un compte? '
+            }[$lang]}<a use:link href={"/signin" + (backurl ? ("?backurl=" + backurl) : "" )}>
+            {{
+            en: 'Sign in here ',
+            fr: 'Se connecter ici'
+            }[$lang]}
+            </a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                 {#if errorMessage}
                     <div class="error-container">
@@ -96,7 +110,11 @@
                 {/if}
                 <div class="input">
                     <i class="fas fa-user" />
-                    <input required bind:this={form.name} type="text" class="name" placeholder="Name" />
+                    <input required bind:this={form.name} type="text" class="name" 
+                    placeholder="{{
+                            en: 'Name',
+                            fr: 'Nom'
+                        }[$lang]}" />
                 </div>
                 <!--                <div class="input">
                     <i class="fas fa-phone" />
@@ -111,7 +129,11 @@
 
                 <div class="input">
                     <i class="fas fa-envelope" />
-                    <input required bind:this={form.email} type="email" class="email" placeholder="Email" />
+                    <input required bind:this={form.email} type="email" class="email" 
+                    placeholder="{{
+                        en: 'Email',
+                        fr: 'Email'
+                        }[$lang]}" />
                 </div>
 
                 <div class="input">
@@ -120,7 +142,10 @@
                         required bind:this={form.password}
                         type="password"
                         class="password"
-                        placeholder="Password"
+                        placeholder="{{
+                        en: 'Password',
+                        fr: 'Mot de passe'
+                        }[$lang]}"
                     />
                 </div>
                 <div class="input">
@@ -129,18 +154,30 @@
                         required bind:this={form.repassword}
                         type="password"
                         class="re_password"
-                        placeholder="Confirm password"
+                        placeholder="{{
+                            en: 'Confirm Password',
+                            fr: 'Confirmez le mot de passe'
+                        }[$lang]}"
                     />
                 </div>
                 <div class="forget">
-                    <a href="/signin">You already have an account?</a>
+                    <a href="/signin">
+                        {{
+                        en: 'You already have an account?',
+                        fr: 'Avez vous déjà un compte?'
+                        }[$lang]}
+                    </a>
                 </div>
                 <div class="signup">
                     <button type="submit" class="signup_btn">
                         {#if sub}
                             <MaterialSpinner />
                         {:else}
-                            Sign Up
+                            {{
+                            en: 'Sign Up',
+                            fr: "S'inscrire"
+                            }[$lang]}
+                            
                         {/if}
                     </button>
                 </div>
@@ -166,6 +203,7 @@
         color: white;
         margin: 12px 0;
         width: 300px;
+        max-width: 80vw;
         text-align: center;
     }
     .signUp_container {
