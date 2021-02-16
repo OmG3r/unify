@@ -24,6 +24,7 @@
     .u-nav-item {
         width: 42px;
         display: block;
+        margin-bottom: 10px;
     }
     .u-nav-item img {
         max-width: 100%;
@@ -38,6 +39,24 @@
         background-color: #dce4fa;
         margin: 8px 0;
     }
+    .u-logout {
+        
+        
+        background-color: var(--AccentColor);
+        width: 42px;
+        padding: 8px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    .u-logout img {
+        max-width: 100%;
+    }
+    .margined {
+        margin-top: auto;
+    }
 </style>
 
 <script>
@@ -50,6 +69,11 @@
             name: 'Orders',
             path: '/orders',
             img: '/imgs/nav/orders.png'
+        },
+        {
+            name: 'Creator Management',
+            path: '/manage-creators',
+            img: '/imgs/nav/user-management.png'
         }
     ]
 </script>
@@ -71,6 +95,11 @@
             
             
         {/each}
+    </div>
+    <div class="separator margined"></div>
+    <div on:click={() => {firebase.auth().signOut()}} class="u-logout">
+        <img src="/imgs/nav/logout.png" alt="logout">
+
     </div>
 </nav>
 

@@ -134,19 +134,13 @@
 <script>
     import Select from 'svelte-select'
     import Address from './_Address.svelte'
-    import {colors} from '../../utils.js'
+    import {colors, formatTimestampToDate} from '../../utils.js'
     
     export let item;
     export let cart
     export let statusData
 
-    const formatTimestampToDate = (t) => {
-        const a = new Date(t* 1000);
-        const year = a.getFullYear();
-        const month = a.getMonth() + 1;
-        const date = a.getDate();
-        return date + "/" + month + "/" + year
-    }
+    
     const handleSelect = (event) => {
         let selected = event.detail.value
     }

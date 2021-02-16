@@ -6,10 +6,11 @@
 <script>
     import {onMount, onDestroy} from 'svelte'
 
-    export let carts
+    export let listener
     export let first
-
-    
+    export let countable = ""
+    export let indexKey = 'cartID'
+    let originalDocTitle = document.title
 
     let nameInter = undefined
     let orderInter = undefined
@@ -26,14 +27,19 @@
         visibilityChange = "webkitvisibilitychange";
     }
 
-    const unsubscribeCart = carts.subscribe((v) => {
+    const unsubscribeCart = listener.subscribe((v) => {
         if (!first) {
-                 
-            let diff = $carts.filter((item) => !lastcart.some((x) => x.cartID == item.cartID))
-            document.title = "(" + String(diff.length) + ") Orders"
+                console.log(v)
+                console.log(lastcart)
+            let diff = v.filter((item) => !lastcart.some((x) => x[indexKey] == item[indexKey]))
+            if (diff.length  == 0) {
+                return
+            }
+            console.log("ended")
+            document.title = "(" + String(diff.length) + ") " + countable
             if (Notification.permission == "granted") {
                 const greeting = new Notification('Unify',{
-                    body: "(" + String(diff.length) + ") Orders",
+                    body: "New " + "(" + String(diff.length) + ") " + countable,
                     icon: './imgs/icon.png'
                 });
             }
@@ -47,7 +53,7 @@
                         clearInterval(nameInter)
                     }
                     nameInter = setInterval(() => {
-                        document.title = "(" + String(diff.length) + ") Orders"
+                        document.title = "(" + String(diff.length) + ") " + countable
                     }, 2000);  
                 }, 1000);
                 
@@ -55,20 +61,21 @@
                     clearInterval(orderInter)
                 }
                 orderInter = setInterval(() => {
-                    document.title = "Unify Moudir - Orders"
+                    document.title = originalDocTitle
                 }, 2000);   
             }
         } else {
-            lastcart = $carts
+            lastcart = $listener
         }
     })
 
     const handleVisibilityChange = () => {
         if (document[hidden]) {
-            lastcart = $carts
+            lastcart = $listener
         } else {
-            if (document.title.includes('Orders')) {
-                document.title = "Unify Creator - Overview"
+            console.log(document.title)
+            if (document.title.includes(') ' + countable)) {
+                document.title = originalDocTitle
                 
             }
             clearInterval(nameInter)

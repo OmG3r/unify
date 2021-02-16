@@ -205,8 +205,8 @@ import { is_empty } from "svelte/internal";
     .u-view {
         width: 100%;
         min-height: 100vh;
-        max-height: 100vh;
-        overflow-y: scroll;
+        
+        
         position: relative;
         padding: 0 0 100px 0;
     }
@@ -318,7 +318,7 @@ import { is_empty } from "svelte/internal";
   
     }
     .banner-image {
-        background-image: url("/imgs/defaultBanner.png");
+        background-image: url("/imgs/defaultbanner.png");
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: scroll;

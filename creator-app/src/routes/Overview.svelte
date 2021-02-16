@@ -174,8 +174,8 @@
     .u-view {
         width: 100%;
         padding: 80px 80px 80px 80px;
-        overflow-y: scroll;
-        max-height: 100vh;
+        
+        
     }
     header {
         width: 100%;

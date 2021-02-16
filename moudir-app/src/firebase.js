@@ -39,7 +39,7 @@ auth.onAuthStateChanged(async function(kuser) {
 
         user.set(kuser)
     } else {
-        user.set(0)
+        user.set(undefined)
     }
 });
 

@@ -9,12 +9,14 @@
 
 </style>
 <script>
-    import { Router, Link, Route } from "svelte-routing";
+    import { Router, Route } from "svelte-routing";
     import Home from "./routes/Home.svelte";
     
     import Orders from './routes/orders/Orders.svelte'
     import Login from './routes/Login.svelte'
     import NotFound from './routes/NotFound.svelte'
+    import RouteManageCreator from './routes/manage-creator/RouteManageCreator.svelte'
+
 
     import Notifications from './comps/Notifications.svelte'
     import PopupOverlay from './comps/PopupOverlay.svelte'
@@ -44,6 +46,10 @@
         </Route>
         <Route path="/orders">
             <Orders/>
+
+        </Route>
+        <Route path="/manage-creators/*">
+            <RouteManageCreator />
 
         </Route>
 

@@ -35,3 +35,11 @@ export const colors = {
     "white": "#ffffff",
     "green": "#3B922D"
 }
+
+export const formatTimestampToDate = (t) => {
+    const a = new Date(t * 1000);
+    const year = a.getFullYear();
+    const month = a.getMonth() + 1;
+    const date = a.getDate();
+    return date + "/" + month + "/" + year
+}

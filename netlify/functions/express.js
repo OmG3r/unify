@@ -108,7 +108,7 @@ router.post('/getClaims', async(req, res) => {
     res.end(JSON.stringify(userData, null, 4))
 })
 
-router.post('/createCreator', async (req, res) => {
+router.post('/createCreator', async(req, res) => {
     if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
         return
@@ -122,12 +122,12 @@ router.post('/createCreator', async (req, res) => {
     }
 
     admin.auth().createUser({
-        email: req.body.email,
-        emailVerified: false,
-        password: req.body.password,
-        disabled: false,
-    })
-        .then(async (userRecord) => {
+            email: req.body.email,
+            emailVerified: false,
+            password: req.body.password,
+            disabled: false,
+        })
+        .then(async(userRecord) => {
             let promises = []
             let pro = admin.auth().setCustomUserClaims(userRecord.uid, { username: req.body.username })
             promises.push(pro)
@@ -140,7 +140,8 @@ router.post('/createCreator', async (req, res) => {
                 [req.body.username]: {
                     email: req.body.email,
                     persoName: req.body.persoName,
-                    storeEnabled: false
+                    storeEnabled: false,
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
                 }
             }, { merge: true })
             promises.push(pro)

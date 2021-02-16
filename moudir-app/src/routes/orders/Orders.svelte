@@ -19,10 +19,10 @@
     import {uuidToImageLink} from '../../utils.js'
     import {navigate} from 'svelte-routing'
     import {writable} from 'svelte/store'
-    import OrdersNotification from './_OrderNotification.svelte'
+    import SignalNotification from '../../comps/SignalNotification.svelte'
 
     let unsubscribeUser = user.subscribe((v) => {
-        if (v == undefined) {
+        if (v === undefined) {
             navigate('/login', {replace: true})
         }
     })
@@ -212,11 +212,14 @@
             }
         } 
     }
+    const filterFunction = (item) => {
+        return !lastcart.some((x) => x.cartID == item.cartID)
+    }
 </script>
 
 
 <div class="u-view">
-    <OrdersNotification {first} {carts} />
+    <SignalNotification indexKey={'cartID'} {first} listener={carts} countable="Orders" />
     <Filters {statusData} {carts} {filters} />
     <Table {first} {statusData} {carts} {filters} />
 
