@@ -709,7 +709,11 @@
             
         {/if}
         {#if !signedin}
-        <a use:link href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
+            <a use:link href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
+            <a
+                use:link
+                href="/signup">{{ en: 'Register', fr: "S'inscrire" }[$lang]}
+            </a>
         {/if}
         <div class="nav-lang">
             {#if $lang == 'fr'}

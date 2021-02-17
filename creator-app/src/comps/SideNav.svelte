@@ -36,10 +36,38 @@
       img: "/imgs/misc/nav/design.png"
     }
   ];
+    
+  const mobileNav = [
+    {
+      name: "Overview",
+      routerLink: "/",
+      path: "/",
+      img: "/imgs/misc/nav/dashboard.png"
+    },
+    {
+      name: "Profile",
+      routerLink: "/profile",
+      path: "/profile",
+      img: "/imgs/misc/nav/profile.png"
+    },
+    {
+      name: "Design",
+      routerLink: "/design",
+      path: "/design",
+      img: "/imgs/misc/nav/design.png"
+    }
+  ];
+
+
+  let activeNav = window.innerWidth < 1180 ? mobileNav : navItems
   const switchSideNav = () => {
     console.log($navCollapse);
     $navCollapse = !$navCollapse;
   };
+
+  window.onresize = () => {
+    activeNav = window.innerWidth < 1180 ? mobileNav : navItems
+  }
   const ascertainImage = () => {
     if ($user.docData && $user.docData.logo && $user.docData.logo.length > 0) {
       return uuidToImageLink($user.docData.logo, 'creators/' + $user.claims.username +"/logo" )
@@ -299,6 +327,7 @@
         max-width: 100vw;
         width: 100vw;
         padding:0;
+        max-width: 100%;
     }
     .user-card,.u-unify,.signout,.resize-button{
         display: none;
@@ -306,6 +335,7 @@
     .navs{
         flex-direction: row; 
         justify-content: center;
+        
         height: 100%;
     }
     .navs a{
@@ -313,9 +343,11 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
     .navs a img{
         min-height: 32px;
+        margin: 0;
     }
     .navs a .nav-item-name{
         display: block;
@@ -324,6 +356,17 @@
     .u-nav-item.active{
         height: 100%;
     }
+
+      nav.noCollapse{
+      
+      width: 100%;
+      max-width: 100vw;
+    }
+
+    nav {
+      padding : 0;
+    }
+
   }
 
 </style>
@@ -370,7 +413,7 @@
       <div class:hidden={$navCollapse} class="unify-text">UNIFY</div>
     </div>
     <div class="navs">
-      {#each navItems as item}
+      {#each activeNav as item}
         <a
           class:justify-center={$navCollapse}
           class:active={activeURI == item.routerLink}

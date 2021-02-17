@@ -173,7 +173,7 @@ let signoutFunc = () =>{
     }
     .join_btn {
         background-color: #46b978;
-        border-radius: 10px;
+        border-radius: 4px;
         margin-right: 15px;
         justify-content: center;
         align-items: center;
@@ -587,7 +587,13 @@ let signoutFunc = () =>{
         {#if !signedin}
             <a
                 use:link
-                href="/signin">{{ en: 'Login', fr: 'Se Connecter' }[$lang]}</a>
+                href="/signin">{{ en: 'Login', fr: 'Se Connecter' }[$lang]}
+            </a>
+
+            <a
+                use:link
+                href="/signup">{{ en: 'Register', fr: "S'inscrire" }[$lang]}
+            </a>
         {/if}
         <div class="nav-lang">
             {#if $lang == 'fr'}
@@ -613,7 +619,7 @@ let signoutFunc = () =>{
         <Cart color={isScroll ? "#ffffff" : "#181d22"} />
             <div class="join_btn" target="_blank">
                 <a href="https://creator.unify.tn">
-                {{ en: 'Join Us', fr: 'Rejoignez-nous' }[$lang]}
+                {{ en: 'Creator?', fr: 'Createur?' }[$lang]}
                 </a>
                 
             </div>

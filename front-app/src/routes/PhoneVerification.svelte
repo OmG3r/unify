@@ -95,6 +95,7 @@
                     errorMessage = "The code is incorrect, please verify it."
                     succOperation = false
                 } else if (error.code == "auth/credential-already-in-use") {
+                    console.log("inside")
                     errorMessage = "Phone number already in use by another account"
                     succOperation = false
                 }
@@ -102,11 +103,13 @@
             
             
         }
-
-        let params = new URLSearchParams(location.search)
-        if (params.get('backurl') != null) {
-            navigate(params.get('backurl'))
+        if (succOperation) {
+            let params = new URLSearchParams(location.search)
+            if (params.get('backurl') != null) {
+                navigate(params.get('backurl'))
+            }
         }
+        
         return
         window.confirmationResult.confirm(code.value).then((result) => {
         // User signed in successfully.
@@ -118,6 +121,8 @@
         // ...
         if (error.code == "auth/invalid-verification-code") {
             errorMessage = "The code is incorrect, please verify it."
+        } else {
+           
         }
             
         });

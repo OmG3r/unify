@@ -104,6 +104,7 @@ app.post('/createCreator', async(req, res) => {
             emailVerified: false,
             password: req.body.password,
             disabled: false,
+            displayName: req.body.persoName
         })
         .then(async(userRecord) => {
             let promises = []

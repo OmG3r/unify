@@ -175,7 +175,7 @@
     .u-view {
         width: 100%;
         padding: 80px 80px 80px 80px;
-        
+        position: relative;
         
     }
     header {

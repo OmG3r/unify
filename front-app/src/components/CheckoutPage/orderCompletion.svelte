@@ -8,6 +8,7 @@
     import {writable} from 'svelte/store'
     import {urlPostReq, notification, generateDeliveryDate} from '../../utils.js'
     import { lang } from "../../store.js";
+    import Form from './Form.svelte'
     let [minDdate, maxdDate] = generateDeliveryDate()
     
     let popup= writable(false);
@@ -112,12 +113,14 @@
     }
     .address{
         padding: 10px 5px 10px 5px;
+        margin: 20px 0;
          display: grid;
         grid-template-columns: 80% 20%;
        grid-template-rows: 0.7fr 1fr;
     }
     .delivery,.payment{
         padding: 10px 5px 10px 5px;
+        margin: 20px 0;
     }
     .address_title,.delivery_title,.payment_title{
         font-size: 18px;
@@ -145,11 +148,7 @@
     }
 
    .address_info,.delivery_methods,.payment_methods{
-       margin: 0 0 0 37px;
-        grid-row-start: 2;
-       grid-row-end: 3;
-       grid-column-start: 1;
-       grid-column-end: 2;
+       width: 100%;
    }
    .address_info .name,.delivery_method .method_title,.payment_methods .method_title{
        font-size: 16px;
@@ -326,7 +325,7 @@ hr{
     display:flex;
     flex-direction: column;
     justify-content: center;
-    margin: 20px;
+    
 }
 
 .address .section2{
@@ -358,6 +357,7 @@ hr{
         <div class="section2">
 
             <div class="address_info">
+                <!--
                 <div class="name">{form.info.name}</div>
                 <div class="address_location">
                     {#if ['address', 'state', 'city', 'postal'].some((item) => {return form.info[item].length == 0;})}
@@ -366,13 +366,12 @@ hr{
                         {form.info.address}, {form.info.state != "Other" ? form.info.state: ""}, {form.info.city != form.info.state ? (form.info.city + ", ") : ""}{form.info.postal != "Other" ? form.info.postal : ""}
                     {/if}
                 </div>
-                <div class="phone_num">{$user.phoneNumber}</div>
+                -->
+                <Form bind:form />
+                
             </div>
 
-            <div class="edit" on:click="{()=>{
-                addressError = false;
-                $popup=true;
-            }}"><i class="far fa-edit" />Edit</div>
+            
 
             </div>
         

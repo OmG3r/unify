@@ -56,7 +56,10 @@
             if (v == 0 || v == 'init') {
 
             } else {
+                console.log(v.docData?.storeEnabled)
+                console.log(closed)
                 if (v.docData?.storeEnabled == false && closed === false) {
+                    console.log("inside")
                     notifText = 'This store is currently disabled, if this is your first time using our service this will be resolved shortly. Otherwise <a class="underlined" href="mailto:contact@unify.tn">contact us</a> for more information.'
                 }
             }
@@ -80,7 +83,7 @@
     <SideNav {activeURI} />
     <div class="u-view-container">
         {#if notifText}
-            <NotificationBanner bind closed text={notifText} />
+            <NotificationBanner bind:closed text={notifText} />
         {/if}
         <Router bind:activeRoute  url="{url}">
             <Route path="/">

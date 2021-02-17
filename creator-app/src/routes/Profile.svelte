@@ -253,6 +253,7 @@
         left: 0;
         margin: auto;
         width: 150px;
+        height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: center;

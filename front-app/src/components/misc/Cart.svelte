@@ -6,6 +6,7 @@
     
     .basket-number {
         position: relative;
+        display: flex;
     }
     .number {
         position: absolute;

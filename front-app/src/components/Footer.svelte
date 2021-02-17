@@ -139,9 +139,15 @@ footer{
        }
        .left_part .sub_text{
            width: 300px;
+           max-width: 80vw;
+            
+            line-height: 1.33;
        }
    }
    @media only screen and (max-width: 800px) {
+       .sub_text {
+            text-align: center; 
+       }
        .right_part{
            
             flex-wrap: wrap;

@@ -5,7 +5,7 @@
         color: white;
         font-weight: bold;
         position: relative;
-        padding: 8px 10px;
+        padding: 8px 40px;
         text-align: center;
     }
     .u-close {

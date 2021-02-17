@@ -521,9 +521,7 @@
                         placeholder="Confirm password"
                     />
                 </div>
-                <div class="forget">
-                    <a href="/signin">You already have an account?</a>
-                </div>
+                
                 <div class="signup">
                     <button type="submit" class="signup_btn">
                         {#if submitting}

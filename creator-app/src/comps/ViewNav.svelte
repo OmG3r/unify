@@ -7,7 +7,7 @@
         align-items: center;
         position:absolute;
         right: 30px;
-        top: 40px;
+        top: 20px;
         z-index: 1;
     }
 
