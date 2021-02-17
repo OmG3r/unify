@@ -42,6 +42,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
+        z-index: 2;
     }
     .left_side .u_logo img {
         width: 50px;
@@ -53,6 +54,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 15px;
+        z-index: 3;
     }
 
     .circle_top,
@@ -90,6 +92,7 @@
     }
     .inputContainer input {
         width: 350px;
+        max-width: 80vw;
         height: 50px;
         padding: 10px;
         text-align: center;
@@ -106,6 +109,8 @@
         border-color: #719ece;
         border: 1px solid rgba(var(--userColor), 0.5);
     }
+
+    
     .verification_btns {
         display: flex;
         flex-direction: row-reverse;
@@ -180,7 +185,7 @@
             <i class="far fa-envelope" />
             <input
                 bind:this={email}
-                type="text"
+                type="email"
                 class="verification"
                 placeholder="Email"
             />

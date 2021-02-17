@@ -160,14 +160,7 @@ import { lang } from '../store.js';
                         }[$lang]}"
                     />
                 </div>
-                <div class="forget">
-                    <a href="/signin">
-                        {{
-                        en: 'You already have an account?',
-                        fr: 'Avez vous déjà un compte?'
-                        }[$lang]}
-                    </a>
-                </div>
+                
                 <div class="signup">
                     <button type="submit" class="signup_btn">
                         {#if sub}

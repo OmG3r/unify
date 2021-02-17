@@ -189,6 +189,7 @@
         align-items: center;
     }
     .inputContainer img{
+        z-index: 2;
         position: absolute;
         padding: 15px; 
         max-width: 50px;
@@ -231,6 +232,9 @@
     .signup_btn:active{
      
         background-color: rgba(var(--AccentColor),0.8);
+    }
+    .input {
+        position: relative;
     }
     .signup{
        

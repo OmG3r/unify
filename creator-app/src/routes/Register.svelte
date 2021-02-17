@@ -34,7 +34,9 @@
         display: flex;
     }
    
-
+    .input {
+        position: relative
+    }
     input.input {
         margin-bottom: 8px;
         width: 100%;
@@ -242,6 +244,7 @@
         align-items: center;
     }
     .inputContainer img {
+        z-index: 2;
         position: absolute;
         padding: 15px;
         max-width: 50px;
@@ -275,6 +278,7 @@
         font-weight: 700;
         border-radius: 30px;
         cursor: pointer;
+        margin-top: 16px;
     }
     .signup_btn:focus{
         outline: none;
@@ -449,7 +453,7 @@
             </a>
             <div class="title">Dear creator,</div>
             <div class="desc">
-                Are you ready to develop your merchandise platform? Start NOW.
+                Are you ready to develop <div>your merchandise platform?</div> <div>Start NOW.</div>
             </div>
            <!--  <div class="circle_top" />
             <div class="circle_bottom" /> -->

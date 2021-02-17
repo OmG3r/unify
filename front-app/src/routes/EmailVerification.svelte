@@ -43,6 +43,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
+        z-index: 2;
     }
     .left_side .u_logo img {
         width: 50px;
@@ -54,6 +55,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 15px;
+        z-index: 2;
     }
 
     .circle_top,
