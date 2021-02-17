@@ -599,6 +599,7 @@
             color:white;
     }
     @media only screen and (max-width: 1180px) {
+       
         .my_account{
             margin-left: 30px;
         }

@@ -60,8 +60,10 @@
         margin-right: 10px;
     }
     @media only screen and (max-width: 1180px) {
+        
         nav {
             flex-direction: column;
+            padding: 20px 0;
         }
         .help{
             margin: 10px 30px;

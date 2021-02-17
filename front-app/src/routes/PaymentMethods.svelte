@@ -78,7 +78,10 @@
 
 <script>
 import { lang } from "../store.js";
-
+import {onMount} from "svelte"
+onMount(() => {
+    window.scrollTo({ top: 0 });
+})
 </script>
 
 <div class="u-view">

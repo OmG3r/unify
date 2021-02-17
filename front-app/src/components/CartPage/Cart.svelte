@@ -21,6 +21,7 @@
             noSize = true
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     const handleChangeSize = (key, fsize) => {
         console.log(key)
@@ -135,6 +136,9 @@
         }
         
     }
+
+
+    
 </script>
 
 {#if loaded}
@@ -253,7 +257,9 @@
                                 </div>
 
                                 <div class="btns_mobile">
-                                    <img src="img/misc/heart.png" alt="heart" />
+                                    <img 
+                                     on:click={addWishlist(value.creator + '-' +value.id)}
+                                    src="img/misc/heart.png" alt="heart" />
                                     <img
                                         on:click={() => {removeItem(key)}}
                                         src="img/misc/delete.png"

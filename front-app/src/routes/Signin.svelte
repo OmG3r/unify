@@ -291,7 +291,7 @@ import { lang } from '../store.js';
     <div class="signUp_container">
         <div class="left_side">
             <a use:link href="/" class="u_logo">
-                <img src="./img/logo.png" alt="logo" />Unify
+                <img src="./img/icon.png" alt="logo" />Unify
             </a>
             <div class="title">Dear community,</div>
             <div class="desc">

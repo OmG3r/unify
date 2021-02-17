@@ -6,6 +6,7 @@ import Summary from './orderSummary.svelte';
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../misc/MaterialSpinner.svelte'
     import {cart} from '../../store.js'
+
     let validated = false;
     let unsubscribeUser = () => {};
     onMount(() => {
@@ -46,7 +47,7 @@ import Summary from './orderSummary.svelte';
             validated = true
         })
 
-        
+      
     })
     onDestroy(() => {
         unsubscribeUser()
