@@ -48,7 +48,7 @@ export const creations = {
     "X8E7FC": {
         type: "hoodie",
         name: 'Premium Unisex Hoodie',
-        cost: 34,
+        cost: 36,
         profit: 7,
         print: {
             front: 5,
