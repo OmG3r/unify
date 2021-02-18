@@ -85,6 +85,7 @@
     <div class="input-wrapper-container">
         <input bind:value={text} class="color-selector" type="color">
         <input
+            disabled
             id={id ? id : title}
             bind:value={text}
             type="text"

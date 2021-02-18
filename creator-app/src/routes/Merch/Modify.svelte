@@ -178,6 +178,7 @@
         console.log(data)
         data.cost = creations[data.mockup].cost
         data.profit = creations[data.mockup].profit
+        data.delivery = creations[data.mockup].delivery
         itemData = data
         
         loaded = true
@@ -223,11 +224,11 @@
             return
         }
         updating = true;
-        if ($priceCalculatorData.profitable == false) {
+        if ($priceCalculatorData.profit < 2) {
             notification.set({
                 accentColor: "alert",
                 title: "Profit",
-                content: "Item should generate profit",
+                content: "Item should generate at least 2tnd profit",
             })
             updating = false
             return
@@ -334,6 +335,7 @@
                         cost={itemData.cost}
                         unifyProfit={itemData.profit}
                         price={itemData.price}
+                        delivery={itemData.delivery}
                     />
                 </div>
             <div on:click={doUpdate} class="u-update" style="background:{background};color:{color};border:1px solid {border}" on:mouseover={handleMouseOver} on:mouseout={handleMouseOut}> 

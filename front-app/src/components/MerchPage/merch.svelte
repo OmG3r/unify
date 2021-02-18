@@ -16,7 +16,9 @@
     export let creatorData = {};
     let loaded = false;
     let displayProducts = [];
-
+    if (creatorData.accentColor == undefined || creatorData.accentColor == null || creatorData.accentColor == "") {
+        creatorData.accentColor = '#45b877'
+    }
 
   
     //change the global(:root) var of css

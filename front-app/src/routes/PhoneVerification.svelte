@@ -43,7 +43,7 @@
 
         let lphone = phone.value
         console.log(lphone)
-        if (!lphone.includes('+216')) {
+        if (!lphone.includes('+')) {
             lphone = '+216' + lphone
         }
 
@@ -77,8 +77,16 @@
     }
     let succOperation = false
     const verifyCode = async () => {
+        errorMessage = ''
         console.log("first")
         let erx = false
+
+        if (code.value == undefined || code.value == null || code.value == '') {
+            errorMessage = "Please enter the code you received on your phone"
+            succOperation = false
+            verifyingCode = false;
+            return
+        }
         
         var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value)
         console.log("second")
@@ -97,6 +105,12 @@
                 } else if (error.code == "auth/credential-already-in-use") {
                     console.log("inside")
                     errorMessage = "Phone number already in use by another account"
+                    succOperation = false
+                } else if (error.code == "auth/missing-verification-code") {
+                    errorMessage = "Unexpected error occured no code was written"
+                    succOperation = false
+                } else {
+                    errorMessage = "Unexpected error occured, please trying"
                     succOperation = false
                 }
             }
@@ -233,6 +247,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
+        z-index: 2;
     }
     .left_side .u_logo img {
         width: 50px;
@@ -244,6 +259,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 15px;
+        z-index: 2;
     }
 
     .circle_top,
@@ -281,6 +297,7 @@
     }
     .inputContainer input {
         width: 350px;
+        max-width: 80vw;
         height: 50px;
         padding: 10px;
         text-align: center;

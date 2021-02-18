@@ -6,17 +6,21 @@
     import {onMount} from 'svelte'
 import { object_without_properties } from 'svelte/internal';
     import {colors} from '../../utils.js'
+    import {meterSquarePrice} from '../../mockupdata.js'
     export let hash = {}
     export let facade;
     export let selectedColor
     export let mockupURL;
     export let showBoundaries
     export let boundaryData;
+    export let printarea;
+    export let mockup
     let canvaDiv;
     onMount(async () => {
         hash.canva = new fabric.Canvas(canvaDiv, {width:600, height:600});
         hash.canva.stateful = true;
         hash.background = new fabric.Rect({
+            id: 'color-box',
             fill: colors[$selectedColor.toLocaleLowerCase()],
             width:600,
             height: 600,
@@ -27,12 +31,14 @@ import { object_without_properties } from 'svelte/internal';
         hash.canva.add(hash.background);
         await fabric.Image.fromURL(mockupURL, function(oImg) {
             hash.mockup = oImg
+            oImg.id = 'mockup'
             oImg.scaleToWidth(600, false)
             oImg.set('selectable', false);
             oImg.set("evented", false)
             hash.canva.add(oImg)
         });
         var boundary = new fabric.Rect({
+            id: 'boundary',
             top : boundaryData.top,
             width: boundaryData.width, height: boundaryData.height,
             selectable: false,
@@ -124,31 +130,116 @@ import { object_without_properties } from 'svelte/internal';
                 
             }
         }
-        let lastobj = undefined
-        function objectMoving(e) {
-            var cCoords = getCoords(boundary);
-            console.log(e.target.aCoords)
-            var inBounds = inside({ x: e.target.left, y: e.target.top}, cCoords);
-            if (inBounds) {
-                e.target.setCoords();
-                e.target.saveState();
-            } else {
-                e.target.left = e.target._stateProperties.left;
-                e.target.top = e.target._stateProperties.top;
+      
+        let hadObjects = false
+        const areaCalculatePrice = () => {
+            let allObjects = hash.canva.getObjects().filter((item) => !['color-box', 'boundary', 'mockup'].includes(item.id))
+            console.log(allObjects)
+            if (allObjects.length == 0) {
+                if (hadObjects) {
+                    console.log("had objects")
+                    $printarea = {
+                        ...$printarea,
+                        [facade.toLocaleLowerCase()]: {
+                            ...$printarea[facade.toLocaleLowerCase()],
+                            price: 0,
+                            area: 0,
+                        }
+                    }
+                    hadObjects = false
+                }
+
+                return
+            }
+            hadObjects = true
+            let realfromneck = '62.5cm'
+            let realtopixel = 428
+            
+            let allXs = []
+            let allYs = []
+            for (let obj of allObjects) {
+
+                Object.values(obj.aCoords).map((item) => {
+                    allXs.push(item.x)
+                    allYs.push(item.y)
+                })
+            }
+            console.log('xs, ys')
+            
+            allYs.sort((a, b) => a - b)
+            allXs.sort((a,b) => a - b)
+
+            console.log(allYs)
+            console.log(allXs)
+            let onePixelToM = 0.146028037 / 100
+            let maxX = allXs[allXs.length - 1]
+            let minX = allXs[0]
+            let maxY = allYs[allYs.length - 1]
+            let minY = allYs[0]
+
+            console.log('min Y: ' + minY + " max Y: " + maxY)
+            console.log('min X : ' + minX + " max X " + maxX)
+            console.log(Math.abs(maxY - minY) * onePixelToM)
+            let oneLine  = ((maxY - maxY) ** 2 + (maxX - minX) ** 2) ** 0.5
+            let twoLine = ((maxX - maxX) ** 2  + (maxY - minY) ** 2) ** 0.5
+            let coveredArea = oneLine * onePixelToM * twoLine * onePixelToM
+            console.log('covered area :' + coveredArea)
+            let price = coveredArea * meterSquarePrice
+            if (price < $printarea[facade.toLocaleLowerCase()].minPrice) {
+                price = $printarea[facade.toLocaleLowerCase()].minPrice
+            }
+            $printarea = {
+                ...$printarea,
+                [facade.toLocaleLowerCase()]: {
+                    ...$printarea[facade.toLocaleLowerCase()],
+                    price: price,
+                    area: coveredArea,
+
+                }
             }
         }
+        
        // hash.canva.on("object:moving", compareIt)
-        hash.canva.on('mouse:up', function (event) {
-            lastobj = event.target
-            console.log(lastobj)
-            if (lastobj) {
-                console.log("comparing")
+        hash.canva.on('object:added', () => {
+            setTimeout(() => {
+                areaCalculatePrice()
+            }, 100)
+        })
+
+        hash.canva.on('object:removed', () => {
+            console.log("running removed")
+            setTimeout(() => {
+                areaCalculatePrice()
+            }, 100) 
+        })
+
+        hash.canva.on('object:moved', function (event) {
+           
+            if (isObjectMoving) {
                 
+                isObjectMoving = false
                 compareIt(event)
+                setTimeout(() => {
+                    areaCalculatePrice()
+                }, 100)
+                
             }
         });
+
+        hash.canva.on('object:scaled', (event) => {
+            compareIt(event)
+            setTimeout(() => {
+                areaCalculatePrice()
+            }, 100)
+        });
         let show = true
+        let isObjectMoving = false
+        hash.canva.on('object:moving', function (event) {
+            isObjectMoving = true;
+        });
+
         hash.canva.on('mouse:move', function(options) {
+            
             if (show == false) {
                 return
             }

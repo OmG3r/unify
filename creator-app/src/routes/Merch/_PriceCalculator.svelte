@@ -51,7 +51,7 @@
 </style>
 
 <script>
-
+    import { calculateBasePrice} from '../../utils.js'
     import { createEventDispatcher } from 'svelte';
     import {onMount} from 'svelte'
     const dispatch = createEventDispatcher();
@@ -61,46 +61,85 @@
     export let unifyProfit;
     export let priceCalculatorData;
     export let delivery
+    export let printarea;
+    export let frontCost = 0;
+    export let backCost = 0;
+
+
+    export let price = Math.ceil(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate)) + 2
+
+    let theInput
+    let hadData = false
+    if (printarea?.subscribe) {
+        printarea.subscribe((v) => {
+            if (hadData === false && v.front.price == 0 && v.back.price == 0) {
+
+
+                return
+            } else if (hadData === true && v.front.price == 0 && v.back.price == 0 ) {
+                hadData = false
+                let creatorProfit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+                console.log('creatorPorift: ' + creatorProfit)
+                frontCost = v.front.price
+                backCost = v.back.price
+                price = Math.ceil((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate))
+                profitable = !(creatorProfit < 1)
+                theInput.value = price
+                $priceCalculatorData = {profit: creatorProfit, price, profitable}
+            } else  {
+                hadData = true
+                console.log(v)
+                let creatorProfit = Math.floor( ( (($priceCalculatorData.price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+                console.log('creatorPorift: ' + creatorProfit)
+                frontCost = v.front.price
+                backCost = v.back.price
+                price = Math.ceil((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate))
+                profitable = !(creatorProfit < 1)
+                theInput.value = price
+                $priceCalculatorData = {profit: creatorProfit, price, profitable}
+            }
+
+        })
+    }
+
+    let adjustedTVA = clicPayRate - ((unifyProfit + cost + delivery ) * clicPayRate ) / price
+
+
     
-    
-    export let price = Math.floor((cost + unifyProfit + delivery ) * (1 + taxRate)) + 2
-
-
-    let adjustedTVA = clicPayRate - ((unifyProfit + cost + delivery) * clicPayRate ) / price
-
-
-    let profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit + delivery) ))
+    let profit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
     let profitable = !(profit < 1)
-    console.log(profit)
+    console.log(profitable)
     $priceCalculatorData = {profit, price, profitable}
-    
+    console.log($priceCalculatorData)
     
         //
         //
    
     const handlePriceChange = (e) => {
         let price = e.target.value
-        console.log(price)
-        console.log(cost)
-        console.log(unifyProfit)
-        profit = Math.floor((price / (1 + taxRate)) - ((cost + unifyProfit + delivery) ))
-        console.log(profit)
+        console.log('input price:' +price)
+        console.log('itemcost:' +cost)
+        console.log('unify profit:' +unifyProfit)
+        profit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+        
         profitable = !(profit < 1)
 
         $priceCalculatorData = {profit, price, profitable}
+        console.log($priceCalculatorData)
+        console.log('profit:' + profit)
     
     }
 </script>
 
 
 <div class="u-price-calculator">
-    <div class:red={!profitable} class="u-price-wrapper">
-        <div class:red={!profitable} class="u-currency">TND</div>
-        <input  on:input={handlePriceChange} class:red={!profitable}  value={price}  class="price-input" type="number">
+    <div class:red={!$priceCalculatorData.profitable} class="u-price-wrapper">
+        <div class:red={!$priceCalculatorData.profitable} class="u-currency">TND</div>
+        <input bind:this={theInput}  on:input={handlePriceChange} class:red={!$priceCalculatorData.profitable}  value={price}  class="price-input" type="number">
     </div>
     
-<div class:red={!profitable} class="u-profit" style="color:{$accentColor}">
-        {#if profitable}
+<div class:red={!$priceCalculatorData.profitable} class="u-profit" >
+        {#if $priceCalculatorData.profitable}
             TND {profit} profit/sale
         {:else}
             no profit

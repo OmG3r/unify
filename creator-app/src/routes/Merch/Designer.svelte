@@ -252,6 +252,17 @@
         price: 0,
 
     }
+
+    const printarea = writable({
+        front: {
+            area: 0,
+            price: 0
+        },
+        back: {
+            area: 0,
+            price: 0
+        }
+    })
     
     const action = writable('Design')
     const facade = writable('Front')
@@ -292,6 +303,18 @@
             navigate("/merch/create")
         }
         mockup = creations[params.itemid]
+        $printarea = {
+            front: {
+                area: 0,
+                price: 0,
+                minPrice: mockup.print.front
+            },
+            back: {
+                area: 0,
+                price: 0,
+                minPrice: mockup.print.back
+            }
+        }
         recievedMockData = true;
         $navCollapsable = false
         $navCollapse = true
@@ -320,13 +343,14 @@
             oImg.originalGID = gid
             imageOriginals[gid] = img
             activeCanva.items.push(oImg)
-            oImg.scaleToWidth(200, false)
+            oImg.scaleToWidth(100, false)
             oImg.center()
             activeCanva.canva.add(oImg)
             oImg.center()
             oImg.set({top: mockup.printable[$facade.toLocaleLowerCase()].top + 5})
             oImg.setCoords();
             oImg.saveState();
+            
             console.log(oImg._originalElement.currentSrc)
         });
         setTimeout(() => {
@@ -338,6 +362,9 @@
     const handleUploadedFile = async (event) => {
 
         let img = event.target.files[0]
+        if (img == undefined) {
+            return
+        }
         if (img.size > MAX_IMAGE_SIZE_MB * 1024 * 1024 ) {
             notification.set({
                 accentColor: "alert",
@@ -353,6 +380,9 @@
     }
     const handleFileDrop = (event) => {
         let img = event.dataTransfer.files[0]
+        if (img == undefined) {
+            return
+        }
         if (img.size > MAX_IMAGE_SIZE_MB * 1024 * 1024 ) {
             notification.set({
                 accentColor: "alert",
@@ -387,7 +417,7 @@
             return
         }
 
-        if ($priceCalculatorData.profitable == false) {
+        if ($priceCalculatorData.profit < 2) {
             notification.set({
                 accentColor: "alert",
                 title: "Profit",
@@ -480,7 +510,7 @@
         }
         merchData.color = $selectedColor
         console.log(merchData)
-
+        merchData.timestamp = firebase.firestore.FieldValue.serverTimestamp()
         await db.doc('/creators/' + $user.claims.username + "/merch/all").set({[merchData.id]: merchData}, {merge: true})
         await db.doc('/creators/' + $user.claims.username + "/merch/" + merchData.id).set(merchData)
     
@@ -492,7 +522,7 @@
                 title: "Success",
                 content: "Merch created",
         })
-
+        navigate('/merch/all', {replace: true})
         }
     let nameError = false;
     const ascertainColorClick = (name) => {
@@ -543,10 +573,12 @@ class="u-view">
                     <span>Add Image</span> 
 
                 </label>
+                <!--
                 <div class="option">
                     <img src="/imgs/misc/designer/font.png" alt="im">
                     <span>Add Text</span>
                 </div>
+                -->
             </div>
         </div>
 
@@ -594,6 +626,7 @@ class="u-view">
                 cost={mockup.cost}
                 delivery={mockup.delivery}
                 {priceCalculatorData}
+                {printarea}
                 />
             {/if}
         </div>
@@ -625,6 +658,8 @@ class="u-view">
                         mockupURL={mockup.imgs.front}
                         {showBoundaries}
                         boundaryData={mockup.printable.front}
+                        {mockup}
+                        {printarea}
                         />
                     {/if}
                 </div>
@@ -636,7 +671,9 @@ class="u-view">
                         {selectedColor} 
                         mockupURL={mockup.imgs.back}
                         {showBoundaries}
+                        {mockup}
                         boundaryData={mockup.printable.back}
+                        {printarea}
                         />
                     {/if}
                 </div>

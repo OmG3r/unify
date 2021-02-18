@@ -85,8 +85,8 @@
 <script>
     import ImageBackground from '../../comps/ImageBackground.svelte'
 
-    import {textToHex} from '../../utils.js'
-    import {creations} from '../../mockupdata.js'
+    import {textToHex, calculateBasePrice} from '../../utils.js'
+    import {creations, taxRate} from '../../mockupdata.js'
     import {link} from 'svelte-routing'
     const categories = {
         "hoodie": {
@@ -110,7 +110,7 @@
 
     
 
-    Object.entries(creations).reduce((acc, [key, curr]) => {
+    Object.entries(creations).filter(([key, item]) => item.disabled !== true).reduce((acc, [key, curr]) => {
         curr.id = key
         categories[curr.type].items[key] = curr
     }, {})
@@ -145,7 +145,7 @@
             
                                 </div>
                                 <p class="u-price">
-                                    Base Cost: {item.cost} TND
+                                    Base Cost: {calculateBasePrice({cost: item.cost, delivery: item.delivery, profit: item.profit, ceil: true})} TND
 
                                 </p>
                                 <p>{item.material}</p>

@@ -55,3 +55,20 @@ export const statusColors = {
     'In Progress': '34bf65'
 
 }
+
+export const calculateBasePrice = ({ cost, profit, delivery, taxRate, clicToPay, ceil }) => {
+    if (taxRate == undefined) {
+        taxRate = 0.19
+    }
+    if (clicToPay == undefined) {
+        clicToPay = 0.025
+    }
+    console.log(cost)
+    let calc = ((profit * (1 + taxRate)) + delivery + cost) * (1 + clicToPay)
+    console.log(calc)
+    if (ceil) {
+        calc = Math.ceil(calc)
+    }
+
+    return calc
+}

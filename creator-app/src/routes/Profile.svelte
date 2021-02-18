@@ -21,6 +21,9 @@
     const handleDropBanner = (event) => {
         console.log("got banner");
         let f = event.dataTransfer.files[0];
+        if (f == undefined) {
+            return
+        }
         if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
             notification.set({
                 accentColor: "error",
@@ -37,6 +40,9 @@
     }, 1500); */
     const handleDropLogo = (event) => {
         let f = event.dataTransfer.files[0];
+        if (f == undefined) {
+            return
+        }
         if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
             notification.set({
                 accentColor: "error",
@@ -54,6 +60,9 @@
     //$: console.log(profile.logo);
     const handleExplorerBanner = (event) => {
         let f = event.target.files[0];
+        if (f == undefined) {
+            return
+        }
         if (f.size > 1024 * 1024 * MAX_BANNER_SIZE) {
             notification.set({
                 accentColor: "error",
@@ -68,7 +77,9 @@
 
     const handleExplorerLogo = (event) => {
         let f = event.target.files[0];
-
+        if (f == undefined) {
+            return
+        }
         if (f.size > 1024 * 1024 * MAX_PROFIL_PIC_SIZE) {
             notification.set({
                 accentColor: "error",
@@ -609,6 +620,7 @@
             <input
                 on:change={handleExplorerBanner}
                 type="file"
+                accept="image/png, image/jpeg"
                 id="banner-upload" />
 
             {#if typeof profile.banner == 'string' && profile.banner.length > 0}
@@ -638,6 +650,7 @@
             <input
                 on:change={handleExplorerLogo}
                 type="file"
+                accept="image/png, image/jpeg"
                 id="logo-upload" />
             <div 
             class="logo_container"

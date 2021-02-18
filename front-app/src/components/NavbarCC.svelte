@@ -11,7 +11,11 @@
     
     $: signedin = $user;
     let myAccount = false;
-    let accentColor = hexToRgb(creatorData.accentColor);
+    let accentColor = '#45b877'
+    if (creatorData.accentColor) {
+        accentColor = hexToRgb(creatorData.accentColor); 
+    }
+    
     onMount(async () =>{
         document.querySelector(".u-pattern").style.background="rgba("+accentColor+",0.8)";
         
@@ -19,6 +23,9 @@
 
     window.addEventListener("resize", () => {
         let mobileItem = document.querySelector(".menu-items.isActive")
+        if (!mobileItem) {
+            return
+        }
         if (window.innerWidth > 1180) {
             mobileItem.style.background= "transparent";
         }else{

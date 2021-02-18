@@ -359,6 +359,8 @@
             submitting = false
             return
         }
+
+        username.value
         /*
         firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
             db.doc("/creators/" + username).set({

@@ -1,6 +1,7 @@
 import { nanoid } from './utils'
 export const taxRate = 0.19
 export const clicPayRate = 0.025
+export const meterSquarePrice = 120
 let varprint = {
     front: {
         top: 50,
@@ -18,7 +19,11 @@ export const creations = {
         type: "hoodie",
         name: 'Eco Unisex Hoodie',
         cost: 32,
-        profit: 6,
+        print: {
+            front: 5,
+            back: 6
+        },
+        profit: 7,
         delivery: 7,
         material: '80% Certified Organic Cotton, 20% Recycled Polyester',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
@@ -43,8 +48,12 @@ export const creations = {
     "X8E7FC": {
         type: "hoodie",
         name: 'Premium Unisex Hoodie',
-        cost: 29,
-        profit: 8,
+        cost: 34,
+        profit: 7,
+        print: {
+            front: 5,
+            back: 6
+        },
         delivery: 7,
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
@@ -70,8 +79,12 @@ export const creations = {
         type: "hoodie",
         name: 'Zip Hoodie',
         cost: 32,
-        profit: 10,
+        profit: 7,
         delivery: 7,
+        print: {
+            front: 5,
+            back: 6
+        },
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -98,6 +111,10 @@ export const creations = {
         cost: 17,
         profit: 7,
         delivery: 7,
+        print: {
+            front: 5,
+            back: 6
+        },
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -118,15 +135,17 @@ export const creations = {
             }
         }
     },
-}
-
-export const phasedOut = {
     "NV7ECZ": {
         type: "long-tee",
         name: 'Classic Long Sleeve Tee',
+        disabled: true,
         cost: 14,
-        profit: 5,
+        profit: 7,
         delivery: 7,
+        print: {
+            front: 5,
+            back: 6
+        },
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -139,9 +158,14 @@ export const phasedOut = {
     "REXE7C": {
         type: "long-tee",
         name: 'Premium Long Sleeve Tee',
+        disabled: true,
         cost: 17,
-        profit: 6,
+        profit: 7,
         delivery: 7,
+        print: {
+            front: 5,
+            back: 6
+        },
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
         imgs: {
@@ -151,4 +175,8 @@ export const phasedOut = {
         colors: ["Black", "Red", "Green", "White"],
         printable: varprint
     },
+}
+
+export const phasedOut = {
+
 }

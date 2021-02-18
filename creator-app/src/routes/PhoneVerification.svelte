@@ -44,7 +44,7 @@
 
         let lphone = phone.value
         console.log(lphone)
-        if (!lphone.includes('+216')) {
+        if (!lphone.includes('+')) {
             lphone = '+216' + lphone
         }
 
@@ -89,6 +89,13 @@
         errorMessage = ""
         console.log("first")
         let erx = false
+
+        if (code.value == undefined || code.value == null || code.value == '') {
+            errorMessage = "Please enter the code you received on your phone"
+            succOperation = false
+            verifyingCode = false;
+            return
+        }
         
         var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code.value)
         console.log("second")
@@ -110,7 +117,14 @@
                     errorMessage = "The code is incorrect, please verify it."
                     succOperation = false
                 } else if (error.code == "auth/credential-already-in-use") {
+                    console.log("inside")
                     errorMessage = "Phone number already in use by another account"
+                    succOperation = false
+                } else if (error.code == "auth/missing-verification-code") {
+                    errorMessage = "Unexpected error occured no code was written"
+                    succOperation = false
+                } else {
+                    errorMessage = "Unexpected error occured, please trying"
                     succOperation = false
                 }
             }
@@ -339,7 +353,7 @@
     .resend_btn {
         background-color: white !important;
         color: rgb(var(--userColor)) !important;
-        padding: 4px 0;
+        padding: 8px 0;
     }
     .send_btn:active {
         background-color: rgba(var(--AccentColor), 0.8);
