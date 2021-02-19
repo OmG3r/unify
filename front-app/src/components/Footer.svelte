@@ -281,8 +281,8 @@ footer{
         
          <span class="brand">UNIFY</span>
          <span>{{
-            en: '@ All right reserved', 
-            fr: '@ Tous droits réservés ' 
+            en: '@ All rights reserved', 
+            fr: '@ Tous Droits réservés ' 
          }[$lang]} </span>
     </div>
 

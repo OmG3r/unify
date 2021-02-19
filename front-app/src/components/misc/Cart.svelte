@@ -1,7 +1,7 @@
 <style>
     .basket {
-        
-        width: 26px;
+        width: 15px;
+        width: 25px;
     }
     
     .basket-number {
