@@ -339,6 +339,7 @@
         console.log("adding image to " + $facade.toLocaleLowerCase())
         let activeCanva = canvas[$facade.toLocaleLowerCase()]
         await fabric.Image.fromURL(URL.createObjectURL(img), function(oImg) {
+            oImg.clipPath = canvas[$facade.toLocaleLowerCase()].boundary
             let gid = nanoid()
             oImg.originalGID = gid
             imageOriginals[gid] = img
@@ -483,6 +484,30 @@
             a.onload = function(e) {callback(e.target.result);}
             a.readAsDataURL(blob);
         }
+        merchData.print = {
+            'front': '',
+            'back': ''
+        }
+        for (let face of ['front', 'back']) {
+            let allObjects = canvas[face].canva.getObjects().filter((item) => !['color-box', 'boundary', 'mockup'].includes(item.id))
+            if (allObjects.length > 0) {
+                let compPath = $user.claims.username + "/merch/" + merchData.id + "/" + face  + "-print.png"
+                const imgData = canvas[face].canva.toDataURL({
+                    top: canvas[face].boundary.top + canvas[face].boundary.strokeWidth,
+                    left: canvas[face].boundary.left + canvas[face].boundary.strokeWidth,
+                    width: canvas[face].boundary.width - canvas[face].boundary.strokeWidth ,
+                    height: canvas[face].boundary.height - canvas[face].boundary.strokeWidth,
+                    quality: 1,
+                    format:'png'
+                })
+                let imguuid = (await uploadImage(imgData, compPath)).split('token=', 2)[1]
+                if (merchData.comps == undefined) {
+                    merchData.comps = {}
+                }
+            }
+
+        }
+
 
         for (let [i, fabobj] of [...canvas.front.items, ...canvas.back.items].entries()) {
             
@@ -538,6 +563,44 @@
             $merchColors = [...$merchColors, name]
             $selectedColor = name
         }
+    }
+
+
+    const exportClip = () => {
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {type:mime});
+        }
+        var link = document.createElement("a");
+        canvas.front.mockup.set('opacity', 0)
+        canvas.front.background.set('opacity', 0)
+        canvas.front.boundary.set('opacity', 0)
+
+        var imgData = canvas.front.canva.toDataURL({
+            top: canvas.front.boundary.top+ canvas.front.boundary.strokeWidth,
+            left: canvas.front.boundary.left+ canvas.front.boundary.strokeWidth,
+            width: canvas.front.boundary.width - canvas.front.boundary.strokeWidth ,
+            height: canvas.front.boundary.height - canvas.front.boundary.strokeWidth,
+            multiplier: 7,
+            format:'png'
+        })
+        canvas.front.mockup.set('opacity', 1)
+        canvas.front.background.set('opacity', 1)
+        canvas.front.boundary.set('opacity', 1)
+        var strDataURI = imgData.substr(22, imgData.length);
+        var blob = dataURLtoBlob(imgData);
+        var objurl = URL.createObjectURL(blob);
+
+        link.download = "helloWorld.png";
+
+        link.href = objurl;
+
+        link.click();
+
     }
 </script>
 
@@ -687,6 +750,7 @@ class="u-view">
                     class="action">{laction}</div>
     
                 {/each}
+                <div on:click={exportClip} class="action">pictures</div>
                
             </div>
         </div>

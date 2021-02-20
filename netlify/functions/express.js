@@ -110,7 +110,12 @@ router.post('/getClaims', async(req, res) => {
 
 router.post('/createCreator', async(req, res) => {
     if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
-        res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
+        res.end(JSON.stringify({ success: false, error: { message: 'invalid request data' }, body: req.body }))
+        return
+    }
+
+    if (username.value.match('/^[a-zA-Z0-9]+$/') == null) {
+        res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
     }
 

@@ -359,7 +359,11 @@
             submitting = false
             return
         }
-
+        if (username.value.match('/^[a-zA-Z0-9]+$/') == null) {
+            errorMessage = "Username must only included letters and digits"
+            submitting = false
+            return
+        }
         username.value
         /*
         firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
