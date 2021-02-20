@@ -21,6 +21,7 @@
 
     import Redirector from '../../components/misc/Redirector.svelte'
     import MerchPage from './MerchPage.svelte'
+    import DonationPage from './DonationPage.svelte'
     import SingleProduct from './SingleProductPage.svelte'
     import FooterCC from '../../components/FooterCC.svelte'
     import MaterialSpinner from '../../components/misc/MaterialSpinner.svelte'
@@ -49,7 +50,7 @@
             }
             
         } else {
-            navigate('/' + params.userid + '/merch', { replace: true })
+           
             validated = true
         }
     })
@@ -59,6 +60,8 @@
 
 
 <Router url={url}>
+
+
     <Route path="/">
         {#if validated == false}
             <div class="u-center-area">
@@ -69,12 +72,23 @@
         {:else}
             <Redirector path={"/" + params.userid + "/merch"} />
         {/if}
-        
-
-
     </Route>
-    <Route path="/merch">
 
+    <Route path="/tip">
+        {#if validated == false}
+            <div class="u-center-area">
+                <MaterialSpinner width="75px" height="75px" />
+
+            </div>
+            
+        {:else}
+            <DonationPage params={localParams} />
+            <FooterCC />
+        {/if}
+    </Route>
+
+    
+    <Route path="/merch">
         {#if validated == false}
             <div class="u-center-area">
                 <MaterialSpinner width="75px" height="75px" />
@@ -85,8 +99,6 @@
             <MerchPage params={localParams} />
             <FooterCC />
         {/if}
-
-        
     </Route>
 
     <Route let:params path="/merch/:itemid">

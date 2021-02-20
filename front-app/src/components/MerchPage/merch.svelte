@@ -389,7 +389,9 @@
 
     <div class="products_container">
         <div class="title_container">
-        <div class="title" style="background-color : {creatorData.accentColor}">Available Now</div>
+        <div class="title" style="background-color : {creatorData.accentColor}">
+            {{ en: 'Available Now', fr: 'Disponible maintenant' }[$lang]}
+        </div>
             <hr class="title_border" style="border-top: 1px solid {creatorData.accentColor};"/>
         </div>
 
