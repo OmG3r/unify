@@ -1,6 +1,6 @@
 <style>
     .u-table {
-        width: 90%;
+        width: 96%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;

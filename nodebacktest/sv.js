@@ -98,10 +98,11 @@ app.post('/createCreator', async(req, res) => {
         res.end(JSON.stringify({ success: false, error: { message: 'username already taken' } }))
         return
     }
-    if (username.value.match('/^[a-zA-Z0-9]+$/') == null) {
+    if (req.body.username.match('/^[a-zA-Z0-9]+$/') == null) {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
     }
+    req.body.username = req.body.username.toLowerCase()
 
     admin.auth().createUser({
             email: req.body.email,

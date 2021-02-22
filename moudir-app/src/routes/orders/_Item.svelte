@@ -93,6 +93,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        padding-left: 20px;
     }
     .u-client-name-container {
         margin-bottom: 8px;
@@ -134,7 +135,7 @@
 <script>
     import Select from 'svelte-select'
     import Address from './_Address.svelte'
-    import {colors, formatTimestampToDate} from '../../utils.js'
+    import {colors, formatTimestampToDate, formatPhoneNumber} from '../../utils.js'
     
     export let item;
     export let cart
@@ -176,7 +177,7 @@
     </div>
     <div class="t-body-client-info">
         <div class="u-client-name-container"><span class="u-client-name bold">{cart.name}</span></div>
-        <div class="u-client-phone-number"> {cart.phoneNumber}</div>
+        <div class="u-client-phone-number"> {formatPhoneNumber(cart.phoneNumber)}</div>
         <Address  {cart} />
     </div>
     <div class="t-body-date">

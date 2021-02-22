@@ -80,6 +80,7 @@
         padding: 8px 16px;
         border-radius: 3px;
         color: white;
+        cursor: pointer;
     }
     .u-button.discard {
         background-color: teal;
@@ -91,8 +92,10 @@
 </style>
 
 <script>
+
     import {states} from '../../states.js'
     import Select from 'svelte-select'
+    import {formatPhoneNumber} from '../../utils'
     import {onDestroy} from 'svelte'
     import {writable} from 'svelte/store'
     export let cart
@@ -111,6 +114,68 @@
         }
         unsubscribeEdit()
     })
+
+    let info = {
+        address: cart.address,
+        state: cart.state,
+        city: cart.city,
+        postal: cart.postal
+        
+    }
+    let acceptedCitiesPostals = {
+        cities: states[info.state].cities,
+        postals: states[info.state].postals
+    }
+   
+    const handleSelectState = (event) => {
+        let v = ''
+        if (event.detail) {
+            v = event.detail
+            console.log(event.detail)
+            acceptedCitiesPostals = {
+                cities: states[v].cities,
+                postals: states[v].postals
+            }
+
+            info.state = v.value
+            info.city = ''
+            info.postal = ''
+        } else {
+            info.state = ''
+            info.city = ''
+            info.postal = ''
+        }
+    }
+
+    const handleSelectCity = (event) => {
+        let v = ''
+        if (event.detail) {
+            v = event.detail.value
+        }
+        info.city = v
+    }
+    const handleSelectPostal = (event) => {
+        console.log(event)
+        let v = ''
+        if (event.detail) {
+            v = event.detail.value
+        }
+        info.postal = v
+    }
+    let updating = false
+    const doUpdate = () => {
+        if (updating) {
+            return
+        }
+        updating = true
+        
+        if (cart.address == info.address && cart.city == info.city && cart.state == info.state && cart.postal == info.postal) {
+            updating = false
+            return
+        }
+        console.log(info)
+        updating = false
+    }
 </script>
 <div class="u-container-address">
     
@@ -127,7 +192,7 @@
                 {cart.name}
             </div>
             <div class="u-phone">
-                {cart.phoneNumber}
+                {formatPhoneNumber(cart.phoneNumber)}
             </div>
         </div>
         <div class="u-entry">
@@ -136,22 +201,28 @@
         </div>
         <div class="u-entry">
             <span>State</span>
-            <Select />
+            <Select items={Object.keys(states)} selectedValue={info.state} on:select={handleSelectState}/>
         </div>
         <div class="u-entry">
             <span>City</span>
-            <Select />
+            <Select
+                items={acceptedCitiesPostals.cities} 
+                selectedValue={info.city}
+                on:select={handleSelectCity}/>
         </div>
         <div class="u-entry">
             <span>Postal</span>
-            <Select />
+            <Select
+                items={acceptedCitiesPostals.postals}
+                selectedValue={info.postal}
+                on:select={handleSelectPostal}/>
         </div>
         <div class="u-buttons">
 
-            <div class="u-button discard">
+            <div on:click={() => {$edit = false}} class="u-button discard">
                 Discard
             </div>
-            <div class="u-button update">
+            <div on:click={doUpdate} class="u-button update">
                 Update
             </div>
         </div>

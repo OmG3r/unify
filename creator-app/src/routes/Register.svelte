@@ -382,7 +382,7 @@
         let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
             email: email.value,
             password: password.value,
-            username: username.value,
+            username: username.value.toLowerCase(),
             persoName: name.value
         })
 

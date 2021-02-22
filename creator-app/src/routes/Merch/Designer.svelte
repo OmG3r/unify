@@ -3,7 +3,7 @@
         width: 100%;
         min-height: 100vh;
         max-height: 100vh;
-        overflow-y: auto;
+        
         display: flex;
     }
     .controls {
@@ -23,7 +23,7 @@
     .design-container {
         width: 100%;
         min-height: 100vh;
-        max-height: 100vh;
+        
         height: 100%;
         display: flex;
     }
@@ -492,52 +492,37 @@
             let allObjects = canvas[face].canva.getObjects().filter((item) => !['color-box', 'boundary', 'mockup'].includes(item.id))
             if (allObjects.length > 0) {
                 let compPath = $user.claims.username + "/merch/" + merchData.id + "/" + face  + "-print.png"
+                canvas[face].mockup.set('opacity', 0)
+                canvas[face].background.set('opacity', 0)
+                canvas[face].boundary.set('opacity', 0)
                 const imgData = canvas[face].canva.toDataURL({
                     top: canvas[face].boundary.top + canvas[face].boundary.strokeWidth,
                     left: canvas[face].boundary.left + canvas[face].boundary.strokeWidth,
                     width: canvas[face].boundary.width - canvas[face].boundary.strokeWidth ,
                     height: canvas[face].boundary.height - canvas[face].boundary.strokeWidth,
+                    multiplier: 7,
                     quality: 1,
                     format:'png'
                 })
+                canvas[face].mockup.set('opacity', 1)
+                canvas[face].background.set('opacity', 1)
+                canvas[face].boundary.set('opacity', 1)
                 let imguuid = (await uploadImage(imgData, compPath)).split('token=', 2)[1]
-                if (merchData.comps == undefined) {
-                    merchData.comps = {}
-                }
+                merchData.print[face] = imguuid
             }
 
         }
+        
 
 
-        for (let [i, fabobj] of [...canvas.front.items, ...canvas.back.items].entries()) {
-            
-            let compID = nanoid()
-            let compPath = $user.claims.username + "/merch/" + merchData.id + "/" + compID + ".png"
-            
-            
-            let img = (await uploadImage(imageOriginals[fabobj.originalGID], compPath)).split('token=', 2)[1]
-            if (merchData.comps == undefined) {
-                merchData.comps = {}
-            }
-
-            merchData.comps[compID] = {
-                img, 
-                coords: {
-                    top: fabobj.top,
-                    left: fabobj.left
-                },
-                scale: {
-                    x: fabobj.scaleX,
-                    y: fabobj.scaleY
-                }
-            }
-            
-        }
+        
         merchData.color = $selectedColor
         console.log(merchData)
         merchData.timestamp = firebase.firestore.FieldValue.serverTimestamp()
-        await db.doc('/creators/' + $user.claims.username + "/merch/all").set({[merchData.id]: merchData}, {merge: true})
-        await db.doc('/creators/' + $user.claims.username + "/merch/" + merchData.id).set(merchData)
+        const batch = db.batch();
+        batch.set(db.doc('/creators/' + $user.claims.username + "/merch/all"), {[merchData.id]: merchData}, {merge: true})
+        batch.set(db.doc('/creators/' + $user.claims.username + "/merch/" + merchData.id), merchData)
+        await batch.commit()
     
         spinit = false;
 
@@ -588,6 +573,8 @@
             multiplier: 7,
             format:'png'
         })
+        
+
         canvas.front.mockup.set('opacity', 1)
         canvas.front.background.set('opacity', 1)
         canvas.front.boundary.set('opacity', 1)

@@ -65,8 +65,15 @@
                 cart.timestamp = cart.timestamp.seconds
                 for( let [key, item] of Object.entries(cart.items)) {
                     console.log(merchData)
+                    console.log(item.creator)
+                    console.log(item.id)
                     
                     let itemData = merchData[item.creator][item.id]
+                    if (itemData == undefined) {
+                        item.img = '/imgs/misc/not-found.png'
+                        item.name = "NOT FOUND"
+                        continue
+                    }
                     let uuid = itemData.imgs[item.color][itemData.featuredFace]
                     let path = "creators/" + item.creator + "/merch/" + item.id + "/" + itemData.featuredFace + "-" + item.color 
                     item.img = uuidToImageLink(uuid, path)

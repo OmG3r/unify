@@ -114,11 +114,11 @@ router.post('/createCreator', async(req, res) => {
         return
     }
 
-    if (username.value.match('/^[a-zA-Z0-9]+$/') == null) {
+    if (req.body.username.match('/^[a-zA-Z0-9]+$/') == null) {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
     }
-
+    req.body.username = req.body.username.toLowerCase()
     let data = await admin.firestore().doc('/creators/' + req.body.username).get()
     console.log(data)
     if (data.exists) {

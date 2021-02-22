@@ -43,3 +43,12 @@ export const formatTimestampToDate = (t) => {
     const date = a.getDate();
     return date + "/" + month + "/" + year
 }
+
+export const formatPhoneNumber = (phone) => {
+    let arrayed = phone.split("")
+    let len = arrayed.length
+    arrayed.splice(len - 3, 0, " ")
+    arrayed.splice(len - 6, 0, " ")
+    arrayed.splice(len - 8, 0, " ")
+    return arrayed.join("")
+}
