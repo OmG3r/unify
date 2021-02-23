@@ -65,6 +65,45 @@
         align-items: center;
         height: 250px;
     }
+
+    .u-select-all {
+        padding: 10px 20px;
+        border-radius: 4px;
+        background-color: #50c275;
+        color: white;
+        margin: 0 0 16px auto;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .u-select-all.undo {
+        background-color: #f44336;
+    }
+
+    .u-select-all .u-icon {
+        width: 26px;
+        height: 26px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+    }
+
+
+    .u-select-all .u-icon img {
+        display: block;
+        max-width: 100%;
+        height: 100%;
+    }
+    .u-header {
+        display: flex;
+        align-items: center;
+    }
+    .u-showing-items {
+        padding: 10px 20px;
+    }
 </style>
 
 
@@ -75,9 +114,10 @@
     import {colors} from '../../utils.js'
     export let carts
     import {onDestroy} from 'svelte'
+    import {writable} from 'svelte/store'
     export let first = true
     import MaterialSpinner from '../../comps/misc/MaterialSpinner.svelte'
-           
+    export let selectedItems
     const statusColor = {
         'in_progress': '#26a65b',
         'printing': '#836349',
@@ -91,7 +131,8 @@
         status: 'in_progress',
         text: 'In Progress'
     }
-    let displayCarts = []
+    let totalShowing = 0
+    let displayCarts = writable([])
     let unsubscribeCarts = carts.subscribe((v) => {
         $filters = $filters
     })
@@ -168,25 +209,95 @@
             cart.items = Object.fromEntries(arrayed)
 
         }
-
+        totalShowing = 0
         copy = copy.filter((cart) => {
             if (Object.keys(cart.items).length == 0) {
                 return false
+            } else {
+                totalShowing += Object.keys(cart.items).length
             }
             return true
         })
-        displayCarts = copy
+        $displayCarts = copy
         console.timeEnd('filter')
     })
+    
+    const selectAll = () => {
+        let currItems = []
+
+        for (let cart of $displayCarts) {
+            
+            for (let creatorItemID of Object.keys(cart.items)) {
+                if (!currItems.includes(cart.cartID + "-" + creatorItemID)) {
+                    console.log(cart.cartID + "-" + creatorItemID + " is new")
+                    currItems.push(cart.cartID + "-" + creatorItemID)
+                }
+                
+            }
+        }
+
+        currItems = currItems.filter((item) => !$selectedItems.includes(item))
+        $selectedItems = [...$selectedItems, ...currItems]
+    }
+
+    const unselectAll = () => {
+        let currItems = []
+
+        for (let cart of $displayCarts) {
+            
+            for (let creatorItemID of Object.keys(cart.items)) {
+                currItems.push(cart.cartID + "-" + creatorItemID)
+            }
+        }
+        console.log(currItems)
+        $selectedItems = $selectedItems.filter((item) => !currItems.includes(item))
+        console.log($selectedItems)
+    }
 
     onDestroy(() => {
         unsubscribeCarts()
         unsubscribeFilters()
     })
+
+    const evaluateSelectItems = (v, display) => {
+        if (display.length == 0 || v.length == 0) {
+            return true
+        }
+        let resp = display.every((item) => v.includes(item))
+        console.log("evaluated to :" + resp)
+        return resp
+    }
 </script>
 
 <div class="u-table">
+    <div class="u-header">
+        <div class="u-showing-items">
+            Displaying {totalShowing} Items
 
+        </div>
+
+        {#if evaluateSelectItems($selectedItems, $displayCarts)}
+            <div on:click={selectAll} class="u-select-all">
+                <div class="u-icon">
+                    <img src="/imgs/misc/bulk-select.png" alt="bulk-select">
+                </div>
+                <div class="u-text">
+                    Select All
+                </div>
+            </div>
+        {:else}
+            <div on:click={unselectAll} class="u-select-all undo">
+                <div class="u-icon">
+                    <img src="/imgs/misc/undo.png" alt="undo-select">
+                </div>
+                <div class="u-text">
+                    Deselect All
+                </div>
+            </div>
+        {/if}
+
+    </div>
+    
     <div class="u-table-head">
         <div class="t-head-cart-session-id">
             <abbr title="Cart & Session ID">C/S ID</abbr>
@@ -206,11 +317,11 @@
     </div>
     <div class="u-table-body">
         {#if !first}
-            {#each displayCarts as cart}
+            {#each $displayCarts as cart}
                 <div class="u-cart">
                     <div class="u-bar"></div>
-                    {#each Object.entries(cart.items) as [key, item]}
-                        <Item {statusData} {cart} {item} /> 
+                    {#each Object.entries(cart.items) as [key, item] ((cart.cartID + "-" + key))}
+                        <Item {selectedItems} {statusData} {cart} {item} /> 
                     {/each}
 
                     <div class="u-bar"></div>

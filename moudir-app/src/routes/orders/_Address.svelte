@@ -81,6 +81,9 @@
         border-radius: 3px;
         color: white;
         cursor: pointer;
+        height: 34px;
+        width: 100px;
+        text-align: center;
     }
     .u-button.discard {
         background-color: teal;
@@ -92,16 +95,32 @@
 </style>
 
 <script>
-
+    import {db} from '../../firebase.js'
     import {states} from '../../states.js'
     import Select from 'svelte-select'
-    import {formatPhoneNumber} from '../../utils'
+    import {formatPhoneNumber, popup, notification} from '../../utils'
     import {onDestroy} from 'svelte'
     import {writable} from 'svelte/store'
+    import MaterialSpinner from '../../comps/misc/MaterialSpinner.svelte'
     export let cart
     const edit = writable(false)
+    let info = {
+        address: cart.address,
+        state: cart.state,
+        city: cart.city,
+        postal: cart.postal
+        
+    }
     let unsubscribeEdit = edit.subscribe((v) => {
         if (v == true) {
+            info = {
+                address: cart.address,
+                state: cart.state,
+                city: cart.city,
+                postal: cart.postal
+            }
+            console.log(info)
+        
             document.body.style.overflowY = "hidden"
         } else {
             document.body.style.overflowY = "auto"
@@ -115,13 +134,7 @@
         unsubscribeEdit()
     })
 
-    let info = {
-        address: cart.address,
-        state: cart.state,
-        city: cart.city,
-        postal: cart.postal
-        
-    }
+    
     let acceptedCitiesPostals = {
         cities: states[info.state].cities,
         postals: states[info.state].postals
@@ -129,15 +142,16 @@
    
     const handleSelectState = (event) => {
         let v = ''
+        console.log(event)
         if (event.detail) {
-            v = event.detail
+            v = event.detail.value
             console.log(event.detail)
             acceptedCitiesPostals = {
                 cities: states[v].cities,
                 postals: states[v].postals
             }
 
-            info.state = v.value
+            info.state = v
             info.city = ''
             info.postal = ''
         } else {
@@ -163,16 +177,80 @@
         info.postal = v
     }
     let updating = false
-    const doUpdate = () => {
+    const doUpdate = async () => {
         if (updating) {
             return
         }
         updating = true
+        if (info.address == '') {
+            notification.set({
+                accentColor: "#F0A92E;",
+                title: "Error",
+                content: "You must write address"
+            })
+            updating = false
+            return
+        }
+
+        if (info.state == '') {
+            notification.set({
+                accentColor: "#F0A92E;",
+                title: "Error",
+                content: "You must select state"
+            })
+            updating = false
+            return
+        }
+
+        if (info.city == '') {
+            notification.set({
+                accentColor: "#F0A92E;",
+                title: "Error",
+                content: "You must select city"
+            })
+            updating = false
+            return
+        }
+        if (info.postal == '') {
+            notification.set({
+                accentColor: "#F0A92E;",
+                title: "Error",
+                content: "You must select postal"
+            })
+            updating = false
+            return
+        }
+
         
         if (cart.address == info.address && cart.city == info.city && cart.state == info.state && cart.postal == info.postal) {
             updating = false
             return
         }
+        let docWrite = {}
+        for (let key of ['address', 'state', 'city', 'postal']) {
+            if (cart[key] != info[key]) {
+                docWrite[cart.cartID + "." + key] = info[key]
+            }
+        }
+
+
+
+        let resp = await $popup({
+            title: "Are you sure ?", 
+            desc: "The data will be overwritten once confirmed",
+            buttons: [
+                {name: "Procced", value: true, color: 'ok'},
+                {name: "Decline", value: false, color: 'danger'}
+            ]
+        })
+
+        if (resp == false || resp == "false") {
+            updating = false
+            return
+        }
+        
+        await db.doc('/orders/all').update(docWrite)
+        $edit = false
         console.log(info)
         updating = false
     }
@@ -223,7 +301,11 @@
                 Discard
             </div>
             <div on:click={doUpdate} class="u-button update">
-                Update
+                {#if updating}
+                    <MaterialSpinner />
+                {:else}
+                    Update
+                {/if}
             </div>
         </div>
 

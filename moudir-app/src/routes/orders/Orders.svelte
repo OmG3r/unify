@@ -20,6 +20,8 @@
     import {navigate} from 'svelte-routing'
     import {writable} from 'svelte/store'
     import SignalNotification from '../../comps/SignalNotification.svelte'
+    import SelectItemsComp from './_SelectItemsComp.svelte'
+    const selectedItems = writable([])
 
     let unsubscribeUser = user.subscribe((v) => {
         if (v === undefined) {
@@ -72,12 +74,16 @@
                     if (itemData == undefined) {
                         item.img = '/imgs/misc/not-found.png'
                         item.name = "NOT FOUND"
+                        item.sizes = [item.size]
+                        item.colors = [item.color]
                         continue
                     }
                     let uuid = itemData.imgs[item.color][itemData.featuredFace]
                     let path = "creators/" + item.creator + "/merch/" + item.id + "/" + itemData.featuredFace + "-" + item.color 
                     item.img = uuidToImageLink(uuid, path)
                     item.name = itemData.name
+                    item.sizes = itemData.sizes
+                    item.colors = itemData.colors
                     if (item.status == undefined) {
                         item.status = "in_progress"
                     }
@@ -228,6 +234,6 @@
 <div class="u-view">
     <SignalNotification indexKey={'cartID'} {first} listener={carts} countable="Orders" />
     <Filters {statusData} {carts} {filters} />
-    <Table {first} {statusData} {carts} {filters} />
-
+    <Table {selectedItems} {first} {statusData} {carts} {filters} />
+    <SelectItemsComp {carts}  {selectedItems} />
 </div>

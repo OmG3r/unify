@@ -9,8 +9,38 @@
         box-shadow: 0px 0px 15px #0000001c;
         background-color: white;
         margin-left: 10px;
+        position: relative;
     }
-.t-body-cart-session-id {
+
+    .u-item.selected {
+        -webkit-box-shadow: 0px 5px 9px 0px #46B978; 
+        box-shadow: 0px 5px 9px 0px #46B978;
+    }
+    .u-select-box {
+        position: absolute;
+        left: -30px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 60px;
+        height: 60px;
+        background-color: #EBEBEB;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        padding: 10px;
+        /*box-shadow: inset 0px 0px 1px 0px #000000;*/
+        border: 3px solid transparent;
+        outline: none;
+    }
+    .u-select-box:focus {
+        border: 3px solid #46B978;
+    }
+    .u-select-box img {
+        max-width: 100%;
+    }
+    .t-body-cart-session-id {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -136,19 +166,47 @@
     import Select from 'svelte-select'
     import Address from './_Address.svelte'
     import {colors, formatTimestampToDate, formatPhoneNumber} from '../../utils.js'
-    
+    import {onDestroy} from 'svelte'
     export let item;
     export let cart
     export let statusData
-
-    
+    export let selectedItems
+    let itemCartID = cart.cartID + "-" + item.creator + "-" + item.id
     const handleSelect = (event) => {
         let selected = event.detail.value
     }
+    const handleSelectedItems = () => {
+        console.log(itemCartID)
+        if (selected) {
+            $selectedItems = $selectedItems.filter((itemx) => itemx != itemCartID)
+        } else {
+            $selectedItems = [...$selectedItems, itemCartID]
+        }
+    }
+    let selected = false
+    let unsubscribeSelectedItems = selectedItems.subscribe((v) => {
+        
+        selected = v.includes(itemCartID)
+    })
+
+    onDestroy(() => {
+        unsubscribeSelectedItems()
+    })
 </script>
 
 
-<div class="u-item">
+<div class:selected={selected} class="u-item">
+    <div
+    tabindex="0"
+    on:click={handleSelectedItems}
+    class="u-select-box noselect">
+    
+        {#if !selected}
+            <img src="/imgs/misc/add-list.png" alt="add-list">
+        {:else}
+            <img src="/imgs/misc/remove-list.png" alt="remove-list">
+        {/if}
+    </div>
     <div class="t-body-cart-session-id">
         <div class="u-cart-id">CartID: <span class="bold">#{cart.cartID}</span> </div>
         <div class="u-session-id">Session: {cart.sessionID  ? cart.sessionID : "-"}</div>
