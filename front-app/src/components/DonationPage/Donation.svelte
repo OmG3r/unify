@@ -290,7 +290,7 @@ import {
 import { link, navigate } from "svelte-routing";
 import {onMount} from "svelte";
 import Tabs from "./Tabs.svelte"
-import Week from "./week.svelte"
+import Week from "./Week.svelte"
 import Month from "./Month.svelte"
 import Year from "./Year.svelte"
 
