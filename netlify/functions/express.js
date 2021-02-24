@@ -114,7 +114,7 @@ router.post('/createCreator', async(req, res) => {
         return
     }
 
-    if (req.body.username.match('/^[a-zA-Z0-9]+$/') == null) {
+    if (req.body.username.match(/^[a-zA-Z0-9]+$/) == null) {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
     }

@@ -88,21 +88,21 @@ app.post('/getClaims', async(req, res) => {
 
 app.post('/createCreator', async(req, res) => {
     if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
-        res.end(JSON.stringify({ success: false, msg: 'invalid request data', body: req.body }))
+        res.end(JSON.stringify({ success: false, error: { message: 'invalid request data' }, body: req.body }))
         return
     }
-
+    console.log(req.body.username)
+    if (req.body.username.match(/^[a-zA-Z0-9]+$/) == null) {
+        res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
+        return
+    }
+    req.body.username = req.body.username.toLowerCase()
     let data = await admin.firestore().doc('/creators/' + req.body.username).get()
     console.log(data)
     if (data.exists) {
         res.end(JSON.stringify({ success: false, error: { message: 'username already taken' } }))
         return
     }
-    if (req.body.username.match('/^[a-zA-Z0-9]+$/') == null) {
-        res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
-        return
-    }
-    req.body.username = req.body.username.toLowerCase()
 
     admin.auth().createUser({
             email: req.body.email,
@@ -124,7 +124,8 @@ app.post('/createCreator', async(req, res) => {
                 [req.body.username]: {
                     email: req.body.email,
                     persoName: req.body.persoName,
-                    storeEnabled: false
+                    storeEnabled: false,
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
                 }
             }, { merge: true })
             promises.push(pro)

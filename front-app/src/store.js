@@ -1,4 +1,13 @@
 import { writable } from 'svelte/store';
+import * as Sentry from "@sentry/browser";
+import { Integrations } from "@sentry/tracing";
+
+Sentry.init({
+    dsn: "https://0ed5871989214c1ea8393862f38c626f@o530304.ingest.sentry.io/5649635",
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
+});
+
 
 
 import { customAlphabet } from 'nanoid'

@@ -31,6 +31,8 @@
     import ShippingDelivery from "./routes/ShippingDelivery.svelte"
     import Policy from "./routes/Policy.svelte"
     export let url = "";
+
+    unfunct()
 </script>
 <Notifications />
 <Router url="{url}">

@@ -359,7 +359,7 @@
             submitting = false
             return
         }
-        if (username.value.match('/^[a-zA-Z0-9]+$/') == null) {
+        if (username.value.match(/^[a-zA-Z0-9]+$/) == null) {
             errorMessage = "Username must only included letters and digits"
             submitting = false
             return
@@ -379,7 +379,7 @@
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
-        let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
+        let resp = await urlPostReq('http://localhost:3001/createCreator', {
             email: email.value,
             password: password.value,
             username: username.value.toLowerCase(),
