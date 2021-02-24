@@ -505,7 +505,7 @@
         </div>
         <button type="submit" class="save_btn">{
                             {
-                                'fr': 'Changer le Mot de Dasse',
+                                'fr': 'Changer le Mot de Passe',
                                 'en': 'Change Password'
                             }[$lang]
                         }</button>

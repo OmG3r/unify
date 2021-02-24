@@ -379,7 +379,7 @@
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' ,                                                                                              
             "Access-Control-Origin": "*"
         }
-        let resp = await urlPostReq('http://localhost:3001/createCreator', {
+        let resp = await urlPostReq('https://api.unify.tn/.netlify/functions/express/createCreator', {
             email: email.value,
             password: password.value,
             username: username.value.toLowerCase(),
@@ -455,7 +455,7 @@
     <div class="signUp_container">
         <div class="left_side">
             <a href="/" use:link class="u_logo">
-                <img src="imgs/icons/logo_transaprent.png" alt="logo" />Unify
+                <img src="imgs/icons/logo.png" alt="logo" />Unify
             </a>
             <div class="title">Dear creator,</div>
             <div class="desc">

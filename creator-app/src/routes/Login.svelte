@@ -328,7 +328,7 @@
     <div class="signUp_container">
         <div class="left_side">
             <a use:link href="/" class="u_logo">
-                <img src="./imgs/icons/logo_transaprent.png" alt="logo" />Unify
+                <img src="./imgs/icons/logo.png" alt="logo" />Unify
             </a>
             <div class="title">Welcome Back 😀</div>
             <div class="desc">
