@@ -32,7 +32,7 @@
     import Policy from "./routes/Policy.svelte"
     export let url = "";
 
-    unfunct()
+    //unfunct()
 </script>
 <Notifications />
 <Router url="{url}">

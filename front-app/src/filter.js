@@ -46,7 +46,6 @@ class Color {
             0.0722 + 0.9278 * (1 - value),
         ]);
     }
-
     sepia(value = 1) {
         this.multiply([
             0.393 + 0.607 * (1 - value),

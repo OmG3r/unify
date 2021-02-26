@@ -305,7 +305,7 @@ document.documentElement.style.setProperty('--AccentColorFilter', filter);
 
 
 
-
+//add 3 zeros after ,
 let  addZeroes = (num) => {   
     let value = Number(num);
 // Split the input string into two arrays containing integers/decimals
@@ -336,7 +336,7 @@ let amounts=["5","10","15","20","50"]
 
 
 let onInput  = (e) =>{
-    donator.amount = addZeroes(e.currentTarget.value)
+    
     let selectedIndex = amounts.indexOf(Number(e.currentTarget.value).toFixed(0));
     if (  selectedIndex == -1){
         let els = document.querySelectorAll('.amountBtn');
@@ -346,6 +346,11 @@ let onInput  = (e) =>{
         });
 
     }else{
+        let els = document.querySelectorAll('.amountBtn');
+        els.forEach((e) =>{
+            e.style.background ='transparent';
+            e.style.color = "black";
+        });
         document.querySelectorAll('.amountBtn')[selectedIndex].style.background=creatorData.accentColor
         document.querySelectorAll('.amountBtn')[selectedIndex].style.color="white"
     } 
@@ -477,7 +482,7 @@ let onInput  = (e) =>{
 
 
                 
-                <input type="radio" name="amounts" id="method1">
+                <input type="radio" name="amounts" id="method1" >
                 <label for="method1" class="method" >
                     <img src="/img/misc/paypal.png" alt="paypal">
                     PayPal
@@ -496,7 +501,7 @@ let onInput  = (e) =>{
             </div>
 
             <div class="submit_button">
-                Tip The Vmaker
+                Donate To {creatorData.name}
             </div>
 
         </div>
