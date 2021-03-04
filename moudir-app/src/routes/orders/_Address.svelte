@@ -249,7 +249,7 @@
             return
         }
         
-        await db.doc('/orders/all').update(docWrite)
+        await db.doc('admin/collections/orders/all').update(docWrite)
         $edit = false
         console.log(info)
         updating = false

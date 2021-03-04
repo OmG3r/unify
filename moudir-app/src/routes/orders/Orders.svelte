@@ -41,7 +41,7 @@
         
         
 
-        unsubscribeDB = db.doc('orders/all').onSnapshot(async (doc) => {
+        unsubscribeDB = db.doc('admin/collections/orders/all').onSnapshot(async (doc) => {
             let data = doc.data()
             let orders = data
             let allCreators =  Object.values(orders).reduce((acc, curr) => {

@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+   	function isAdmin(request) {
+      return request.auth.token.admin == true;
+    }
+    
+    function isCreator(request, creator) {
+    		return request.auth.token.username == creator
+    }
+  
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    match /creators/{creator} {
+    		allow get: if creator != "all" // anybody can read creator profile
+    		allow get, update: if isCreator(request, creator);
+        allow read, write: if isAdmin(request);
+        
+        match /merch/{oneMerch} {
+        	 allow get: if true; // anybody can view creator merch
+         	 allow get, update, create: if  isCreator(request, creator); // creator cannot delete merch, only hide it
+           allow read, write: if isAdmin(request);
+        }
+        
+        match /orders/{order} {
+         	 allow get: if  isCreator(request, creator);
+           allow read, write: if isAdmin(request);
+        }
+    
+    }
+    
+    
+    
+  }
+}

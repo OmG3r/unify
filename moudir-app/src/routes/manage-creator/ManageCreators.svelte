@@ -92,7 +92,7 @@
     let users = writable([])
     let first = true
     document.title = "Unify Moudir - Manage Creators"
-    let unsubscribeDB = db.doc('creators/all').onSnapshot((doc) => {
+    let unsubscribeDB = db.doc('admin/collections/creators/all').onSnapshot((doc) => {
         first = false
         let data = doc.data()
         if (data == undefined) {
@@ -111,14 +111,14 @@
         let batch = db.batch();
         if (user.storeEnabled == true) {
             console.log("1 false")
-            batch.set(db.doc('/creators/all'), {[user.username]: {storeEnabled: false} }, {merge: true})
+            batch.set(db.doc('admin/collections/creators/all'), {[user.username]: {storeEnabled: false} }, {merge: true})
             console.log("2 false")
             batch.set(db.doc('/creators/' + user.username), {storeEnabled: false}, {merge: true})
             console.log("3 false")
             user.storeEnabled = false
         } else {
             console.log("1 true")
-            batch.set(db.doc('/creators/all'), {[user.username]: {storeEnabled: true} }, {merge: true})
+            batch.set(db.doc('admin/collections/creators/all'), {[user.username]: {storeEnabled: true} }, {merge: true})
             console.log("2 true")
             batch.set(db.doc('/creators/' + user.username), {storeEnabled: true}, {merge: true})
             console.log("3 true")

@@ -79,6 +79,10 @@
         flex-direction: row;
         margin: 2px 0 2px 0;
     }
+
+    .single_product {
+        align-items: center;
+    }
     .color_size .color,
     .color_size .size {
         display: flex;

@@ -159,7 +159,12 @@
         submitting = true
         errorMessage = ""
         if ($user) {
-            await $user.sendEmailVerification().then(function() {
+            let params = new URLSearchParams(location.search)
+            let obf = {}
+            if (params.get('backurl')) {
+                obj = "https://unify.tn/" + params.get('backurl')
+            }
+            await $user.sendEmailVerification(obj).then(function() {
                 sent = true
             }).catch(function(error) {
                 sent = false
