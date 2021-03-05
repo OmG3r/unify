@@ -2,19 +2,24 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
    	function isAdmin(request) {
-      return request.auth.token.admin == true;
+      return request.auth != null && request.auth.token.admin == true;
     }
     
     function isCreator(request, creator) {
-    		return request.auth.token.username == creator
+    		return request.auth != null && request.auth.token.username == creator
+    }
+    
+    function isUser(request, userid) {
+    		return request.auth != null && request.auth.uid == userid
     }
   
     match /{document=**} {
+      // by default deny all requests
       allow read, write: if false;
     }
     
     match /creators/{creator} {
-    		allow get: if creator != "all" // anybody can read creator profile
+    		allow get: if true // anybody can read creator profile
     		allow get, update: if isCreator(request, creator);
         allow read, write: if isAdmin(request);
         
@@ -29,6 +34,31 @@ service cloud.firestore {
            allow read, write: if isAdmin(request);
         }
     
+    }
+    
+    match /users/{userid} {
+    		allow write, get: if isUser(request, userid); // user can read and edit their data
+    		allow write, read: if isAdmin(request)
+    }
+    
+    match /admin/collections {
+    		allow read, write: if isAdmin(request)
+        
+        match /orders/all {
+        		allow read, update: if isAdmin(request);
+        }
+        
+        match /orders/{order} {
+        		allow read, write: if order != "all" && isAdmin(request);
+        }
+        
+        match /creators/all {
+        		allow read, update: if isAdmin(request);
+        }
+        
+        match /creators/{doc} {
+        		allow read, write: if doc != "all" && isAdmin(request)
+        }
     }
     
     
