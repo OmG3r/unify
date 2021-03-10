@@ -30,8 +30,6 @@
 
     .p_img {
         background-color: white;
-        width: 90px;
-        height: 90px;
         display: flex;
         justify-content: center;
         align-items: center;

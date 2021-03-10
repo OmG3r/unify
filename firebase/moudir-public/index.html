@@ -5,6 +5,14 @@
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
 
 	<title>Unify Backoffice</title>
+	<script>
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
 	<link rel='icon' type='image/png' href='/favicon.png'>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.0.2/firebase-app.min.js" integrity="sha512-Byap1umx3F72DDA6f4PkbEuvgnUznI988gMUb0pesy9wkEcnmOG3coAPCd2nhdc83ZhBWGB0zTs4PfYkEySZJA==" crossorigin="anonymous"></script>

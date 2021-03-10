@@ -2,11 +2,11 @@ rules_version = '2';
 service firebase.storage {
     match /b/{bucket}/o {
         function isAdmin(request) {
-            return request.auth != null && request.auth.token.admin == true;
+            return request.auth != null && "admin" in request.auth.token && request.auth.token.admin == true;
         }
 
         function isCreator(request, creator) {
-            return request.auth != null && request.auth.token.username == creator;
+            return request.auth != null && "username" in request.auth.token && request.auth.token.username == creator;
         }
 
         match /{allPaths=**} {
@@ -15,22 +15,22 @@ service firebase.storage {
 
 
         match /creators/{creator}/merch/{merchid}/{item} {
-            allow create: if isCreator(request,creator); 
+            allow get, create: if isCreator(request,creator); 
             allow read, write: if isAdmin(request);
         }
 
         match /creators/{creator}/merch/{merchid} {
-            allow create: if isCreator(request,creator); 
+            allow get, create: if isCreator(request,creator); 
             allow read, write: if isAdmin(request);
         }
 
         match /creators/{creator}/merch {
-            allow create: if isCreator(request,creator); 
+            allow get, create: if isCreator(request,creator); 
             allow read, write: if isAdmin(request);
         }
 
         match /creators/{creator} {
-            allow create: if isCreator(request,creator); 
+            allow get, create: if isCreator(request,creator); 
             allow read, write: if isAdmin(request);
         }
 
