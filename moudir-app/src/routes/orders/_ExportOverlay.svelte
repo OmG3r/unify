@@ -77,6 +77,7 @@
     export let selectedItems
     export let showOverlay
     export let carts
+    import ExportExcel from './_ExportPriningExcel.svelte'
     import {onDestroy} from 'svelte'
     let unsubscribeShowOverlay = showOverlay.subscribe((v) => {
         if (v == true) {
@@ -91,63 +92,15 @@
     })
 
 
-    const exportPrinting = () => {
-        /*
-            creator-itemid -> Size -> Color
-        */
-        const hasheCarts = $carts.reduce((acc, curr) => {
-            acc[curr.cartID] = curr
-            return acc
-        }, {})
-        let itemCount = $selectedItems.reduce((itemCount, curr) => {
-            console.log(curr)
-            let [cartID, creator, itemID]  = curr.split('-')
-            let itemRef = creator + "-" + itemID
-            console.log(cartID)
-            console.log(hasheCarts)
-
-            let itemData = hasheCarts[cartID].items[itemRef]
-            if (itemCount[itemRef] == undefined) {
-                itemCount[itemRef] = {}
-                for (const size of itemData.sizes) {
-                    itemCount[itemRef][size] = {}
-                    for (const color of itemData.colors) {
-                        itemCount[itemRef][size][color] = 0 
-                    }
-                }
-            } else if (itemCount[itemRef][itemData.size] == undefined) {
-                itemCount[itemRef][itemData.size] = {}
-                for (const color of itemData.colors) {
-                    itemCount[itemRef][size][color] = 0 
-                }
-            } else if (itemCount[itemRef][itemData.size][itemData.color] == undefined) {
-                itemCount[itemRef][itemData.size][itemData.color] = 0 
-            }
-
-            
-            itemCount[itemRef][itemData.size][itemData.color] += 1
-            return itemCount
-        }, {})
-        console.log(itemCount)
-    }
-    
+   
 </script>
 
 <div on:click={() => {$showOverlay = false}} class="u-overlay">
     <div on:click|preventDefault|stopPropagation class="u-box">
         <h3>Export Selected {$selectedItems.length} Items </h3>
         <div class="u-options">
-            <div on:click={exportPrinting} class="u-option">
-                <div class="u-icon">
-                    <img src="/imgs/misc/hoodie-print.png" alt="print">
-                </div>
-                <div  class="u-text">
-                    Printing
-                </div>
-
-            </div>
+            <ExportExcel {selectedItems} {carts} />
            
-
         </div>
 
 

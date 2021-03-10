@@ -17,6 +17,7 @@ let varprint = {
 export const creations = {
     "EUJHU3": {
         type: "hoodie",
+        quality: "standard",
         name: 'Eco Unisex Hoodie',
         cost: 32,
         print: {
@@ -47,6 +48,7 @@ export const creations = {
     },
     "X8E7FC": {
         type: "hoodie",
+        quality: "Premium",
         name: 'Premium Unisex Hoodie',
         cost: 36,
         profit: 7,
@@ -77,6 +79,7 @@ export const creations = {
     },
     "EF7CEX": {
         type: "hoodie",
+        quality: "standard",
         name: 'Zip Hoodie',
         cost: 32,
         profit: 7,
@@ -107,6 +110,7 @@ export const creations = {
     },
     "25X8E7": {
         type: "sweatshirt",
+        quality: "Premium",
         name: 'Premium Unisex Sweatshirt',
         cost: 17,
         profit: 7,
@@ -137,6 +141,7 @@ export const creations = {
     },
     "NV7ECZ": {
         type: "long-tee",
+        quality: "standard"
         name: 'Classic Long Sleeve Tee',
         disabled: true,
         cost: 14,
@@ -157,6 +162,7 @@ export const creations = {
     },
     "REXE7C": {
         type: "long-tee",
+        quality: "premium"
         name: 'Premium Long Sleeve Tee',
         disabled: true,
         cost: 17,
