@@ -161,7 +161,7 @@ router.post('/createCreator', async(req, res) => {
             }))
         })
         .catch((xerror) => {
-            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error: { xerror } }))
+            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error:  xerror  }))
         })
 })
 router.post('/addOrder', async(req, res) => {
