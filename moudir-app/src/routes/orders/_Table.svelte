@@ -132,6 +132,7 @@
         text: 'In Progress'
     }
     let totalShowing = 0
+    let withQuantity = 0
     let displayCarts = writable([])
     let unsubscribeCarts = carts.subscribe((v) => {
         $filters = $filters
@@ -210,11 +211,16 @@
 
         }
         totalShowing = 0
+        withQuantity = 0
         copy = copy.filter((cart) => {
             if (Object.keys(cart.items).length == 0) {
                 return false
             } else {
                 totalShowing += Object.keys(cart.items).length
+                withQuantity += Object.values(cart.items).reduce((acc , curr ) => {
+                    acc += curr.quantity
+                    return acc
+                }, 0)
             }
             return true
         })
@@ -263,16 +269,24 @@
         if (display.length == 0 || v.length == 0) {
             return true
         }
-        let resp = display.every((item) => v.includes(item))
+        let keys = display.map((cart) => {
+            return Object.keys(cart.items).map((itemKey) => {
+                return cart.cartID + "-" + itemKey
+            })
+        }).flat()
+        console.log(keys)
+        console.log(v)
+        console.log(display)
+        let resp = keys.every((item) => v.includes(item))
         console.log("evaluated to :" + resp)
-        return resp
+        return !resp
     }
 </script>
 
 <div class="u-table">
     <div class="u-header">
         <div class="u-showing-items">
-            Displaying {totalShowing} Items
+            Displaying {totalShowing} Items, Quantity {withQuantity}
 
         </div>
 

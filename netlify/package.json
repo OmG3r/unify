@@ -10,6 +10,9 @@
     "firebase-admin": "^9.4.0",
     "serverless-http": "^2.6.0"
   },
+  "scripts": {
+    "netlify": "netlify deploy --dir=unify-public --prod"
+  },
   "devDependencies": {},
   "repository": {
     "type": "git",

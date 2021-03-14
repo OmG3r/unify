@@ -30,8 +30,6 @@
 
     .p_img {
         background-color: white;
-        width: 90px;
-        height: 90px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -78,6 +76,10 @@
         display: flex;
         flex-direction: row;
         margin: 2px 0 2px 0;
+    }
+
+    .single_product {
+        align-items: center;
     }
     .color_size .color,
     .color_size .size {

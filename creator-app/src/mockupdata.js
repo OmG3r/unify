@@ -17,6 +17,7 @@ let varprint = {
 export const creations = {
     "EUJHU3": {
         type: "hoodie",
+        quality: "standard",
         name: 'Eco Unisex Hoodie',
         metadata: {
             type: "hoodie",
@@ -87,6 +88,7 @@ export const creations = {
     },
     "X8E7FC": {
         type: "hoodie",
+        quality: "Premium",
         name: 'Premium Unisex Hoodie',
         cost: 35,
         metadata: {
@@ -158,6 +160,7 @@ export const creations = {
     },
     "25X8E7": {
         type: "sweatshirt",
+        quality: "Premium",
         name: 'Premium Unisex Sweatshirt',
         metadata: {
             type: "sweatshirt",

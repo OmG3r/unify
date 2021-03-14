@@ -1,42 +1,56 @@
 {
-    "hosting": [{
-            "public": "unify-public",
-            "site": "unify-tn",
-            "ignore": [
-                "firebase.json",
-                "**/.*",
-                "**/node_modules/**"
-            ],
-            "rewrites": [{
-                "source": "**",
-                "destination": "/index.html"
-            }]
-        },
+  "hosting": [
+    {
+      "public": "unify-public",
+      "site": "unify-tn",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
         {
-            "site": "creator-unify-tn",
-            "public": "creator-public",
-            "ignore": [
-                "firebase.json",
-                "**/.*",
-                "**/node_modules/**"
-            ],
-            "rewrites": [{
-                "source": "**",
-                "destination": "/index.html"
-            }]
-        },
-        {
-            "site": "moudir-unify-tn",
-            "public": "moudir-public",
-            "ignore": [
-                "firebase.json",
-                "**/.*",
-                "**/node_modules/**"
-            ],
-            "rewrites": [{
-                "source": "**",
-                "destination": "/index.html"
-            }]
+          "source": "**",
+          "destination": "/index.html"
         }
-    ]
+      ]
+    },
+    {
+      "site": "creator-unify-tn",
+      "public": "creator-public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "site": "moudir-unify-tn",
+      "public": "moudir-public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
 }

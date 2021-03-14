@@ -1,0 +1,53 @@
+<style>
+    header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 8px 12px;
+        height: 54px;
+        align-items: center;
+        position:absolute;
+        right: 30px;
+        top: 20px;
+        z-index: 1;
+    }
+
+    .u-button {
+        padding: 6px 12px;
+        background-color: #46b978;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 3px;
+        height: 55px;
+        width: 185px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .u-button:hover {
+        background-color: #77ca9b;
+    }
+    .u-button img {
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    }
+
+  @media only screen and (max-width: 1180px) {
+      header{
+          display: none;
+      }
+  }
+    
+</style>
+
+
+<script>
+    import {link} from 'svelte-routing'
+    import {accentColor} from "../store.js"
+</script>
+
+<header>
+    <a use:link href="/merch/create" class="u-button" style="background:{$accentColor}"> <img src="/imgs/misc/nav/donation.png" alt=""> Edit Donation Page</a>
+</header>

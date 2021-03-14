@@ -1,7 +1,7 @@
 <script>
     import { link } from "svelte-routing";
-    import ViewNav from '../comps/ViewNav.svelte'
-    import Orders from '../comps/orders.svelte'
+    import EditDonation from '../comps/EditDonation.svelte'
+    import Donations from '../comps/Donations.svelte'
     import {onMount, onDestroy} from 'svelte'
     import {auth, db, user} from '../firebase.js'
     import {uuidToImageLink} from '../utils.js'
@@ -319,10 +319,10 @@
 </style>
 
 <div class="u-view">
-    <ViewNav />
+    <EditDonation />
     <section class="kpi-section">
         <div class="kpi-header">
-            <div class="kpi-header-title">Analytics Overview</div>
+            <div class="kpi-header-title">Donations Overview</div>
             <div class="analytics-filter">
                 <i class="far fa-calendar-alt" />
             <select style="background-color:{$accentColor};">
@@ -357,5 +357,5 @@
         </div>
     </section>
 
-    <Orders {first} {carts}/>
+    <Donations {first}/>
 </div>

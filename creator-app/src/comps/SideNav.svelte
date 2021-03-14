@@ -12,10 +12,16 @@
  
   const navItems = [
     {
-      name: "Overview",
+      name: "Merch Overview",
       routerLink: "/",
       path: "/",
       img: "/imgs/misc/nav/dashboard.png"
+    },
+    {
+      name: "Donation Overview",
+      routerLink: "/donation",
+      path: "/donation",
+      img: "/imgs/misc/nav/donation.png"
     },
     {
       name: "Profile",
@@ -35,6 +41,7 @@
       path: "/design",
       img: "/imgs/misc/nav/design.png"
     }
+
   ];
     
   const mobileNav = [

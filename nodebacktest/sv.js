@@ -91,7 +91,7 @@ app.post('/createCreator', async(req, res) => {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid request data' }, body: req.body }))
         return
     }
-    console.log(req.body.username)
+
     if (req.body.username.match(/^[a-zA-Z0-9]+$/) == null) {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
@@ -120,7 +120,7 @@ app.post('/createCreator', async(req, res) => {
                 storeEnabled: false
             })
             promises.push(pro)
-            pro = admin.firestore().doc('/creators/all').set({
+            pro = admin.firestore().doc('admin/collections/creators/all').set({
                 [req.body.username]: {
                     email: req.body.email,
                     persoName: req.body.persoName,
@@ -139,7 +139,7 @@ app.post('/createCreator', async(req, res) => {
             }))
         })
         .catch((xerror) => {
-            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error: { xerror } }))
+            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error:  xerror }))
         })
 })
 
@@ -208,12 +208,14 @@ app.post('/addOrder', async(req, res) => {
 
 
     const batch = db.batch();
-    batch.set(db.collection('orders').doc(data.cart.cartID), xdata)
+
+    
+    batch.set(db.doc('admin/collections/orders/' + data.cart.cartID), xdata)
         //db.collection('orders').doc(data.cart.cartID).set(xdata);
         /*db.collection('orders').doc('all').set({
             [data.cartID]: xdata
         }, { merge: true })*/
-    batch.set(db.collection('orders').doc('all'), {
+    batch.set(db.doc('admin/collections/orders/all'), {
             [xdata.cartID]: xdata
         }, { merge: true })
         /*db.collection('users').doc(userData.uid).set({
