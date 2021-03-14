@@ -5,7 +5,7 @@
         "build": "rollup -c",
         "dev": "rollup -c -w",
         "start": "sirv public --host 0.0.0.0 --port 2225 --single",
-        "firebase": "npm run build && cp  ./public/build/bundle.css ./public/build/bundle.js ../firebase/creator-public && cd ../firebase && firebase deploy --only hosting:creator-unify-tn"
+        "firebase": "npm run build && cp  ./public/build/bundle.css ./public/build/bundle.js ../firebase/creator-public/build && cd ../firebase && firebase deploy --only hosting:creator-unify-tn"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^17.0.0",
