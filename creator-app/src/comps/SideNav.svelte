@@ -17,12 +17,14 @@
       path: "/",
       img: "/imgs/misc/nav/dashboard.png"
     },
+    /*
     {
       name: "Donation Overview",
       routerLink: "/donation",
       path: "/donation",
       img: "/imgs/misc/nav/donation.png"
     },
+    */
     {
       name: "Profile",
       routerLink: "/profile",

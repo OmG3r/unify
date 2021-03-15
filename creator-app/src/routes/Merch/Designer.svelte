@@ -432,8 +432,7 @@
         merchData.price = $priceCalculatorData.price
         merchData.profit = $priceCalculatorData.profit
         merchData.sizes = mockup.sizes
-        merchData.type = mockup.type
-        merchData.quality = mockup.quality
+
         let uploadImage = (f, npath) => {
             return new Promise(async (resolve, reject) => {
                 let path = 'creators/' + npath

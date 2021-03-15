@@ -114,7 +114,9 @@
         justify-content: center;
         align-items: center;
     }
-    
+    p {
+        margin: 4px 0;
+    }
 </style>
 
 <script>
@@ -122,6 +124,7 @@
     import {onMount, onDestroy} from 'svelte'
     import {navigate, link} from 'svelte-routing'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
+    import {getBackurl} from '../utils.js'
     let unsubscribeUser = () => {};
     onMount(() => {
         document.title = "Unify - Email Verification"
@@ -160,15 +163,18 @@
         errorMessage = ""
         if ($user) {
             let params = new URLSearchParams(location.search)
-            let obf = {}
-            if (params.get('backurl')) {
-                obj = "https://unify.tn/" + params.get('backurl')
+            let obj = {
+                url: "https://unify.tn" + getBackurl()
             }
+            console.log("sending email")
             await $user.sendEmailVerification(obj).then(function() {
                 sent = true
+                console.log("sent")
             }).catch(function(error) {
                 sent = false
-                errorMessage = error.errorMessage
+                errorMessage = error.message
+                console.log(error)
+                console.log("failed")
             // An error happened.
             });
         }
@@ -201,7 +207,9 @@
     {/if}
     {#if sent}
         <div class="success-container">
-            Check your email.
+            <p>Check your email: {$user.email}.</p>
+            <p><b>Check your junk emails</b></p>
+            <p>You can safely close this tab</p>
         </div>
     {/if}
 

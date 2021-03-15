@@ -105,7 +105,6 @@
             try {
                 await $user.updatePhoneNumber(credential)
                 console.log($user)
-                await db.doc('admin/collections/creators/all').set({[$user.claims.username]: {phoneNumber: $user.phoneNumber}}, {merge: true})
                 succOperation = true
                 let params = new URLSearchParams(location.search)
                 if (params.get('backurl') != null) {

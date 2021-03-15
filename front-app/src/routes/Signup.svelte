@@ -4,10 +4,12 @@
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import SignInProviders from '../components/misc/SigninProviders.svelte'
     import {onMount, onDestroy} from 'svelte'
-import { lang } from '../store.js';
+    import { lang } from '../store.js';
+    import {getBackurl} from '../utils.js'
     let unsubscribeUser = () => {} ;
     let backurl = "";
     let params
+    let newRegister = false
     onMount(() => {
         document.title = "Unify - Signup"
         params = new URLSearchParams(location.search)
@@ -16,11 +18,20 @@ import { lang } from '../store.js';
             if (v == 0) {
                 console.log("uninited")
             } else if (v) {
-                if (params.get('backurl') != null) {
-                    navigate(params.get('backurl'), {replace:true} )
+                if (newRegister == false) {
+                    if (params.get('backurl') != null) {
+                        navigate(params.get('backurl'), {replace:true} )
+                    } else {
+                        navigate("/myaccount", {replace:true} )
+                    }
                 } else {
-                    navigate("/myaccount", {replace:true} )
+                    if (params.get('backurl')) {
+                        navigate('/phoneverification?backurl='+params.get('backurl'),{replace:true})
+                    } else {
+                        navigate('/phoneverification', {replace:true})
+                    }
                 }
+                
             }
         })
     })
@@ -28,7 +39,7 @@ import { lang } from '../store.js';
     onDestroy(() => {
         unsubscribeUser()
     })
-
+    
     let sub = false
     const doSubmit = async () => {
         sub = true
@@ -48,15 +59,11 @@ import { lang } from '../store.js';
             })
              let params = new URLSearchParams(location.search)
            
-            setTimeout(() => {
-                if (params.get('backurl')) {
-                    navigate('/phoneverification?backurl='+params.get('backurl'),{replace:true})
-                } else {
-                    navigate('/phoneverification', {replace:true})
-                }
-                
-                sub = false
-            },300)
+            
+            newRegister = true
+            
+            sub = false
+        
            
         })
         .catch((error) => {

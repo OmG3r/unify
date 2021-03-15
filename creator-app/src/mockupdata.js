@@ -282,11 +282,22 @@ export const creations = {
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
         imgs: {
-            front: '/imgs/clothes/t-shirts/t-shirt-premium-front.png',
-            back: '/imgs/clothes/t-shirts/t-shirt-premium-back.png'
+            front: '/imgs/clothes/polo/polo-half-normal-front.png',
+            back: '/imgs/clothes/polo/polo-half-normal-back.png'
         },
         colors: ["Black", "White", "Green", "Red"],
-        printable: varprint
+        printable: {
+            front: {
+                top: 130,
+                width: 255,
+                height: 300
+            },
+            back: {
+                top: 120,
+                width: 250,
+                height: 330
+            }
+        }
     },
     "HUF7BZ": {
         type: "polo",
@@ -306,11 +317,22 @@ export const creations = {
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
         imgs: {
-            front: '/imgs/clothes/t-shirts/t-shirt-premium-front.png',
-            back: '/imgs/clothes/t-shirts/t-shirt-premium-back.png'
+            front: '/imgs/clothes/polo/polo-full-normal-front.png',
+            back: '/imgs/clothes/polo/polo-full-normal-back.png'
         },
         colors: ["Black", "White", "Green", "Red"],
-        printable: varprint
+        printable: {
+            front: {
+                top: 150,
+                width: 210,
+                height: 300
+            },
+            back: {
+                top: 120,
+                width: 210,
+                height: 330
+            }
+        }
     },
 }
 

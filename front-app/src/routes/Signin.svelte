@@ -9,6 +9,7 @@ import { lang } from '../store.js';
     let sub = false
     let params
     let backurl = ''
+    let newLogin = false
     onMount(() => {
         params = new URLSearchParams(location.search)
         backurl = params.get('backurl') || ''
@@ -17,12 +18,16 @@ import { lang } from '../store.js';
             if (v == 0) {
                 console.log("uninited")
             } else if (v) {
-
-                if (params.get('backurl') != null) {
-                    navigate(params.get('backurl'), {replace:true} )
+                if (newLogin == false) {
+                    if (params.get('backurl') != null) {
+                        navigate(params.get('backurl'), {replace:true} )
+                    } else {
+                        navigate("/myaccount", {replace:true} )
+                    }
                 } else {
-                    navigate("/myaccount", {replace:true} )
+                    
                 }
+                
             }
         })
     })
@@ -39,7 +44,7 @@ import { lang } from '../store.js';
         let lform = Object.fromEntries(Object.entries(form).map(([key, el]) => [key, el.value]))
         await firebase.auth().signInWithEmailAndPassword(lform.email, lform.password)
         .then((user) => {
-            
+            newLogin = true
             sub = false
         })
         .catch((error) => {

@@ -22,10 +22,10 @@
 
   
     //change the global(:root) var of css
-    document.documentElement.style.setProperty('--AccentColor', hexToRgb(creatorData.accentColor));
+   
     let filter = convert(creatorData.accentColor).replace('filter:','').replace(";","");
     
-	document.documentElement.style.setProperty('--AccentColorFilter', filter);
+	
     console.log(filter);
     
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
@@ -422,6 +422,7 @@
                                         title: 'success',
                                         content: 'Article Added to Cart',
                                     });
+                                    navigate("/cart");
                                 }} />
                         </div>
                         <div
