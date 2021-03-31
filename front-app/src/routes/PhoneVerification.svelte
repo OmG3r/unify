@@ -286,6 +286,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 2;
     }
     .inputContainer i {
         position: absolute;
@@ -315,6 +316,7 @@
         border: 1px solid rgba(var(--userColor), 0.5);
     }
     .verification_btns {
+        z-index: 2;
         display: flex;
         flex-direction: row-reverse;
         margin-top: 15px;
