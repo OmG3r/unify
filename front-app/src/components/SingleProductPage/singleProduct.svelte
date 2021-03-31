@@ -86,6 +86,7 @@
             title: "Success",
             content: "Item added to cart",
         });
+        navigate("/cart")
     };
     console.log("doing init");
     let show = false;

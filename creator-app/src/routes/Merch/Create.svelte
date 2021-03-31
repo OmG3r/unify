@@ -95,6 +95,10 @@
                 
             }
         },
+        "t-shirt": {
+            title: "T-shirts",
+            items: {}
+        },
         "long-tee": {
             title: "Long Sleeve Tee",
             items: {
@@ -104,7 +108,12 @@
         "sweatshirt": {
             title: "Sweatshirts",
             items: {}
+        },
+        "polo": {
+            title: "Polos",
+            items: {}
         }
+        
     }
 
 
@@ -112,6 +121,7 @@
 
     Object.entries(creations).filter(([key, item]) => item.disabled !== true).reduce((acc, [key, curr]) => {
         curr.id = key
+        console.log(curr.type)
         categories[curr.type].items[key] = curr
     }, {})
 

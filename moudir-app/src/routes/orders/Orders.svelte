@@ -43,6 +43,11 @@
 
         unsubscribeDB = db.doc('admin/collections/orders/all').onSnapshot(async (doc) => {
             let data = doc.data()
+            if (data == undefined || data == null) {
+                $carts = []
+                first = false
+                return
+            }
             let orders = data
             let allCreators =  Object.values(orders).reduce((acc, curr) => {
                 for( let [model, item] of Object.entries(curr.items)) {

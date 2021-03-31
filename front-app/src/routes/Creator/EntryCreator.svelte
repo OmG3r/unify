@@ -29,6 +29,7 @@
     console.log("entry work")
     let validated = false
     onMount(async () => {
+        params.userid = params.userid.toLowerCase()
         let data = await dbWrapper.get('/creators/' + params.userid, false, true)
         if (Object.keys(data).length == 0) {
             console.log("no store")

@@ -1,6 +1,6 @@
 <script>
     import { lang } from "../store.js";
-    import { socialMedias } from "../utils.js";
+    import { socialMedias, getBackurl } from "../utils.js";
     import {link,navigate} from 'svelte-routing'
     import Cart from './misc/Cart.svelte'
     import {user} from '../firebase.js'
@@ -717,9 +717,13 @@
             
         {/if}
         {#if !signedin}
-            <a use:link href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
             <a
-                use:link
+            
+            on:click|preventDefault|stopPropagation={() => {navigate('/signin?backurl=' + window.location.pathname)}}
+            href="/signin">{{ en: 'Sign in', fr: 'Se connecter' }[$lang]}</a>
+            <a
+                
+                on:click|preventDefault|stopPropagation={() => {navigate('/signup?backurl=' + window.location.pathname)}}
                 href="/signup">{{ en: 'Register', fr: "S'inscrire" }[$lang]}
             </a>
         {/if}

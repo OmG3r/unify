@@ -68,7 +68,7 @@ import Summary from './orderSummary.svelte';
         width: 100%;
         min-height: 100vh;
     }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1300px) {
     .container {
         
         padding: 100px 20px 40px 40px;

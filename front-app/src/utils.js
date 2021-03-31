@@ -7,14 +7,14 @@ export const uuidToImageLink = (uuid, path) => {
 }
 export const socialMedias = [
     { type: 'facebook' },
-    { type: 'youtube'},
+    { type: 'youtube' },
     { type: 'instagram' },
-    { type: 'twitch'},
+    { type: 'twitch' },
     { type: 'nimo' },
     { type: 'twitter' },
     { type: 'Tiktok' },
     { type: 'baaz' },
-    { type: 'pinterest'}
+    { type: 'pinterest' }
 ]
 
 export const colors = {
@@ -73,4 +73,13 @@ export const generateDeliveryDate = () => {
     let maxFormat = String(days[maxDate.getDay()] + " " + maxDate.getDate() + " " + months[minDate.getMonth()])
 
     return [minFormat, maxFormat]
+}
+
+export const getBackurl = () => {
+    let params = new URLSearchParams(location.search)
+    if (params.get('backurl')) {
+        return params.get('backurl')
+    } else {
+        return ""
+    }
 }

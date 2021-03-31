@@ -14,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore()
 export const auth = firebase.auth()
+export const storage = firebase.storage()
     /*      0 => uninitialized 
             undefined => there is no user logged in
             else (object) => user logged in

@@ -737,7 +737,7 @@ class="u-view">
                     class="action">{laction}</div>
     
                 {/each}
-                <div on:click={exportClip} class="action">pictures</div>
+                <!--<div on:click={exportClip} class="action">pictures</div>-->
                
             </div>
         </div>

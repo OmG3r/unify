@@ -128,12 +128,26 @@
         }
         updating = true;
         if (typeof profile.logo != "string") {
+            try {
+                await storage.ref().child("creators/" + $user.claims?.username + "/logo").delete()
+            } catch {
+
+            }
+            console.log("uploading logo")
             profile.logo = (
                 await uploadImage(profile.logo, $user.claims?.username + "/logo")
             ).split("token=", 2)[1];
         }
-
+        console.log(profile.banner)
         if (typeof profile.banner != "string") {
+            try {
+                await storage.ref().child("creators/" + $user.claims?.username + "/banner").delete()
+                
+            } catch {
+
+            }
+            
+            console.log("uploading banner")
             profile.banner = (
                 await uploadImage(
                     profile.banner,
@@ -141,6 +155,7 @@
                 )
             ).split("token=", 2)[1];
         }
+        console.log("got banner:" + profile.banner)
         let minorModification = false
         if (persoName != $user.displayName) {
             minorModification = true
@@ -197,7 +212,7 @@
                 content: "Profile updated",
             });
         }
-
+        console.log(profile)
         $user = {
             ...$user,
             docData: {
@@ -627,7 +642,7 @@
                 <div
                     crossorigin="anonymous"
                     class="banner-image"
-                    style="background-image:url({uuidToImageLink(profile.logo, 'creators/' + $user.claims?.username + '/banner')})"
+                    style="background-image:url({uuidToImageLink(profile.banner, 'creators/' + $user.claims?.username + '/banner')})"
                      />
             {:else if typeof profile.banner != 'string'}
                 <div
@@ -748,12 +763,7 @@
                         on:input={(event) => {persoName = event.target.value}}
                         value={$user.displayName ? $user.displayName : ''} />
                 </div>
-                <div class="input">
-                    <div class="title" style="color:{$accentColor}">
-                        Date of Birth
-                    </div>
-                    <input type="date" class="birth_date" />
-                </div>
+                
             </div>
         </div>
 
