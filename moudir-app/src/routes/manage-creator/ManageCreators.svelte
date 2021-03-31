@@ -22,6 +22,9 @@
     .u-head-email, .u-body-email {
         width: 30%
     }
+    .u-head-phone, .u-body-phone {
+        width: 10%
+    }
     .u-head-date-join, .u-body-date-join {
         width: 15%;
     }
@@ -143,6 +146,9 @@
             <div class="u-head-email">
                 Email
             </div>
+            <div class="u-head-phone">
+                Phone
+            </div>
             <div class="u-head-date-join">
                 Date Join
 
@@ -159,6 +165,9 @@
                 </div>
                 <div class="u-body-email">
                     {user.email}
+                </div>
+                <div class="u-body-phone">
+                    {user.phoneNumber ? user.phoneNumber : "None"}
                 </div>
                 <div class="u-body-date-join">
                     {#if user.timestamp?.seconds}

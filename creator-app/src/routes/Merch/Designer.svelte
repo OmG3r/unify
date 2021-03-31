@@ -222,6 +222,24 @@
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../../comps/MaterialSpinner.svelte'
     export let params
+
+
+    const unsubUser = user.subscribe((v) => {
+        if (v) {
+            if (v.docData?.storeEnabled == false) {
+                notification.set({
+                    accentColor: "alert",
+                    title: "Error",
+                    content: "Your store must be enabled to create merch" 
+                })
+                navigate('/merch/all', {replace: true})
+            }
+        }
+    })
+    onDestroy(() => {
+        unsubUser() 
+    })
+
     console.log(params)
     console.log(creations)
     const MAX_IMAGE_SIZE_MB = 6
@@ -432,7 +450,7 @@
         merchData.price = $priceCalculatorData.price
         merchData.profit = $priceCalculatorData.profit
         merchData.sizes = mockup.sizes
-
+        merchData.metadata = mockup.metadata
         let uploadImage = (f, npath) => {
             return new Promise(async (resolve, reject) => {
                 let path = 'creators/' + npath

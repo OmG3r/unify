@@ -348,6 +348,7 @@
     let password = ""
     let re_password =""
     let email = ""
+    let phone = ""
     let errorMessage = ""
     let doSubmit = async () => {
         if (submitting) {
@@ -383,7 +384,8 @@
             email: email.value,
             password: password.value,
             username: username.value.toLowerCase(),
-            persoName: name.value
+            persoName: name.value,
+            phone: phone.value
         })
 
         let data = await resp.json()
@@ -496,19 +498,19 @@
                     <img src="/imgs/misc/login_register/envelope.png" alt="email">
                     <input required bind:this={email} type="email" class="email" placeholder="Email" />
                 </div>
-                <!--                <div class="input">
-                    <i class="fas fa-phone" />
+                <div class="input">
+                    <img src="/imgs/misc/login_register/phone.png" alt="email">
                     <input
-                        required bind:this={form.phone}
-                        type="phone"
+                        required bind:this={phone}
+                        type="text"
                         class="phone"
                         placeholder="Phone Number"
                     />
                 </div>
-                -->
+                
 
                 <div class="input">
-                    <img src="/imgs/misc/login_register/user.png" alt="email">
+                    <img src="/imgs/misc/login_register/user.png" alt="username">
                     <input required bind:this={username} name="email" type="text" class="username" placeholder="Username" />
                 </div>
 

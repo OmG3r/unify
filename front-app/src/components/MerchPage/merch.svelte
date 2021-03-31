@@ -419,10 +419,18 @@
                                     });
                                     notification.set({
                                         accentColor: 'success',
-                                        title: 'success',
+                                        title: 'Success',
                                         content: 'Article Added to Cart',
+                                        uniqueActions: [
+                                            {
+                                                text: 'Checkout',
+                                                func: () => {
+                                                    navigate("/cart");
+                                                }
+                                            }
+                                        ]
                                     });
-                                    navigate("/cart");
+                                    
                                 }} />
                         </div>
                         <div

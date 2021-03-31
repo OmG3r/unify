@@ -84,10 +84,11 @@
 
 <script>
     import ImageBackground from '../../comps/ImageBackground.svelte'
-
-    import {textToHex, calculateBasePrice} from '../../utils.js'
+    import {user} from '../../firebase.js'
+    import {textToHex, calculateBasePrice, notification} from '../../utils.js'
     import {creations, taxRate} from '../../mockupdata.js'
-    import {link} from 'svelte-routing'
+    import {link, navigate} from 'svelte-routing'
+    import {onDestroy} from 'svelte'
     const categories = {
         "hoodie": {
             title: "Hoodies",
@@ -126,6 +127,21 @@
     }, {})
 
     console.log(categories)
+    const unsubUser = user.subscribe((v) => {
+        if (v) {
+            if (v.docData?.storeEnabled == false) {
+                notification.set({
+                    accentColor: "alert",
+                    title: "Error",
+                    content: "Your store must be enabled to create merch" 
+                })
+                navigate('/merch/all', {replace: true})
+            }
+        }
+    })
+    onDestroy(() => {
+        unsubUser() 
+    })
 </script>
 
 <div class="u-view">
@@ -155,7 +171,7 @@
             
                                 </div>
                                 <p class="u-price">
-                                    Base Cost: {calculateBasePrice({cost: item.cost, delivery: item.delivery, profit: item.profit, ceil: true})} TND
+                                    Base Price: {calculateBasePrice({cost: item.cost, delivery: item.delivery, profit: item.profit, ceil: true})} TND, <span style="color: #45b877" >Delivery included</span>
 
                                 </p>
                                 <p>{item.material}</p>

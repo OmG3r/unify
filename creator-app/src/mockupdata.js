@@ -26,10 +26,10 @@ export const creations = {
         },
         cost: 22,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
-        profit: 5,
+        profit: 13,
         delivery: 8,
         material: 'S-XL, 100% cotton, comfort',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -60,11 +60,11 @@ export const creations = {
             category: "zip"
         },
         cost: 25,
-        profit: 5,
+        profit: 13,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
         sizes: ['XS', 'S', 'M', 'L', 'X', 'XL'],
@@ -96,10 +96,10 @@ export const creations = {
             quality: "basic",
             category: "sweater"
         },
-        profit: 6,
+        profit: 15,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         delivery: 8,
         material: 'Regular fit, premium poly/cotton blend, white drawcords, unisex',
@@ -132,11 +132,11 @@ export const creations = {
             category: "sweater"
         },
         cost: 22,
-        profit: 4,
+        profit: 12,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Slim fit, cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -168,11 +168,11 @@ export const creations = {
             category: "sweater"
         },
         cost: 35,
-        profit: 7,
+        profit: 15,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Slim fit, premium soft cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -203,11 +203,11 @@ export const creations = {
             category: "tee"
         },
         cost: 12,
-        profit: 3,
+        profit: 6,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -238,11 +238,11 @@ export const creations = {
             category: "tee"
         },
         cost: 10,
-        profit: 2,
+        profit: 6,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -273,11 +273,11 @@ export const creations = {
             category: "half-sleeve"
         },
         cost: 19,
-        profit: 4,
+        profit: 7,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -308,11 +308,11 @@ export const creations = {
             category: "long-sleeve"
         },
         cost: 22,
-        profit: 4,
+        profit: 7,
         delivery: 8,
         print: {
-            front: 9,
-            back: 9
+            front: 8,
+            back: 8
         },
         material: 'Regular fit, 100% cotton, unisex',
         sizes: ['S', 'M', 'L', 'X', 'XL'],

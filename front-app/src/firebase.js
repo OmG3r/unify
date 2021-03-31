@@ -31,7 +31,7 @@ auth.onAuthStateChanged(async function(kuser) {
     }
 });
 
-let cacheHours = 3
+let cacheHours = 0.5
 class FirebaseDBWrapper {
     constructor(db) {
         this.db = db
@@ -67,7 +67,7 @@ class FirebaseDBWrapper {
             let pData = JSON.parse(lData)
             if (pData.data) {
                 if (((Date.now() / 1000) - pData.timestamp) < cacheHours * 3600) {
-                    console.log("serving from localStorage")
+                    console.log("serving from localStorage for " + path)
                     return showCached ? {...pData.data, fromCache: true } : pData.data
                 }
             } else {
@@ -88,6 +88,7 @@ class FirebaseDBWrapper {
                 data: docData,
                 timestamp: Date.now() / 1000
             }
+            console.log("from db for " + path)
             localStorage.setItem(path, JSON.stringify(writing))
                 //console.log("serving from db and saving")
             return showCached ? {...docData, fromCache: false } : docData
