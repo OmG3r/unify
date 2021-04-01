@@ -72,3 +72,8 @@ export const calculateBasePrice = ({ cost, profit, delivery, taxRate, clicToPay,
 
     return calc
 }
+
+export const round = (value, precision) => {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}
