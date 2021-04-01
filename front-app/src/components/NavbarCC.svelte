@@ -638,10 +638,10 @@
     @media only screen and (max-width: 800px) {
         .u-logo span{
             width: max-content;
-            top: 70%;
+            top: 75%;
         }
         .u-logo .userSocial{
-            top: 75%;
+            top: 80%;
         }
     }
         
