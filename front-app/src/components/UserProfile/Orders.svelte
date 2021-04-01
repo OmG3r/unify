@@ -5,6 +5,7 @@
     import { link } from "svelte-routing";
     import {onDestroy } from 'svelte'
     import MaterialSpinner from '../misc/MaterialSpinner.svelte'
+import { lang } from "../../store.js";
 
     export let params = {};
     let loaded = false;
@@ -456,7 +457,12 @@
 </style>
 
 <div class="profile_container">
-    <div class="big_title">My Orders</div>
+    <div class="big_title">
+        {{
+            'fr': 'Mes Commandes',
+            'en': 'My Orders'
+        }[$lang]}
+        </div>
     <hr class="hr_to_remove"/>
 
     {#if initialized == false}

@@ -83,6 +83,7 @@
         --AccentColor: 70, 185, 120;
         --AccentColorFilter: 70, 185, 120;
     }
+   
     nav {
         display: grid;
         color: white;
@@ -378,7 +379,7 @@
         width:25px;
     }
     .userSocial img:hover {
-        color: rgb(var(--AccentColor));
+        filter : none;
         cursor: pointer;
     }
 

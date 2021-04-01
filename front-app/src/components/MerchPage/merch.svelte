@@ -22,9 +22,8 @@
 
   
     //change the global(:root) var of css
-   
     let filter = convert(creatorData.accentColor).replace('filter:','').replace(";","");
-    
+    document.documentElement.style.setProperty('--AccentColorFilter',filter);
 	
     console.log(filter);
     
@@ -80,7 +79,7 @@
             notification.set({
                 accentColor: "success",
                 title: "success",
-                content: "Article Added to WishList",
+                content: { en: 'Article Added to Wishlist', fr: "Article ajouté à la Liste d'envies" },
             });
             db.collection("users")
                 .doc($user.uid)
@@ -247,33 +246,7 @@
 
     /******************end Budget slider******************/
 
-    @media only screen and (max-width: 1550px) {
-        .u_products {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-    }
-    @media only screen and (max-width: 1180px) {
-        .u_products {
-            grid-template-columns: 1fr 1fr;
-            flex: 0 0 45%;
-            padding: 0px;
-        }
-        .container {
-            grid-template-columns: none;
-            padding: 20px;
-        }
-
-        .u_filters {
-            flex-direction: row;
-            padding: 0 0 50px 0px;
-        }
-    }
-    @media only screen and (max-width: 800px) {
-        .u_products {
-            grid-template-columns: 1fr;
-            flex: 0 0 100%;
-        }
-    }
+  
 
     .social_icons {
         display: flex;
@@ -285,6 +258,7 @@
     .social_icons a {
         padding: 5px;
     }
+    
     .social_icons img {
         width: 35px;
         margin-right: 15px;
@@ -294,15 +268,14 @@
         cursor: pointer;
     }
     .u_info {
-        padding: 30px;
         color: #181d22;
     }
     .u_desc {
         color:#7b7f84;
-        line-break: anywhere;
     }
     .title_container {
         position: relative;
+
     }
     .title {
         background-color: rgba(var(--AccentColor), 1);
@@ -351,6 +324,37 @@
     .color_border:hover,
     .color_border.active {
         border-width: 2px !important;
+    }
+
+    @media only screen and (max-width: 1550px) {
+        .u_products {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    @media only screen and (max-width: 1180px) {
+        .u_products {
+            grid-template-columns: 1fr 1fr;
+            flex: 0 0 45%;
+            padding: 0px;
+        }
+        .container {
+            grid-template-columns: none;
+            padding: 20px;
+        }
+
+        .u_filters {
+            flex-direction: row;
+            padding: 0 0 50px 0px;
+        }
+    }
+    @media only screen and (max-width: 800px) {
+        .u_products {
+            grid-template-columns: 1fr;
+            flex: 0 0 100%;
+        }
+        .title {
+            font-size: 18px;
+        }
     }
 </style>
 
@@ -420,10 +424,10 @@
                                     notification.set({
                                         accentColor: 'success',
                                         title: 'Success',
-                                        content: 'Article Added to Cart',
+                                        content:{ en: 'Article Added to Cart', fr: 'Article ajouté au panier ' }[$lang],
                                         uniqueActions: [
                                             {
-                                                text: 'Checkout',
+                                                text: { en: 'Checkout', fr: 'Commander' }[$lang],
                                                 func: () => {
                                                     navigate("/cart");
                                                 }

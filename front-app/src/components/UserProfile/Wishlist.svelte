@@ -1,7 +1,7 @@
 <script>
     import { dbWrapper, user, db } from "../../firebase.js";
     import { uuidToImageLink, socialMedias,notification, colors } from "../../utils.js";
-    import {cart} from '../../store.js'
+    import {cart, lang} from '../../store.js'
     import { link } from "svelte-routing";
     import { onMount, onDestroy } from "svelte";
 
@@ -248,7 +248,11 @@
 </style>
 
 <div class="profile_container">
-    <div class="big_title">My Wishlist</div>
+    <div class="big_title">
+        {{
+            'fr': "Ma Liste D'envie",
+            'en': 'My Wishlist'
+        }[$lang]}</div>
     <hr />
 
     <div class="product_container">

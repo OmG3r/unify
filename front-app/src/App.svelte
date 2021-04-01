@@ -123,7 +123,6 @@
     </Route>
     -->
     <Route let:params path="/:userid/*">
-        
         <RouteCreator  {params} />
         
     

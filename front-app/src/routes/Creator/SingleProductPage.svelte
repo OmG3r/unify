@@ -19,6 +19,7 @@
     import {dbWrapper} from '../../firebase.js'
     import {navigate} from 'svelte-routing'
     import MaterialSpinner from '../../components/misc/MaterialSpinner.svelte'
+    import FreeDeliveryBar from "../../components/FreeDeliveryBar.svelte"
     import {uuidToImageLink} from '../../utils'
     let validated = false
     let data = {}
@@ -48,6 +49,7 @@
 </script>
 {#if validated}
     <NavbarCC {creatorData} />
+    <FreeDeliveryBar {creatorData}/>
     <Single {params} {creatorData} />
 {:else}
     <div class="u-view">

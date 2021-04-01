@@ -20,6 +20,8 @@
     import MaterialSpinner from '../../components/misc/MaterialSpinner.svelte'
     import {uuidToImageLink} from '../../utils.js'
     import Navbar from "../../components/NavbarCC.svelte";
+    import FreeDeliveryBar from "../../components/FreeDeliveryBar.svelte"
+
 
     let validated = false;
     let data = {}
@@ -50,6 +52,7 @@
 
 {#if validated}
     <Navbar bind:creatorData={data}/>
+    <FreeDeliveryBar creatorData={data}/>
     <Merch creatorData={data} {params}/>
 
 {:else}

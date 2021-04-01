@@ -84,10 +84,10 @@
         notification.set({
             accentColor: "success",
             title: "Success",
-            content: "Item added to cart",
+            content: { en: 'Article Added to Cart', fr: 'Article ajouté au panier ' },
             uniqueActions: [
                 {
-                    text: 'Checkout',
+                    text: { en: 'Colors', fr: 'couleurs' }[$lang],
                     func: () => {
                         navigate("/cart");
                     }
@@ -175,6 +175,46 @@
     };
     console.log("ended script");
    
+
+    let topFinal =0;
+    let leftFinal= 0;
+    let scale=1;
+
+	let duration = 500;
+   let mouse_position = (e,DifWidth)=>{
+    
+    let myElement = e.target.getBoundingClientRect();
+    
+    let marginTop = e.target.offsetTop;
+    let marginLeft = e.target.offsetLeft;
+    console.log("margin:" + marginTop,marginLeft);
+    let body = document.body;
+    let docEl = document.documentElement;
+    let scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    let scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    let clientTop = docEl.clientTop || body.clientTop || 0;
+    let clientLeft = docEl.clientLeft || body.clientLeft || 0;
+    //position of element
+    let top  = myElement.top +  scrollTop - clientTop;
+    let left = myElement.left + scrollLeft - clientLeft;
+     
+   
+    let winEv = window.event;
+    //position of mouse
+    let posY = winEv.clientY + scrollTop - clientTop ; 
+    let posX = winEv.clientX  + scrollLeft - clientLeft  ;
+    
+    topFinal = top - posY + DifWidth
+    leftFinal= left  - posX + DifWidth
+    console.log(topFinal ,leftFinal)
+    /* console.log("top : " + top,"left : " +left);
+    console.log(posY,posX) 
+    console.log(topFinal ,leftFinal) */
+    scale=2.5
+    
+   }
+   
 </script>
 
 <style>
@@ -230,6 +270,23 @@
         bottom: 0;
         position: absolute;
         width: 50vw;
+        z-index:9;
+    }
+    .p_main_img .gadgad{
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        width: 50vw;
+        height: 50vw;
+        z-index:10;
+        border-radius: 50%;
+       /*  background-color: red; */
+
     }
     .p_imgs .p_slider {
         display: flex;
@@ -271,14 +328,13 @@
         margin-left: 50%;
         top: 50%;
         transform: translate3d(-50%, -50%, 0);
+        overflow: hidden;
     }
 
     .p_title {
         color: #181d22;
         font-size: 35px;
         font-weight: 700;
-        width: max-content;
-        margin-right: 20px;
     }
     .p_price {
         color: #181d22;
@@ -318,6 +374,10 @@
     .p_size {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .p_size .title{
+        margin:8px 10px 0 0;
     }
     .sizes {
         display: grid;
@@ -331,7 +391,7 @@
         height: 35px;
         border-radius: 10px;
         color: white;
-        margin: 0 5px 0 5px;
+        margin: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -381,6 +441,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        flex-wrap: wrap;
     }
     .p_quantity .input_number {
         display: flex;
@@ -390,6 +451,7 @@
         border-radius: 15px;
         height: 40px;
         width: max-content;
+        margin: 5px;
     }
     .input_number .arrow_left,
     .input_number .arrow_right {
@@ -485,7 +547,6 @@
         align-items: center;
         cursor: pointer;
         position: relative;
-        
         margin-left: auto
     }
     .wishlist_btn:focus {
@@ -620,6 +681,20 @@
             margin-top: 25px;
         }
     }
+    @media only screen and (max-width: 800px) {
+        .p_container{
+            padding: 0;
+        }
+        .p_title{
+            font-size: 30px;
+        }
+        .p_subTitle{
+            font-size: 25px;
+        }
+        .wishlist_btn{
+            position: static;
+        }
+    }
 </style>
 
 {#if validated}
@@ -703,14 +778,33 @@
                     </svg>
                     <!--end-->
 
-                    <div class="p_back_circle" />
+                    <div class="p_back_circle"
+                   
+                    >
+                    <div class="gadgad"
+                    on:mousemove|preventDefault|stopPropagation={(e) =>{
+                        let DifWidth = e.target.offsetWidth - document.querySelector(".product_img").offsetWidth + e.target.offsetLeft 
+                        mouse_position(e,DifWidth)
+                        }}
+                        
+                        on:mouseleave|preventDefault|stopPropagation={(e) => {
+                                scale=1
+                                topFinal=0;
+                                leftFinal=0}}
+                    >
+                    </div>
                     {#if activeItem && activeItem.imgs}
                         <img
                             src={activeItem.imgs[$activeColor][$activeFacade]}
                             alt="product"
                             class="product_img"
-                            class:rotating />
+                            class:rotating
+                            style="top:{topFinal}px;left:{leftFinal}px;transform:scale({scale})"
+                            
+                            />
                     {/if}
+                    
+                    </div>
                 </div>
 
                 <div class="p_slider">
