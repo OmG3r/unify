@@ -23,6 +23,7 @@
     console.log("in singe");
     let validated = false;
     onMount(async () => {
+        
         console.log("mounted");
         let data = await dbWrapper.get(
             "/creators/" + params.userid + "/merch/all"
@@ -61,6 +62,8 @@
 
             activeItem = activeItem;
             console.log(activeItem);
+
+           
         }
 
         
@@ -216,6 +219,36 @@
     console.log(topFinal ,leftFinal) */
     scale=2.5
     
+   }
+
+   let clientX
+   let clientY
+   let touch_position = (e,DifWidth)=>{
+
+    let myElement = e.target.getBoundingClientRect();
+    
+    let marginTop = e.target.offsetTop;
+    let marginLeft = e.target.offsetLeft;
+    console.log("margin:" + marginTop,marginLeft);
+    let body = document.body;
+    let docEl = document.documentElement;
+    let scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    let scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    let clientTop = docEl.clientTop || body.clientTop || 0;
+    let clientLeft = docEl.clientLeft || body.clientLeft || 0;
+    //position of element
+    let top  = myElement.top +  scrollTop - clientTop;
+    let left = myElement.left + scrollLeft - clientLeft;
+     
+   clientX = e.touches[0].clientX;
+   clientY = e.touches[0].clientY;
+
+   topFinal = top - clientY + DifWidth
+    leftFinal= left  - clientX + DifWidth
+    console.log(topFinal ,leftFinal)
+    
+    scale=2.5
    }
    
 </script>
@@ -784,11 +817,23 @@
                     <div class="p_back_circle"
                    
                     >
-                    <div class="gadgad"
+                    <div class="gadgad" id="gadgad_id"
                     on:mousemove|preventDefault|stopPropagation={(e) =>{
                         let DifWidth = e.target.offsetWidth - document.querySelector(".product_img").offsetWidth + e.target.offsetLeft 
                         mouse_position(e,DifWidth)
                         }}
+                    on:touchmove|preventDefault|stopPropagation ={(e) =>{
+                        let DifWidth = e.target.offsetWidth - document.querySelector(".product_img").offsetWidth + e.target.offsetLeft 
+                        touch_position(e,DifWidth)
+                    }}
+                    on:touchstart|preventDefault|stopPropagation ={(e) =>{
+                        let DifWidth = e.target.offsetWidth - document.querySelector(".product_img").offsetWidth + e.target.offsetLeft 
+                        touch_position(e,DifWidth)
+                    }}
+                    on:touchend|preventDefault|stopPropagation={(e) => {
+                        scale=1
+                        topFinal=0;
+                        leftFinal=0}}
                         
                         on:mouseleave|preventDefault|stopPropagation={(e) => {
                                 scale=1
