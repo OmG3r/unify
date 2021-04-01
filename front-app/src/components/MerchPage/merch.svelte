@@ -53,7 +53,8 @@
             }
             return value;
         });
-
+        console.log(displayProducts)
+        displayProducts = displayProducts.filter((item) => !item.deleted)
         let loaded = true;
     });
 

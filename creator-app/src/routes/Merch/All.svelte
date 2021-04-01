@@ -9,7 +9,7 @@
  
 
     let format = "article-color-random5LettersCode";
-    let products = [];
+    let products = {};
     let loaded = false;
     /*
     let products = {
@@ -41,7 +41,7 @@
             let data = doc.data();
             console.log(data);
             if (data == undefined) {
-                products = [];
+                products = {};
                 return;
             }
             for (let [key, value] of Object.entries(data)) {
@@ -63,7 +63,8 @@
                     }
                 }
             }
-            products = data;
+            Object.fromEntries(Object.entries(data).filter(([key, value]) => value.deleted != true))
+            products = Object.fromEntries(Object.entries(data).filter(([key, value]) => value.deleted != true));
             console.log(products);
             console.log(products.length);
         });

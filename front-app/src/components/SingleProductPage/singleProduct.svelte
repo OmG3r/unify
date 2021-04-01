@@ -29,7 +29,10 @@
         );
         console.log("sdf " +params);
         if (data[params.itemid] == undefined) {
-            navigate("/" + params.userid);
+            navigate("/" + params.userid, {replace: true});
+        } else if (data[params.itemid].deleted === true) {
+
+            navigate("/" + params.userid, {replace: true});
         } else {
             validated = true;
             activeItem = data[params.itemid];

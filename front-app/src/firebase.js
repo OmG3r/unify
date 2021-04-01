@@ -31,7 +31,7 @@ auth.onAuthStateChanged(async function(kuser) {
     }
 });
 
-let cacheHours = 0.5
+let cacheHours = 0
 class FirebaseDBWrapper {
     constructor(db) {
         this.db = db

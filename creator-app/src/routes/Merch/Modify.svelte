@@ -204,7 +204,7 @@
         if (resp == 'true') {
             let batch = db.batch()
             batch.update(db.doc("/creators/" + $user.claims.username + "/merch/" + params.itemid), {deleted: true})
-            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/all"), {[params.itemid + "." + deleted]: true})
+            batch.update(db.doc("/creators/" + $user.claims.username + "/merch/all"), {[params.itemid + "." + "deleted"]: true})
             await batch.commit()
             notification.set({
                 accentColor: "success",
