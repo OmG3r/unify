@@ -49,10 +49,22 @@
     .u-t-text {
         color: #67696E;
     }
-    .u-t-action {
+    .u-actions {
         margin-left: auto;
         padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .u-actions .u-t-action:first-child {
+        border-top: 1px solid grey; 
+    }
+    .u-t-action {
+        padding: 8px 0;
         cursor: pointer;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid grey;
     }
     .shadow-6 {
    box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
@@ -74,15 +86,24 @@
 <script>
     import {notification} from '../utils.js'
     import { fly } from 'svelte/transition';
+    
     let toasts = []
     let createdToasts = 0;
 
-    let toastDuration = 6000
+    let toastDuration = 15000
 
     let template = {
         accentColor: "#F0A92E;",
         title: "Delete",
         content: "an error happend",
+        uniqueActions: [
+            {
+                text: 'Checkout',
+                func: () => {
+                    console.log("doing func")
+                }
+            }
+        ]
     }
     const notifcolors = {
         'alert': '#f5b353',
@@ -136,9 +157,18 @@
                     {toast.data.content}
                 </div>
             </div>
-            <div on:click={() => {deleteToast(toast)}} class="u-t-action">
-                Dismiss
+            <div class="u-actions">
+                {#each toast.data.uniqueActions as action}
+                    <div on:click={action.func} class="u-t-action">
+                        {action.text}
+                    </div> 
+                {/each}
+                <div on:click={() => {deleteToast(toast)}} class="u-t-action">
+                    Dismiss
+                </div>
+
             </div>
+            
         </div>
     {/each}
 </div>

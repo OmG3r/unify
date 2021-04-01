@@ -85,8 +85,16 @@
             accentColor: "success",
             title: "Success",
             content: "Item added to cart",
+            uniqueActions: [
+                {
+                    text: 'Checkout',
+                    func: () => {
+                        navigate("/cart");
+                    }
+                }
+            ]
         });
-        navigate("/cart")
+        
     };
     console.log("doing init");
     let show = false;
@@ -270,6 +278,7 @@
         font-size: 35px;
         font-weight: 700;
         width: max-content;
+        margin-right: 20px;
     }
     .p_price {
         color: #181d22;
@@ -475,9 +484,9 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        position: absolute;
-        top: 0;
-        right: 15px;
+        position: relative;
+        
+        margin-left: auto
     }
     .wishlist_btn:focus {
         outline: none;
@@ -588,7 +597,9 @@
         font-weight: 400;
         margin: 6px 6px 6px 0;
     }
-
+    .u-heart-container {
+        display: flex;
+    }
     @media only screen and (max-width: 1180px) {
         .p_container {
             display: flex;
@@ -763,7 +774,33 @@
             <div class="all_info">
                 
                 <div class="p_info">
-                    <span class="p_title">{activeItem.name}</span>
+                    <div class="u-heart-container">
+                        <span class="p_title">{activeItem.name}</span>
+                        
+                            <button
+                                type="button"
+                                class="wishlist_btn"
+                                on:mouseenter={() => {
+                                    show = true;
+                                }}
+                                on:mouseleave={() => {
+                                    show = false;
+                                }}
+                                on:click={addWishlist(params.userid + '-' + activeItem.id)}>
+                                <img
+                                    class="heart-img"
+                                    src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + activeItem.id] ? '/img/misc/filled-heart-1.png' : '/img/misc/empty-heart.png'}
+                                    alt="eart" />
+                                <span
+                                    class="popuptext"
+                                    class:show
+                                    style="background-color:{creatorData.accentColor}"
+                                    id="myPopup">{$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + activeItem.id] ? 'Remove from ' : 'Add to '}
+                                    wishlist</span>
+                            </button>
+                        
+                    </div>
+                    
                     <span class="p_subTitle">
                         {#if activeItem.creator}
                             <a  href={"/" + activeItem.creator} use:routlink>
@@ -967,27 +1004,7 @@
                         </span>
                     </div>
                 </div>
-                <button
-                    type="button"
-                    class="wishlist_btn"
-                    on:mouseenter={() => {
-                        show = true;
-                    }}
-                    on:mouseleave={() => {
-                        show = false;
-                    }}
-                    on:click={addWishlist(params.userid + '-' + activeItem.id)}>
-                    <img
-                        class="heart-img"
-                        src={$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + activeItem.id] ? '/img/misc/filled-heart-1.png' : '/img/misc/empty-heart.png'}
-                        alt="eart" />
-                    <span
-                        class="popuptext"
-                        class:show
-                        style="background-color:{creatorData.accentColor}"
-                        id="myPopup">{$user && $user.docData && $user.docData.wishlist && $user.docData?.wishlist[params.userid + '-' + activeItem.id] ? 'Remove from ' : 'Add to '}
-                        wishlist</span>
-                </button>
+                
             </div>
         </div>
     </div>

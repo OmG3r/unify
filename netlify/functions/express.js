@@ -109,7 +109,7 @@ router.post('/getClaims', async(req, res) => {
 })
 
 router.post('/createCreator', async(req, res) => {
-    if (['email', 'password', 'username', 'persoName'].some((item) => req.body[item] == undefined)) {
+    if (['email', 'password', 'username', 'persoName', 'phone'].some((item) => req.body[item] == undefined)) {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid request data' }, body: req.body }))
         return
     }
@@ -147,6 +147,7 @@ router.post('/createCreator', async(req, res) => {
                     email: req.body.email,
                     persoName: req.body.persoName,
                     storeEnabled: false,
+                    phoneNumber: req.body.phone,
                     timestamp: admin.firestore.FieldValue.serverTimestamp()
                 }
             }, { merge: true })
@@ -161,7 +162,7 @@ router.post('/createCreator', async(req, res) => {
             }))
         })
         .catch((xerror) => {
-            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error:  xerror  }))
+            res.end(JSON.stringify({ success: false, msg: 'firebase creation error', error: xerror }))
         })
 })
 router.post('/addOrder', async(req, res) => {
@@ -230,7 +231,7 @@ router.post('/addOrder', async(req, res) => {
 
     const batch = db.batch();
 
-    
+
     batch.set(db.doc('admin/collections/orders/' + data.cart.cartID), xdata)
         //db.collection('orders').doc(data.cart.cartID).set(xdata);
         /*db.collection('orders').doc('all').set({
