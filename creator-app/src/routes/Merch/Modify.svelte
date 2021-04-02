@@ -252,6 +252,7 @@
         if ($priceCalculatorData.price != itemData.price) {
             updateDoc.price = $priceCalculatorData.price
             updateAll[params.itemid + '.price'] = $priceCalculatorData.price
+            updateAll[params.itemid + '.profit'] = $priceCalculatorData.rofit
         }
 
         if (Object.keys(updateDoc).length != 0) {

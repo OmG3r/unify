@@ -51,7 +51,7 @@
 </style>
 
 <script>
-    import { calculateBasePrice} from '../../utils.js'
+    import { calculateBasePrice, round} from '../../utils.js'
     import { createEventDispatcher } from 'svelte';
     import {onMount} from 'svelte'
     const dispatch = createEventDispatcher();
@@ -66,7 +66,7 @@
     export let backCost = 0;
 
 
-    export let price = Math.ceil(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate)) + 2
+    export let price = round(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1) + 2
 
     let theInput
     let hadData = false
@@ -78,22 +78,22 @@
                 return
             } else if (hadData === true && v.front.price == 0 && v.back.price == 0 ) {
                 hadData = false
-                let creatorProfit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+                let creatorProfit = round( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit, 1 )
                 console.log('creatorPorift: ' + creatorProfit)
                 frontCost = v.front.price
                 backCost = v.back.price
-                price = Math.ceil((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate))
+                price = round((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1)
                 profitable = !(creatorProfit < 1)
                 theInput.value = price
                 $priceCalculatorData = {profit: creatorProfit, price, profitable}
             } else  {
                 hadData = true
                 console.log(v)
-                let creatorProfit = Math.floor( ( (($priceCalculatorData.price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+                let creatorProfit = round( ( (($priceCalculatorData.price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit, 1 )
                 console.log('creatorPorift: ' + creatorProfit)
                 frontCost = v.front.price
                 backCost = v.back.price
-                price = Math.ceil((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate))
+                price = round((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1)
                 profitable = !(creatorProfit < 1)
                 theInput.value = price
                 $priceCalculatorData = {profit: creatorProfit, price, profitable}
@@ -106,7 +106,7 @@
 
 
     
-    let profit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+    let profit = round( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit, 1 )
     let profitable = !(profit < 1)
     console.log(profitable)
     $priceCalculatorData = {profit, price, profitable}
@@ -120,7 +120,7 @@
         console.log('input price:' +price)
         console.log('itemcost:' +cost)
         console.log('unify profit:' +unifyProfit)
-        profit = Math.floor( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit )
+        profit = round( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit, 1 )
         
         profitable = !(profit < 1)
 
