@@ -533,7 +533,7 @@ let signoutFunc = () =>{
     <div
         class="menuItems {window.innerWidth <= 1180 ? (isActive ? 'isActive' : isActiveReverse ? 'isActiveReverse' : '') : ''}"
         style="background-color:{mobileMenuColor} !important">
-        <a use:link href="/">{{ en: 'Home', fr: 'Acceuil' }[$lang]}</a>
+        <a use:link href="/">{{ en: 'Home', fr: 'Accueil' }[$lang]}</a>
         <!--
         <a use:link href="/merch">{{ en: 'Merch', fr: 'Merch' }[$lang]}</a>
         <a use:link href="/tips">{{ en: 'Donations', fr: 'don' }[$lang]}</a>

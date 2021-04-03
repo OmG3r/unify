@@ -193,7 +193,6 @@
     
     let marginTop = e.target.offsetTop;
     let marginLeft = e.target.offsetLeft;
-    console.log("margin:" + marginTop,marginLeft);
     let body = document.body;
     let docEl = document.documentElement;
     let scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
@@ -213,10 +212,7 @@
     
     topFinal = top - posY + DifWidth
     leftFinal= left  - posX + DifWidth
-    console.log(topFinal ,leftFinal)
-    /* console.log("top : " + top,"left : " +left);
-    console.log(posY,posX) 
-    console.log(topFinal ,leftFinal) */
+ 
     scale=2.5
     
    }
@@ -229,7 +225,6 @@
     
     let marginTop = e.target.offsetTop;
     let marginLeft = e.target.offsetLeft;
-    console.log("margin:" + marginTop,marginLeft);
     let body = document.body;
     let docEl = document.documentElement;
     let scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
