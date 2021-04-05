@@ -427,7 +427,7 @@
         <div class="title">
             {{ en: 'Start Selling Your', fr: 'Commencez à vendre votre' }[$lang]}
             
-            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Merchandise' }[$lang]}</span>
+            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
             {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
         </div>
         <div class="paragraph">
