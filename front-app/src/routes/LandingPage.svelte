@@ -403,12 +403,12 @@
     <div class="part_one">
         <div class="paragraph">
             <div class="div_p">
-                {{ en: 'Start', fr: 'Commencer' }[$lang]}
-                <span style="color:#00CE7C !important">{{ en: 'Generating', fr: 'à Générer' }[$lang]}</span>
+                {{ en: 'Start', fr: 'Commencez' }[$lang]}
+                <span style="color:#00CE7C !important">{{ en: 'Generating', fr: 'À Générer' }[$lang]}</span>
                 {{ en: 'Revenues', fr: 'Des Revenus' }[$lang]}
             </div>
 
-            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: 'à partir De Votre Passion' }[$lang]}</p>
+            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: ' Partir De Votre Passion' }[$lang]}</p>
         </div>
     </div>
     <div class="socialMedia part_two" data-aos="fade-up">
@@ -425,18 +425,18 @@
 <div class="section2">
     <div class="part_one">
         <div class="title">
-            {{ en: 'Start Selling Your', fr: 'Commencez à vendre votre' }[$lang]}
+            {{ en: 'Start Selling Your', fr: 'Commencez à Vendre Votre' }[$lang]}
             
             <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
             {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
         </div>
         <div class="paragraph">
-            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression au support." }[$lang]}
+            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livrason au support client." }[$lang]}
            
             <div>
                 {{ 
                 en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
-                fr: "concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition,support client et plus." 
+                fr: "Concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition, du support client et plus." 
                 }[$lang]}
             
             </div>
@@ -444,7 +444,7 @@
         <button><a target="_blank" href="https://creator.unify.tn/register">
             {{ 
                 en: "Start Now",
-                fr: "Démarrez maintenant" 
+                fr: "Démarrez Maintenant" 
                 }[$lang]}</a></button>
     </div>
     <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>
