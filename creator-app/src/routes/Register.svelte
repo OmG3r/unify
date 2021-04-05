@@ -315,7 +315,7 @@
 
 
 <script>
-    import {user,auth, db} from '../firebase.js'
+    import {user,auth, db, analytics} from '../firebase.js'
     import {onDestroy} from 'svelte'
     import { navigate, link } from "svelte-routing";
     import {urlPostReq} from '../utils.js'
@@ -394,6 +394,7 @@
             errorMessage = data.error.message
         } else {
             auth.signInWithCustomToken(data.authToken)
+            analytics.logEvent('creator-signup')
         }
         submitting = false
         return

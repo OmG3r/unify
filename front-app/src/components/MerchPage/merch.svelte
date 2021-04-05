@@ -4,7 +4,7 @@
     import { lang, cart } from "../../store.js";
     import { onMount } from "svelte";
     import Single from "../SingleProductPage/singleProduct.svelte";
-    import { db, dbWrapper, user } from "../../firebase.js";
+    import { db, dbWrapper, user, analytics } from "../../firebase.js";
     import {
         uuidToImageLink,
         socialMedias,
@@ -19,7 +19,9 @@
     if (creatorData.accentColor == undefined || creatorData.accentColor == null || creatorData.accentColor == "") {
         creatorData.accentColor = '#45b877'
     }
-
+    onMount(() => {
+        analytics.logEvent('store_view', {creator: params.userid})
+    })
   
     //change the global(:root) var of css
     let filter = convert(creatorData.accentColor).replace('filter:','').replace(";","");

@@ -84,7 +84,7 @@
 
 <script>
     import ImageBackground from '../../comps/ImageBackground.svelte'
-    import {user} from '../../firebase.js'
+    import {user, analytics} from '../../firebase.js'
     import {textToHex, calculateBasePrice, notification} from '../../utils.js'
     import {creations, taxRate} from '../../mockupdata.js'
     import {link, navigate} from 'svelte-routing'
@@ -135,6 +135,7 @@
                     title: "Error",
                     content: "Your store must be enabled to create merch" 
                 })
+                analytics.logEvent('creation-blocked')
                 navigate('/merch/all', {replace: true})
             }
         }

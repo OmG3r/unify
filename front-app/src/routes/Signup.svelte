@@ -1,5 +1,5 @@
 <script>
-    import {auth, user} from '../firebase.js'
+    import {auth, user, analytics} from '../firebase.js'
     import {navigate, link} from 'svelte-routing'
     import MaterialSpinner from '../components/misc/MaterialSpinner.svelte'
     import SignInProviders from '../components/misc/SigninProviders.svelte'
@@ -59,7 +59,7 @@
             })
              let params = new URLSearchParams(location.search)
            
-            
+             analytics.logEvent('front-signup')
             newRegister = true
             
             sub = false
