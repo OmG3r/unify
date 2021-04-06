@@ -30,6 +30,7 @@
     console.log(filter);
     
     dbWrapper.get("/creators/" + params.userid + "/merch/all").then((data) => {
+        console.log("got " + "/creators/" + params.userid + "/merch/all")
         console.log(data)
         if (data == undefined) {
             displayProducts = [];

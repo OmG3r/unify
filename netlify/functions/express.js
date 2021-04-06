@@ -118,6 +118,16 @@ router.post('/createCreator', async(req, res) => {
         res.end(JSON.stringify({ success: false, error: { message: 'invalid username' }, body: req.body }))
         return
     }
+
+    function isNumeric(value) {
+        return /^\d+$/.test(value);
+    }
+    let tphone = req.body.phone.replace("+216", "").replace(" ", "")
+    if (tphone.length != 8 || !isNumeric(tphone)) {
+        res.end(JSON.stringify({ success: false, error: { message: "Phone number is invalid" }, body: req.body }))
+        return
+    }
+
     req.body.username = req.body.username.toLowerCase()
     let data = await admin.firestore().doc('/creators/' + req.body.username).get()
     console.log(data)

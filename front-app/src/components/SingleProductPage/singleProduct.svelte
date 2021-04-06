@@ -90,10 +90,10 @@
         notification.set({
             accentColor: "success",
             title: "Success",
-            content: { en: 'Article Added to Cart', fr: 'Article ajouté au panier ' },
+            content: { en: 'Article Added to Cart', fr: 'Article ajouté au panier ' }[$lang],
             uniqueActions: [
                 {
-                    text: { en: 'Colors', fr: 'couleurs' }[$lang],
+                    text: { en: 'Checkout', fr: 'Commander' }[$lang],
                     func: () => {
                         navigate("/cart");
                     }

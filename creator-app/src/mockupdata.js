@@ -29,7 +29,7 @@ export const creations = {
             front: 8,
             back: 8
         },
-        profit: 13,
+        profit: 11,
         delivery: 8,
         material: 'S-XL, 100% cotton, comfort',
         sizes: ['S', 'M', 'L', 'X', 'XL'],
@@ -60,7 +60,7 @@ export const creations = {
             category: "zip"
         },
         cost: 25,
-        profit: 13,
+        profit: 11,
         delivery: 8,
         print: {
             front: 8,
@@ -96,7 +96,7 @@ export const creations = {
             quality: "basic",
             category: "sweater"
         },
-        profit: 15,
+        profit: 13,
         print: {
             front: 8,
             back: 8
@@ -132,7 +132,7 @@ export const creations = {
             category: "sweater"
         },
         cost: 22,
-        profit: 12,
+        profit: 11,
         delivery: 8,
         print: {
             front: 8,
@@ -168,7 +168,7 @@ export const creations = {
             category: "sweater"
         },
         cost: 35,
-        profit: 15,
+        profit: 13,
         delivery: 8,
         print: {
             front: 8,
@@ -203,7 +203,7 @@ export const creations = {
             category: "tee"
         },
         cost: 12,
-        profit: 6,
+        profit: 5,
         delivery: 8,
         print: {
             front: 8,
@@ -238,7 +238,7 @@ export const creations = {
             category: "tee"
         },
         cost: 10,
-        profit: 6,
+        profit: 5,
         delivery: 8,
         print: {
             front: 8,
@@ -273,7 +273,7 @@ export const creations = {
             category: "half-sleeve"
         },
         cost: 19,
-        profit: 7,
+        profit: 6,
         delivery: 8,
         print: {
             front: 8,
@@ -308,7 +308,7 @@ export const creations = {
             category: "long-sleeve"
         },
         cost: 22,
-        profit: 7,
+        profit: 6,
         delivery: 8,
         print: {
             front: 8,

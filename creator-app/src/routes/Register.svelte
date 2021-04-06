@@ -365,7 +365,18 @@
             submitting = false
             return
         }
-        username.value
+
+        function isNumeric(value) {
+            return /^\d+$/.test(value);
+        }
+        let tphone = phone.value.replace("+216", "").replace(" ", "")
+        if (tphone.length != 8 || !isNumeric(tphone)) {
+            errorMessage = "Phone number is invalid"
+            submitting = false
+            return
+        }
+
+        
         /*
         firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
             db.doc("/creators/" + username).set({

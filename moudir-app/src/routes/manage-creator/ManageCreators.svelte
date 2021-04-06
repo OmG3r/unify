@@ -16,7 +16,7 @@
     
 
     .u-head-username, .u-body-username {
-        width: 20%;
+        width: 15%;
         
     }
     .u-head-email, .u-body-email {
@@ -26,14 +26,18 @@
         width: 10%
     }
     .u-head-date-join, .u-body-date-join {
-        width: 15%;
+        width: 20%;
     }
     .u-head-store-status, .u-body-store-status {
-        width: 180px
+        width: 160px
+    }
+
+    .u-head-contacted, .u-body-contacted {
+        width: 160px
     }
     .u-table-head {
         width: 100%;
-        padding: 8px 10px;
+        padding: 8px 0px 8px 10px;
         display: flex;
         background-color: white;
         border-bottom: 1px solid #dce4fa;
@@ -43,7 +47,7 @@
     }
 
     .u-item {
-        padding: 8px 10px;
+        padding: 8px 0px 8px 10px;
         display: flex;
         border-bottom: 1px solid #dce4fa;
         background-color: white;
@@ -55,7 +59,8 @@
         justify-content: center;
     }
     .u-toggle-container {
-        width: 100%;
+        width: 90%;
+        margin: auto;
         height: 40px;
         background-color: #f4f4f4;
         border: 1px solid #bcc1cf;
@@ -83,13 +88,14 @@
         
         left: 0;   
     }
+
 </style>
 
 
 <script>
     import {writable} from 'svelte/store'
-    import {formatTimestampToDate} from '../../utils.js'
-    import {db} from '../../firebase.js'
+    import {formatTimestampToDateTime} from '../../utils.js'
+    import {db, user} from '../../firebase.js'
     import {onMount, onDestroy} from 'svelte'
     import SignalNotification from '../../comps/SignalNotification.svelte'
     let users = writable([])
@@ -107,7 +113,11 @@
             return data
         })
         console.log(arrayed)
-        arrayed.sort((a, b) => {return a.username.localeCompare(b.username)})
+        arrayed.sort((a, b) => {
+            let aTime = a.timestamp.seconds + (a.timestamp.nanoseconds /( 10 ** 9))
+            let bTime = b.timestamp.seconds + (b.timestamp.nanoseconds /( 10 ** 9))
+            return bTime - aTime
+        })
         $users = arrayed
     })
     const handleStoreStatus = async (user) => {
@@ -129,10 +139,32 @@
         }
         await batch.commit()
     }
+
+    const handleContacted = async (user) => {
+        if (user.contacted == true) {
+            await db.doc('admin/collections/creators/all').set({
+                [user.username]: {
+                    contacted: false
+                }
+            }, {merge: true})
+        } else {
+            await db.doc('admin/collections/creators/all').set({
+                [user.username]: {
+                    contacted: true
+                }
+            }, {merge: true})
+        }
+    }
     onDestroy(() => {
         unsubscribeDB()
     })
-    
+    let mores = []
+    const addMore = (username) => {
+        mores = [...mores, username]
+    }
+    const removeMore = (username) => {
+        mores = mores.filter((item) => item != username)
+    }
 </script>
 <SignalNotification indexKey={'username'} {first} listener={users} countable={'Creators'} />
 
@@ -156,37 +188,51 @@
             <div class="u-head-store-status">
                 Store Status
             </div>
+            <div class="u-head-contacted">
+                Contacted
+            </div>
         </div>
         <div class="u-table-body">
             {#each $users as user}
-            <div class="u-item">
-                <div class="u-body-username">
-                    {user.username}
-                </div>
-                <div class="u-body-email">
-                    {user.email}
-                </div>
-                <div class="u-body-phone">
-                    {user.phoneNumber ? user.phoneNumber : "None"}
-                </div>
-                <div class="u-body-date-join">
-                    {#if user.timestamp?.seconds}
-                        {formatTimestampToDate(user.timestamp.seconds)}
-                    {:else}
-                        -
-                    {/if}
-                </div>
-                <div class="u-body-store-status">
-                    <div  on:click={() => {handleStoreStatus(user)}} class="noselect u-toggle-container">
-                        <div
-                        class:disabled={!user.storeEnabled}
-                        class:enabled={user.storeEnabled} class="u-toggler">
-                            {user.storeEnabled ? 'Enabled' : 'Disabled'}
-                        </div>
+                <div class="u-item">
+                    <div class="u-body-username">
+                        {user.username}
+                    </div>
+                    <div class="u-body-email">
+                        {user.email}
+                    </div>
+                    <div class="u-body-phone">
+                        {user.phoneNumber ? user.phoneNumber : "None"}
+                    </div>
+                    <div class="u-body-date-join">
+                        {#if user.timestamp?.seconds}
+                            {formatTimestampToDateTime(user.timestamp.seconds)}
+                        {:else}
+                            -
+                        {/if}
+                    </div>
+                    <div class="u-body-store-status">
+                        <div  on:click={() => {handleStoreStatus(user)}} class="noselect u-toggle-container">
+                            <div
+                            class:disabled={!user.storeEnabled}
+                            class:enabled={user.storeEnabled} class="u-toggler">
+                                {user.storeEnabled ? 'Enabled' : 'Disabled'}
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="u-body-contacted">
+                        <div  on:click={() => {handleContacted(user)}} class="noselect u-toggle-container">
+                            <div
+                            class:disabled={!user.contacted}
+                            class:enabled={user.contacted} class="u-toggler">
+                                {user.contacted ? 'Yes' : 'No'}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
+                
             {/each}
         </div>
 

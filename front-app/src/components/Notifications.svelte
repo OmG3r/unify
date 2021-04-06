@@ -158,11 +158,13 @@
                 </div>
             </div>
             <div class="u-actions">
-                {#each toast.data.uniqueActions as action}
-                    <div on:click={action.func} class="u-t-action">
-                        {action.text}
-                    </div> 
-                {/each}
+                {#if toast?.data?.uniqueActions}
+                    {#each toast.data.uniqueActions as action}
+                        <div on:click={() => {action.func();deleteToast(toast);} } class="u-t-action">
+                            {action.text}
+                        </div> 
+                    {/each}
+                {/if}
                 <div on:click={() => {deleteToast(toast)}} class="u-t-action">
                     Dismiss
                 </div>

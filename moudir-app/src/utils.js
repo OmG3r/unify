@@ -43,6 +43,18 @@ export const formatTimestampToDate = (t) => {
     const date = a.getDate();
     return date + "/" + month + "/" + year
 }
+export const formatTimestampToDateTime = (t) => {
+    const a = new Date(t * 1000);
+    const year = a.getFullYear();
+    const month = a.getMonth() + 1;
+    const date = a.getDate();
+    const hours = a.getHours();
+    // Minutes part from the timestamp
+    const minutes = "0" + a.getMinutes();
+    // Seconds part from the timestamp
+    const seconds = "0" + a.getSeconds();
+    return date + "/" + month + "/" + year + " - " + hours + ':' + minutes.substr(-2)
+}
 
 export const formatPhoneNumber = (phone) => {
     let arrayed = phone.split("")
