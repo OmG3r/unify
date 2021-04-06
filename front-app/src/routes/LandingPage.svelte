@@ -408,7 +408,7 @@
                 {{ en: 'Revenues', fr: 'Des Revenus' }[$lang]}
             </div>
 
-            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: ' Partir De Votre Passion' }[$lang]}</p>
+            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: ' à Partir De Votre Passion' }[$lang]}</p>
         </div>
     </div>
     <div class="socialMedia part_two" data-aos="fade-up">

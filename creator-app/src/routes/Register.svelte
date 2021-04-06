@@ -484,7 +484,7 @@
             </div>
             -->
             <div class="orEmailText">sign up using your email</div>
-            <div class="have-acc">Aready have an account ? <a use:link href="/login">Sign in here</a></div>
+            <div class="have-acc">Already have an account ? <a use:link href="/login">Sign in here</a></div>
             <form on:submit|preventDefault={doSubmit} class="inputContainer">
                 {#if errorMessage}
                     <div class="error-container">

@@ -214,7 +214,7 @@ footer{
             <div class="sub_text">
                 {{
                     en: 'Unify is the first platform dedicated to content creation in Tunisia that connects content creators and their supporters.', 
-                    fr: 'Unify est la première plateforme dédiée à la création de contenu en Tunisie qui met en relation les créateurs de contenu et et leurs fans.' 
+                    fr: 'Unify est la première plateforme dédiée à la création de contenu en Tunisie qui met en relation les créateurs de contenu et leurs fans.' 
                 }[$lang]}
             </div>
         </div>
