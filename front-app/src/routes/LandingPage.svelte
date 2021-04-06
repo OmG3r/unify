@@ -431,7 +431,7 @@
             {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
         </div>
         <div class="paragraph">
-            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livrason au support client." }[$lang]}
+            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livraison au support client." }[$lang]}
            
             <div>
                 {{ 
