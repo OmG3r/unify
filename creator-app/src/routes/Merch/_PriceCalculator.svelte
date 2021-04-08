@@ -66,7 +66,7 @@
     export let backCost = 0;
 
 
-    export let price = round(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1) + 2
+    export let price = round(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1) + 3
 
     let theInput
     let hadData = false
@@ -83,7 +83,7 @@
                 frontCost = v.front.price
                 backCost = v.back.price
                 price = round((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1)
-                profitable = !(creatorProfit < 1)
+                profitable = !(creatorProfit < 2)
                 theInput.value = price
                 $priceCalculatorData = {profit: creatorProfit, price, profitable}
             } else  {
@@ -94,7 +94,7 @@
                 frontCost = v.front.price
                 backCost = v.back.price
                 price = round((((unifyProfit + creatorProfit) * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1)
-                profitable = !(creatorProfit < 1)
+                profitable = !(creatorProfit < 2)
                 theInput.value = price
                 $priceCalculatorData = {profit: creatorProfit, price, profitable}
             }
@@ -122,7 +122,7 @@
         console.log('unify profit:' +unifyProfit)
         profit = round( ( ((price / (1 + clicPayRate)) - cost - delivery - frontCost - backCost) / ( 1+ taxRate) ) - unifyProfit, 1 )
         
-        profitable = !(profit < 1)
+        profitable = !(profit < 2)
 
         $priceCalculatorData = {profit, price, profitable}
         console.log($priceCalculatorData)
