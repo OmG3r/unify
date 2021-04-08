@@ -186,7 +186,7 @@
         bottom: 0;
         right: 0;
         margin: auto;
-        width: 120px;
+        max-height:120px;
     
     }
     .u-logo span {
