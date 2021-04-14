@@ -380,6 +380,7 @@
             <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
             <img src="/img/socialMedia/facebook_colored.svg" alt="fb"  class="fb"/>
             <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
+            <img src="/img/socialMedia/trovo_colored.png" alt="trovo" />
             </div>
 
             <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>

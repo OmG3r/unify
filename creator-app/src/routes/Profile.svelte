@@ -188,8 +188,8 @@
             modification = true;
         }
 
-        for (let media of ["youtube","facebook","instagram", "twitch", "nimo","twitter","baaz","Tiktok","pinterest"]) {
-            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com"].some((item)=>profile[media].includes(item) || profile[media].length == 0)) {
+        for (let media of ["youtube","facebook","instagram", "twitch", "nimo","twitter","baaz","Tiktok","pinterest", "trovo"]) {
+            if (!["facebook.com","twitch.tv","youtube.com","instagram.com","twitter.com","tiktok.com","baaz.com","nimo.tv","smart.link","pinterest.com", "trovo.live"].some((item)=>profile[media].includes(item) || profile[media].length == 0)) {
                 notification.set({
                     accentColor: "alert",
                     title: "Error",
@@ -816,8 +816,12 @@
                 bind:text={profile.Tiktok} />
             <Input
                 placeholder={'Link'}
-                title="pinterest"
-                bind:text={profile.pinterest} />    
+                title="Pinterest"
+                bind:text={profile.pinterest} />
+            <Input
+                placeholder={'Link'}
+                title="Trovo"
+                bind:text={profile.trovo} />     
         </div>
 
         <button on:click={doUpdate} class="save-btn" style="background:{$accentColor}">

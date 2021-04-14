@@ -62,11 +62,27 @@
     export let priceCalculatorData;
     export let delivery
     export let printarea;
+    export let xCreatorPorfit = 0;
+    export let modify = false
     export let frontCost = 0;
     export let backCost = 0;
-
+    
 
     export let price = round(((unifyProfit * (1 + taxRate)) + delivery + cost +frontCost + backCost) * (1 + clicPayRate), 1) + 3
+
+    if (modify && xCreatorPorfit) {
+        console.log({
+            price,
+            cost,
+            delivery,
+            unifyProfit,
+            xCreatorPorfit
+        })
+
+        
+        frontCost = round( (( ((price / (1 + clicPayRate)) - cost - delivery ) / ( 1+ taxRate) ) - unifyProfit - xCreatorPorfit) * (1 + taxRate), 1 )
+        console.log("print cost: " + frontCost)
+    }
 
     let theInput
     let hadData = false

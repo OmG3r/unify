@@ -14,7 +14,8 @@ export const socialMedias = [
     { type: 'twitter' },
     { type: 'Tiktok' },
     { type: 'baaz' },
-    { type: 'pinterest' }
+    { type: 'pinterest' },
+    {type: 'trovo'}
 ]
 
 export const colors = {

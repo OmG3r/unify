@@ -177,7 +177,7 @@
         
         console.log(data)
         data.cost = creations[data.mockup].cost
-        data.profit = creations[data.mockup].profit
+        data.uprofit = creations[data.mockup].profit
         data.delivery = creations[data.mockup].delivery
         itemData = data
         
@@ -334,9 +334,11 @@
                     <PriceCalculator
                         {priceCalculatorData}
                         cost={itemData.cost}
-                        unifyProfit={itemData.profit}
+                        unifyProfit={itemData.uprofit}
                         price={itemData.price}
                         delivery={itemData.delivery}
+                        xCreatorPorfit={itemData.profit}
+                        modify={true}
                     />
                 </div>
             <div on:click={doUpdate} class="u-update" style="background:{background};color:{color};border:1px solid {border}" on:mouseover={handleMouseOver} on:mouseout={handleMouseOut}> 

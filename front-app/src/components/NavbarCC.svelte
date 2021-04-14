@@ -369,6 +369,7 @@
         margin-top: 20px;
         position: absolute;
         top: 80%;
+        display: flex;
     }
     .userSocial img {
         width:25px;
@@ -376,7 +377,13 @@
         margin: 0 3px;
     }
     .userSocial a {
-        width:25px;
+        width: 32px;
+        
+        display: block;
+        margin: 0 6px;
+    }
+    .userSocial img {
+        width: 100%;
     }
     .userSocial img:hover {
         filter : none;
@@ -808,10 +815,17 @@
             {#each socialMedias as media}
                 {#if creatorData[media.type] && creatorData[media.type].length > 0}
                     <a target="_blank" href={creatorData[media.type].includes("http") ? creatorData[media.type] : "https://" + creatorData[media.type]}>
+                        {#if media.type != "trovo"}
                         <img
                         style="width:{media.type == "baaz" ? "50px" :" 30px"}"
                                 src="/img/socialMedia/{media.type}.svg"
                                 alt="" />
+                        {:else}
+                                <img
+
+                                src="/img/socialMedia/xtrovo.png"
+                                alt="" />
+                        {/if}
                     </a>
                     
                 {/if}

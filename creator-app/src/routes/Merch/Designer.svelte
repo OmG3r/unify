@@ -537,6 +537,18 @@
         merchData.color = $selectedColor
         console.log(merchData)
         merchData.timestamp = firebase.firestore.FieldValue.serverTimestamp()
+        merchData.printarea = {
+           
+            front: {
+                area: $printarea.front.area,
+                price: $printarea.front.price,
+            },
+            back: {
+                area: $printarea.back.area,
+                price: $printarea.back.price,
+            }
+        
+        }
         const batch = db.batch();
         batch.set(db.doc('/creators/' + $user.claims.username + "/merch/all"), {[merchData.id]: merchData}, {merge: true})
         batch.set(db.doc('/creators/' + $user.claims.username + "/merch/" + merchData.id), merchData)

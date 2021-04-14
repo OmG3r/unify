@@ -663,7 +663,7 @@
 
     .policies {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         font-size: 20px;
         font-weight: 700;
         color: #181d22;
@@ -1139,6 +1139,11 @@
                     and <span style="color:{creatorData.accentColor};font-weight:600">{maxDdate}</span>. Please check exact dates in the
                             checkout page.
                         </span>
+                    </div>
+                    <div class="delivery">
+                        <span>{{ en: 'LAUNDRY', fr: 'LESSIVE' }[$lang]}
+                        </span>
+                        <span class="desc">The product have special washing techniques. <a style="color:{creatorData.accentColor}" href="/washing">learn more.</a></span>
                     </div>
                 </div>
                 

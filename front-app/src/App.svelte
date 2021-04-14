@@ -30,6 +30,7 @@
     import PaymentMethods from "./routes/PaymentMethods.svelte"
     import ShippingDelivery from "./routes/ShippingDelivery.svelte"
     import Policy from "./routes/Policy.svelte"
+    import Washing from './routes/Washing.svelte'
     export let url = "";
 
     //unfunct()
@@ -61,6 +62,14 @@
         <Terms/>
         <Footer/>  
     </Route>
+
+    <Route path="/washing">
+        <NavbarUnify/> 
+        <Washing />
+        <Footer/>  
+    </Route>
+
+
     <Route  path="/completed">
         <OrderCompleted/>   
     </Route>
