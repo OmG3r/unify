@@ -252,7 +252,7 @@
         if ($priceCalculatorData.price != itemData.price) {
             updateDoc.price = $priceCalculatorData.price
             updateAll[params.itemid + '.price'] = $priceCalculatorData.price
-            updateAll[params.itemid + '.profit'] = $priceCalculatorData.rofit
+            updateAll[params.itemid + '.profit'] = $priceCalculatorData.profit
         }
 
         if (Object.keys(updateDoc).length != 0) {
@@ -274,7 +274,7 @@
         }
         setTimeout(() => {
             updating = false
-        }, 8000);
+        }, 1000);
         
 
     }

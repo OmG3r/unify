@@ -7,10 +7,17 @@
         background-color: #181d22;
         color:white
     }
-    h1{
-        margin: 25px auto;
+    .lastUpdate{
+        color:white;
         width: max-content;
-        color:white; 
+        margin: 25px auto;
+        text-align: center;
+        max-width: 80%;
+    }
+
+    h1 {
+        text-align: center;
+        max-width: 80%;
     }
     .lastUpdate{
         color:white;

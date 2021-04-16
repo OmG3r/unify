@@ -16,6 +16,13 @@
         color:white;
         width: max-content;
         margin: 25px auto;
+        text-align: center;
+        max-width: 80%;
+    }
+
+    h1 {
+        text-align: center;
+        max-width: 80%;
     }
     .h3{
         font-size: 25px;
@@ -58,6 +65,8 @@
         margin-bottom: 15px;
         
     }
+
+    
 
     @media only screen and (max-width: 1180px) {
         .u-container{
