@@ -179,8 +179,10 @@
         data.cost = creations[data.mockup].cost
         data.uprofit = creations[data.mockup].profit
         data.delivery = creations[data.mockup].delivery
+        console.info('this is itemData')
         itemData = data
-        
+        console.info('this is itemData')
+        console.log(itemData)
         loaded = true
 
     })
@@ -251,6 +253,7 @@
         }
         if ($priceCalculatorData.price != itemData.price) {
             updateDoc.price = $priceCalculatorData.price
+            updateDoc.profit = $priceCalculatorData.profit
             updateAll[params.itemid + '.price'] = $priceCalculatorData.price
             updateAll[params.itemid + '.profit'] = $priceCalculatorData.profit
         }
@@ -340,6 +343,7 @@
                         xCreatorPorfit={itemData.profit}
                         modify={true}
                     />
+                    {itemData.profit}
                 </div>
             <div on:click={doUpdate} class="u-update" style="background:{background};color:{color};border:1px solid {border}" on:mouseover={handleMouseOver} on:mouseout={handleMouseOut}> 
                     {#if updating }
