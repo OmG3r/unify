@@ -163,7 +163,7 @@ router.post('/createCreator', async(req, res) => {
                 }
             }, { merge: true })
             promises.push(pro)
-            pro = admin.firestore().doc('/admin/collections/creator/' + req.body.username).set({
+            pro = admin.firestore().doc('/admin/collections/creators/' + req.body.username).set({
                 email: req.body.email,
                 persoName: req.body.persoName,
                 storeEnabled: false,
