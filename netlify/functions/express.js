@@ -141,6 +141,7 @@ router.post('/createCreator', async(req, res) => {
             emailVerified: false,
             password: req.body.password,
             disabled: false,
+            phoneNumber: '+216' + tphone,
             displayName: req.body.persoName
         })
         .then(async(userRecord) => {
@@ -161,6 +162,14 @@ router.post('/createCreator', async(req, res) => {
                     timestamp: admin.firestore.FieldValue.serverTimestamp()
                 }
             }, { merge: true })
+            promises.push(pro)
+            pro = admin.firestore().doc('/admin/collections/creator/' + req.body.username).set({
+                email: req.body.email,
+                persoName: req.body.persoName,
+                storeEnabled: false,
+                phoneNumber: req.body.phone,
+                timestamp: admin.firestore.FieldValue.serverTimestamp()
+            })
             promises.push(pro)
             await Promise.all(promises)
             res.end(JSON.stringify({

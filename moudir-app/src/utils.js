@@ -1,4 +1,11 @@
 import { writable } from 'svelte/store'
+
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+
 export const itemBaseStorageLink = "https://firebasestorage.googleapis.com/v0/b/unify-tn.appspot.com/o/"
 export const uuidToImageLink = (uuid, path) => {
     return itemBaseStorageLink + encodeURIComponent(path) + "?alt=media&token=" + uuid

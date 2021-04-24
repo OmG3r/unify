@@ -9,6 +9,8 @@
         
         position: relative;
         height: 300px;
+
+        overflow: hidden;
     }
     .u-banner {
         max-width: 100%;
@@ -69,7 +71,7 @@
 
 
 <div class="u-banner-x-profile">
-    {#if data.banner.uuid != ''}
+    {#if data.banner.uuid != '' && data.banner.uuid != undefined}
         <img class="u-banner" src={uuidToImageLink(data.banner.uuid, data.banner.path)} alt="banner">
     {:else}
         <img class="u-banner default" src="/imgs/defaultbanner.png" alt="banner">

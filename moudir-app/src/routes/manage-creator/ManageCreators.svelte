@@ -121,23 +121,22 @@
         $users = arrayed
     })
     const handleStoreStatus = async (user) => {
+        
         let batch = db.batch();
+        
         if (user.storeEnabled == true) {
-            console.log("1 false")
+
             batch.set(db.doc('admin/collections/creators/all'), {[user.username]: {storeEnabled: false} }, {merge: true})
-            console.log("2 false")
             batch.set(db.doc('/creators/' + user.username), {storeEnabled: false}, {merge: true})
-            console.log("3 false")
+            await batch.commit()
             user.storeEnabled = false
         } else {
-            console.log("1 true")
             batch.set(db.doc('admin/collections/creators/all'), {[user.username]: {storeEnabled: true} }, {merge: true})
-            console.log("2 true")
             batch.set(db.doc('/creators/' + user.username), {storeEnabled: true}, {merge: true})
-            console.log("3 true")
+            await batch.commit()
             user.storeEnabled = true
         }
-        await batch.commit()
+        
     }
 
     const handleContacted = async (user) => {
