@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./unify-tn-firebase-adminsdk-6i0rp-5c5b822f0b.json");
+const serviceAccount = require("./unify-tn-firebase-adminsdk-c62jb-dc5a601b5e.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
