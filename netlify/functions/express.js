@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./unify-tn-firebase-adminsdk-g0dk4-3bc7dd4099.json");
+const serviceAccount = /* must include actual file, manual deploys do not add fiel */
+ //require("./unify-tn-firebase-adminsdk-gimsz-53afea4adf.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -19,16 +20,12 @@ app.use(express.urlencoded());
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true }));
-app.use(function(req, res, next) {
-    res.type('application/json');
-    next();
-});
-app.options('*', cors({ origin: true, credentials: true }))
-app.post('*', cors({ origin: true, credentials: true }))
+app.use(cors({ origin: "*", credentials: true }));
+//app.options('*', cors({ origin: "*", credentials: true }))
+//app.post('*', cors({ origin: "*", credentials: true }))
 const router = express.Router();
 router.get('/', (req, res) => {
-    res.end('hello')
+    res.end('hello32')
 });
 router.get('/another', (req, res) => {
     res.json({ route: req.originalUrl })

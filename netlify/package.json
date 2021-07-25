@@ -11,7 +11,8 @@
     "serverless-http": "^2.6.0"
   },
   "scripts": {
-    "netlify": "netlify deploy --dir=unify-public --prod"
+    "netlify": "netlify deploy --dir=unify-public --prod",
+    "functions": "netlify deploy --functions=functions --dir=unify-public --prod"
   },
   "devDependencies": {},
   "repository": {
