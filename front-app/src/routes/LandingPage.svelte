@@ -173,7 +173,7 @@
     }
     .section1 .part_one .paragraph {
         color: #181d22;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
     }
     .section1 .part_one .paragraph .div_sub{
@@ -187,7 +187,7 @@
         width: 100%;
     }
     .section1 .part_two img {
-        width: 100px;
+        width: 70px;
         margin: 0 15px 0 15px;
     }
     .section2 {
@@ -202,12 +202,12 @@
     .section2 .part_one {
         width: 100%;
         color: #3d4853;
-        font-size: 50px;
+        font-size: 32px;
         font-weight: 600;
     }
     .section2 .part_one .paragraph {
         color: #4b555f;
-        font-size: 30px;
+        font-size: 24px;
         font-weight: 400;
         margin-top: 25px;
     }
@@ -223,7 +223,7 @@
         font-size: 25px;
         font-weight: 600;
         height: max-content;
-        min-height: 75px;
+        
         width: max-content;
         border: none;
         display: flex;
@@ -233,8 +233,10 @@
         cursor: pointer;
     }
     .section2 .part_one button a {
-        padding: 15px 30px;
+        padding: 15px 16px;
         display: block;
+        max-width: 340px;
+        width: 90vw;
 
     }
     .section2 .part_one button:active {
@@ -268,7 +270,7 @@
             margin: 0;
         }
         .section1 .part_one .paragraph {
-            font-size: 40px;
+            font-size: 32px;
         }
         .section1 .part_one .paragraph .div_sub{
             width: 100%;
@@ -365,6 +367,42 @@
 .fb{
     width: 48px;
 }
+
+
+.u-section {
+    padding: 40px 60px;
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.u-left {
+    width: 50%;
+    margin-right: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.u-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 32px;
+}
+
+.u-paragraph {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+.u-right {
+    width: 50%;
+    margin-left: 6px;
+}
+.u-events-image {
+    display: block;
+    height: 380px;
+}
 </style>
 
 <!--header-->
@@ -383,7 +421,7 @@
             <img src="/img/socialMedia/trovo_colored.png" alt="trovo" />
             </div>
 
-            <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Design and sell branded merch', fr: 'Conception et vente de marchandise' }[$lang]}</div>
+            <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Engage your community', fr: 'Engagez votre communauté ' }[$lang]}</div>
     
 
             <div class="get_started_btn">
@@ -450,4 +488,53 @@
     </div>
     <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>
 </div>
+
+<div class="u-section">
+    <div class="u-left">
+        <div class="u-title">
+            {{ en: 'Start Selling Your', fr: 'Commencez à Vendre Votre' }[$lang]}
+            
+            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
+            {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
+        </div>
+        <div class="u-paragraphs">
+            <div class="u-paragraph">
+                {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livraison au support client." }[$lang]}
+            </div>
+           
+            <div class="u-paragraph">
+                {{ 
+                en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
+                fr: "Concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition, du support client et plus." 
+                }[$lang]}
+            
+            </div>
+        </div>
+    </div>
+    <div class="u-right">
+        <img src="/img/section2.png" alt="section2" />
+    </div>
+</div>
 <!------End Section 2------>
+
+<div class="u-section">
+
+    <div class="u-left">
+        <div class="u-title">
+            Organize events for your community
+        </div>
+        <div class="u-paragraphs">
+            <class class="u-paragraph">
+                We will take care of the logistics, management and formalities.
+            </class>
+           
+        </div>
+
+    </div>
+
+    <div class="u-right">
+        <img class="u-events-image" src="/img/events.png" alt="events">
+
+    </div>
+
+</div>
