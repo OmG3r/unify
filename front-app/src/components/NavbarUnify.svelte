@@ -584,7 +584,7 @@ let signoutFunc = () =>{
             </div>
             
         {/if}
-        {#if !signedin}
+        <!-- {#if !signedin}
             <a
                 use:link
                 href="/signin">{{ en: 'Login', fr: 'Se Connecter' }[$lang]}
@@ -594,7 +594,7 @@ let signoutFunc = () =>{
                 use:link
                 href="/signup">{{ en: 'Register', fr: "S'inscrire" }[$lang]}
             </a>
-        {/if}
+        {/if} -->
         <div class="nav-lang">
             {#if $lang == 'fr'}
                 <img
@@ -615,7 +615,7 @@ let signoutFunc = () =>{
         {#if signedin}
             <Cart color={isScroll ? "#ffffff" : "#181d22"} />
         {/if}
-        {#if !signedin}
+        <!-- {#if !signedin}
         <Cart color={isScroll ? "#ffffff" : "#181d22"} />
             <div class="join_btn" target="_blank">
                 <a href="https://creator.unify.tn">
@@ -624,7 +624,7 @@ let signoutFunc = () =>{
                 
             </div>
             
-        {/if}
+        {/if} -->
     </div>
     <div
         class="closeMobileMenu"

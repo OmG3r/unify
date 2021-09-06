@@ -37,6 +37,8 @@
     import PhoneVerification from './routes/PhoneVerification.svelte'
     import Design from  './routes/Design.svelte'
     import Donation from './routes/Donation.svelte'
+    import Events from './routes/Events.svelte'
+    import Mentorship from './routes/Mentorship.svelte'
     import ForgotPassword from './routes/ForgotPassword.svelte'
 
 
@@ -112,6 +114,16 @@
             <Route path="/donation">
                 <VerifyLogin >
                    <Donation />
+                </VerifyLogin>
+            </Route>
+            <Route path="/events">
+                <VerifyLogin >
+                   <Events />
+                </VerifyLogin>
+            </Route>
+            <Route path="/mentorship">
+                <VerifyLogin >
+                   <Mentorship />
                 </VerifyLogin>
             </Route>
             <Route path="/test">

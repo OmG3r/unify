@@ -15,7 +15,7 @@
       name: "Merch Overview",
       routerLink: "/",
       path: "/",
-      img: "/imgs/misc/nav/dashboard.png"
+      img: "/imgs/misc/nav/dashboard.svg"
     },
     /*
     {
@@ -26,22 +26,28 @@
     },
     */
     {
-      name: "Profile",
-      routerLink: "/profile",
-      path: "/profile",
-      img: "/imgs/misc/nav/profile.png"
-    },
-    {
       name: "Store",
       routerLink: "/merch",
       path: "/merch/all",
-      img: "/imgs/misc/nav/store.png"
+      img: "/imgs/misc/nav/store.svg"
     },
     {
       name: "Design",
       routerLink: "/design",
       path: "/design",
-      img: "/imgs/misc/nav/design.png"
+      img: "/imgs/misc/nav/design.svg"
+    },
+    {
+      name: "Events",
+      routerLink: "/events",
+      path: "/events",
+      img: "/imgs/misc/nav/events.svg"
+    },
+    {
+      name: "Mentorship",
+      routerLink: "/mentorship",
+      path: "/mentorship",
+      img: "/imgs/misc/nav/mentorship.svg"
     }
 
   ];
@@ -54,16 +60,22 @@
       img: "/imgs/misc/nav/dashboard.png"
     },
     {
-      name: "Profile",
-      routerLink: "/profile",
-      path: "/profile",
-      img: "/imgs/misc/nav/profile.png"
-    },
-    {
       name: "Design",
       routerLink: "/design",
       path: "/design",
-      img: "/imgs/misc/nav/design.png"
+      img: "/imgs/misc/nav/design.svg"
+    },
+    {
+      name: "events",
+      routerLink: "/events",
+      path: "/events",
+      img: "/imgs/misc/nav/events.svg"
+    },
+    {
+      name: "mentorship",
+      routerLink: "/mentorship",
+      path: "/mentorship",
+      img: "/imgs/misc/nav/mentorship.svg"
     }
   ];
 
@@ -197,11 +209,17 @@
     padding: 0 12px 0px 12px;
     border-bottom: 1px solid #dce4fa;
   }
+  .user-card a{
+    width: 90%;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
   .u-info {
     width: 100%;
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    color: white;
   }
   .u-info .u-name {
     font-weight: bold;
@@ -243,17 +261,21 @@
         padding: 8px 12px;
         border-radius: 3px;
         font-weight: bold;
+        color: #283341 !important;
+        width: 90%;
     }
     .u-nav-item.active {
-        background-color: #deeae3;
-        color: #46b978;
+        background-color: #DFFFE8;
+        color:#283341 ;
+        
     }
     .nav-item-name {
         margin-left: 12px;   
     }
     .nav-item-img {
         display: block;
-        max-height: 32px;
+        max-width: 28px;
+        width: 28px;
         
     }
   .unify-text {
@@ -267,17 +289,7 @@
     flex-direction: column;
   }
 
-  .u-nav-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    border-radius: 3px;
-    font-weight: bold;
-  }
-  .u-nav-item.active {
-    background-color: #deeae3;
-    color: #46b978;
-  }
+ 
   .nav-item-img {
     display: block;
     max-height: 32px;
@@ -394,8 +406,8 @@
           alt="caret" />
       </div>
     {/if}
-    <div class:justify-center={$navCollapse} class:no-padding={$navCollapse} class="user-card">
-      <a use:link href="/profile">
+    <div class:justify-center={$navCollapse} class:no-padding={$navCollapse} class="user-card" >
+      <a use:link href="/profile" style="background-color:{$accentColor}">
         <div class:justify-center={$navCollapse} class="u-info">
 
           <div class:no-margin={$navCollapse} class="u-profile-pic">
