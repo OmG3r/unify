@@ -14,6 +14,11 @@
 </script>
 
 <style>
+    .u-section-container {
+        width: 100%;
+        padding: 80px 0;
+        overflow-x: hidden
+    }
     header {
         background-color: #181d22;
         position: relative;
@@ -312,28 +317,7 @@
       
     }
  
-    @media only screen and (max-width: 800px) {
-        .left_part .title{
-            font-size: 40px;
-        }
-
-        header .socialMedia img{
-            width: 30px;
-            margin:0 10px 0 10px;
-            flex-wrap:wrap;
-        }
-        .shape_top_right,.shape_bottom_left{
-            width: 200px;
-            height: 200px;
-        }
-        
-        .section1 .part_one .paragraph,.section2 .part_one .title{
-            font-size: 30px;
-        }
-        .section2 .part_one .paragraph{
-            font-size: 20px;
-        }
-    }
+    
 .half-circle {
     width: 100px;
     height: 100px;
@@ -378,11 +362,12 @@
 }
 
 .u-left {
-    width: 50%;
+    width: 60%;
     margin-right: 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0 20px 0 0;
 }
 
 .u-title {
@@ -391,18 +376,78 @@
     margin-bottom: 32px;
 }
 
+.u-paragraphs {
+    display: flex;
+    flex-direction: column;
+}
 .u-paragraph {
     font-size: 24px;
     margin-bottom: 16px;
 }
 .u-right {
-    width: 50%;
+    width: 40%;
     margin-left: 6px;
 }
 .u-events-image {
     display: block;
     height: 380px;
 }
+.u-section-button {
+    max-width: 250px;
+    font-size: 18px;
+    width: 90%;
+    margin: auto;
+    padding: 12px 16px;
+    background-color:#00ce7c;
+    display: block;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 50px;
+}
+.u-level-images img {
+    max-width: 30px;
+    margin: 0 8px;
+}
+
+@media only screen and (max-width: 1000px) {
+        .left_part .title{
+            font-size: 40px;
+            padding: 0 8px;
+        }
+
+        header .socialMedia img{
+            width: 30px;
+            margin:0 10px 0 10px;
+            flex-wrap:wrap;
+        }
+        .shape_top_right,.shape_bottom_left{
+            width: 200px;
+            height: 200px;
+        }
+        
+        .section1 .part_one .paragraph,.section2 .part_one .title{
+            font-size: 30px;
+        }
+        .section2 .part_one .paragraph{
+            font-size: 20px;
+        }
+
+        .u-section {
+            flex-direction: column-reverse;
+            padding: 40px 0;
+            width: 86%;
+
+        }
+        .u-right, .u-left {
+            width: 100%;
+            text-align: center;
+        }
+        .u-right {
+            margin-bottom: 24px;
+        }
+    }
 </style>
 
 <!--header-->
@@ -413,12 +458,12 @@
             {{ en: 'Creators. Brands.', fr: 'Createurs. Brands.' }[$lang]}
 
             <div class="socialMedia part_two" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" >
-            <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" class="instagram" />
-            <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" class="twitch" />
-            <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
-            <img src="/img/socialMedia/facebook_colored.svg" alt="fb"  class="fb"/>
-            <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
-            <img src="/img/socialMedia/trovo_colored.png" alt="trovo" />
+                <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" class="instagram" />
+                <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" class="twitch" />
+                <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
+                <img src="/img/socialMedia/facebook_colored.svg" alt="fb"  class="fb"/>
+                <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
+                <img src="/img/socialMedia/trovo_colored.png" alt="trovo" />
             </div>
 
             <div class="sub_title" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000">{{ en: 'Engage your community', fr: 'Engagez votre communauté ' }[$lang]}</div>
@@ -437,104 +482,104 @@
 </header>
 <!-- End header-->
 
-<!------Section 1 -------->
-<div class="section1">
-    <div class="part_one">
-        <div class="paragraph">
-            <div class="div_p">
-                {{ en: 'Start', fr: 'Commencez' }[$lang]}
-                <span style="color:#00CE7C !important">{{ en: 'Generating', fr: 'À Générer' }[$lang]}</span>
-                {{ en: 'Revenues', fr: 'Des Revenus' }[$lang]}
-            </div>
 
-            <p style="color:#747474 !important" class="div_sub">{{ en: 'From Your Hobby', fr: ' à Partir De Votre Passion' }[$lang]}</p>
-        </div>
-    </div>
-    <div class="socialMedia part_two" data-aos="fade-up">
-        <img src="/img/socialMedia/youtube_colored.svg" alt="yt" />
-        <img src="/img/socialMedia/twitch_colored.svg" alt="twitch" />
-        <img src="/img/socialMedia/facebook_colored.svg" alt="fb" />
-        <img src="/img/socialMedia/instagram_colored.svg" alt="instagram" />
-        <img src="/img/socialMedia/nimo_colored.svg" alt="nimo" />
-    </div>
-</div>
-<!------End Section 1------>
 
-<!------Section 2 -------->
-<div class="section2">
-    <div class="part_one">
-        <div class="title">
-            {{ en: 'Start Selling Your', fr: 'Commencez à Vendre Votre' }[$lang]}
-            
-            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
-            {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
-        </div>
-        <div class="paragraph">
-            {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livraison au support client." }[$lang]}
-           
-            <div>
-                {{ 
-                en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
-                fr: "Concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition, du support client et plus." 
-                }[$lang]}
-            
-            </div>
-        </div>
-        <button><a target="_blank" href="https://creator.unify.tn/register">
-            {{ 
-                en: "Start Now",
-                fr: "Démarrez Maintenant" 
-                }[$lang]}</a></button>
-    </div>
-    <div class="part_two" data-aos="fade-right"><img src="/img/section2.png" alt="section2" /></div>
-</div>
 
-<div class="u-section">
-    <div class="u-left">
-        <div class="u-title">
-            {{ en: 'Start Selling Your', fr: 'Commencez à Vendre Votre' }[$lang]}
-            
-            <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
-            {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
-        </div>
-        <div class="u-paragraphs">
-            <div class="u-paragraph">
-                {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livraison au support client." }[$lang]}
-            </div>
-           
-            <div class="u-paragraph">
-                {{ 
-                en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
-                fr: "Concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition, du support client et plus." 
-                }[$lang]}
-            
-            </div>
-        </div>
-    </div>
-    <div class="u-right">
-        <img src="/img/section2.png" alt="section2" />
-    </div>
-</div>
 <!------End Section 2------>
+<div class="u-section-container">
 
-<div class="u-section">
+    <div class="u-section">
 
-    <div class="u-left">
-        <div class="u-title">
-            Organize events for your community
+        <div class="u-left">
+            <div class="u-title">
+                {{en: "Organize events for your community", fr: 'Organisez des événements pour votre communauté'}[$lang]}
+            </div>
+            <div class="u-paragraphs">
+                <div class="u-paragraph">
+                    {{fr: "Nous nous occupons de la logistique, de la gestion et des formalités.", en: "We will take care of the logistics, management and formalities."}[$lang]}
+                </div>
+                <div class="u-paragraph">
+                    {{fr: "Pendant que vous vous concentrez sur votre contenu et spectacle." ,en:"While you focus on your content and show."}[$lang]}
+                </div>
+                <a href="https://creator.unify.tn/register" class="u-section-button">
+                    {{fr: "Commencez" ,en:"Start Now"}[$lang]}
+                </a>
+            
+               
+            </div>
+    
         </div>
-        <div class="u-paragraphs">
-            <class class="u-paragraph">
-                We will take care of the logistics, management and formalities.
-            </class>
-           
+    
+        <div class="u-right">
+            <img class="u-events-image" src="/img/events.png" alt="events">
+    
         </div>
-
+    
+    </div>
+    
+</div>
+<div style="background-color: #f1f4f8;" class="u-section-container">
+    <div  class="u-section">
+        <div class="u-left">
+            <div class="u-title">
+                {{ en: 'Start Selling Your', fr: 'Commencez à Vendre Votre' }[$lang]}
+                
+                <span style="color:#00CE7C !important">{{ en: 'Customized', fr: 'Marchandise' }[$lang]}</span>
+                {{ en: 'Merch Online', fr: 'Personnalisée En Ligne' }[$lang]}
+            </div>
+            <div class="u-paragraphs">
+                <div class="u-paragraph">
+                    {{ en: ' We handle it all from printing to support.', fr: "Nous nous occupons de tout, de l'impression et la livraison au support client." }[$lang]}
+                </div>
+               
+                <div class="u-paragraph">
+                    {{ 
+                    en: "focus on your hobby. we'll take care of the printing, shipping,customer support and more.",
+                    fr: "Concentrez-vous sur votre passion. nous nous occuperons de l'impression, de l'expédition, du support client et plus." 
+                    }[$lang]}
+                
+                </div>
+                <a href="https://creator.unify.tn/register" class="u-section-button">
+                    {{fr: "Commencez" ,en:"Start Now"}[$lang]}
+                </a>
+            </div>
+        </div>
+        <div class="u-right">
+            <img style="display: block;margin: auto;" src="/img/mobile.png" alt="section2" />
+        </div>
     </div>
 
-    <div class="u-right">
-        <img class="u-events-image" src="/img/events.png" alt="events">
+</div>
 
+<div class="u-section-container">
+
+    <div class="u-section">
+
+        <div class="u-left">
+            <div class="u-title">
+                {{fr: "Accès au mentorat par un créateur de contenu chevronné sur la plateforme. " ,en: "Access to mentorship by veteran content creator in the platform."}[$lang]}
+            </div>
+            <div class="u-paragraphs">
+                <div class="u-paragraph">
+                   {{fr: "Le réseau de créateurs de contenu sur la plateforme apportera son expertise aux rising-stars" ,en: " The network of content creator on the platform will provide expertise to rising stars"}[$lang]}
+                </div>
+                <div class="u-paragraph">
+                    {{fr: "Partager c'est aimer." ,en: "Sharing is caring."}[$lang]}
+                </div>
+                <a href="https://creator.unify.tn/register" class="u-section-button">
+                    {{fr: "Commencez" ,en:"Start Now"}[$lang]}
+                </a>
+            
+               
+            </div>
+    
+        </div>
+    
+        <div class="u-right">
+            <img class="u-events-image" src="/img/mentors.png" alt="events">
+    
+        </div>
+    
     </div>
-
+    
 </div>

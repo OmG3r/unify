@@ -1,3 +1,4 @@
+
 <script>
     import { lang } from "../store.js";
     import Logo from "./misc/UnifyLogo.svelte";
@@ -12,7 +13,6 @@
     let isActiveReverse = false;
     let myAccount = false;
     
-
     
     $upColor = "#45B877";
     $downColor = "#181D22";
@@ -65,7 +65,6 @@
                 }
                 
             }
-
             if (currentScrollPos > 180) {
                 isScroll = true;
                 isScrollReverse = false;
@@ -79,7 +78,6 @@
             }
           
     };
-
 let signoutFunc = () =>{
     firebase.auth().signOut()
     navigate("/")
@@ -218,7 +216,6 @@ let signoutFunc = () =>{
         color: white;
         z-index: 5001;
     }
-
     @keyframes scrollAnim {
         0% {
             position: fixed;
@@ -226,7 +223,6 @@ let signoutFunc = () =>{
             background-color: #181d22;
             color: white;
         }
-
         100% {
             position: fixed;
             height: 70px;
@@ -241,7 +237,6 @@ let signoutFunc = () =>{
             background-color: #181d22;
             opacity: 1;
         }
-
         100% {
             position: fixed;
             height: 0px;
@@ -259,13 +254,11 @@ let signoutFunc = () =>{
         opacity: 1;
         justify-content: flex-end;
     }
-
     .menuItems.isActiveReverse {
         animation: mobileMenuReverse 0.3s ease-out;
         opacity: 0;
         width: 0px;
     }
-
 .first_part {
         display: flex;
         flex-direction: row;
@@ -314,7 +307,6 @@ let signoutFunc = () =>{
     .edit_btn .btn:active {
         background-color: #46b978c7;
     }
-
     .menu_item {
         display: flex;
         flex-direction: row;
@@ -335,7 +327,6 @@ let signoutFunc = () =>{
         height: 45px;
         border-radius: 5px;
         margin:0px !important; 
-
     }
     .user_avatar img {
         width: 30px;
@@ -366,7 +357,6 @@ let signoutFunc = () =>{
     .popup_myaccount.myAccount {
         display: block !important;
     }
-
     .help_logout{
         display: none !important;
     }
@@ -374,8 +364,6 @@ let signoutFunc = () =>{
                 color:white;
     }
     @media only screen and (max-width: 1180px) {
-
-
         .menuItems {
             display: none;
             opacity: 0;
@@ -393,7 +381,6 @@ let signoutFunc = () =>{
             background: white;
             overflow-y: scroll;
         }
-
         .menuItems.isActive {
             display: flex;
             animation: mobileMenu 0.3s ease-out;
@@ -401,7 +388,6 @@ let signoutFunc = () =>{
             opacity: 1;
             justify-content:flex-start;
         }
-
         .menuItems.isActiveReverse {
             animation: mobileMenuReverse 0.3s ease-out;
             opacity: 0;
@@ -447,7 +433,6 @@ let signoutFunc = () =>{
             color:#46b978;
             cursor:pointer;
         }
-
         @keyframes mobileMenu {
             from {
                 width: 0px;
@@ -468,7 +453,6 @@ let signoutFunc = () =>{
                 width: 0px;
             }
         }
-
         .menuItems.isActive .nav-lang,
         .menuItems.isActive a {
             margin-top: 18px;
@@ -477,7 +461,6 @@ let signoutFunc = () =>{
         .closeMobileMenu.isActive {
             display: block;
         }
-
         nav .menuBtn {
             display: block;
             opacity: 1;
@@ -487,7 +470,6 @@ let signoutFunc = () =>{
             height: 50px;
         }
        
-
         .my_account{
             display: flex;
             justify-content: center;
@@ -584,17 +566,16 @@ let signoutFunc = () =>{
             </div>
             
         {/if}
-        <!-- {#if !signedin}
+        {#if !signedin}
             <a
                 use:link
                 href="/signin">{{ en: 'Login', fr: 'Se Connecter' }[$lang]}
             </a>
-
             <a
                 use:link
                 href="/signup">{{ en: 'Register', fr: "S'inscrire" }[$lang]}
             </a>
-        {/if} -->
+        {/if} 
         <div class="nav-lang">
             {#if $lang == 'fr'}
                 <img
@@ -615,7 +596,7 @@ let signoutFunc = () =>{
         {#if signedin}
             <Cart color={isScroll ? "#ffffff" : "#181d22"} />
         {/if}
-        <!-- {#if !signedin}
+        {#if !signedin}
         <Cart color={isScroll ? "#ffffff" : "#181d22"} />
             <div class="join_btn" target="_blank">
                 <a href="https://creator.unify.tn">
@@ -624,7 +605,7 @@ let signoutFunc = () =>{
                 
             </div>
             
-        {/if} -->
+        {/if} 
     </div>
     <div
         class="closeMobileMenu"

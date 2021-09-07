@@ -206,13 +206,13 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0 12px 0px 12px;
+    
     border-bottom: 1px solid #dce4fa;
   }
   .user-card a{
     width: 90%;
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-bottom: 8px;
   }
   .u-info {
@@ -284,9 +284,11 @@
   }
 
   .navs {
+    margin-top: 8px;
     width: 100%;
     display: flex;
     flex-direction: column;
+    
   }
 
  
@@ -406,6 +408,10 @@
           alt="caret" />
       </div>
     {/if}
+    <div class:justify-center={$navCollapse} class="u-unify">
+      <img class="unify-logo" src="/logo.png" alt="unify-logo" />
+      <div class:hidden={$navCollapse} class="unify-text">UNIFY</div>
+    </div>
     <div class:justify-center={$navCollapse} class:no-padding={$navCollapse} class="user-card" >
       <a use:link href="/profile" style="background-color:{$accentColor}">
         <div class:justify-center={$navCollapse} class="u-info">
@@ -429,10 +435,7 @@
                 <i class="fas fa-user-edit"></i>
             </a>-->
     </div>
-    <div class:justify-center={$navCollapse} class="u-unify">
-      <img class="unify-logo" src="/logo.png" alt="unify-logo" />
-      <div class:hidden={$navCollapse} class="unify-text">UNIFY</div>
-    </div>
+    
     <div class="navs">
       {#each activeNav as item}
         <a
