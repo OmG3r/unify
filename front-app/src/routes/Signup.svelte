@@ -57,13 +57,13 @@
             await result.user.updateProfile({
                 displayName: lform.name
             })
-             let params = new URLSearchParams(location.search)
+            let params = new URLSearchParams(location.search)
            
-             analytics.logEvent('front-signup')
+            analytics.logEvent('front-signup')
             newRegister = true
             
             sub = false
-        
+            navigate('/myaccount')
            
         })
         .catch((error) => {

@@ -46,6 +46,7 @@ import { lang } from '../store.js';
         .then((user) => {
             newLogin = true
             sub = false
+            navigate('/myaccount')
         })
         .catch((error) => {
 
